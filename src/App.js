@@ -212,7 +212,7 @@ function App() {
                       <form action="">
                         <div>
                           <p id="aut-msg">
-                            An authentication code has been sent to your email.
+                            An authentication code has been sent to your Email.
                           </p>
                           <div>
                             <div className="otp-bx">
