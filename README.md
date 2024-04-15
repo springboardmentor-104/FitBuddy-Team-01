@@ -1,18 +1,18 @@
-FITBUDDY-TEAM-01/
-│
-├── backend/
-│   ├── (backend code files)
-│
-├── frontend/
-│   ├── (frontend code files)
-│
-├── apis/
-│   ├── (API documentation files)
-│
-└── testing/
-    ├── (testing documentation files)
-
-
+FITBUDDY-TEAM-01/                                                                                                                                        
+│                                                                                                                                                         
+├── backend/                                                                                                                                              
+│   ├── (backend code files)                                                                                                                              
+│                                                                                                                                                         
+├──frontend/                                                                                                                                              
+│   ├── (frontend code files)                                                                                                                             
+│                                                                                                                                                         
+├── apis/                                                                                                                                               
+│   ├── (API documentation files)                                                                                                                         
+│                                                                                                                                                         
+└──testing/                                                                                                                                               
+    ├── (testing documentation files)                                                                                                                     
+               (frontend code files)                                                                                                                                          
+                                                                                                                                                          
 In this structure:
 
 The backend folder contains all the backend code files.
