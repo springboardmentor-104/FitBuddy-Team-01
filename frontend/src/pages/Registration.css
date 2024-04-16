@@ -1,57 +1,24 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-
-* > * {
-  font-family: "Poppins", cursive;
-  margin: 0;
+#reg-sec {
+  background: gray;
+  background: linear-gradient(to right, gray, gray, gray);
 }
 
-body {
-  /* background: gray;  */
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    /* gray, */ /* gray, */ /* gray */
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    /* gray, */ /* gray, */ /* gray */
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-
-.App {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.register {
-  max-width: 978px;
-  width: 100vw;
-  display: flex;
-  border: 1px solid #e9ecef;
-  border-radius: 5px;
-  /* box-shadow: 1px 3px 10px #e9ecef; */
-  background-color: white;
-}
 .register h1 {
   color: #1e32ec;
 }
+
 .register span {
   color: #414346;
 }
 
 #form {
-  max-width: 320px;
-  width: 100vw;
   margin: 2em auto;
 }
 
 #form > input,
 .btn {
   border: 1px solid #e9ecef;
-  padding: 0.9em 1em;
+  padding: 0.4em 1em;
 }
 
 #form > input:focus {
@@ -67,7 +34,7 @@ body {
 
 .flex {
   display: flex;
-  gap: 2em;
+  gap: 1em;
 }
 
 .flex-col {

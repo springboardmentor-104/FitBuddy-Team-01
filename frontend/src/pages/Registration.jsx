@@ -13,52 +13,64 @@ const Registration = (props) => {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <section>
-      <div className="register">
-        <div className="col-1">
-          <h1>Fit Buddy</h1>
-          <span>
-            <h3>Get started with easily register</h3>
-            Free register any you can enjoy it
-          </span>
+    <section
+      className="register d-flex align-items-center"
+      style={{ height: window.innerHeight }}
+      id="reg-sec"
+    >
+      <div className="container px-lg-5 ">
+        <div className="row">
+          <div className="col-sm-12 col-md-6 bg-white">
+            <div className="text-center p-3">
+              <h1 className="h3">Fit Buddy</h1>
+              <span>
+                <h3 className="h4">Get started with easily register</h3>
+                <span>Free register any you can enjoy it</span>
+              </span>
+              <form id="form" className="flex flex-col">
+                <input
+                  type="text"
+                  {...register("Email Address")}
+                  placeholder="Email Address"
+                  required
+                />
+                <input
+                  type="text"
+                  {...register("Full name")}
+                  placeholder="Full name"
+                  required
+                />
+                <input
+                  type="text"
+                  {...register("User name")}
+                  placeholder="User name"
+                  required
+                />
+                <input
+                  type="text"
+                  {...register("password")}
+                  placeholder="password"
+                  required
+                />
+                <input
+                  type="text"
+                  {...register("confirmpwd")}
+                  placeholder="confirm password"
+                  required
+                />
 
-          <form id="form" className="flex flex-col">
-            <input
-              type="text"
-              {...register("Email Address")}
-              placeholder="Email Address"
-              required
+                <button className="btn rounded-0 py-1">Sign In</button>
+              </form>
+            </div>
+          </div>
+          <div className="d-none d-md-block col-6 p-0">
+            <img
+              src={bgImg}
+              alt={`Registration Page`}
+              className="img-fluid"
+              style={{ height: "100%" }}
             />
-            <input
-              type="text"
-              {...register("Full name")}
-              placeholder="Full name"
-              required
-            />
-            <input
-              type="text"
-              {...register("User name")}
-              placeholder="User name"
-              required
-            />
-            <input
-              type="text"
-              {...register("password")}
-              placeholder="password"
-              required
-            />
-            <input
-              type="text"
-              {...register("confirmpwd")}
-              placeholder="confirm password"
-              required
-            />
-
-            <button className="btn">Sign In</button>
-          </form>
-        </div>
-        <div className="col-2">
-          <img src={bgImg} alt="" />
+          </div>
         </div>
       </div>
     </section>

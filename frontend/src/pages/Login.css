@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .login_para {
   /* width: 50%;
   height: 100vh; */
