@@ -1,5 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import { Link } from "react-router-dom";
 import "./../Components/forgotpassword/forgotpassword.css";
 
 import OtpVrfo_icon from "./../Assets/otpvrfo.png";
@@ -166,11 +167,11 @@ const ForgotPassword = (props) => {
               <div className="row">
                 <div className="col-md-6 col-sm-12">
                   <div ref={ref} className={`p-5`}>
-                    <a href="/">
+                    <Link to="/Login">
                       <i className="fa fa-angle-left" id="lft-arw-icn">
                         &nbsp;Back to Login
                       </i>
-                    </a>
+                    </Link>
                     <br />
                     <br />
                     <h1 id="frg-pwd-txt">Forgot your Password?</h1>
