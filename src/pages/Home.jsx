@@ -29,14 +29,14 @@ const Home = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/About">
                   About
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/ContactUs">
                   ContactUs
-                </a>
+                </Link>
               </li>
             </ul>
             <form className="d-flex" role="search">
@@ -69,7 +69,6 @@ const Home = () => {
           </div>
         </div>
       </nav>
-
       <div className="container-fluid">
         <div id="abt-inf-cnt"></div>
         <div className="row" id="rw-1">
@@ -86,7 +85,6 @@ const Home = () => {
             <strong className="lnd-lnk-1">Get Started</strong>
             <strong className="lnd-lnk-2">Watch Demo</strong>
           </div>
-
           <div className="row">
             <div id="jn-us">
               <div className="col-12">
@@ -100,7 +98,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
       <div className="container-fluid" id="footer"></div>
     </div>
   );
