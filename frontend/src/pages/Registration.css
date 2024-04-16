@@ -1,7 +1,7 @@
-#reg-sec {
+/* #reg-sec {
   background: gray;
   background: linear-gradient(to right, gray, gray, gray);
-}
+} */
 
 .register h1 {
   color: #1e32ec;
@@ -26,7 +26,6 @@
 }
 
 #form > .btn {
-  background-color: #1e32ec;
   color: #e9ecef;
   font-size: 1em;
   cursor: pointer;
@@ -60,4 +59,27 @@
   .register .col-2 img {
     display: initial;
   }
+}
+
+/* =============================== */
+
+#ap-nm {
+  text-align: left;
+  font-weight: 600;
+  font-size: 32.5px;
+}
+
+#reg-hd {
+  text-align: left;
+  color: #152085;
+}
+
+#rg-rw {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  /* border-radius: 0px; */
+}
+
+#reg-slogan {
+  text-align: left;
+  color: gray;
 }

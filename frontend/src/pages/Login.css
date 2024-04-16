@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .login_para {
   /* width: 50%;
   height: 100vh; */
@@ -18,4 +14,29 @@
   height: 100% !important;
   max-width: 100% !important;
   object-fit: cover !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+/* ============================ */
+
+#lg-h4,
+#lg-lg {
+  text-align: left;
+  text-align: justify;
+}
+
+#fg-ps {
+  text-align: justify;
+  text-decoration: none;
+}
+
+#sgn-up-lnk {
+  text-decoration: none;
 }

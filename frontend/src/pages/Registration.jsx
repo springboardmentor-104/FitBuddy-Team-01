@@ -19,13 +19,17 @@ const Registration = (props) => {
       id="reg-sec"
     >
       <div className="container px-lg-5 ">
-        <div className="row">
+        <div className="row" id="rg-rw">
           <div className="col-sm-12 col-md-6 bg-white">
             <div className="text-center p-3">
-              <h1 className="h3">Fit Buddy</h1>
+              <h1 className="h3" id="ap-nm">
+                FIT BUDDY
+              </h1>
               <span>
-                <h3 className="h4">Get started with easily register</h3>
-                <span>Free register any you can enjoy it</span>
+                <h3 className="h4" id="reg-hd">
+                  Get started with easily register
+                </h3>
+                <p id="reg-slogan">Free register any you can enjoy it</p>
               </span>
               <form id="form" className="flex flex-col">
                 <input
@@ -58,8 +62,9 @@ const Registration = (props) => {
                   placeholder="confirm password"
                   required
                 />
-
-                <button className="btn rounded-0 py-1">Sign In</button>
+                <button className="btn btn-primary rounded-0 py-1">
+                  Sign up
+                </button>
               </form>
             </div>
           </div>
