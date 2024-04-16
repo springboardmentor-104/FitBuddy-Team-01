@@ -177,7 +177,7 @@ const ForgotPassword = (props) => {
                     <h1 id="frg-pwd-txt">Forgot your Password?</h1>
                     <p id="frg-pwd-msg">
                       Don't worry, happens to all of us. Enter your{" "}
-                      {showOtpField ? "OTP" : "email"} below to recover your
+                      {showOtpField ? "OTP" : "Email"} below to recover your
                       password.
                     </p>
 

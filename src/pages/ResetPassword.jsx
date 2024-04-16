@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import "./ResetPassword.css"; // Import the CSS file
+import "bootstrap/dist/css/bootstrap.css";
+import OtpVrfo_icon from "./../Assets/otpvrfo.png";
+// import "./ResetPassword.css"; // Import the CSS file
 
 const ResetPassword = (props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [height, setHeight] = useState(0);
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -33,65 +37,84 @@ const ResetPassword = (props) => {
   };
 
   return (
-    <div className="container">
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <h1>Set a Password</h1>
-          <p>
-            Your previous password has been reset. Please set a new password for
-            your account.
-          </p>
-          <div className="input-container">
-            <label>Create Password</label>
-            <div className="password-input">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={handlePasswordChange}
-                className="password-input"
-                required
-              />
-              <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className="password-toggle-btn"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
+    <>
+      <div className="container-fluid">
+        <div
+          className="d-flex align-items-center justify-content-center"
+          style={{ height: window.innerHeight }}
+        >
+          <div className="card border-0">
+            <div className="card-body p-0 shadow">
+              <div className="row">
+                <div className="col-md-6 col-sm-12 p-5">
+                  <form onSubmit={handleSubmit}>
+                    <h1>Set a Password</h1>
+                    <p>
+                      Your previous password has been reset. Please set a new
+                      password for your account.
+                    </p>
+                    <div className="input-container">
+                      <label>Create Password</label>
+                      <div class="input-group mb-3">
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          class="form-control"
+                          aria-label="Amount (to the nearest dollar)"
+                          onChange={handlePasswordChange}
+                        />
+                        <span
+                          class="input-group-text"
+                          onClick={togglePasswordVisibility}
+                        >
+                          {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="input-container">
+                      <label>Create Password</label>
+                      <div class="input-group mb-3">
+                        <input
+                          type={showConfirmPassword ? "text" : "password"}
+                          class="form-control"
+                          aria-label="Amount (to the nearest dollar)"
+                          onChange={handleConfirmPasswordChange}
+                        />
+                        <span
+                          class="input-group-text"
+                          onClick={toggleConfirmPasswordVisibility}
+                        >
+                          {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
+                      </div>
+                      <button
+                        type="submit"
+                        className="btn btn-primary mt-3 w-100"
+                      >
+                        Set Password
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <div className="d-sm-none d-md-block col-md-6 border-start">
+                  <div className="p-5">
+                    <img
+                      src={OtpVrfo_icon}
+                      alt={`Asf`}
+                      className="rounded-0"
+                      style={{
+                        maxHeight: window.innerHeight / 2,
+                        width: "100%",
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="input-container">
-            <label>Re-enter Password</label>
-            <div className="password-input">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-                className="password-input"
-                required
-              />
-              <button
-                type="button"
-                onClick={toggleConfirmPasswordVisibility}
-                className="password-toggle-btn"
-              >
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
-            </div>
-          </div>
-          <button type="submit" className="submit-btn">
-            Set Password
-          </button>
-        </form>
+        </div>
       </div>
-      <div className="image-container">
-        <img
-          src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2155200775/settings_images/1d5f40b-db0c-a845-5b40-3a8157abeba_Klerapy_login.png"
-          alt="Reset Password"
-          className="image-border"
-        />
-      </div>
-    </div>
+    </>
   );
 };
 
