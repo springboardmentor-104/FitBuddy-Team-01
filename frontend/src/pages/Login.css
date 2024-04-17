@@ -1,6 +1,6 @@
 .login_para {
-  /* width: 50%;
-  height: 100vh; */
+  /* width: 50%; */
+  /* height: 100vh; */
   align-items: center;
   display: flex;
   justify-content: center;
@@ -35,8 +35,60 @@
 #fg-ps {
   text-align: justify;
   text-decoration: none;
+  text-align: right;
+  font-size: 0.875em;
+  color: gray;
+  font-weight: 400;
 }
 
 #sgn-up-lnk {
   text-decoration: none;
+  color: rgb(255, 193, 7);
+  font-weight: 600;
+}
+
+/* #btn-lg {
+  border-radius: 0%;
+} */
+
+.otp-bx {
+  /* background: grey; */
+  border: 1.5px solid black;
+  width: 100%;
+  /* max-width: 500px; */
+  border-radius: 5px;
+  padding: 3.5px 12.5px;
+  display: flex;
+  align-items: center;
+}
+
+.otp-bx input {
+  width: 100%;
+  padding: 8px 0;
+  border: 0;
+  outline: 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.otp-bx img {
+  width: 25px;
+  cursor: pointer;
+}
+
+#warn {
+  text-align: left;
+  text-align: justify;
+}
+
+/* #reg-sec {
+  background-color: rgba(202, 201, 201, 0.815);
+} */
+
+#reg-bx {
+  margin-top: 25px;
+}
+
+#btn-lg {
+  font-weight: 500;
 }

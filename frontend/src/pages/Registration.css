@@ -18,7 +18,7 @@
 #form > input,
 .btn {
   border: 1px solid #e9ecef;
-  padding: 0.4em 1em;
+  padding: 0.2em 1em;
 }
 
 #form > input:focus {
@@ -72,6 +72,7 @@
 #reg-hd {
   text-align: left;
   color: #152085;
+  font-size: 20.5px;
 }
 
 #rg-rw {
@@ -82,4 +83,26 @@
 #reg-slogan {
   text-align: left;
   color: gray;
+}
+
+#sgn-btn {
+  color: rgba(25, 63, 246, 1);
+}
+
+/* #mb-3 {
+  margin-bottom: 0rem !important;
+} */
+
+#img {
+  padding: 10px;
+  border-radius: 17.5px;
+}
+
+#entr-otp {
+  text-align: left;
+  text-align: justify;
+}
+
+#otp-btn-fr-rg {
+  margin-top: 5.5px;
 }
