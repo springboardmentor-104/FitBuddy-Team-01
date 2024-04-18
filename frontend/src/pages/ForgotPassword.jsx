@@ -91,7 +91,7 @@ const ForgotPassword = (props) => {
 
     // eslint-disable-next-line eqeqeq
     if (input != "" && !validateEmail(input)) {
-      setEmailError("Please enter a valid email address");
+      setEmailError("Please enter a valid Email Address.");
     }
   };
 
