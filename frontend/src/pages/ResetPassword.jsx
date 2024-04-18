@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.css";
 import OtpVrfo_icon from "./../Assets/otpvrfo.png";
 import "./ResetPassword.css"; // Import the CSS file
+import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 
 const ResetPassword = (props) => {
   // const [password, setPassword] = useState("");
   // const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [passwordLengthValid, setPasswordLengthValid] = useState(true);
 
   // const [height, setHeight] = useState(0);
 
@@ -37,11 +41,6 @@ const ResetPassword = (props) => {
   };
 
   // ===================== For Password Validation =====================
-
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [passwordLengthValid, setPasswordLengthValid] = useState(true);
 
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
@@ -99,7 +98,7 @@ const ResetPassword = (props) => {
     } else {
       // Passwords match, allow form submission
       // alert("Form submitted successfully!");
-      alert("Password Changed Successfully");
+      alert("Password Changed Successfully!");
       // Here you can proceed with further actions like submitting the form to a server
     }
 
