@@ -1,10 +1,11 @@
 // import React from "react";
 // import { useForm } from "react-hook-form";
+
 import axios from "axios";
-import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 import React, { useState } from "react";
 import bgImg from "./../Assets/img1.jpg";
 import "./Registration.css";
+import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 
 const Registration = (props) => {
   const handleSubmitOTP = (e) => {
@@ -28,20 +29,23 @@ const Registration = (props) => {
   // const onSubmit = (data) => console.log(data);
 
   const [email, setEmail] = useState("");
-  const [emailValid, setEmailValid] = useState(true);
   const [fullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordValid, setPasswordValid] = useState(true);
   const [confirmedPassword, setConfirmedPassword] = useState("");
-  // const [formValid, setFormValid] = useState(false);
+
+  const [emailValid, setEmailValid] = useState(true);
   const [otp, setOtp] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
-  const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [registeredUserId, setRegisteredUserId] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
-  // const [otp, setOtp] = useState('');
   const [otpVerified, setOtpVerified] = useState(false);
+
+  const [passwordValid, setPasswordValid] = useState(true);
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+
+  // const [formValid, setFormValid] = useState(false);
+  // const [otp, setOtp] = useState('');
 
   console.log("registeredUserId", registeredUserId);
   const handleOtpSubmit = async (event) => {
@@ -288,9 +292,9 @@ const Registration = (props) => {
                     </div>
                     <button
                       type="submit"
-                      className="btn btn-success"
-                      id="otp-btn-fr-rg"
                       // className="input-group mb-3 btn btn-success"
+                      className="input-group mb-3 btn btn-success"
+                      id="otp-btn-fr-rg"
                     >
                       Verify OTP
                     </button>
