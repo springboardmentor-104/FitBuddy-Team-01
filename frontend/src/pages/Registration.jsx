@@ -35,7 +35,6 @@ const Registration = (props) => {
   const [passwordValid, setPasswordValid] = useState(true);
   const [confirmedPassword, setConfirmedPassword] = useState("");
   // const [formValid, setFormValid] = useState(false);
-
   const [otp, setOtp] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
