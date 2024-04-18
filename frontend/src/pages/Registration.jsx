@@ -1,5 +1,6 @@
 // import React from "react";
 // import { useForm } from "react-hook-form";
+import axios from "axios";
 import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 import React, { useState } from "react";
 import bgImg from "./../Assets/img1.jpg";
@@ -100,11 +101,23 @@ const Registration = (props) => {
     }
   };
 
-  const handleRegistrationSubmit = (event) => {
+  const handleRegistrationSubmit = async (event) => {
     event.preventDefault();
     // Check if all fields are filled
     if (email && fullName && userName && password && confirmedPassword) {
       // All fields are filled, mark registration as completed
+      let data = {
+        name: fullName,
+        email: email,
+        username: userName,
+        password: password,
+        cpassword: confirmedPassword,
+      };
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/register",
+        data
+      );
+      console.log("response", response);
       setIsRegistered(true);
     } else {
       // Form is not valid, show an alert or error message
