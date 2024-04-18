@@ -137,6 +137,8 @@ const Registration = (props) => {
                       className="form-control"
                       type="email"
                       value={email}
+                      // value={formData.email}
+                      name="email"
                       onChange={handleEmailChange}
                       placeholder="Email Address"
                       required
@@ -153,6 +155,8 @@ const Registration = (props) => {
                       className="form-control"
                       type="text"
                       value={fullName}
+                      // value={formData.fullName}
+                      name="fullName"
                       onChange={handleFullNameChange}
                       placeholder="Full name"
                       pattern="[A-Z,a-z, ]*"
@@ -165,6 +169,8 @@ const Registration = (props) => {
                       className="form-control"
                       type="text"
                       value={userName}
+                      // value={formData.username}
+                      name="username"
                       onChange={handleUserNameChange}
                       placeholder="User name"
                       required
@@ -177,6 +183,8 @@ const Registration = (props) => {
                       className="form-control"
                       type={showPassword ? "password" : "text"}
                       value={password}
+                      // value={formData.password}
+                      name="password"
                       onChange={handlePasswordChange}
                       placeholder="password"
                       required
@@ -196,6 +204,8 @@ const Registration = (props) => {
                       className="form-control"
                       type={showPassword ? "password" : "text"}
                       value={confirmedPassword}
+                      // value={formData.confirmPassword}
+                      name="confirmPassword"
                       onChange={handleConfirmedPasswordChange}
                       placeholder="confirm password"
                       required

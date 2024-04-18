@@ -1,7 +1,7 @@
 // import React from "react";
+// import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
-// import { useForm } from "react-hook-form";
 import bgImg from "./../Assets/LoginPage.jpg";
 import { Link } from "react-router-dom";
 import "./Login.css";
@@ -36,7 +36,7 @@ const Login = (props) => {
     event.preventDefault();
     if (emailValid && passwordValid) {
       // Form is valid, you can proceed with further actions like submitting the form
-      alert("Form submitted successfully!");
+      alert("Login done successfully!");
     } else {
       // Form is not valid, show an alert or error message
       alert("Please fill in all fields correctly.");
