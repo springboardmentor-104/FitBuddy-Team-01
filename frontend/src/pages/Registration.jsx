@@ -39,23 +39,27 @@ const Registration = (props) => {
   const [otp, setOtp] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
-
+  const [registeredUserId, setRegisteredUserId] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   // const [otp, setOtp] = useState('');
   const [otpVerified, setOtpVerified] = useState(false);
 
-  const handleOtpSubmit = (event) => {
+  console.log("registeredUserId", registeredUserId);
+  const handleOtpSubmit = async (event) => {
     event.preventDefault();
     // Check if OTP is correct
-    if (otp === "123456") {
-      // Replace '123456' with the actual OTP sent to the user
-      setIsOtpVerified(true);
-      alert("OTP verified successfully!");
-      // Here you can proceed with further actions like logging the user in
-    } else {
-      // Incorrect OTP, show an alert or error message
-      alert("Incorrect OTP. Please try again.");
-    }
+    let data = {
+      otp: otp,
+      userId: registeredUserId,
+    };
+    await axios.post("http://localhost:8080/api/v1/auth/verify", data).then(
+      (response) => {
+        alert("OTP Verified");
+      },
+      (error) => {
+        alert(error?.data?.error);
+      }
+    );
   };
 
   const handleFullNameChange = (event) => {
@@ -113,11 +117,16 @@ const Registration = (props) => {
         password: password,
         cpassword: confirmedPassword,
       };
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/register",
-        data
+      await axios.post("http://localhost:8080/api/v1/auth/register", data).then(
+        (response) => {
+          console.log(response?.data?.data);
+          setRegisteredUserId(response?.data?.data?.userId);
+          alert("Registered Successfully");
+        },
+        (error) => {
+          alert(error?.data?.error);
+        }
       );
-      console.log("response", response);
       setIsRegistered(true);
     } else {
       // Form is not valid, show an alert or error message

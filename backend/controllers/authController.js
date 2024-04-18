@@ -12,6 +12,7 @@ const xss = require("xss");
 const sendOtpVerificationEmail = async ({ _id, name, email }, res) => {
   try {
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    console.log("otp", otp);
     const message = `<p>Hello ${name} here is your otp <b>${otp}</b> for registration </p> <p> otp will expire in 1hr`;
     await sendMail(email, "Fit-buddy email verification", message);
 
@@ -76,6 +77,7 @@ const registerController = async (req, res) => {
 
     // Respond with success message
     res.status(201).send({
+      data: { userId: user?._id },
       success: true,
       message:
         "Registration successful. Please verify your email to activate your account.",
