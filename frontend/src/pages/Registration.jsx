@@ -6,6 +6,18 @@ import bgImg from "./../Assets/img1.jpg";
 import "./Registration.css";
 
 const Registration = (props) => {
+  const handleSubmitOTP = (e) => {
+    e.preventDefault();
+    // Validate OTP, for simplicity, compare with a hardcoded value
+    const correctOTP = "123456";
+    if (otp === correctOTP) {
+      setOtpVerified(true);
+      // Proceed with registration
+    } else {
+      alert("Invalid OTP, please try again.");
+    }
+  };
+
   // const {
   //   register,
   //   handleSubmit,
@@ -26,6 +38,10 @@ const Registration = (props) => {
   const [otp, setOtp] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
+
+  const [otpSent, setOtpSent] = useState(false);
+  // const [otp, setOtp] = useState('');
+  const [otpVerified, setOtpVerified] = useState(false);
 
   const handleOtpSubmit = (event) => {
     event.preventDefault();
@@ -261,6 +277,12 @@ const Registration = (props) => {
                 </form>
               )}
             </div>
+            {otpVerified && (
+              <div>
+                <h2>Registration Successful!</h2>
+                <p>Your account has been successfully registered.</p>
+              </div>
+            )}
           </div>
           <div className="d-none d-md-block col-6 p-0">
             <img
