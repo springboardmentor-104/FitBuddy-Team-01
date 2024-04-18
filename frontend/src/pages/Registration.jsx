@@ -223,14 +223,14 @@ const Registration = (props) => {
                     <label class="input-group mb-3">Enter OTP</label>
                     <div class="input-group mb-3" id="">
                       <input
-                        type="password"
+                        className="form-control"
+                        type={showPassword ? "password" : "text"}
                         value={otp}
                         onChange={handleOtpChange}
-                        className="form-control"
                         placeholder=""
                         required
                         pattern="[A-Z,a-z,0-9,@,#]*"
-                        maxLength={8}
+                        maxLength={6}
                       />
                       <span
                         class="input-group-text"
