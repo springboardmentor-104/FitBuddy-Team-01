@@ -248,7 +248,7 @@ const ForgotPassword = (props) => {
                               <p style={{ color: "red" }}>{otpError}</p>
                             )}
                             <p id="nt-rc-pr">
-                              <spnan>Didn't recieve a Code?</spnan>
+                              <span>Didn't recieve a Code?</span>
                               <button id="rsnd" onClick={handleResendOTP}>
                                 &nbsp;Resend
                               </button>

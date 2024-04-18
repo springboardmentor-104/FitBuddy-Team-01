@@ -42,7 +42,7 @@ const registerController = async (req, res) => {
       return res.status(400).send({ error: "Passwords do not match" });
     }
     // Check if username is unique
-    const existingUsername = await userModel.find({ username });
+    const existingUsername = await userModel.findOne({ username });
     if (existingUsername) {
       return res.status(400).send({ error: "Username is already taken" });
     }

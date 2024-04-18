@@ -160,7 +160,7 @@ const Registration = (props) => {
                   className="flex flex-col"
                   onSubmit={(handleSubmit, handleRegistrationSubmit)}
                 >
-                  <div class="input-group mb-3">
+                  <div className="input-group mb-3">
                     <input
                       // {...register("Email Address")}
                       className="form-control"
@@ -178,7 +178,7 @@ const Registration = (props) => {
                       Invalid email format
                     </p>
                   )}
-                  <div class="input-group mb-3" id="">
+                  <div className="input-group mb-3" id="">
                     <input
                       // {...register("Full name")}
                       className="form-control"
@@ -192,7 +192,7 @@ const Registration = (props) => {
                       required
                     />
                   </div>
-                  <div class="input-group mb-3" id="">
+                  <div className="input-group mb-3" id="">
                     <input
                       // {...register("User name")}
                       className="form-control"
@@ -206,7 +206,7 @@ const Registration = (props) => {
                       pattern="[A-Z,a-z,0-9,@,#]*"
                     />
                   </div>
-                  <div class="input-group mb-3" id="">
+                  <div className="input-group mb-3" id="">
                     <input
                       // {...register("password")}
                       className="form-control"
@@ -221,13 +221,13 @@ const Registration = (props) => {
                       maxLength={8}
                     />
                     <span
-                      class="input-group-text"
+                      className="input-group-text"
                       onClick={togglePasswordVisibility}
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>
                   </div>
-                  <div class="input-group mb-3" id="">
+                  <div className="input-group mb-3" id="">
                     <input
                       // {...register("confirmpwd")}
                       className="form-control"
@@ -242,7 +242,7 @@ const Registration = (props) => {
                       maxLength={8}
                     />
                     <span
-                      class="input-group-text"
+                      className="input-group-text"
                       onClick={togglePasswordVisibility}
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -259,8 +259,8 @@ const Registration = (props) => {
               ) : (
                 <form onSubmit={handleOtpSubmit}>
                   <div>
-                    <label class="input-group mb-3">Enter OTP</label>
-                    <div class="input-group mb-3" id="">
+                    <label className="input-group mb-3">Enter OTP</label>
+                    <div className="input-group mb-3" id="">
                       <input
                         className="form-control"
                         type={showPassword ? "password" : "text"}
@@ -272,7 +272,7 @@ const Registration = (props) => {
                         maxLength={6}
                       />
                       <span
-                        class="input-group-text"
+                        className="input-group-text"
                         onClick={togglePasswordVisibility}
                       >
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -282,7 +282,7 @@ const Registration = (props) => {
                       type="submit"
                       className="btn btn-success"
                       id="otp-btn-fr-rg"
-                      class="input-group mb-3 btn btn-success"
+                      className="input-group mb-3 btn btn-success"
                     >
                       Verify OTP
                     </button>
