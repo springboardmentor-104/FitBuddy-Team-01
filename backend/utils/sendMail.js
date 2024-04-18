@@ -20,7 +20,7 @@ module.exports = async (email, subject, text) => {
       requireTLS: true,
       auth: {
         user: "shivankushsingh493@gmail.com",
-        pass: "yourpassword",
+        pass: "mgeaxwvqvefyfobl",
       },
     });
     await trasnporter.sendMail({
