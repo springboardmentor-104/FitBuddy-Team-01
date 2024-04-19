@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const connectDB = require('./config/db');
-const authRoute = require('./routes/authRoutes')
+const authRoute = require('./routes/authRoutes');
+const cors = require('cors');
 
 dotenv.config(); 
 
@@ -14,6 +15,7 @@ connectDB();
 const app = express();
 
 // middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 

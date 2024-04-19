@@ -77,7 +77,12 @@ const registerController = async (req, res) => {
         // Respond with success message
         res.status(201).send({
             success: true,
-            message: 'Registration successful. Please verify your email to activate your account.'
+            message: 'Registration successful. Please verify your email to activate your account.',
+            user:{
+                userId:user._id,
+                name: user.name,
+                email:user.email
+            }
         });
 
     } catch (error) {
@@ -98,7 +103,7 @@ const loginController = async (req, res) => {
 
         // Validation
         if (!emailOrUsername || !password) {
-            return res.status(400).send({
+            return res.send({
                 success: false,
                 message: "Please provide email/username and password"
             });
@@ -112,7 +117,7 @@ const loginController = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(404).send({
+            return res.send({
                 success: false,
                 message: "Invalid email/username or password"
             });
@@ -122,18 +127,33 @@ const loginController = async (req, res) => {
             let oldOtp = await userOtpVerification.findOne({ userId: user._id });
             if (!oldOtp) {
                 await sendOtpVerificationEmail(user, res);
-                return;
+                return res.send({
+                    success: true,
+                    verify:false,
+                    message: 'An otp is sent to please verify first',
+                    user:{
+                        userId:user._id,
+                        name : user.name,
+                        email : user.email
+                    }
+                });
             } else {
-                return res.status(400).send({
-                    success: false,
-                    message: 'An email has already been sent to verify your account'
+                return res.send({
+                    success: true,
+                    verify:false,
+                    message: 'An email has already been sent to verify your account',
+                    user:{
+                        userId:user._id,
+                        name : user.name,
+                        email : user.email
+                    }
                 });
             }
         }
 
         const match = await comparePassword(password, user.password);
         if (!match) {
-            return res.status(404).send({
+            return res.send({
                 success: false,
                 message: "Invalid email/username or password"
             });
@@ -146,7 +166,12 @@ const loginController = async (req, res) => {
         res.status(200).send({
             success: true,
             message: "Login successful",
-            user,
+            verify:true,
+            user:{
+                userId:user._id,
+                name:user.name,
+                email:user.email,
+            },
             token
         });
     } catch (error) {
@@ -230,6 +255,47 @@ const resendOtpController = async (req,res) =>{
 }
 
 // forgot password
+// const forgotOtpController = async (req, res) => {
+//     try {
+//         const { email } = req.body;
+//         const user = await userModel.findOne({ email });
+//         const userId = user._id;
+
+//         if (!user) {
+//             return res.status(404).send({
+//                 success: false,
+//                 message: "User not found"
+//             });
+//         }
+
+//         // Generate OTP
+//         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+
+//         // Save OTP in database
+//         const hashedOtp = await hashPassword(otp);
+//         const newOtpVerification = new userOtpVerification({
+//             userId: user._id,
+//             otp: hashedOtp
+//         });
+//         await newOtpVerification.save();
+
+//         // Send OTP to user's email
+//         const message = `<p>Hello ${user.name}, here is your OTP for password reset: <b>${otp}</b>.</p>`;
+//         await sendMail(user.email, "Password Reset OTP", message);
+
+//         return res.status(200).send({
+//             success: true,
+//             message: "OTP sent to your email",
+//             userId:userId
+//         });
+//     } catch (error) {
+//         return res.status(500).send({
+//             success: false,
+//             message: "Error in forgot password process",
+//             error
+//         });
+//     }
+// };
 const forgotOtpController = async (req, res) => {
     try {
         const { email } = req.body;
@@ -242,9 +308,20 @@ const forgotOtpController = async (req, res) => {
             });
         }
 
+        // Check if OTP already exists for the user
+        const existingOtpVerification = await userOtpVerification.findOne({ userId: user._id });
+
+        if (existingOtpVerification) {
+            return res.send({
+                success: true,
+                message: "An OTP has already been sent. Please verify your email.",
+                userId:user._id
+            });
+        }
+
         // Generate OTP
         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-
+        console.log(otp)
         // Save OTP in database
         const hashedOtp = await hashPassword(otp);
         const newOtpVerification = new userOtpVerification({
@@ -259,7 +336,8 @@ const forgotOtpController = async (req, res) => {
 
         return res.status(200).send({
             success: true,
-            message: "OTP sent to your email"
+            message: "OTP sent to your email",
+            userId : user._id
         });
     } catch (error) {
         return res.status(500).send({
@@ -271,21 +349,22 @@ const forgotOtpController = async (req, res) => {
 };
 
 
+
 // reset password
 const resetPasswordController = async (req, res) => {
     try {
         const { userId, otp, newPassword } = req.body;
         if (!userId || !otp || !newPassword) {
-            return res.status(400).send({
+            return res.send({
                 success: false,
-                message: "User ID, OTP, and new password are required. Please provide them."
+                message: "OTP and new password are required. Please provide them."
             });
         }
 
         // Find OTP verification record
         const userVerificationRecord = await userOtpVerification.findOne({ userId });
         if (!userVerificationRecord) {
-            return res.status(404).send({
+            return res.send({
                 success: false,
                 message: "No OTP verification record found. Please initiate the forgot password process again."
             });
@@ -295,7 +374,7 @@ const resetPasswordController = async (req, res) => {
         const hashedOtp = userVerificationRecord.otp;
         const validOtp = await comparePassword(otp, hashedOtp);
         if (!validOtp) {
-            return res.status(404).send({
+            return res.send({
                 success: false,
                 message: "Invalid OTP, please try again."
             });
