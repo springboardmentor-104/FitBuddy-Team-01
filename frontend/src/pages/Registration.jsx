@@ -292,8 +292,8 @@ const Registration = (props) => {
                     </div>
                     <button
                       type="submit"
-                      // className="input-group mb-3 btn btn-success"
                       className="input-group mb-3 btn btn-success"
+                      // className="input-group mb-3 btn btn-success"
                       id="otp-btn-fr-rg"
                     >
                       Verify OTP
