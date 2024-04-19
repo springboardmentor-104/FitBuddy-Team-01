@@ -83,6 +83,7 @@
 #reg-slogan {
   text-align: left;
   color: gray;
+  /* margin-bottom: -1rem; */
 }
 
 #sgn-btn {

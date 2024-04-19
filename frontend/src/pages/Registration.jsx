@@ -172,7 +172,7 @@ const Registration = (props) => {
                   className="flex flex-col"
                   onSubmit={(handleSubmit, handleRegistrationSubmit)}
                 >
-                  <div className="input-group mb-3">
+                  <div className="input-group">
                     <input
                       // {...register("Email Address")}
                       className="form-control"
@@ -190,7 +190,7 @@ const Registration = (props) => {
                       Invalid email format
                     </p>
                   )}
-                  <div className="input-group mb-3" id="">
+                  <div className="input-group">
                     <input
                       // {...register("Full name")}
                       className="form-control"
@@ -204,7 +204,7 @@ const Registration = (props) => {
                       required
                     />
                   </div>
-                  <div className="input-group mb-3" id="">
+                  <div className="input-group">
                     <input
                       // {...register("User name")}
                       className="form-control"
@@ -218,7 +218,7 @@ const Registration = (props) => {
                       pattern="[A-Z,a-z,0-9,@,#]*"
                     />
                   </div>
-                  <div className="input-group mb-3" id="">
+                  <div className="input-group">
                     <input
                       // {...register("password")}
                       className="form-control"
@@ -239,7 +239,7 @@ const Registration = (props) => {
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>
                   </div>
-                  <div className="input-group mb-3" id="">
+                  <div className="input-group">
                     <input
                       // {...register("confirmpwd")}
                       className="form-control"
@@ -290,14 +290,15 @@ const Registration = (props) => {
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                       </span>
                     </div>
-                    <button
-                      type="submit"
-                      className="input-group mb-3 btn btn-success"
-                      // className="input-group mb-3 btn btn-success"
-                      id="otp-btn-fr-rg"
-                    >
-                      Verify OTP
-                    </button>
+                    <div class="d-grid gap-2 col-12 mx-auto">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        id="otp-btn-fr-rg"
+                      >
+                        Verify OTP
+                      </button>
+                    </div>
                   </div>
                 </form>
               )}
