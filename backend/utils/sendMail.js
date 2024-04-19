@@ -24,7 +24,7 @@ module.exports = async (email, subject, text) => {
       },
     });
     await trasnporter.sendMail({
-      from: "Fit-Buddy",
+      from: "dayaborkar01@gamil.com",
       to: email,
       subject: subject,
       html: text,

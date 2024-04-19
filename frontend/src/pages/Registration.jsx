@@ -60,11 +60,15 @@ const Registration = (props) => {
     };
     await axios.post("http://localhost:8080/api/v1/auth/verify", data).then(
       (response) => {
-        alert(response?.data?.message || "Somthing Went wrong");
+        alert(response?.data?.message || "Registration done Successfully!");
         navigate(`/login`);
       },
       (error) => {
-        alert(error?.data?.error || "Somthing Went wrong");
+        alert(
+          error?.data?.error ||
+            "OTP not Verified, Registration process Incompleted"
+        );
+        navigate(`/Registration`);
       }
     );
   };
@@ -128,7 +132,7 @@ const Registration = (props) => {
         (response) => {
           console.log(response?.data);
           setRegisteredUserId(response?.data?.data?.userId);
-          alert("Registered Successfully");
+          // alert("Registered Successfully");
           setIsRegistered(true);
         },
         (error) => {

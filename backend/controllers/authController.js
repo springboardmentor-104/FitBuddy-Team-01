@@ -195,7 +195,7 @@ const verifyOtpController = async (req, res) => {
 
     return res.status(202).send({
       success: true,
-      message: "User email verified successfully",
+      // message: "User email verified successfully",
     });
   } catch (error) {
     res.status(500).send({
