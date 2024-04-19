@@ -178,7 +178,7 @@ const Registration = (props) => {
                 <h3 className="h4" id="reg-hd">
                   Get started with easily register
                 </h3>
-                <p id="reg-slogan">Free register any you can enjoy it</p>
+                <p id="reg-slogan">Free register and you can enjoy it</p>
               </span>
               {!isRegistered ? (
                 <form
@@ -303,7 +303,7 @@ const Registration = (props) => {
                         placeholder=""
                         required
                         pattern="[A-Z,a-z,0-9,@,#]*"
-                        maxLength={6}
+                        maxLength={4}
                       />
                       <span
                         className="input-group-text"

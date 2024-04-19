@@ -1,11 +1,12 @@
 // import React from "react";
 // import { useForm } from "react-hook-form";
+// import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 
+import "./Login.css";
 import React, { useState } from "react";
 import bgImg from "./../Assets/LoginPage.jpg";
 import { Link } from "react-router-dom";
-import "./Login.css";
-import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = (props) => {
   // const {
@@ -33,7 +34,18 @@ const Login = (props) => {
     setPasswordValid(event.target.value.length >= 6); // Password should be at least 6 characters long
   };
 
-  const handleSubmit = (event) => {
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   if (emailValid && passwordValid) {
+  //     // Form is valid, you can proceed with further actions like submitting the form
+  //     alert("Login done successfully!");
+  //   } else {
+  //     // Form is not valid, show an alert or error message
+  //     alert("Please fill in all fields correctly.");
+  //   }
+  // };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (emailValid && passwordValid) {
       // Form is valid, you can proceed with further actions like submitting the form
@@ -41,6 +53,24 @@ const Login = (props) => {
     } else {
       // Form is not valid, show an alert or error message
       alert("Please fill in all fields correctly.");
+    }
+    // **API call to login user in your backend (replace with your implementation)**
+    try {
+      const response = await fetch("/api/Login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Login failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Login successful:", data);
+      // Handle successful login
+    } catch (error) {
+      console.error("An error occurred:", error);
     }
   };
 
