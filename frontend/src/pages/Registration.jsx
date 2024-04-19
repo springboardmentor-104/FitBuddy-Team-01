@@ -161,6 +161,13 @@ const Registration = (props) => {
         <div className="row" id="rg-rw">
           <div className="col-sm-12 col-md-6 bg-white">
             <div className="text-center p-3">
+              {/* <div className="bc-bx">
+                <Link to="/">
+                  <i className="fa fa-angle-left" id="bc">
+                    &nbsp;Back
+                  </i>
+                </Link>
+              </div> */}
               <h1 className="h3" id="ap-nm">
                 Fit Buddy
               </h1>
