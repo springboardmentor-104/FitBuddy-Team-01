@@ -1,13 +1,14 @@
 // import React from "react";
 // import { useForm } from "react-hook-form";
+// import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 
 import axios from "axios";
 import React, { useState } from "react";
 import bgImg from "./../Assets/img1.jpg";
 import "./Registration.css";
-import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Registration = (props) => {
   const navigate = useNavigate();
@@ -193,13 +194,14 @@ const Registration = (props) => {
                   <div className="input-group">
                     <input
                       // {...register("Email Address")}
+                      // value={formData.email}
                       className="form-control"
                       type="email"
                       value={email}
-                      // value={formData.email}
                       name="email"
                       onChange={handleEmailChange}
                       placeholder="Email Address"
+                      pattern="[A-Z,a-z,0-9,@]*"
                       required
                     />
                   </div>
@@ -211,10 +213,10 @@ const Registration = (props) => {
                   <div className="input-group">
                     <input
                       // {...register("Full name")}
+                      // value={formData.fullName}
                       className="form-control"
                       type="text"
                       value={fullName}
-                      // value={formData.fullName}
                       name="fullName"
                       onChange={handleFullNameChange}
                       placeholder="Full name"
@@ -225,10 +227,10 @@ const Registration = (props) => {
                   <div className="input-group">
                     <input
                       // {...register("User name")}
+                      // value={formData.username}
                       className="form-control"
                       type="text"
                       value={userName}
-                      // value={formData.username}
                       name="username"
                       onChange={handleUserNameChange}
                       placeholder="User name"
@@ -239,10 +241,10 @@ const Registration = (props) => {
                   <div className="input-group">
                     <input
                       // {...register("password")}
+                      // value={formData.password}
                       className="form-control"
                       type={showPassword ? "password" : "text"}
                       value={password}
-                      // value={formData.password}
                       name="password"
                       onChange={handlePasswordChange}
                       placeholder="password"
@@ -260,10 +262,10 @@ const Registration = (props) => {
                   <div className="input-group">
                     <input
                       // {...register("confirmpwd")}
+                      // value={formData.confirmPassword}
                       className="form-control"
                       type={showPassword ? "password" : "text"}
                       value={confirmedPassword}
-                      // value={formData.confirmPassword}
                       name="confirmPassword"
                       onChange={handleConfirmedPasswordChange}
                       placeholder="confirm password"
