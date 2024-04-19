@@ -7,8 +7,10 @@ import bgImg from "./../Assets/img1.jpg";
 import "./Registration.css";
 import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Registration = (props) => {
+  const navigate = useNavigate();
   const handleSubmitOTP = (e) => {
     e.preventDefault();
     // Validate OTP, for simplicity, compare with a hardcoded value
@@ -59,6 +61,7 @@ const Registration = (props) => {
     await axios.post("http://localhost:8080/api/v1/auth/verify", data).then(
       (response) => {
         alert(response?.data?.message || "Somthing Went wrong");
+        navigate(`/login`);
       },
       (error) => {
         alert(error?.data?.error || "Somthing Went wrong");
