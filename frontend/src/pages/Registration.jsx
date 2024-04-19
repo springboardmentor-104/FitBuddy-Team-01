@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import bgImg from "./../Assets/img1.jpg";
 import "./Registration.css";
 import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Registration = (props) => {
   const handleSubmitOTP = (e) => {
@@ -57,10 +58,10 @@ const Registration = (props) => {
     };
     await axios.post("http://localhost:8080/api/v1/auth/verify", data).then(
       (response) => {
-        alert("OTP Verified");
+        alert(response?.data?.message || "Somthing Went wrong");
       },
       (error) => {
-        alert(error?.data?.error);
+        alert(error?.data?.error || "Somthing Went wrong");
       }
     );
   };
@@ -122,15 +123,18 @@ const Registration = (props) => {
       };
       await axios.post("http://localhost:8080/api/v1/auth/register", data).then(
         (response) => {
-          console.log(response?.data?.data);
+          console.log(response?.data);
           setRegisteredUserId(response?.data?.data?.userId);
           alert("Registered Successfully");
+          setIsRegistered(true);
         },
         (error) => {
-          alert(error?.data?.error);
+          console.log(error);
+          alert(error?.data?.error || error?.response?.data?.error);
+          setRegisteredUserId("");
+          setIsRegistered(false);
         }
       );
-      setIsRegistered(true);
     } else {
       // Form is not valid, show an alert or error message
       alert("Please fill in all fields.");
@@ -261,12 +265,20 @@ const Registration = (props) => {
                     </span>
                   </div>
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-success"
                     id="sgn-btn"
                     type="submit"
                   >
                     Sign up
                   </button>
+                  <div className="text-left">
+                    <small>
+                      Already have an account ?{" "}
+                      <Link to="/Login" id="sgn-up-lnk">
+                        Sign In
+                      </Link>
+                    </small>
+                  </div>
                 </form>
               ) : (
                 <form onSubmit={handleOtpSubmit}>
@@ -290,15 +302,23 @@ const Registration = (props) => {
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                       </span>
                     </div>
-                    <div class="d-grid gap-2 col-12 mx-auto">
+                    <div className="d-grid gap-2 col-12 mx-auto">
                       <button
                         type="submit"
-                        class="btn btn-success"
+                        className="btn btn-success"
                         id="otp-btn-fr-rg"
                       >
                         Verify OTP
                       </button>
                     </div>
+                  </div>
+                  <div className="text-left" id="lgin-bx">
+                    <small>
+                      Already have an account ?{" "}
+                      <Link to="/Login" id="sgin-up-lnk">
+                        Sign In
+                      </Link>
+                    </small>
                   </div>
                 </form>
               )}

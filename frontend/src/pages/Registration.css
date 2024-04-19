@@ -115,3 +115,13 @@
   text-align: justify;
   cursor: pointer;
 } */
+
+#sgin-up-lnk {
+  text-decoration: none;
+  color: #ffc107;
+  font-weight: 500;
+}
+
+#lgin-bx {
+  margin-top: 10px;
+}
