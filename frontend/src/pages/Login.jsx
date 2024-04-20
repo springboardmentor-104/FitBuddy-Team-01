@@ -31,7 +31,7 @@ const Login = (props) => {
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
     // Check email validity
-    setEmailValid(validateEmail(event.target.value));
+    // setEmailValid(validateEmail(event.target.value));
   };
 
   const handlePasswordChange = (event) => {
@@ -66,6 +66,11 @@ const Login = (props) => {
           console.log(response?.data);
           if (response.data.success) {
             setLoginUserId(response?.data?.user?._id);
+            let localData = {
+              token: response?.data?.token,
+              ...response?.data?.user,
+            };
+            localStorage.setItem("user", JSON.stringify(localData));
             navigate("/dashboard");
           } else {
             setLoginUserId("");
@@ -76,7 +81,8 @@ const Login = (props) => {
         },
         (error) => {
           console.log(error);
-          alert(error?.data?.error || error?.response?.data?.error);
+          // alert(error?.data?.error || error?.response?.data?.error);
+          alert(error?.data?.error || "Incorrect data for Login");
           setLoginUserId("");
           setIsLogin(false);
         }
@@ -126,7 +132,7 @@ const Login = (props) => {
                   <input
                     // {...register("Email Address")}
                     required
-                    type="email"
+                    type="text"
                     value={email}
                     className="form-control"
                     onChange={handleEmailChange}

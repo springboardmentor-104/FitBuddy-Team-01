@@ -1,20 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import "./Userdashboard.css";
 
-const Userdashboard = (props) => {
+const Userdashboard = () => {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    let user = localStorage.getItem("user");
+    if (user) {
+      user = JSON.parse(user);
+      setUser(user);
+    }
+  }, []);
+
   return (
     <div>
-      Hell User
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint
-        voluptatibus recusandae mollitia nihil quasi molestiae inventore
-        dignissimos! Provident illum qui ex ducimus dolorum itaque deleniti in
-        maxime minus, dolores aperiam.
-      </p>
+      <div className="centeredDiv ">
+        <h1 className="">Welcome {user?.name || "User"} !</h1>
+        <p className="">Welcome to Fit Buddy</p>
+      </div>
     </div>
   );
 };
-
-Userdashboard.propTypes = {};
 
 export default Userdashboard;
