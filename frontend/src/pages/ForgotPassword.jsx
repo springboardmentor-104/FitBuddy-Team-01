@@ -1,7 +1,9 @@
+// import "./../Components/forgotpassword/forgotpassword.css";
+
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from "react-router-dom";
-import "./../Components/forgotpassword/forgotpassword.css";
+import "./forgotpassword.css";
 
 import OtpVrfo_icon from "./../Assets/otpvrfo.png";
 import clseye_icon from "./../Assets/clseye.png";
