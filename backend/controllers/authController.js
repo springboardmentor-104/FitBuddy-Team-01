@@ -11,7 +11,8 @@ const xss = require("xss");
 // send otp vefication email for registration
 const sendOtpVerificationEmail = async ({ _id, name, email }, res) => {
   try {
-    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    // const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
     console.log("otp", otp);
     const message = `<p>Hello ${name} here is your otp <b>${otp}</b> for registration </p> <p> otp will expire in 1hr`;
     await sendMail(email, "Fit-buddy email verification", message);

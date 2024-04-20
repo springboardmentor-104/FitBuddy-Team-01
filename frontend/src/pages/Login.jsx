@@ -24,9 +24,9 @@ const Login = (props) => {
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
 
+  const [setError] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
   const [LoginUserId, setLoginUserId] = useState("");
-  const [setError] = useState(null);
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);

@@ -1,18 +1,21 @@
+// import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
+
+import "./ResetPassword.css";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import OtpVrfo_icon from "./../Assets/otpvrfo.png";
-import "./ResetPassword.css"; // Import the CSS file
-import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ResetPassword = (props) => {
   // const [password, setPassword] = useState("");
   // const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordLengthValid, setPasswordLengthValid] = useState(true);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // const [height, setHeight] = useState(0);
 

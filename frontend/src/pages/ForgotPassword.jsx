@@ -1,27 +1,25 @@
 // import "./../Components/forgotpassword/forgotpassword.css";
 
 import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import { Link } from "react-router-dom";
 import "./forgotpassword.css";
-
-import OtpVrfo_icon from "./../Assets/otpvrfo.png";
+import { Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
+import { useNavigate } from "react-router-dom";
 import clseye_icon from "./../Assets/clseye.png";
 import opneye_icon from "./../Assets/opneye.png";
-
+import OtpVrfo_icon from "./../Assets/otpvrfo.png";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = (props) => {
+  // const [email, setEmail] = useState("");
   const ref = useRef(null);
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  // const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
+  const [email, setEmail] = useState("");
   const [orignalOtp, setOrignalOtp] = useState(4545);
+  const [showPassword, setShowPassword] = useState(false);
   const [showOtpField, setShowOtpField] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const [height, setHeight] = useState(0);
   const onResize = useCallback(() => {
@@ -182,7 +180,6 @@ const ForgotPassword = (props) => {
                       {showOtpField ? "OTP" : "Email"} below to recover your
                       password.
                     </p>
-
                     {!showOtpField && (
                       <form action="" onSubmit={handleSubmit1}>
                         <div>
@@ -213,7 +210,6 @@ const ForgotPassword = (props) => {
                         </div>
                       </form>
                     )}
-
                     {showOtpField && (
                       <form action="">
                         <div>
