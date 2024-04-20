@@ -69,7 +69,6 @@ const Registration = (props) => {
           error?.data?.error ||
             "OTP not Verified, Registration process Incompleted"
         );
-        navigate(`/Registration`);
       }
     );
   };

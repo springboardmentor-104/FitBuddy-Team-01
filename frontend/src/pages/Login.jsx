@@ -3,12 +3,14 @@
 // import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 
 import "./Login.css";
+import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bgImg from "./../Assets/LoginPage.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = (props) => {
+  const navigate = useNavigate();
   // const {
   //   register,
   //   handleSubmit,
@@ -22,6 +24,10 @@ const Login = (props) => {
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
 
+  const [isLogin, setIsLogin] = useState(false);
+  const [LoginUserId, setLoginUserId] = useState("");
+  const [setError] = useState(null);
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
     // Check email validity
@@ -34,14 +40,50 @@ const Login = (props) => {
     setPasswordValid(event.target.value.length >= 8); // Password should be at least 6 characters long
   };
 
-  const handleSubmit = (event) => {
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   if (emailValid && passwordValid) {
+  //     // Form is valid, you can proceed with further actions like submitting the form
+  //     alert("Login done successfully!");
+  //   } else {
+  //     // Form is not valid, show an alert or error message
+  //     alert("Please fill in all fields correctly.");
+  //   }
+  // };
+
+  console.log("LoginUserId", LoginUserId);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (emailValid && passwordValid) {
-      // Form is valid, you can proceed with further actions like submitting the form
-      alert("Login done successfully!");
+    if (email && password) {
+      // All fields are filled, mark registration as completed
+      let data = {
+        emailOrUsername: email,
+        password: password,
+      };
+      await axios.post("http://localhost:8080/api/v1/auth/login", data).then(
+        (response) => {
+          console.log(response?.data);
+          if (response.data.success) {
+            setLoginUserId(response?.data?.user?._id);
+            navigate("/dashboard");
+          } else {
+            setLoginUserId("");
+          }
+          //
+          alert(response.data.message);
+          setIsLogin(true);
+        },
+        (error) => {
+          console.log(error);
+          alert(error?.data?.error || error?.response?.data?.error);
+          setLoginUserId("");
+          setIsLogin(false);
+        }
+      );
     } else {
       // Form is not valid, show an alert or error message
-      alert("Please fill in all fields correctly.");
+      alert("Please fill in all fields.");
     }
   };
 
