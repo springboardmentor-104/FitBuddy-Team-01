@@ -37,27 +37,27 @@ const registerController = async (req, res) => {
 
         // Validation
         if (!name || !email || !username || !password || !cpassword) {
-            return res.status(400).send({ error: 'All fields are required' });
+            return res.send({ success:false,message: 'All fields are required' });
         }
 
         if (password !== cpassword) {
-            return res.status(400).send({ error: 'Passwords do not match' });
+            return res.send({ success:false,message: 'Passwords do not match' });
         }
         // Check if username is unique
         const existingUsername = await userModel.findOne({ username });
         if (existingUsername) {
-            return res.status(400).send({ error: 'Username is already taken' });
+            return res.send({ success:false,message: 'Username is already taken' });
         }
 
         // Check if email format is valid
         if (!isEmail(email)) {
-            return res.status(400).send({ error: 'Invalid email format' });
+            return res.send({ success:false,message: 'Invalid email format' });
         }
 
         // Check if email is already registered
         const existingUser = await userModel.findOne({ email });
         if (existingUser) {
-            return res.status(400).send({ error: 'Email is already registered. Please login instead.' });
+            return res.send({ success:false,message: 'Email is already registered. Please login instead.' });
         }
 
         // Hash password

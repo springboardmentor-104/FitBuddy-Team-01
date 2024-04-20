@@ -1,10 +1,25 @@
 import "./Home.css";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from '../context/auth';
+import {ToastContainer,  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Home = () => {
+  const [auth, setAuth] = useAuth();
+  const handleLogout = () => {
+    setAuth({
+      ...auth,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("auth");
+    toast.success("Logout Successfully");
+  }
   return (
     <div>
+      <ToastContainer/>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
@@ -54,7 +69,9 @@ const Home = () => {
                 Search
               </button>
             </form>
-            <div className="lgn-sgn-btn">
+            {!auth.user?
+              (<>
+              <div className="lgn-sgn-btn">
               <Link
                 to="/registration"
                 className="btn btn-success"
@@ -66,6 +83,12 @@ const Home = () => {
                 Login
               </Link>
             </div>
+            </>):(<>
+              <div className="lgn-sgn-btn">
+              <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+            </div>
+            </>)
+            }
           </div>
         </div>
       </nav>

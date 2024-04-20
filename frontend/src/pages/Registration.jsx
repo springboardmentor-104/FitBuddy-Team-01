@@ -30,30 +30,6 @@ const Registration = (props) => {
   const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
 
-  // const [formValid, setFormValid] = useState(false);
-  // const [otp, setOtp] = useState('');
-
-  // const handleOtpSubmit = async (event) => {
-  //   event.preventDefault();
-  //   // Check if OTP is correct
-  //   let data = {
-  //     userId: registeredUserId,
-  //     otp: otp,
-  //   };
-  //   try {
-  //     const response = await axios.post("http://localhost:8080/api/v1/auth/verify", data);
-  //     const responseData = response.data;
-  //     if (responseData.success) {
-  //       alert(responseData.message); // Display success message
-  //       setOtpVerified(true); // Update state to indicate OTP verification success
-  //     } else {
-  //       alert(responseData.message); // Display error message
-  //     }
-  //   } catch (error) {
-  //     console.error("Error occurred during OTP verification:", error);
-  //     alert("Something went wrong while verifying OTP"); // Display generic error message
-  //   }
-  // };
   
   const handleOtpSubmit = async (event) => {
     event.preventDefault();
@@ -116,17 +92,6 @@ const Registration = (props) => {
     setPasswordValid(event.target.value.length >= 6); // Password should be at least 6 characters long
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Check if all fields are filled
-    if (email && fullName && userName && password && confirmedPassword) {
-      // Form is valid, you can proceed with further actions like submitting the form
-      alert("Registration done successfully!");
-    } else {
-      // Form is not valid, show an alert or error message
-      alert("Please fill in all fields.");
-    }
-  };
 
   // const handleRegistrationSubmit = async (event) => {
   //   event.preventDefault();
@@ -160,31 +125,28 @@ const Registration = (props) => {
 
   const handleRegistrationSubmit = async (event) => {
     event.preventDefault();
+
+    const response = await axios.post("http://localhost:8080/api/v1/auth/register",  {
+      name: fullName,
+      email: email,
+      username: userName,
+      password: password,
+      cpassword: confirmedPassword,
+    });
+
     try {
       // Check if all fields are filled
-      if (email && fullName && userName && password && confirmedPassword) {
-        // All fields are filled, mark registration as completed
-        let data = {
-          name: fullName,
-          email: email,
-          username: userName,
-          password: password,
-          cpassword: confirmedPassword,
-        };
-        
-        const response = await axios.post("http://localhost:8080/api/v1/auth/register", data);
+      if (response.data.success) {
+        setIsRegistered(true);
         const responseData = response.data;
-  
         setRegisteredUserId(responseData.user.userId);
         toast.success(responseData.message);
-        setIsRegistered(true);
       } else {
-        // Form is not valid, show an alert or error message
-        toast("please fill all the fields");
+        toast.error(response.data.message);
       }
     } catch (error) {
       if (error.response && error.response.status >= 400 && error.response.status <= 500) {
-        toast.error(error.response);
+        toast.error(response.data.message);
       }
       setRegisteredUserId("");
       setIsRegistered(false);
@@ -212,13 +174,7 @@ const Registration = (props) => {
         <div className="row" id="rg-rw">
           <div className="col-sm-12 col-md-6 bg-white">
             <div className="text-center p-3">
-              {/* <div className="bc-bx">
-                <Link to="/">
-                  <i className="fa fa-angle-left" id="bc">
-                    &nbsp;Back
-                  </i>
-                </Link>
-              </div> */}
+             
               <h1 className="h3" id="ap-nm">
                 Fit Buddy
               </h1>
@@ -232,7 +188,7 @@ const Registration = (props) => {
                 <form
                   id="form"
                   className="flex flex-col"
-                  onSubmit={(handleSubmit, handleRegistrationSubmit)}
+                  onSubmit={( handleRegistrationSubmit)}
                 >
                   <div className="input-group">
                     <input
@@ -381,12 +337,6 @@ const Registration = (props) => {
                 </form>
               )}
             </div>
-            {otpVerified && (
-              <div>
-                <h2>Registration Successful!</h2>
-                <p>Your account has been successfully registered.</p>
-              </div>
-            )}
           </div>
           <div className="d-none d-md-block col-6 p-0">
             <img

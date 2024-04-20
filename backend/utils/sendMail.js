@@ -6,22 +6,23 @@ dotenv.config();
 module.exports = async (email,subject,text) => {
     try {
         const trasnporter = nodemailer.createTransport ({
-            // host:process.env.HOST,
-            // port:Number(process.env.MAIL_PORT),
-            // secure:Boolean(process.env.SECURE),
+            host: process.env.HOST,
+            port: Number(process.env.EMAIL_PORT),
+            secure: process.env.SECURE === "false",
+            requireTLS: true,
+            service: process.env.SERVICE,
+            auth: {
+                user: process.env.USER,
+                pass: process.env.PASS
+            }
+            // host:'smtp.gmail.com',
+            // port:587,
+            // secure:false,
             // requireTLS:true,
             // auth:{
-            //     user:process.env.USER,
-            //     pass:process.env.PASS
+            //     user:'<testemail>',
+            //     pass:'<testpassword>'
             // }
-            host:'smtp.gmail.com',
-            port:587,
-            secure:false,
-            requireTLS:true,
-            auth:{
-                user:'dayaborkar01@gmail.com',
-                pass:'cjhuxsevskctegbm'
-            }
         });
         await  trasnporter.sendMail ({
             from:'dayaborkar01@gamil.com',

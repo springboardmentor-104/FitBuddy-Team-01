@@ -7,18 +7,11 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {ToastContainer,  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLocation } from 'react-router-dom';
-
+import { useAuth } from '../context/auth';
 const Login = (props) => {
   const navigate = useNavigate();
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm();
-  // const onSubmit = (data) => console.log(data);
 
+  const [auth,setAuth] = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailValid, setEmailValid] = useState(true);
@@ -43,6 +36,13 @@ const Login = (props) => {
         if (response.data.success) {
             if (response.data.verify) {
                 toast.success(response.data.message);
+                setAuth({
+                  ...auth,
+                  user:response.data.user,
+                  token:response.data.token
+              });
+              console.log("auth")
+              console.log(auth)
                 localStorage.setItem("auth", JSON.stringify(response.data));
                 setTimeout(() => {
                     navigate('/');
@@ -57,7 +57,6 @@ const Login = (props) => {
                 }, 1000);
             }
         } else {
-            // Handle login failure
             toast.error(response.data.message);
         }
     } catch (error) {
@@ -70,7 +69,6 @@ const Login = (props) => {
 
   // Email validation function
   const validateEmail = (email) => {
-    // This is a basic email validation regex, you can use a more comprehensive one if needed
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
