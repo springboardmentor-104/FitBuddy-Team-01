@@ -3,10 +3,10 @@
 // import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 
 import axios from "axios";
-import React, { useState } from "react";
-import bgImg from "./../Assets/img1.jpg";
 import "./Registration.css";
 import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import bgImg from "./../Assets/img1.jpg";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -201,7 +201,7 @@ const Registration = (props) => {
                       name="email"
                       onChange={handleEmailChange}
                       placeholder="Email Address"
-                      pattern="[A-Z,a-z,0-9,@]*"
+                      pattern="[A-Z,a-z,0-9,@,.]*"
                       required
                     />
                   </div>

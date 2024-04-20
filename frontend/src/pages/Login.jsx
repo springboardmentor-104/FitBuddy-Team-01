@@ -4,8 +4,8 @@
 
 import "./Login.css";
 import React, { useState } from "react";
-import bgImg from "./../Assets/LoginPage.jpg";
 import { Link } from "react-router-dom";
+import bgImg from "./../Assets/LoginPage.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = (props) => {
@@ -31,21 +31,10 @@ const Login = (props) => {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
     // Check password validity
-    setPasswordValid(event.target.value.length >= 6); // Password should be at least 6 characters long
+    setPasswordValid(event.target.value.length >= 8); // Password should be at least 6 characters long
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   if (emailValid && passwordValid) {
-  //     // Form is valid, you can proceed with further actions like submitting the form
-  //     alert("Login done successfully!");
-  //   } else {
-  //     // Form is not valid, show an alert or error message
-  //     alert("Please fill in all fields correctly.");
-  //   }
-  // };
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     if (emailValid && passwordValid) {
       // Form is valid, you can proceed with further actions like submitting the form
@@ -53,24 +42,6 @@ const Login = (props) => {
     } else {
       // Form is not valid, show an alert or error message
       alert("Please fill in all fields correctly.");
-    }
-    // **API call to login user in your backend (replace with your implementation)**
-    try {
-      const response = await fetch("/api/Login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Login failed with status ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Login successful:", data);
-      // Handle successful login
-    } catch (error) {
-      console.error("An error occurred:", error);
     }
   };
 
@@ -111,13 +82,13 @@ const Login = (props) => {
               <form id="form" className="flex flex-col" onSubmit={handleSubmit}>
                 <div class="input-group mb-3">
                   <input
-                    className="form-control"
+                    // {...register("Email Address")}
+                    required
                     type="email"
                     value={email}
+                    className="form-control"
                     onChange={handleEmailChange}
-                    // {...register("Email Address")}
                     placeholder="Email Address"
-                    required
                   />
                 </div>
                 {!emailValid && (
@@ -128,15 +99,15 @@ const Login = (props) => {
 
                 <div class="input-group mb-3">
                   <input
-                    className="form-control"
-                    type={showPassword ? "password" : "text"}
-                    value={password}
-                    onChange={handlePasswordChange}
                     // {...register("Full name")}
-                    placeholder="Password"
                     required
-                    pattern="[A-Z,a-z,0-9,@,#]*"
                     maxLength={8}
+                    value={password}
+                    placeholder="Password"
+                    className="form-control"
+                    pattern="[A-Z,a-z,0-9,@,#]*"
+                    onChange={handlePasswordChange}
+                    type={showPassword ? "password" : "text"}
                   />
                   <span
                     class="input-group-text"
@@ -147,7 +118,7 @@ const Login = (props) => {
                 </div>
                 {!passwordValid && (
                   <p style={{ color: "red" }} id="warn">
-                    Password should be at least 6 characters long
+                    Password should be at least 8 characters long
                   </p>
                 )}
 
