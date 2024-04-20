@@ -192,16 +192,16 @@ const Registration = (props) => {
                 >
                   <div className="input-group">
                     <input
-                      // {...register("Email Address")}
                       // value={formData.email}
-                      className="form-control"
+                      // {...register("Email Address")}
+                      required
                       type="email"
-                      value={email}
                       name="email"
-                      onChange={handleEmailChange}
+                      value={email}
+                      className="form-control"
                       placeholder="Email Address"
                       pattern="[A-Z,a-z,0-9,@,.]*"
-                      required
+                      onChange={handleEmailChange}
                     />
                   </div>
                   {!emailValid && (
@@ -211,45 +211,46 @@ const Registration = (props) => {
                   )}
                   <div className="input-group">
                     <input
-                      // {...register("Full name")}
                       // value={formData.fullName}
-                      className="form-control"
-                      type="text"
-                      value={fullName}
-                      name="fullName"
-                      onChange={handleFullNameChange}
-                      placeholder="Full name"
-                      pattern="[A-Z,a-z, ]*"
+                      // {...register("Full name")}
                       required
+                      type="text"
+                      name="fullName"
+                      value={fullName}
+                      pattern="[A-Z,a-z, ]*"
+                      placeholder="Full name"
+                      className="form-control"
+                      onChange={handleFullNameChange}
                     />
                   </div>
                   <div className="input-group">
                     <input
-                      // {...register("User name")}
                       // value={formData.username}
-                      className="form-control"
-                      type="text"
-                      value={userName}
-                      name="username"
-                      onChange={handleUserNameChange}
-                      placeholder="User name"
+                      // {...register("User name")}
                       required
+                      type="text"
+                      name="username"
+                      value={userName}
+                      placeholder="User name"
+                      className="form-control"
                       pattern="[A-Z,a-z,0-9,@,#]*"
+                      onChange={handleUserNameChange}
                     />
                   </div>
                   <div className="input-group">
                     <input
                       // {...register("password")}
                       // value={formData.password}
-                      className="form-control"
-                      type={showPassword ? "password" : "text"}
-                      value={password}
-                      name="password"
-                      onChange={handlePasswordChange}
-                      placeholder="password"
                       required
+                      minLength={8}
+                      maxLength={15}
+                      name="password"
+                      value={password}
+                      placeholder="password"
+                      className="form-control"
                       pattern="[A-Z,a-z,0-9,@,#]*"
-                      maxLength={8}
+                      onChange={handlePasswordChange}
+                      type={showPassword ? "password" : "text"}
                     />
                     <span
                       className="input-group-text"
@@ -262,15 +263,16 @@ const Registration = (props) => {
                     <input
                       // {...register("confirmpwd")}
                       // value={formData.confirmPassword}
-                      className="form-control"
-                      type={showPassword ? "password" : "text"}
-                      value={confirmedPassword}
-                      name="confirmPassword"
-                      onChange={handleConfirmedPasswordChange}
-                      placeholder="confirm password"
                       required
+                      minLength={8}
+                      maxLength={15}
+                      name="confirmPassword"
+                      className="form-control"
+                      value={confirmedPassword}
                       pattern="[A-Z,a-z,0-9,@,#]*"
-                      maxLength={8}
+                      placeholder="confirm password"
+                      type={showPassword ? "password" : "text"}
+                      onChange={handleConfirmedPasswordChange}
                     />
                     <span
                       className="input-group-text"
@@ -301,14 +303,15 @@ const Registration = (props) => {
                     <label className="input-group mb-3">Enter OTP</label>
                     <div className="input-group mb-3" id="">
                       <input
-                        className="form-control"
-                        type={showPassword ? "password" : "text"}
-                        value={otp}
-                        onChange={handleOtpChange}
-                        placeholder=""
                         required
+                        value={otp}
+                        minLength={6}
+                        maxLength={8}
+                        placeholder=""
+                        className="form-control"
+                        onChange={handleOtpChange}
                         pattern="[A-Z,a-z,0-9,@,#]*"
-                        maxLength={4}
+                        type={showPassword ? "password" : "text"}
                       />
                       <span
                         className="input-group-text"

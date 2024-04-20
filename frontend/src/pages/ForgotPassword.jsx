@@ -187,11 +187,11 @@ const ForgotPassword = (props) => {
                       <form action="" onSubmit={handleSubmit1}>
                         <div>
                           <input
-                            className="eml-inp"
+                            name=""
                             id="email"
                             type="email"
                             value={email}
-                            name=""
+                            className="eml-inp"
                             placeholder="Email"
                             onChange={(e) => {
                               setEmail(e.target.value);
@@ -203,10 +203,10 @@ const ForgotPassword = (props) => {
                             <p style={{ color: "red" }}>{emailError}</p>
                           )}
                           <button
-                            type="submit"
-                            className="btn btn-primary"
                             id="otp-btn"
+                            type="submit"
                             onClick={handleGetOTP}
+                            className="btn btn-primary"
                           >
                             Get OTP
                           </button>
@@ -223,18 +223,19 @@ const ForgotPassword = (props) => {
                           <div>
                             <div className="otp-bx">
                               <input
-                                type={showPassword ? "text" : "password"}
                                 name=""
-                                placeholder="Enter OTP"
-                                id="password"
+                                required
                                 value={otp}
+                                minLength={6}
+                                maxLength={8}
+                                id="password"
+                                pattern="[0 - 9]*"
+                                placeholder="Enter OTP"
                                 onChange={(e) => {
                                   setOtp(e.target.value);
                                   handleOtpChange(e);
                                 }}
-                                maxLength={6} // Limit the input to 6 characters
-                                required
-                                // pattern={[0 - 9]}
+                                type={showPassword ? "text" : "password"}
                               />
                               <img
                                 src={showPassword ? opneye_icon : clseye_icon}

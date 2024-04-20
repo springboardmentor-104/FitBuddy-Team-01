@@ -140,13 +140,15 @@ const ResetPassword = (props) => {
                       <label>Create Password</label>
                       <div class="input-group mb-3">
                         <input
-                          type={showPassword ? "password" : "text"}
-                          class="form-control"
-                          aria-label="Amount (to the nearest dollar)"
-                          value={password}
-                          onChange={handlePasswordChange}
-                          pattern="[A-Z,a-z,0-9,@,#]*"
                           required
+                          minLength={8}
+                          maxLength={15}
+                          value={password}
+                          class="form-control"
+                          pattern="[A-Z,a-z,0-9,@,#]*"
+                          onChange={handlePasswordChange}
+                          type={showPassword ? "password" : "text"}
+                          aria-label="Amount (to the nearest dollar)"
                         />
                         <span
                           class="input-group-text"
@@ -160,13 +162,15 @@ const ResetPassword = (props) => {
                       <label>Re-enter Password</label>
                       <div class="input-group mb-3">
                         <input
-                          type={showPassword ? "password" : "text"}
-                          class="form-control"
-                          aria-label="Amount (to the nearest dollar)"
-                          value={confirmPassword}
-                          onChange={handleConfirmPasswordChange}
-                          pattern="[A-Z,a-z,0-9,@,#]*"
                           required
+                          minLength={8}
+                          maxLength={15}
+                          class="form-control"
+                          value={confirmPassword}
+                          pattern="[A-Z,a-z,0-9,@,#]*"
+                          onChange={handleConfirmPasswordChange}
+                          type={showPassword ? "password" : "text"}
+                          aria-label="Amount (to the nearest dollar)"
                         />
                         <span
                           class="input-group-text"

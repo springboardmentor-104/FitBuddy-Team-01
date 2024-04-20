@@ -149,7 +149,8 @@ const Login = (props) => {
                   <input
                     // {...register("Full name")}
                     required
-                    maxLength={8}
+                    minLength={8}
+                    maxLength={15}
                     value={password}
                     placeholder="Password"
                     className="form-control"
