@@ -12,8 +12,8 @@ const xss = require('xss');
 // send otp vefication email for registration
 const sendOtpVerificationEmail = async ({ _id, name, email }, res) => {
     try {
-        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-        const message = `<p>Hello ${name} here is your otp <b>${otp}</b> for registration </p> <p> otp will expire in 1hr`;
+        const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
+        const message = `<p>Hello ${name} here is your otp <b>${otp}</b> for registration </p> <p> otp will expire in 5min only`;
         await sendMail(email, "Fit-buddy email verification", message);
 
         // hash the otp 
@@ -320,8 +320,7 @@ const forgotOtpController = async (req, res) => {
         }
 
         // Generate OTP
-        const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-        console.log(otp)
+        const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
         // Save OTP in database
         const hashedOtp = await hashPassword(otp);
         const newOtpVerification = new userOtpVerification({
@@ -353,12 +352,20 @@ const forgotOtpController = async (req, res) => {
 // reset password
 const resetPasswordController = async (req, res) => {
     try {
-        const { userId, otp, newPassword } = req.body;
-        if (!userId || !otp || !newPassword) {
+        const { userId, otp, newPassword,cpassword } = req.body;
+    
+        if (!userId || !otp || !newPassword || cpassword) {
             return res.send({
                 success: false,
                 message: "OTP and new password are required. Please provide them."
             });
+        }
+
+        if(newPassword != cpassword){
+            return res.send({
+                success:false,
+                message:"password doest not matched with confirm password"
+            })
         }
 
         // Find OTP verification record

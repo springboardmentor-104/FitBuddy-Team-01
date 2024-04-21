@@ -52,7 +52,8 @@ const ResetPassword = (props) => {
       const response = await axios.put("http://localhost:8080/api/v1/auth/reset-password", {
         userId: userId,
         otp: otp,
-        newPassword: password
+        newPassword: password,
+        cpassword:confirmPassword
       });
   
       const data = response.data;
