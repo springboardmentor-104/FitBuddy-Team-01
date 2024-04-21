@@ -52,7 +52,6 @@ const Login = (props) => {
   // };
 
   console.log("LoginUserId", LoginUserId);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (email && password) {
