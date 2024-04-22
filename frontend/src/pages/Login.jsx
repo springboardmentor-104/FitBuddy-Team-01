@@ -139,12 +139,12 @@ const Login = (props) => {
                   />
                 </div>
                 {!emailValid && (
-                  <p style={{ color: "red" }} id="warn">
+                  <small style={{ color: "red" }} id="warn">
                     Invalid email format
-                  </p>
+                  </small>
                 )}
 
-                <div class="input-group mb-3">
+                <div class="input-group">
                   <input
                     // {...register("Full name")}
                     required
@@ -165,9 +165,9 @@ const Login = (props) => {
                   </span>
                 </div>
                 {!passwordValid && (
-                  <p style={{ color: "red" }} id="warn">
+                  <small style={{ color: "red" }} id="warn">
                     Password should be at least 8 characters long
-                  </p>
+                  </small>
                 )}
 
                 <Link to="/forgot-password" id="fg-ps">

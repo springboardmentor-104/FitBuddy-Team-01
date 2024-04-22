@@ -34,8 +34,6 @@ const Registration = (props) => {
 
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
 
   const [emailValid, setEmailValid] = useState(true);
@@ -44,45 +42,44 @@ const Registration = (props) => {
   const [registeredUserId, setRegisteredUserId] = useState("");
   const [otpVerified, setOtpVerified] = useState(false);
 
+  const [isValid, setIsValid] = useState(null);
+
   const [passwordValid, setPasswordValid] = useState(true);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
 
+  // const [emailValid, setEmailValid] = useState(true);
+  // const [isValid, setIsValid] = useState(false);
+  // const [userName, setUserName] = useState("");
   // const [formValid, setFormValid] = useState(false);
   // const [otp, setOtp] = useState('');
 
-  console.log("registeredUserId", registeredUserId);
-  const handleOtpSubmit = async (event) => {
-    event.preventDefault();
-    // Check if OTP is correct
-    let data = {
-      otp: otp,
-      userId: registeredUserId,
-    };
-    await axios.post("http://localhost:8080/api/v1/auth/verify", data).then(
-      (response) => {
-        alert(response?.data?.message || "Registration done Successfully!");
-        navigate(`/login`);
-      },
-      (error) => {
-        alert(
-          error?.data?.error ||
-            "OTP not Verified, Registration process Incompleted"
-        );
-      }
+  // Password Validation(for validation min 8 character+One Upper+One Lower+Special Character+One Digit)
+  const [password, setPassword] = useState("");
+  const validatePassword = (password) => {
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    return regex.test(password);
+  };
+  const handlePasswordChange = (event) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+    setIsValid(validatePassword(newPassword));
+  };
+
+  // Username Validation(Check the Expression of Username)
+  const [userName, setUsername] = useState("");
+  const validateUsername = (username) => {
+    // Regular expression for alphanumeric characters, underscores, and hyphens
+    const regex = /^[a-zA-Z0-9_-]+$/;
+    // Check length (between 3 and 16 characters) and allowed characters
+    return (
+      username.length >= 3 && username.length <= 16 && regex.test(username)
     );
   };
-
-  const handleFullNameChange = (event) => {
-    setFullName(event.target.value);
-  };
-
   const handleUserNameChange = (event) => {
-    setUserName(event.target.value);
-  };
-
-  const handleConfirmedPasswordChange = (event) => {
-    setConfirmedPassword(event.target.value);
+    const newUsername = event.target.value;
+    setUsername(newUsername);
+    setIsValid(validateUsername(newUsername));
   };
 
   const handleEmailChange = (event) => {
@@ -90,7 +87,6 @@ const Registration = (props) => {
     // Check email validity
     setEmailValid(validateEmail(event.target.value));
   };
-
   // Email validation function
   const validateEmail = (email) => {
     // This is a basic email validation regex, you can use a more comprehensive one if needed
@@ -98,10 +94,44 @@ const Registration = (props) => {
     return emailRegex.test(email);
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-    // Check password validity
-    setPasswordValid(event.target.value.length >= 6); // Password should be at least 6 characters long
+  console.log("registeredUserId", registeredUserId);
+  const handleOtpSubmit = async (event) => {
+    event.preventDefault();
+
+    // Check if OTP is correct
+    let data = {
+      otp: otp,
+      userId: registeredUserId,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/verify",
+        data
+      );
+
+      // Check if the OTP is verified successfully
+      if (response.data && response.data.success) {
+        alert(response.data.message || "Registered Successfully!");
+        navigate(`/login`);
+      } else {
+        alert("OTP not verified. Please try again.");
+      }
+    } catch (error) {
+      // Handle error if the OTP verification request fails
+      alert(
+        error.response?.data?.error ||
+          "OTP not verified, Registration process incomplete."
+      );
+    }
+  };
+
+  const handleFullNameChange = (event) => {
+    setFullName(event.target.value);
+  };
+
+  const handleConfirmedPasswordChange = (event) => {
+    setConfirmedPassword(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -148,8 +178,74 @@ const Registration = (props) => {
     }
   };
 
+  // Resend OTP
+  const [resendStatus, setResendStatus] = useState("");
+  const [isResending, setIsResending] = useState(false);
+  const [resendMessage, setResendMessage] = useState("");
+  const [userId, setUserId] = useState(""); // Add state for user ID
+
+  // Inside your handleResendOTP function
+  const handleResendOTP = async () => {
+    setIsResending(true);
+    try {
+      const data = {
+        email: email,
+        userId: userId,
+      };
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/resend",
+        data
+      );
+      if (response.data && response.data.success) {
+        setResendStatus("OTP has been resent successfully.");
+      } else {
+        setResendStatus("Failed to resend OTP. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+      setResendStatus(
+        "An error occurred while resending OTP. Please try again later."
+      );
+    } finally {
+      setIsResending(false);
+    }
+  };
+
   const handleOtpChange = (event) => {
     setOtp(event.target.value);
+  };
+
+  const handleRegistrationSubmit1 = async (event) => {
+    event.preventDefault();
+    if (email && fullName && userName && password && confirmedPassword) {
+      let data = {
+        name: fullName,
+        email: email,
+        username: userName,
+        password: password,
+        cpassword: confirmedPassword,
+      };
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/v1/auth/register",
+          data
+        );
+        if (response.data && response.data.success) {
+          console.log(response.data);
+          setRegisteredUserId(response.data.data.userId); // Set the user ID
+          setUserId(response.data.data.userId); // Update the user ID state
+          // setEmail(response.data.data.email); // Update the email state
+          setIsRegistered(true);
+        } else {
+          alert(response.data.message || "Registration failed");
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+        alert(error.message || "Registration failed");
+      }
+    } else {
+      alert("Please fill in all fields.");
+    }
   };
 
   // Password Show and Hide
@@ -157,6 +253,21 @@ const Registration = (props) => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  // Function to handle OTP resend
+  // const handleResendOTP = () => {
+  //   // You can implement OTP resend logic here
+  // };
+
+  // const handleUserNameChange = (event) => {
+  //   setUserName(event.target.value);
+  // };
+
+  // const handlePasswordChange = (event) => {
+  //   setPassword(event.target.value);
+  //   // Check password validity
+  //   setPasswordValid(event.target.value.length >= 8); // Password should be at least 8 characters long
+  // };
 
   return (
     <section
@@ -188,7 +299,11 @@ const Registration = (props) => {
                 <form
                   id="form"
                   className="flex flex-col"
-                  onSubmit={(handleSubmit, handleRegistrationSubmit)}
+                  onSubmit={
+                    (handleSubmit,
+                    handleRegistrationSubmit,
+                    handleRegistrationSubmit1)
+                  }
                 >
                   <div className="input-group">
                     <input
@@ -204,10 +319,12 @@ const Registration = (props) => {
                       onChange={handleEmailChange}
                     />
                   </div>
-                  {!emailValid && (
-                    <p style={{ color: "red" }} id="warn">
-                      Invalid email format
-                    </p>
+                  {!emailValid && email && (
+                    <div style={{ color: "red" }} id="warn">
+                      <small>
+                        Invalid email format! : For Example(this@this.com)
+                      </small>
+                    </div>
                   )}
                   <div className="input-group">
                     <input
@@ -237,6 +354,13 @@ const Registration = (props) => {
                       onChange={handleUserNameChange}
                     />
                   </div>
+                  {!isValid && userName && (
+                    <div id="inv-Usrnm-frm">
+                      <small>
+                        Username is invalid! : For Example(@SarahLTomslin)
+                      </small>
+                    </div>
+                  )}
                   <div className="input-group">
                     <input
                       // {...register("password")}
@@ -246,7 +370,7 @@ const Registration = (props) => {
                       maxLength={15}
                       name="password"
                       value={password}
-                      placeholder="password"
+                      placeholder="Password"
                       className="form-control"
                       pattern="[A-Z,a-z,0-9,@,#]*"
                       onChange={handlePasswordChange}
@@ -259,6 +383,11 @@ const Registration = (props) => {
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>
                   </div>
+                  {!isValid && password && (
+                    <div id="inv-frmt-pas">
+                      <small>Invalid Format! : For Example(45A5@5a9)</small>
+                    </div>
+                  )}
                   <div className="input-group">
                     <input
                       // {...register("confirmpwd")}
@@ -270,7 +399,7 @@ const Registration = (props) => {
                       className="form-control"
                       value={confirmedPassword}
                       pattern="[A-Z,a-z,0-9,@,#]*"
-                      placeholder="confirm password"
+                      placeholder="Confirm Password"
                       type={showPassword ? "password" : "text"}
                       onChange={handleConfirmedPasswordChange}
                     />
@@ -300,14 +429,17 @@ const Registration = (props) => {
               ) : (
                 <form onSubmit={handleOtpSubmit}>
                   <div>
-                    <label className="input-group mb-3">Enter OTP</label>
+                    <p id="msg-rg-otp">
+                      An authentication code has been sent to your email.
+                    </p>
+                    {/* <label className="input-group mb-3">Enter OTP</label> */}
                     <div className="input-group mb-3" id="">
                       <input
                         required
                         value={otp}
                         minLength={6}
                         maxLength={8}
-                        placeholder=""
+                        placeholder="Enter OTP"
                         className="form-control"
                         onChange={handleOtpChange}
                         pattern="[A-Z,a-z,0-9,@,#]*"
@@ -320,6 +452,20 @@ const Registration = (props) => {
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                       </span>
                     </div>
+                    <p className="Reg-OTP">
+                      <span>{resendMessage}</span>
+                      <span>
+                        Didn't recieve a Code?
+                        <button
+                          id="reg-rsnd-btn"
+                          onClick={handleResendOTP}
+                          disabled={isResending}
+                        >
+                          {isResending ? "Resending..." : "Resend"}
+                        </button>
+                      </span>
+                    </p>
+                    {resendStatus && <p>{resendStatus}</p>}
                     <div className="d-grid gap-2 col-12 mx-auto">
                       <button
                         type="submit"

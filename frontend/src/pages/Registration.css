@@ -127,3 +127,34 @@
 #lgin-bx {
   margin-top: 10px;
 }
+
+.Reg-OTP {
+  text-align: left;
+  text-align: justify;
+}
+
+#reg-rsnd-btn {
+  outline: 0;
+  border: 0;
+  background-color: #fff;
+  color: red;
+  text-align: center;
+  cursor: pointer;
+}
+
+#msg-rg-otp {
+  text-align: left;
+  text-align: justify;
+}
+
+#inv-frmt-pas {
+  color: red;
+  text-align: left;
+  text-align: justify;
+}
+
+#inv-Usrnm-frm {
+  color: red;
+  text-align: left;
+  text-align: justify;
+}

@@ -249,7 +249,7 @@ const ForgotPassword = (props) => {
                             <p id="nt-rc-pr">
                               <span>Didn't recieve a Code?</span>
                               <button id="rsnd" onClick={handleResendOTP}>
-                                &nbsp;Resend
+                                Resend
                               </button>
                             </p>
                             <button
