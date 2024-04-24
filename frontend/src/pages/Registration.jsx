@@ -48,6 +48,9 @@ const Registration = (props) => {
   const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
 
+  const [isUsernameValid, setIsUsernameValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
   // const [emailValid, setEmailValid] = useState(true);
   // const [isValid, setIsValid] = useState(false);
   // const [userName, setUserName] = useState("");
@@ -63,7 +66,7 @@ const Registration = (props) => {
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
-    setIsValid(validatePassword(newPassword));
+    setIsPasswordValid(validatePassword(newPassword));
   };
 
   // Username Validation(Check the Expression of Username)
@@ -79,9 +82,10 @@ const Registration = (props) => {
   const handleUserNameChange = (event) => {
     const newUsername = event.target.value;
     setUsername(newUsername);
-    setIsValid(validateUsername(newUsername));
+    setIsUsernameValid(validateUsername(newUsername));
   };
 
+  // For Email Validation
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
     // Check email validity
@@ -94,6 +98,7 @@ const Registration = (props) => {
     return emailRegex.test(email);
   };
 
+  //
   console.log("registeredUserId", registeredUserId);
   const handleOtpSubmit = async (event) => {
     event.preventDefault();
@@ -354,7 +359,7 @@ const Registration = (props) => {
                       onChange={handleUserNameChange}
                     />
                   </div>
-                  {!isValid && userName && (
+                  {!isUsernameValid && userName && (
                     <div id="inv-Usrnm-frm">
                       <small>
                         Username is invalid! : For Example(@SarahLTomslin)
@@ -383,7 +388,7 @@ const Registration = (props) => {
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>
                   </div>
-                  {!isValid && password && (
+                  {!isPasswordValid && password && (
                     <div id="inv-frmt-pas">
                       <small>Invalid Format! : For Example(45A5@5a9)</small>
                     </div>

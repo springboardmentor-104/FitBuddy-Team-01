@@ -187,7 +187,8 @@ const Login = (props) => {
               </form>
             </div>
           </div>
-          <div className="d-none d-md-block col-6 p-0">
+          {/* <div className="d-none d-md-block col-6 p-0"> */}
+          <div className="d-none d-md-block col-6 pt-3">
             <img
               src={bgImg}
               alt={`Registration Page`}
