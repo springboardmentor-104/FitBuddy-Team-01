@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const connectDB = require('./config/db');
 const authRoute = require('./routes/authRoutes');
+const exerciseRoute = require('./routes/exercisesRoute');
 const cors = require('cors');
 
 dotenv.config(); 
@@ -21,6 +22,8 @@ app.use(express.urlencoded({extended:true}));
 
 // routes
 app.use('/api/v1/auth',authRoute);
+app.use('/api/v1/exercise',exerciseRoute);
+
 
 
 app.get('/',(req,res)=>{

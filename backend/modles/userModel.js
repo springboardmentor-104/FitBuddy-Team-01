@@ -22,7 +22,11 @@ const userSchema = new mongoose.Schema({
     is_verified:{
         type:Boolean,
         default:false
-    }
+    },
+    favoriteExercises: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exercise'
+    }]
 },{timestamps:true});
 
 module.exports = mongoose.model('users',userSchema); 
