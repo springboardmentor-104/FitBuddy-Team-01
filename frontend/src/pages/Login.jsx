@@ -35,9 +35,10 @@ const Login = (props) => {
   };
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-    // Check password validity
-    setPasswordValid(event.target.value.length >= 8); // Password should be at least 6 characters long
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+    // Check password validity only if the password is not empty
+    setPasswordValid(newPassword.length === 0 || newPassword.length >= 8);
   };
 
   // const handleSubmit = (event) => {
@@ -164,11 +165,12 @@ const Login = (props) => {
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </span>
                 </div>
-                {!passwordValid && (
-                  <small style={{ color: "red" }} id="warn">
-                    Password should be at least 8 characters long
-                  </small>
-                )}
+                {!passwordValid &&
+                  password.length > 0 && ( // Display warning only if password is not empty
+                    <small style={{ color: "red" }} id="warn">
+                      Password should be at least 8 characters long
+                    </small>
+                  )}
 
                 <Link to="/forgot-password" id="fg-ps">
                   Forgot your password?
