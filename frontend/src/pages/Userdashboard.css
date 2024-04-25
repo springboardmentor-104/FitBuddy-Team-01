@@ -1009,7 +1009,8 @@ h6 {
 
 .profile .profile-card h2 {
   font-size: 24px;
-  font-weight: 700;
+  /* font-weight: 700; */
+  font-weight: 500;
   color: #2c384e;
   margin: 10px 0 0 0;
 }
@@ -1269,6 +1270,14 @@ h6 {
     border-top: 1px solid #eaedf1;
     border-left: 1px solid #eaedf1;
   }
+}
+
+/* #dob {
+  cursor: pointer;
+} */
+
+#gen {
+  cursor: pointer;
 }
 
 /* ======================================= */

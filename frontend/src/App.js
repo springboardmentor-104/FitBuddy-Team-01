@@ -2,14 +2,21 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Login from "./pages/Login";
 import About from "./pages/About";
-import NotFound from "./pages/NotFound";
 import ContactUs from "./pages/ContactUs";
+
+import Login from "./pages/Login";
 import Registration from "./pages/Registration";
-import ResetPassword from "./pages/ResetPassword";
-import Userdashboard from "./pages/Userdashboard";
+
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+
+import Userdashboard from "./pages/Userdashboard";
+
+import History from "./pages/History";
+import MyProfile from "./pages/MyProfile";
+
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
@@ -24,6 +31,8 @@ const App = () => {
         <Route exact path="/registration" element={<Registration />} />
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
+        <Route exact path="/History" element={<History />} />
+        <Route exact path="/MyProfile" element={<MyProfile />} />
       </Routes>
     </Router>
   );

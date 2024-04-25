@@ -145,7 +145,7 @@ const Login = (props) => {
                   </small>
                 )}
 
-                <div class="input-group">
+                <div className="input-group">
                   <input
                     // {...register("Full name")}
                     required

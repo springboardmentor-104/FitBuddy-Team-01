@@ -252,14 +252,14 @@ const Userdashboard = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
+            <Link className="nav-link collapsed" to="/MyProfile">
               <BsPersonFill />
               &nbsp;
               <span>My Profile</span>
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
+            <Link className="nav-link collapsed" to="/History">
               <BiTime />
               &nbsp;
               <span>History</span>
