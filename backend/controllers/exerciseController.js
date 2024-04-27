@@ -1,32 +1,48 @@
 const userModel = require('../modles/userModel');
 const Exercise = require('../modles/exerciseModel'); // Singular 'Exercise' instead of 'exercises'
+const PersonalExercise = require('../modles/personalExercise');
 
 
-// create exercise
+
+// create exercis
 const createExerciseController = async (req, res) => {
     try {
-        const { name, description, category } = req.body;
-        const photo = req.file ? req.file.filename : null; // Assuming 'photo' is the field name in your form
-        if (!name || !description || !category) {
-            return res.send({ success: false, message: "all fields is required" });
+        const { name, description, category, muscle, equipment, difficulty, photo } = req.body;
+
+        // Check if required fields are present
+        if (!name || !description || !category || !muscle || !equipment || !difficulty || !photo) {
+            return res.status(400).json({ success: false, message: "All fields are required" });
         }
-        if (!photo) {
-            return res.send({ success: false, message: "Image is required" });
+        
+        // Validate difficulty level
+        const validDifficultyLevels = ['easy', 'intermediate', 'hard', 'other'];
+        if (!validDifficultyLevels.includes(difficulty.toLowerCase())) {
+            return res.status(400).json({ success: false, message: "Invalid difficulty level" });
         }
 
-        const exercise = new Exercise({ // Changed 'exercises' to 'Exercise'
+        // Create new exercise instance
+        const exercise = new Exercise({
             name,
             description,
             category,
+            muscle,
+            equipment,
+            difficulty: difficulty.toLowerCase(), // Convert to lowercase for consistency
             photo
         });
-        console.log(exercise)
+
+        // Save the exercise to the database
         const savedExercise = await exercise.save();
-        return res.status(201).send({ success: true, message: "exercise is created", savedExercise });
+
+        // Return success response
+        return res.status(201).json({ success: true, message: "Exercise created successfully", exercise: savedExercise });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        // Handle errors
+        console.error("Error creating exercise:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
     }
 }
+
 // show all exercise
 const getAllExercisesController = async (req, res) => {
     try {
@@ -53,5 +69,42 @@ const getExerciseByIdController = async (req, res) => {
     }
 }
 
+// find by difficulty
+const findExercisesByCategoryAndDifficulty = async (req, res) => {
+    try {
+        const { category, difficulty } = req.params; // Assuming both category and difficulty are passed as URL parameters
+        
+        // Validate category
+        const validCategories = ['strength', 'yoga', 'cardio', 'other'];
+        if (!validCategories.includes(category)) {
+            return res.send({ success: false, message: "Invalid category" });
+        }
 
-module.exports = {createExerciseController, getAllExercisesController,getExerciseByIdController};
+        // Validate difficulty
+        const validDifficulties = ['easy', 'intermediate', 'hard', 'other'];
+        if (!validDifficulties.includes(difficulty)) {
+            return res.send({ success: false, message: "Invalid difficulty" });
+        }
+
+        // Find exercises by category and difficulty
+        const exercises = await Exercise.find({ category, difficulty });
+
+        // Check if exercises were found
+        if (exercises.length === 0) {
+            return res.send({ success: false, message: "No exercises found in this category and difficulty" });
+        }
+
+        // Return found exercises
+        return res.status(200).json({ success: true, exercises });
+    } catch (error) {
+        console.error("Error finding exercises by category and difficulty:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+}
+
+
+// ******************* to make personal exercise api are here ***********************//
+
+
+
+module.exports = {createExerciseController, getAllExercisesController,getExerciseByIdController, findExercisesByCategoryAndDifficulty};

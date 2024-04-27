@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {registerController, loginController, verifyOtpController, resendOtpController, forgotOtpController, resetPasswordController, updatePasswordController} = require('../controllers/authController')
+const {registerController, loginController, verifyOtpController, resendOtpController, forgotOtpController, resetPasswordController, updatePasswordController,getUserProfileController, updateProfileController} = require('../controllers/authController')
 const {requireSignIn} = require('../middleware/authMiddleware');
+const { upload } = require('../middleware/uploadImageMiddleware');
 
 
 // register
@@ -24,6 +25,13 @@ router.put('/reset-password', resetPasswordController);
 
 // update password
 router.put('/update-password', requireSignIn, updatePasswordController);
+
+
+router.get('/profile', requireSignIn, getUserProfileController);
+
+// update profile 
+router.put('/update-profile', requireSignIn, upload.single('image'), updateProfileController);
+
 
 
 module.exports = router

@@ -26,7 +26,45 @@ const userSchema = new mongoose.Schema({
     favoriteExercises: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Exercise'
-    }]
+    }],
+    phoneno: {
+        type: String
+    },
+    dob: {
+        type: Date
+    },
+    gender: {
+        type: String,
+        enum: ['male', 'female', 'other']
+    },
+    height: {
+        type: Number
+    },
+    weight: {
+        type: Number
+    },
+    country: {
+        type: String
+    },
+    address: {
+        type: String
+    },
+    occupation: {
+        type: String
+    },
+    insta: {
+        type: String
+    },
+    fb: {
+        type: String
+    },
+    twitter: {
+        type:String
+    },
+    photo:{
+        type:String
+    }
+    
 },{timestamps:true});
 
 module.exports = mongoose.model('users',userSchema); 

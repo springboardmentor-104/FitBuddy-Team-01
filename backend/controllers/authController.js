@@ -8,6 +8,8 @@ const { hashPassword, comparePassword } = require('../helper/authHelper');
 const {isEmail} = require('validator');
 const xss = require('xss');
 
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../middleware/uploadImageMiddleware");
 
 // send otp vefication email for registration
 const sendOtpVerificationEmail = async ({ _id, name, email }, res) => {
@@ -255,47 +257,6 @@ const resendOtpController = async (req,res) =>{
 }
 
 // forgot password
-// const forgotOtpController = async (req, res) => {
-//     try {
-//         const { email } = req.body;
-//         const user = await userModel.findOne({ email });
-//         const userId = user._id;
-
-//         if (!user) {
-//             return res.status(404).send({
-//                 success: false,
-//                 message: "User not found"
-//             });
-//         }
-
-//         // Generate OTP
-//         const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-
-//         // Save OTP in database
-//         const hashedOtp = await hashPassword(otp);
-//         const newOtpVerification = new userOtpVerification({
-//             userId: user._id,
-//             otp: hashedOtp
-//         });
-//         await newOtpVerification.save();
-
-//         // Send OTP to user's email
-//         const message = `<p>Hello ${user.name}, here is your OTP for password reset: <b>${otp}</b>.</p>`;
-//         await sendMail(user.email, "Password Reset OTP", message);
-
-//         return res.status(200).send({
-//             success: true,
-//             message: "OTP sent to your email",
-//             userId:userId
-//         });
-//     } catch (error) {
-//         return res.status(500).send({
-//             success: false,
-//             message: "Error in forgot password process",
-//             error
-//         });
-//     }
-// };
 const forgotOtpController = async (req, res) => {
     try {
         const { email } = req.body;
@@ -412,7 +373,6 @@ const resetPasswordController = async (req, res) => {
 // update password 
 const updatePasswordController = async (req, res) => {
     try {
-        console.log(req.body)
         // Accessing user ID from req.body.user
         const { user } = req.body;
         const { oldpassword, newPassword } = req.body;
@@ -459,9 +419,79 @@ const updatePasswordController = async (req, res) => {
     }
 };
 
+// to get all deatails
+const getUserProfileController = async (req, res) => {
+    try {
+        const userId = req.user._id; 
+        const user = await userModel.findById(userId).select('-password'); 
+        // Check if user exists
+        if (!user) {
+            return res.send({ success: false, message: "User not found" });
+        }
+
+        // Return user details
+        return res.status(200).send({ success: true, user });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+}
+
+// to update profile
+
+const updateProfileController = async (req, res) => {
+    try {
+        const userId = req.user._id; // Assuming you have authenticated the user and have access to their user ID
+
+        // Extract fields from request body
+        const { name, phoneno, dob, gender, height, weight, country, address, occupation, insta, fb, twitter } = req.body;
+
+        // Construct update object with allowed fields
+        const updateFields = {};
+        if (name) updateFields.name = name;
+        if (phoneno) updateFields.phoneno = phoneno;
+        if (dob) updateFields.dob = dob;
+        if (gender) updateFields.gender = gender;
+        if (height) updateFields.height = height;
+        if (weight) updateFields.weight = weight;
+        if (country) updateFields.country = country;
+        if (address) updateFields.address = address;
+        if (occupation) updateFields.occupation = occupation;
+        if (insta) updateFields.insta = insta;
+        if (fb) updateFields.fb = fb;
+        if (twitter) updateFields.twitter = twitter;
+
+        // Check if an image was provided in the request body
+        if (req.file) {
+            // Upload image to Cloudinary
+            const result = await cloudinary.uploader.upload(req.file.path);
+
+            // Add image URL to updateFields
+            updateFields.photo = result.secure_url;
+        }
+        console.log(updateFields)
+
+        // Update user profile
+        const updatedUser = await userModel.findByIdAndUpdate(userId, updateFields, { new: true });
+
+        // Check if user exists
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Return updated user profile
+        return res.status(200).json({ success: true, message: "Profile updated successfully", user: updatedUser });
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+}
+
+module.exports = { updateProfileController, upload };
 
 
 
 
 
-module.exports = { registerController, loginController, verifyOtpController,resendOtpController, forgotOtpController,resetPasswordController , updatePasswordController};
+
+
+module.exports = { registerController, loginController, verifyOtpController,resendOtpController, forgotOtpController,resetPasswordController , updatePasswordController, getUserProfileController, updateProfileController};

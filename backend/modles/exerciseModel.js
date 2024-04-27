@@ -6,18 +6,32 @@ const exerciseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        type: String,
+        enum: ['strength', 'yoga', 'cardio','powerlifting', 'other'], // Add more categories as needed
+        required: true
+    },
+    muscle:{
+        type:String,
+        required: true
+    },
+    equipment:{
+        type:String,
+        required: true
+    },
+    difficulty:{
+        type:String,
+        enum: ['easy', 'intermediate', 'hard', 'other'], // Add more categories as needed
+        required: true
+    },
     description: {
         type: String,
         required: true
     },
     photo:{
-        type:String
-    },
-    category: {
-        type: String,
-        enum: ['strength', 'yoga', 'cardio', 'other'], // Add more categories as needed
+        type:String,
         required: true
-    }
+    },
 });
 
 module.exports = mongoose.model('exercise', exerciseSchema);

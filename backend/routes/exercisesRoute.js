@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const {upload} = require('../middleware/uploadImageMiddleware')
-const { requireSignIn } = require('../middleware/authMiddleware');
-const {createExerciseController, getAllExercisesController, getExerciseByIdController} = require('../controllers/exerciseController')
+// const {upload} = require('../middleware/uploadImageMiddleware')
+const {createExerciseController, getAllExercisesController, getExerciseByIdController, findExercisesByCategoryAndDifficulty} = require('../controllers/exerciseController')
 
 
 // exercise
-router.post('/create-exercise',upload.single("photo"), createExerciseController);
-
+router.post('/createExercise', createExerciseController);
 router.get('/exercises', getAllExercisesController);
 router.get('/exercises/:id', getExerciseByIdController);
+router.get('/exercises/:category/:difficulty', findExercisesByCategoryAndDifficulty);
 
+// personal exercise routes
 
+router.post('/create-exercise')
 
 
 

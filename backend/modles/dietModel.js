@@ -1,25 +1,35 @@
 const mongoose = require('mongoose');
 
-const dietPlanSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+// Schema for the Meal
+const mealSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
     },
-    plans: [{
-        day: {
-            type: String,
-            required: true
-        },
-        morningMeal: {
-            type: String,
-            required: true
-        },
-        nightMeal: {
-            type: String,
-            required: true
-        }
-    }]
+    calories: {
+        type: Number,
+        required: true
+    },
+    protein: {
+        type: Number,
+        required: true
+    },
+    carbs: {
+        type: Number,
+        required: true
+    },
+    fat: {
+        type: Number,
+        required: true
+    },
+    ingredients: {
+        type: [String],
+        required: true
+    },
+    instructions: {
+        type: String,
+        required: true
+    }
 });
 
-module.exports = mongoose.model('DietPlan', dietPlanSchema);
-    
+module.exports = mongoose.model('meal', exerciseSchema);
