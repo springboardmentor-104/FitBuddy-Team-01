@@ -52,9 +52,18 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 const MyProfile = () => {
   // const navigate = useNavigate();
 
+  // Tab system for overview , Edit profile, change password and Account setting section
+  const [tabLiNum, setTabLiNum] = useState(1);
+
+  // In overview section tab system for Basic Information, Your Body Status and Social Links
+  const [activeTab, setActiveTab] = useState(5);
+  const handleTabClick = (tabNumber) => {
+    setActiveTab(tabNumber);
+  };
+  // End
+
   // My User - Name - Previous Name(fetch) - From Registration Data
   const [user, setUser] = useState({});
-  const [tabLiNum, setTabLiNum] = useState(1);
   useEffect(() => {
     let user = localStorage.getItem("user");
     if (user) {
@@ -86,13 +95,24 @@ const MyProfile = () => {
   }, []);
   // End
 
-  // My User - Phone - Phone Data(fetch) - From Edit Password Form
+  // My User - Password - Password Data(fetch) - From Registration Form
+  const [password, setpassword] = useState({});
+  useEffect(() => {
+    let password = localStorage.getItem("user");
+    if (password) {
+      password = JSON.parse(password);
+      setpassword(password);
+    }
+  }, []);
+  // End
+
+  // My User - Phone - Phone Data(fetch) - From Edit Profile Form
   // const [Phone, setPhone] = useState({});
   // useEffect(() => {
   //   let Phone = localStorage.getItem("user");
   //   if (Phone) {
-  //     Phone = JSON.parse(password);
-  //     setPhone(password);
+  //     Phone = JSON.parse(Phone);
+  //     setPhone(Phone);
   //   }
   // }, []);
   // End
@@ -244,9 +264,17 @@ const MyProfile = () => {
   const [setError] = useState(null);
   const [isPasswordUpdate, setIsPasswordUpdate] = useState(false);
   const [PasswordUpdateUserId, setPasswordUpdateUserId] = useState("");
-  // Change Password Form Submit - For Current Password and New Password and Re-entered password Check
+  const [registrationPassword, setRegistrationPassword] = useState("");
+
+  // Change Password Form Submittion
   const handlePasswordUpdateSubmit = async (event) => {
     event.preventDefault();
+
+    // Check current password is correct or not
+    // if (currentpassword !== password) {
+    //   alert("Current password does not match.");
+    //   return;
+    // }
 
     // currentpassword and new password do not matched
     if (currentpassword === newPassword) {
@@ -418,6 +446,34 @@ const MyProfile = () => {
   const [Gender, setGender] = useState("");
   const handleGenderChange = (e) => {
     setGender(e.target.value);
+  };
+  // End
+
+  // Social Link 1 - New - Edit Profile
+  const [twitter, settwitter] = useState("");
+  const handletwitterChange = (e) => {
+    settwitter(e.target.value);
+  };
+  // End
+
+  // Social Link 2 - New - Edit Profile
+  const [facebook, setfacebook] = useState("");
+  const handlefacebookChange = (e) => {
+    setfacebook(e.target.value);
+  };
+  // End
+
+  // Social Link 3 - New - Edit Profile
+  const [instagram, setinstagram] = useState("");
+  const handleinstagramChange = (e) => {
+    setinstagram(e.target.value);
+  };
+  // End
+
+  // Social Link 4 - New - Edit Profile
+  const [linkedin, setlinkedin] = useState("");
+  const handlelinkedinChange = (e) => {
+    setlinkedin(e.target.value);
   };
   // End
 
@@ -752,7 +808,7 @@ const MyProfile = () => {
               <li className="breadcrumb-item">
                 <Link to="">Home</Link>
               </li>
-              <li class="breadcrumb-item">Users</li>
+              <li className="breadcrumb-item">Users</li>
               <li className="breadcrumb-item active">My Profile</li>
             </ol>
           </nav>
@@ -767,19 +823,19 @@ const MyProfile = () => {
                     src={person_icn}
                     className="rounded-circle"
                   />
-                  <h2>{user?.name || "User"}</h2>
-                  <h3>Occupation</h3>
+                  <h2>{user?.name || "N/A"}</h2>
+                  <h3>{Occupation || "N/A"}</h3>
                   <div className="social-links mt-2">
-                    <Link to="" className="twitter">
+                    <Link to={twitter} className="twitter">
                       <FontAwesomeIcon icon={faTwitter} />
                     </Link>
-                    <Link to="" className="facebook">
+                    <Link to={facebook} className="facebook">
                       <FontAwesomeIcon icon={faFacebook} />
                     </Link>
-                    <Link to="" className="instagram">
+                    <Link to={instagram} className="instagram">
                       <FontAwesomeIcon icon={faInstagram} />
                     </Link>
-                    <Link to="" className="linkedin">
+                    <Link to={linkedin} className="linkedin">
                       <FontAwesomeIcon icon={faLinkedin} />
                     </Link>
                   </div>
@@ -857,148 +913,256 @@ const MyProfile = () => {
                       }`}
                       id="profile-overview"
                     >
+                      {/* About */}
                       <h5 className="card-title">About</h5>
                       {/* <p className="small fst-italic"> */}
-                      <p className=""></p>
+                      <p className="">{About || "N/A"}</p>
+
                       <h5 className="card-title">Profile Details</h5>
-                      {/* Full Name */}
-                      <div className="row">
+
+                      {/* Tab System for all type of content */}
+                      <ul className="nav nav-tabs nav-tabs-bordered">
+                        <li className="nav-item">
+                          <button
+                            className={`nav-link ${
+                              activeTab === 5 ? "active" : ""
+                            }`}
+                            onClick={() => handleTabClick(5)}
+                          >
+                            Basic Information
+                          </button>
+                        </li>
+                        <li className="nav-item">
+                          <button
+                            className={`nav-link ${
+                              activeTab === 6 ? "active" : ""
+                            }`}
+                            onClick={() => handleTabClick(6)}
+                          >
+                            Body Status
+                          </button>
+                        </li>
+                        <li className="nav-item">
+                          <button
+                            className={`nav-link ${
+                              activeTab === 7 ? "active" : ""
+                            }`}
+                            onClick={() => handleTabClick(7)}
+                          >
+                            Social accounts
+                          </button>
+                        </li>
+                      </ul>
+
+                      <div className="tab-content pt-2">
+                        {/* Basic Information */}
                         <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
+                          className={`tab-pane fade profile-edit pt-3 ${
+                            activeTab === 5 ? "show active" : ""
+                          }`}
+                          id="profile-overview"
                         >
-                          <strong>Full Name</strong>
+                          {/* Full Name */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>Full Name</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {/* {user?.name || "User"} */}
+                              {user?.name || fullName || "N/A"}
+                            </div>
+                          </div>
+
+                          {/* User Name */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>User Name</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {/* {username?.username || "username"} */}
+                              {username?.username || userName || "N/A"}
+                            </div>
+                          </div>
+
+                          {/* Email */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>Email</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {/* {email?.email || "email"} */}
+                              {email?.email || Email || "N/A"}
+                            </div>
+                          </div>
+
+                          {/* Phone No. */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>Phone No.</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {/* Phone */}
+                              {Phone || "N/A"}
+                            </div>
+                          </div>
+
+                          {/* Date of Birth */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>Date of Birth</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {DOB || "N/A"}
+                            </div>
+                          </div>
+
+                          {/* Gender */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>Gender</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {Gender || "N/A"}
+                            </div>
+                          </div>
+
+                          {/* Country */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>Country</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {Country || "N/A"}
+                            </div>
+                          </div>
+
+                          {/* Address */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>Address</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {Address || "N/A"}
+                            </div>
+                          </div>
+
+                          {/* Occupation */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>Occupation</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {Occupation || "N/A"}
+                            </div>
+                          </div>
                         </div>
-                        <div className="col-lg-9 col-md-8">
-                          {/* {user?.name || "User"} */}
-                          {user?.name || fullName || "User"}
+
+                        {/* Body Status */}
+                        <div
+                          className={`tab-pane fade profile-edit pt-3 ${
+                            activeTab === 6 ? "show active" : ""
+                          }`}
+                          id="profile-edit"
+                        >
+                          {/* Height */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>Height</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {Height || "N/A"}
+                            </div>
+                          </div>
+
+                          {/* Weight */}
+                          <div className="row">
+                            <div
+                              className="col-lg-3 col-md-4 label"
+                              id="Orv-Pr-Dt-hd"
+                            >
+                              <strong>Weight</strong>
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {Weight || "N/A"}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Social Links */}
+                        <div
+                          className={`tab-pane fade profile-edit pt-3 ${
+                            activeTab === 7 ? "show active" : ""
+                          }`}
+                          id="profile-edit"
+                        >
+                          {/* Link 1 */}
+                          <div className="row">
+                            <div className="col-lg-3 col-md-4 label">
+                              Twitter
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {twitter || "N/A"}
+                            </div>
+                          </div>
+                          {/* Link 2 */}
+                          <div className="row">
+                            <div className="col-lg-3 col-md-4 label">
+                              Facebook
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {facebook || "N/A"}
+                            </div>
+                          </div>
+                          {/* Link 3 */}
+                          <div className="row">
+                            <div className="col-lg-3 col-md-4 label">
+                              Instagram
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {instagram || "N/A"}
+                            </div>
+                          </div>
+                          {/* Link 4 */}
+                          <div className="row">
+                            <div className="col-lg-3 col-md-4 label">
+                              Linkedin
+                            </div>
+                            <div className="col-lg-9 col-md-8">
+                              {linkedin || "N/A"}
+                            </div>
+                          </div>
                         </div>
                       </div>
-
-                      {/* User Name */}
-                      <div className="row">
-                        <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
-                        >
-                          <strong>User Name</strong>
-                        </div>
-                        <div className="col-lg-9 col-md-8">
-                          {/* {username?.username || "username"} */}
-                          {username?.username || userName || "username"}
-                        </div>
-                      </div>
-
-                      {/* Email */}
-                      <div className="row">
-                        <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
-                        >
-                          <strong>Email</strong>
-                        </div>
-                        <div className="col-lg-9 col-md-8">
-                          {/* {email?.email || "email"} */}
-                          {email?.email || Email || "email"}
-                        </div>
-                      </div>
-
-                      {/* Phone No. */}
-                      <div className="row">
-                        <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
-                        >
-                          <strong>Phone No.</strong>
-                        </div>
-                        <div className="col-lg-9 col-md-8">
-                          {/* Phone */}
-                          {/* {Phone?.Phone || "Phone"} */}
-                        </div>
-                      </div>
-
-                      {/* Date of Birth */}
-                      <div className="row">
-                        <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
-                        >
-                          <strong>Date of Birth</strong>
-                        </div>
-                        <div className="col-lg-9 col-md-8"></div>
-                      </div>
-
-                      {/* Gender */}
-                      <div className="row">
-                        <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
-                        >
-                          <strong>Gender</strong>
-                        </div>
-                        <div className="col-lg-9 col-md-8"></div>
-                      </div>
-
-                      {/* Country */}
-                      <div className="row">
-                        <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
-                        >
-                          <strong>Country</strong>
-                        </div>
-                        <div className="col-lg-9 col-md-8"></div>
-                      </div>
-
-                      {/* Address */}
-                      <div className="row">
-                        <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
-                        >
-                          <strong>Address</strong>
-                        </div>
-                        <div className="col-lg-9 col-md-8"></div>
-                      </div>
-
-                      {/* Occupation */}
-                      <div className="row">
-                        <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
-                        >
-                          <strong>Occupation</strong>
-                        </div>
-                        <div className="col-lg-9 col-md-8"></div>
-                      </div>
-
-                      {/* Height */}
-                      <div className="row">
-                        <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
-                        >
-                          <strong>Height</strong>
-                        </div>
-                        <div className="col-lg-9 col-md-8"></div>
-                      </div>
-
-                      {/* Weight */}
-                      <div className="row">
-                        <div
-                          className="col-lg-3 col-md-4 label"
-                          id="Orv-Pr-Dt-hd"
-                        >
-                          <strong>Weight</strong>
-                        </div>
-                        <div className="col-lg-9 col-md-8"></div>
-                      </div>
-
-                      {/* Add more Data */}
-                      {/* <div className="row">
-                        <div className="col-lg-3 col-md-4 label">Title</div>
-                        <div className="col-lg-9 col-md-8">content</div>
-                      </div> */}
                     </div>
                     {/* Overview Section End */}
 
@@ -1107,7 +1271,7 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              name=""
+                              name="userName"
                               // value=""
                               id="Job"
                               required
@@ -1137,7 +1301,7 @@ const MyProfile = () => {
                               // value=""
                               id="Email"
                               type="email"
-                              name="email"
+                              name="Email"
                               // value={Email}
                               value={email?.email || Email || "email"}
                               className="form-control"
@@ -1171,7 +1335,7 @@ const MyProfile = () => {
                             <PhoneInput
                               required
                               id="Phone"
-                              name="phone"
+                              name="Phone"
                               type="phone"
                               value={Phone}
                               country={"in"} // Default country code
@@ -1198,7 +1362,7 @@ const MyProfile = () => {
                           <div className="col-md-8 col-lg-9">
                             <input
                               id="dob"
-                              name="dob"
+                              name="DOB"
                               type="date"
                               required
                               value={DOB}
@@ -1222,7 +1386,7 @@ const MyProfile = () => {
                             <select
                               required
                               id="gen"
-                              name="gender"
+                              name="Gender"
                               class="form-control"
                               value={Gender}
                               onChange={handleGenderChange}
@@ -1248,7 +1412,7 @@ const MyProfile = () => {
                               required
                               type="text"
                               id="Country"
-                              name="country"
+                              name="Country"
                               value={Country}
                               // pattern="[A-Z,a-z]*"
                               className="form-control"
@@ -1271,7 +1435,7 @@ const MyProfile = () => {
                               required
                               type="text"
                               id="Address"
-                              name="address"
+                              name="Address"
                               value={Address}
                               className="form-control"
                               // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
@@ -1293,7 +1457,8 @@ const MyProfile = () => {
                               required
                               type="text"
                               id="company"
-                              name="company"
+                              // name="company"
+                              name="Occupation"
                               value={Occupation}
                               className="form-control"
                               onChange={handleOccupationChange}
@@ -1313,7 +1478,7 @@ const MyProfile = () => {
                             <textarea
                               required
                               id="about"
-                              name="about"
+                              name="About"
                               value={About}
                               className="form-control"
                               style={{ height: "100px" }}
@@ -1335,7 +1500,7 @@ const MyProfile = () => {
                             <input
                               // value=""
                               id=""
-                              name=""
+                              name="Height"
                               required
                               type="text"
                               value={Height}
@@ -1358,7 +1523,7 @@ const MyProfile = () => {
                             <input
                               // value=""
                               id=""
-                              name=""
+                              name="Weight"
                               required
                               type="text"
                               value={Weight}
@@ -1380,11 +1545,13 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              value=""
-                              type="text"
+                              value={twitter}
+                              type="url"
                               id="Twitter"
                               name="twitter"
                               className="form-control"
+                              placeholder="Link to social profile"
+                              onChange={handletwitterChange}
                             />
                           </div>
                         </div>
@@ -1399,11 +1566,13 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              value=""
-                              type="text"
+                              value={facebook}
+                              type="url"
                               id="Facebook"
                               name="facebook"
                               className="form-control"
+                              placeholder="Link to social profile"
+                              onChange={handlefacebookChange}
                             />
                           </div>
                         </div>
@@ -1418,11 +1587,13 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              value=""
-                              type="text"
+                              value={instagram}
                               id="Instagram"
                               name="instagram"
                               className="form-control"
+                              type="url"
+                              placeholder="Link to social profile"
+                              onChange={handleinstagramChange}
                             />
                           </div>
                         </div>
@@ -1437,11 +1608,13 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              value=""
-                              type="text"
+                              value={linkedin}
+                              type="url"
                               id="Linkedin"
                               name="linkedin"
                               className="form-control"
+                              placeholder="Link to social profile"
+                              onChange={handlelinkedinChange}
                             />
                           </div>
                         </div>
