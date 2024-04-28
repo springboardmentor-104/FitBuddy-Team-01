@@ -1,0 +1,44 @@
+.card-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dropdown {
+  margin: 10px 10px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  width: 200px; /* Adjust width as needed */
+}
+
+.dropdown:focus {
+  border-color: #007bff; /* Change border color on focus */
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  margin-bottom: 10px;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 576px) {
+  .dropdown {
+    width: 100%; /* Full width on small screens */
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .card-list-container {
+    padding: 0 10px; /* Adjust padding for medium screens */
+  }
+}
+
+/* Add more media queries as needed for larger devices */

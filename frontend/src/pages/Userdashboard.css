@@ -1,14 +1,3 @@
-/* .centeredDiv {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: cornflowerblue;
-} */
-
-/* ================================ */
-
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -16,11 +5,11 @@
   scroll-behavior: smooth;
 }
 
-/* body {
+body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
   color: #444444;
-} */
+}
 
 a {
   color: #4154f1;
@@ -67,7 +56,6 @@ h6 {
   font-size: 24px;
   margin-bottom: 0;
   font-weight: 600;
-  font-weight: 500;
   color: #012970;
 }
 
@@ -312,8 +300,7 @@ h6 {
   font-size: 14px;
   font-family: "Nunito", sans-serif;
   color: #899bbd;
-  /* font-weight: 600; */
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .breadcrumb a {
@@ -331,8 +318,7 @@ h6 {
 
 .breadcrumb .active {
   color: #51678f;
-  /* font-weight: 600; */
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* Bordered Tabs */
@@ -377,8 +363,7 @@ h6 {
 
 .logo span {
   font-size: 26px;
-  /* font-weight: 700; */
-  font-weight: 500;
+  font-weight: 700;
   color: #012970;
   font-family: "Nunito", sans-serif;
 }
@@ -688,8 +673,7 @@ h6 {
   display: flex;
   align-items: center;
   font-size: 15px;
-  /* font-weight: 600; */
-  font-weight: 500;
+  font-weight: 600;
   color: #4154f1;
   transition: 0.3;
   background: #f6f9ff;
@@ -1009,8 +993,7 @@ h6 {
 
 .profile .profile-card h2 {
   font-size: 24px;
-  /* font-weight: 700; */
-  font-weight: 500;
+  font-weight: 700;
   color: #2c384e;
   margin: 10px 0 0 0;
 }
@@ -1278,6 +1261,10 @@ h6 {
 
 #gen {
   cursor: pointer;
+}
+
+#Orv-Pr-Dt-hd {
+  font-weight: 500;
 }
 
 /* ======================================= */

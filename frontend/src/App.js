@@ -1,22 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import Home from "./pages/Home";
 import About from "./pages/About";
 import ContactUs from "./pages/ContactUs";
-
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
-
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-
 import Userdashboard from "./pages/Userdashboard";
-
 import History from "./pages/History";
 import MyProfile from "./pages/MyProfile";
-
 import NotFound from "./pages/NotFound";
+// import ExerciseCard from "./pages/ExerciseCard";
+// import Card from "./pages/Card";
 
 const App = () => {
   return (
@@ -33,6 +29,8 @@ const App = () => {
         <Route exact path="/reset-password" element={<ResetPassword />} />
         <Route exact path="/History" element={<History />} />
         <Route exact path="/MyProfile" element={<MyProfile />} />
+        {/* <Route exact path="/ExerciseCard" element={<ExerciseCard />} /> */}
+        {/* <Route exact path="/Card" element={<Card />} /> */}
       </Routes>
     </Router>
   );

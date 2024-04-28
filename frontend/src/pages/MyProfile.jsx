@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from "react";
 import "./Userdashboard.css";
+import "./MyProfile.css";
 
 import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import profile_icn from "../Assets/profile.png";
 
+import axios from "axios";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+  faDumbbell,
+  // faRunning,
+  // faBicycle,
+} from "@fortawesome/free-solid-svg-icons";
+
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 import {
   BiCog,
@@ -37,7 +50,9 @@ import {
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const MyProfile = () => {
-  // My User - Name - Previous Name(fetch)
+  // const navigate = useNavigate();
+
+  // My User - Name - Previous Name(fetch) - From Registration Data
   const [user, setUser] = useState({});
   const [tabLiNum, setTabLiNum] = useState(1);
   useEffect(() => {
@@ -49,7 +64,7 @@ const MyProfile = () => {
   }, []);
   // End
 
-  // My User - Email - Previous Email(fetch)
+  // My User - Email - Previous Email(fetch) - From Registration Data
   const [email, setemail] = useState({});
   useEffect(() => {
     let email = localStorage.getItem("user");
@@ -60,7 +75,7 @@ const MyProfile = () => {
   }, []);
   // End
 
-  // My User - userName - Previous User Name(fetch)
+  // My User - userName - Previous User Name(fetch) - From Registration Data
   const [username, setusername] = useState({});
   useEffect(() => {
     let username = localStorage.getItem("user");
@@ -69,6 +84,17 @@ const MyProfile = () => {
       setusername(username);
     }
   }, []);
+  // End
+
+  // My User - Phone - Phone Data(fetch) - From Edit Password Form
+  // const [Phone, setPhone] = useState({});
+  // useEffect(() => {
+  //   let Phone = localStorage.getItem("user");
+  //   if (Phone) {
+  //     Phone = JSON.parse(password);
+  //     setPhone(password);
+  //   }
+  // }, []);
   // End
 
   // Side Bar Toggale
@@ -134,26 +160,8 @@ const MyProfile = () => {
   }, [isProfileOpen]);
   // End
 
-  // const [errorMessage, setErrorMessage] = useState("");
-
-  // currentpassword - if Password Field is empty that there not shown alert otherwise shown
-  const [showcurrentpassword, setShowcurrentpassword] = useState(false);
-  const togglecurrentpasswordVisibility = () => {
-    setShowcurrentpassword(!showcurrentpassword);
-  };
-  const [currentpassword, setcurrentpassword] = useState("");
-  const [currentpasswordValid, setcurrentpasswordValid] = useState(true);
-  const handlecurrentpasswordChange = (event) => {
-    const newcurrentpassword = event.target.value;
-    setcurrentpassword(newcurrentpassword);
-    // Check password validity only if the password is not empty
-    setcurrentpasswordValid(
-      newcurrentpassword.length === 0 || newcurrentpassword.length >= 8
-    );
-  };
-  // End
-
   // If Password length is less than 8 then show another alert and if Password Expression is Wrong then there shown another alert
+  // const [errorMessage, setErrorMessage] = useState("");
   // const [showcurrentpassword, setShowcurrentpassword] = useState(false);
   // const [currentpassword, setcurrentpassword] = useState("");
   // const togglecurrentpasswordVisibility = () => {
@@ -181,6 +189,23 @@ const MyProfile = () => {
   // };
   // End
 
+  // currentpassword - if Password Field is empty that there not shown alert otherwise shown
+  const [showcurrentpassword, setShowcurrentpassword] = useState(false);
+  const togglecurrentpasswordVisibility = () => {
+    setShowcurrentpassword(!showcurrentpassword);
+  };
+  const [currentpassword, setcurrentpassword] = useState("");
+  const [currentpasswordValid, setcurrentpasswordValid] = useState(true);
+  const handlecurrentpasswordChange = (event) => {
+    const newcurrentpassword = event.target.value;
+    setcurrentpassword(newcurrentpassword);
+    // Check password validity only if the password is not empty
+    setcurrentpasswordValid(
+      newcurrentpassword.length === 0 || newcurrentpassword.length >= 8
+    );
+  };
+  // End
+
   // newPassword
   const [shownewPassword, setShownewPassword] = useState(false);
   const togglenewPasswordVisibility = () => {
@@ -199,34 +224,115 @@ const MyProfile = () => {
   };
   // End
 
-  // renewPassword
-  const [showrenewPassword, setShowrenewPassword] = useState(false);
-  const togglerenewPasswordVisibility = () => {
-    setShowrenewPassword(!showrenewPassword);
+  // reEnterPassword
+  const [showreEnterPassword, setShowreEnterPassword] = useState(false);
+  const togglereEnterPasswordVisibility = () => {
+    setShowreEnterPassword(!showreEnterPassword);
   };
-  const [renewPassword, setrenewPassword] = useState("");
-  const [renewPasswordValid, setrenewPasswordValid] = useState(true);
-  const handlerenewPasswordChange = (event) => {
-    const renewPassword = event.target.value;
-    setrenewPassword(renewPassword);
+  const [reEnterPassword, setreEnterPassword] = useState("");
+  const [reEnterPasswordValid, setreEnterPasswordValid] = useState(true);
+  const handlereEnterPasswordChange = (event) => {
+    const reEnterPassword = event.target.value;
+    setreEnterPassword(reEnterPassword);
     // Check password validity only if the password is not empty
-    setrenewPasswordValid(
-      renewPassword.length === 0 || renewPassword.length >= 8
+    setreEnterPasswordValid(
+      reEnterPassword.length === 0 || reEnterPassword.length >= 8
     );
   };
   // End
 
-  // For matching Current Password and New Password
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const [setError] = useState(null);
+  const [isPasswordUpdate, setIsPasswordUpdate] = useState(false);
+  const [PasswordUpdateUserId, setPasswordUpdateUserId] = useState("");
+  // Change Password Form Submit - For Current Password and New Password and Re-entered password Check
+  const handlePasswordUpdateSubmit = async (event) => {
+    event.preventDefault();
+
+    // currentpassword and new password do not matched
     if (currentpassword === newPassword) {
-      alert("Current Password and New Password cannot be the same.");
+      alert("Current Password and New Password Matched ! , Try another");
+    }
+    // if newPassword and reEnteredPassword Matching
+    if (newPassword !== reEnterPassword) {
+      alert("New Password and Re-entered New Password not Matched !");
+    }
+
+    // currentpassword
+    if (currentpassword.length < 8) {
+      alert("Current Password must be at least 8 characters long");
+    }
+    if (!isValidPassword(currentpassword)) {
+      alert("Current Password does not match the required pattern");
+    }
+
+    // newPassword
+    if (newPassword.length < 8) {
+      alert("New Password must be at least 8 characters long");
+    }
+    if (!isValidPassword(newPassword)) {
+      alert("New Password does not match the required pattern");
+    }
+
+    // reEnterPassword
+    if (reEnterPassword.length < 8) {
+      alert("Re-entered Password must be at least 8 characters long");
+    }
+    if (!isValidPassword(reEnterPassword)) {
+      alert("Re-entered Password does not match the required pattern");
+    }
+
+    // Call API for Update Password
+    if (currentpassword && newPassword && reEnterPassword) {
+      // All fields are filled, mark registration as completed
+      let userData = localStorage.getItem("user");
+      userData = JSON.parse(userData);
+      let data = {
+        oldpassword: currentpassword,
+        newPassword: newPassword,
+      };
+      let headers = {
+        Authorization: userData?.token || "",
+        "Content-Type": "application/json",
+      };
+      console.log(headers);
+      await axios
+        .put("http://localhost:8080/api/v1/auth/update-password", data, {
+          headers: headers,
+        })
+        .then(
+          (response) => {
+            console.log(response?.data);
+            if (response.data.success) {
+              setPasswordUpdateUserId(response?.data?.user?._id);
+              setcurrentpassword("");
+            } else {
+              setPasswordUpdateUserId("");
+            }
+            //
+            alert(response.data.message);
+            setIsPasswordUpdate(true);
+          },
+          (error) => {
+            console.log(error);
+            // alert(error?.data?.error || error?.response?.data?.error);
+            // alert(error?.data?.error || "Incorrect data for ...");
+            setPasswordUpdateUserId("");
+            setIsPasswordUpdate(false);
+          }
+        );
     } else {
-      // Handle password change logic here
-      // For example, you can make an API call to update the password
+      // Form is not valid, show an alert or error message
+      alert("Please fill in all fields.");
     }
   };
   // End
+
+  // Regular expression function to validate password pattern
+  const isValidPassword = (password) => {
+    const pattern =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
+    return pattern.test(password);
+  };
 
   // For Full Names - New - Edit Profile
   const [fullName, setfullName] = useState("");
@@ -249,11 +355,14 @@ const MyProfile = () => {
   };
   // End
 
-  // For Email - New - Edit Profile
+  // For Phone - New - Edit Profile
   const [Phone, setPhone] = useState("");
-  const handlePhoneChange = (e) => {
-    setPhone(e.target.value);
+  const handlePhoneChange = (value) => {
+    setPhone(value);
   };
+  // const handlePhoneChange = (e) => {
+  //   setPhone(e.target.value);
+  // };
   // End
 
   // For Country - New - Edit Profile
@@ -312,15 +421,142 @@ const MyProfile = () => {
   };
   // End
 
+  // Edit Form Submission Logic
+  const [EditFormSubmitted, setEditFormSubmitted] = useState(false);
+  const handleEditFormSubmit = async (event) => {
+    event.preventDefault();
+
+    let formData = Array.from(event.target.elements).map((e) => {
+      return { [e.getAttribute("name")]: e.value };
+    });
+    let formData2 = {};
+    formData.forEach((element) => {
+      formData2 = { ...formData2, ...element };
+    });
+    console.log("formData2", formData2);
+
+    // Check if the phone number is filled in
+    if (Phone) {
+      // Phone number is filled, proceed with form submission logic
+      let userData = localStorage.getItem("user");
+      userData = JSON.parse(userData);
+      let data = formData2;
+      let headers = {
+        Authorization: userData?.token || "",
+        "Content-Type": "application/json",
+      };
+      console.log(headers);
+      await axios
+        .put("http://localhost:8080/api/v1/auth/update-profile", data, {
+          headers: headers,
+        })
+        .then(
+          (response) => {
+            alert(response.data.message);
+          },
+          (error) => {
+            console.log(error);
+            // alert(error?.data?.error || error?.response?.data?.error);
+          }
+        );
+      // Reset phone input after form submission if needed
+      // setPhone('');
+    } else {
+      // Phone number is not filled, prevent form submission
+      alert("Please fill in the phone number");
+      console.log("Please fill in the phone number");
+    }
+  };
+  // End
+
+  // Account Deletion Logic
+  const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
+    useState(false);
+  const [isCheckboxesChecked, setIsCheckboxesChecked] = useState(false);
+
+  const handleDeleteAccountSubmit = () => {
+    // Check if all checkboxes are checked
+    const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    const allChecked = Array.from(allCheckboxes).every(
+      (checkbox) => checkbox.checked
+    );
+
+    if (!allChecked) {
+      alert("Please check all checkboxes before deleting your account.");
+      return;
+    }
+
+    // Your logic for handling the delete account submission goes here
+    // For example, you can make an API call to delete the account
+    // or update the state to reflect that the account has been deleted
+    console.log("Account deleted");
+  };
+
+  const handleCheckboxChange = () => {
+    // Check if all checkboxes are checked
+    const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    const allChecked = Array.from(allCheckboxes).every(
+      (checkbox) => checkbox.checked
+    );
+    setIsCheckboxesChecked(allChecked);
+
+    // Hide confirmation modal if any checkbox is unchecked
+    if (!allChecked) {
+      setIsDeleteConfirmationVisible(false);
+    }
+  };
+
+  const handleCancelClick = () => {
+    // Uncheck all checkboxes and hide confirmation modal
+    resetCheckboxes();
+    setIsDeleteConfirmationVisible(false);
+  };
+
+  const handleDeleteClick = () => {
+    if (!isCheckboxesChecked) {
+      alert("Please check all checkboxes before deleting your account.");
+      return;
+    }
+    setIsDeleteConfirmationVisible(true);
+  };
+
+  const resetCheckboxes = () => {
+    const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    allCheckboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+    setIsCheckboxesChecked(false);
+  };
+  // Account Deletion Logic End
+
+  // On clicking Trash of profile Image, shown an alert
+  const handleDeleteImage = () => {
+    // Show confirmation dialog
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your current profile image?"
+    );
+    // If user confirms, delete the image
+    if (confirmDelete) {
+      // Add logic to delete the image from the database
+      console.log("Image deleted");
+    }
+  };
+  // End
+
   return (
     <div>
+      {/* Header Section */}
       <header
         id="header"
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
           <Link to="" className="logo d-flex align-items-center">
-            {/* <img src={person_icn} alt="" /> */}
+            {/* <img src={} alt="" /> */}
+            <FontAwesomeIcon icon={faDumbbell} /> {/* Dumbbell icon */}
+            {/* <FontAwesomeIcon icon={faRunning} /> Running icon */}
+            {/* <FontAwesomeIcon icon={faBicycle} /> Bicycle icon */}
+            &nbsp;
             <span className="d-none d-lg-block">Fit Buddy</span>
           </Link>
           <BsList className="toggle-sidebar-btn" />
@@ -439,6 +675,8 @@ const MyProfile = () => {
           </ul>
         </nav>
       </header>
+
+      {/* Aside Menu */}
       <aside id="sidebar" className="sidebar">
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
@@ -456,6 +694,7 @@ const MyProfile = () => {
               <span>Manage Goals</span>
             </Link>
           </li>
+
           <li className="nav-item">
             <Link className="nav-link collapsed" to="">
               <BsFillPlusCircleFill />
@@ -463,6 +702,7 @@ const MyProfile = () => {
               <span>Create Goals</span>
             </Link>
           </li>
+
           <li className="nav-item">
             <Link className="nav-link collapsed" to="">
               <BsCartPlusFill />
@@ -470,6 +710,7 @@ const MyProfile = () => {
               <span>Buy Subscription</span>
             </Link>
           </li>
+
           <li className="nav-item">
             <Link className="nav-link collapsed" to="/MyProfile">
               <BsPersonFill />
@@ -477,6 +718,7 @@ const MyProfile = () => {
               <span>My Profile</span>
             </Link>
           </li>
+
           <li className="nav-item">
             <Link className="nav-link collapsed" to="/History">
               <BiTime />
@@ -484,12 +726,14 @@ const MyProfile = () => {
               <span>History</span>
             </Link>
           </li>
+
           {/* <li className="nav-item">
             <Link className="nav-link collapsed" to="">
               <i className="bi bi-dash-circle"></i>
               <span>Section 6</span>
             </Link>
           </li> */}
+
           {/* <li className="nav-item">
             <Link className="nav-link collapsed" to="">
               <i className="bi bi-file-earmark"></i>
@@ -498,6 +742,8 @@ const MyProfile = () => {
           </li> */}
         </ul>
       </aside>
+
+      {/* Main Section */}
       <main id="main" className="main">
         <div className="pagetitle">
           <h1>My Profile</h1>
@@ -506,6 +752,7 @@ const MyProfile = () => {
               <li className="breadcrumb-item">
                 <Link to="">Home</Link>
               </li>
+              <li class="breadcrumb-item">Users</li>
               <li className="breadcrumb-item active">My Profile</li>
             </ol>
           </nav>
@@ -525,19 +772,15 @@ const MyProfile = () => {
                   <div className="social-links mt-2">
                     <Link to="" className="twitter">
                       <FontAwesomeIcon icon={faTwitter} />
-                      {/* <i className="bi bi-twitter"></i> */}
                     </Link>
                     <Link to="" className="facebook">
                       <FontAwesomeIcon icon={faFacebook} />
-                      {/* <i className="bi bi-facebook"></i> */}
                     </Link>
                     <Link to="" className="instagram">
                       <FontAwesomeIcon icon={faInstagram} />
-                      {/* <i className="bi bi-instagram"></i> */}
                     </Link>
                     <Link to="" className="linkedin">
                       <FontAwesomeIcon icon={faLinkedin} />
-                      {/* <i className="bi bi-linkedin"></i> */}
                     </Link>
                   </div>
                 </div>
@@ -547,6 +790,7 @@ const MyProfile = () => {
               <div className="card">
                 <div className="card-body pt-3">
                   <ul className="nav nav-tabs nav-tabs-bordered">
+                    {/* Overview */}
                     <li className="nav-item">
                       <button
                         data-bs-toggle="tab"
@@ -559,6 +803,8 @@ const MyProfile = () => {
                         Overview
                       </button>
                     </li>
+
+                    {/* Edit Profile */}
                     <li className="nav-item">
                       <button
                         data-bs-toggle="tab"
@@ -571,19 +817,8 @@ const MyProfile = () => {
                         Edit Profile
                       </button>
                     </li>
-                    {/* <li className="nav-item">
-                      <button
-                        className="nav-link"
-                        data-bs-toggle="tab"
-                        data-bs-target="#profile-settings"
-                        className={`nav-link ${tabLiNum === 3 ? "active" : ""}`}
-                        onClick={() => {
-                          setTabLiNum(3);
-                        }}
-                      >
-                        Settings
-                      </button>
-                    </li> */}
+
+                    {/* Change Password */}
                     <li className="nav-item">
                       <button
                         // className="nav-link"
@@ -597,7 +832,23 @@ const MyProfile = () => {
                         Change Password
                       </button>
                     </li>
+
+                    {/* Account Settings */}
+                    <li className="nav-item">
+                      <button
+                        // className="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#profile-settings"
+                        className={`nav-link ${tabLiNum === 3 ? "active" : ""}`}
+                        onClick={() => {
+                          setTabLiNum(3);
+                        }}
+                      >
+                        Account Settings
+                      </button>
+                    </li>
                   </ul>
+
                   <div className="tab-content pt-2">
                     {/* Overview Section Start */}
                     <div
@@ -608,43 +859,142 @@ const MyProfile = () => {
                     >
                       <h5 className="card-title">About</h5>
                       {/* <p className="small fst-italic"> */}
-                      <p className="">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Mollitia temporibus placeat quidem, nemo quod molestiae?
-                      </p>
+                      <p className=""></p>
                       <h5 className="card-title">Profile Details</h5>
+                      {/* Full Name */}
                       <div className="row">
-                        <div className="col-lg-3 col-md-4 label ">
-                          Full Name
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>Full Name</strong>
                         </div>
                         <div className="col-lg-9 col-md-8">
-                          {user?.name || "User"}
+                          {/* {user?.name || "User"} */}
+                          {user?.name || fullName || "User"}
                         </div>
                       </div>
+
+                      {/* User Name */}
                       <div className="row">
-                        <div className="col-lg-3 col-md-4 label">User Name</div>
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>User Name</strong>
+                        </div>
                         <div className="col-lg-9 col-md-8">
-                          {username?.username || "username"}
+                          {/* {username?.username || "username"} */}
+                          {username?.username || userName || "username"}
                         </div>
                       </div>
+
+                      {/* Email */}
                       <div className="row">
-                        <div className="col-lg-3 col-md-4 label">Email</div>
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>Email</strong>
+                        </div>
                         <div className="col-lg-9 col-md-8">
-                          {email?.email || "email"}
+                          {/* {email?.email || "email"} */}
+                          {email?.email || Email || "email"}
                         </div>
                       </div>
-                      {/* <div className="row">
-                        <div className="col-lg-3 col-md-4 label">Title</div>
-                        <div className="col-lg-9 col-md-8">content</div>
-                      </div> */}
-                      {/* <div className="row">
-                        <div className="col-lg-3 col-md-4 label">Title</div>
-                        <div className="col-lg-9 col-md-8">content</div>
-                      </div> */}
-                      {/* <div className="row">
-                        <div className="col-lg-3 col-md-4 label">Title</div>
-                        <div className="col-lg-9 col-md-8">content</div>
-                      </div> */}
+
+                      {/* Phone No. */}
+                      <div className="row">
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>Phone No.</strong>
+                        </div>
+                        <div className="col-lg-9 col-md-8">
+                          {/* Phone */}
+                          {/* {Phone?.Phone || "Phone"} */}
+                        </div>
+                      </div>
+
+                      {/* Date of Birth */}
+                      <div className="row">
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>Date of Birth</strong>
+                        </div>
+                        <div className="col-lg-9 col-md-8"></div>
+                      </div>
+
+                      {/* Gender */}
+                      <div className="row">
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>Gender</strong>
+                        </div>
+                        <div className="col-lg-9 col-md-8"></div>
+                      </div>
+
+                      {/* Country */}
+                      <div className="row">
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>Country</strong>
+                        </div>
+                        <div className="col-lg-9 col-md-8"></div>
+                      </div>
+
+                      {/* Address */}
+                      <div className="row">
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>Address</strong>
+                        </div>
+                        <div className="col-lg-9 col-md-8"></div>
+                      </div>
+
+                      {/* Occupation */}
+                      <div className="row">
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>Occupation</strong>
+                        </div>
+                        <div className="col-lg-9 col-md-8"></div>
+                      </div>
+
+                      {/* Height */}
+                      <div className="row">
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>Height</strong>
+                        </div>
+                        <div className="col-lg-9 col-md-8"></div>
+                      </div>
+
+                      {/* Weight */}
+                      <div className="row">
+                        <div
+                          className="col-lg-3 col-md-4 label"
+                          id="Orv-Pr-Dt-hd"
+                        >
+                          <strong>Weight</strong>
+                        </div>
+                        <div className="col-lg-9 col-md-8"></div>
+                      </div>
+
+                      {/* Add more Data */}
                       {/* <div className="row">
                         <div className="col-lg-3 col-md-4 label">Title</div>
                         <div className="col-lg-9 col-md-8">content</div>
@@ -659,7 +1009,7 @@ const MyProfile = () => {
                       }`}
                       id="profile-edit"
                     >
-                      <form>
+                      <form onSubmit={handleEditFormSubmit}>
                         {/* Profile Image */}
                         <div className="row mb-3">
                           <label
@@ -676,13 +1026,12 @@ const MyProfile = () => {
                               style={{
                                 // width: "200px",
                                 // height: "200px",
-                                borderRadius: "3%",
+                                borderRadius: "0%",
                                 border: "1px solid #191919",
                               }}
                             />
                             <div className="pt-2">
                               <input
-                                required
                                 name="Image"
                                 type="file"
                                 accept="image/jpej, image/png, image/jpg"
@@ -710,18 +1059,16 @@ const MyProfile = () => {
                                 title="Upload new profile image"
                               >
                                 <BiUpload style={{ color: "#fff" }} />
-                                {/* style={{ color: "#fff" }}  */}
-                                {/* <i className="bi bi-upload"></i> */}
                               </label>
                               &nbsp;
-                              <Link
-                                href="#"
+                              <label
+                                to=""
                                 className="btn btn-danger btn-sm"
                                 title="Remove my profile image"
+                                onClick={handleDeleteImage}
                               >
-                                <BiTrash />
-                                {/* <i className="bi bi-trash"></i> */}
-                              </Link>
+                                <BiTrash style={{ color: "#fff" }} />
+                              </label>
                             </div>
                           </div>
                         </div>
@@ -741,7 +1088,8 @@ const MyProfile = () => {
                               type="text"
                               id="fullName"
                               name="fullName"
-                              value={fullName}
+                              // value={fullName}
+                              value={user?.name || fullName || "User"}
                               pattern="[A-Z,a-z, ]*"
                               className="form-control"
                               onChange={handleFullNameChange}
@@ -764,7 +1112,10 @@ const MyProfile = () => {
                               id="Job"
                               required
                               type="text"
-                              value={userName}
+                              // value={userName}
+                              value={
+                                username?.username || userName || "username"
+                              }
                               className="form-control"
                               pattern="[A-Z,a-z,0-9,@,#]*"
                               onChange={handleuserNameChange}
@@ -787,7 +1138,8 @@ const MyProfile = () => {
                               id="Email"
                               type="email"
                               name="email"
-                              value={Email}
+                              // value={Email}
+                              value={email?.email || Email || "email"}
                               className="form-control"
                               pattern="[A-Z,a-z,0-9,@,.]*"
                               onChange={handleEmailChange}
@@ -804,7 +1156,7 @@ const MyProfile = () => {
                             Phone No.
                           </label>
                           <div className="col-md-8 col-lg-9">
-                            <input
+                            {/* <input
                               // value=""
                               required
                               id="Phone"
@@ -814,7 +1166,24 @@ const MyProfile = () => {
                               value={Phone}
                               className="form-control"
                               onChange={handlePhoneChange}
+                            /> */}
+
+                            <PhoneInput
+                              required
+                              id="Phone"
+                              name="phone"
+                              type="phone"
+                              value={Phone}
+                              country={"in"} // Default country code
+                              onChange={handlePhoneChange}
+                              inputStyle={{ width: "100%" }} // Custom input width
                             />
+                            {/* Display error message if form is submitted and phone is empty */}
+                            {EditFormSubmitted && !Phone && (
+                              <p style={{ color: "red" }}>
+                                {/* Please fill in the phone number */}
+                              </p>
+                            )}
                           </div>
                         </div>
 
@@ -831,7 +1200,7 @@ const MyProfile = () => {
                               id="dob"
                               name="dob"
                               type="date"
-                              required=""
+                              required
                               value={DOB}
                               min="1950-01-01"
                               max="2025-01-01"
@@ -851,63 +1220,17 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <select
-                              name="gen"
+                              required
                               id="gen"
+                              name="gender"
                               class="form-control"
-                              required="required"
                               value={Gender}
                               onChange={handleGenderChange}
                             >
-                              <option value="-SELECT-">-SELECT-</option>
+                              <option value="">-SELECT-</option>
                               <option value="Male">Male</option>
                               <option value="Female">Female</option>
                             </select>
-                          </div>
-                        </div>
-
-                        {/* Height */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor=""
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Height
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              // value=""
-                              id=""
-                              name=""
-                              required
-                              type="text"
-                              value={Height}
-                              // pattern="[0-9,A-Z]*"
-                              className="form-control"
-                              onChange={handleHeightChange}
-                            />
-                          </div>
-                        </div>
-
-                        {/* Weight */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Weight"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Weight
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              // value=""
-                              id=""
-                              name=""
-                              required
-                              type="text"
-                              value={Weight}
-                              // pattern="[0-9,A-Z]*"
-                              className="form-control"
-                              onChange={handleWeightChange}
-                            />
                           </div>
                         </div>
 
@@ -1000,9 +1323,55 @@ const MyProfile = () => {
                           </div>
                         </div>
 
-                        {/* Social Media Profile Section Start */}
+                        {/* Height */}
+                        <div className="row mb-3">
+                          <label
+                            htmlFor=""
+                            className="col-md-4 col-lg-3 col-form-label"
+                          >
+                            Height
+                          </label>
+                          <div className="col-md-8 col-lg-9">
+                            <input
+                              // value=""
+                              id=""
+                              name=""
+                              required
+                              type="text"
+                              value={Height}
+                              // pattern="[0-9,A-Z]*"
+                              className="form-control"
+                              onChange={handleHeightChange}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Weight */}
+                        <div className="row mb-3">
+                          <label
+                            htmlFor="Weight"
+                            className="col-md-4 col-lg-3 col-form-label"
+                          >
+                            Weight
+                          </label>
+                          <div className="col-md-8 col-lg-9">
+                            <input
+                              // value=""
+                              id=""
+                              name=""
+                              required
+                              type="text"
+                              value={Weight}
+                              // pattern="[0-9,A-Z]*"
+                              className="form-control"
+                              onChange={handleWeightChange}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Social Media Profile Section Starts */}
                         {/* Twitter Profile */}
-                        {/* <div className="row mb-3">
+                        <div className="row mb-3">
                           <label
                             htmlFor="Twitter"
                             className="col-md-4 col-lg-3 col-form-label"
@@ -1011,16 +1380,17 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              name="twitter"
-                              type="text"
-                              className="form-control"
-                              id="Twitter"
                               value=""
+                              type="text"
+                              id="Twitter"
+                              name="twitter"
+                              className="form-control"
                             />
                           </div>
-                        </div> */}
+                        </div>
+
                         {/* Facebook Profile */}
-                        {/* <div className="row mb-3">
+                        <div className="row mb-3">
                           <label
                             htmlFor="Facebook"
                             className="col-md-4 col-lg-3 col-form-label"
@@ -1029,16 +1399,17 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              name="facebook"
-                              type="text"
-                              className="form-control"
-                              id="Facebook"
                               value=""
+                              type="text"
+                              id="Facebook"
+                              name="facebook"
+                              className="form-control"
                             />
                           </div>
-                        </div> */}
+                        </div>
+
                         {/* Instagram Profile */}
-                        {/* <div className="row mb-3">
+                        <div className="row mb-3">
                           <label
                             htmlFor="Instagram"
                             className="col-md-4 col-lg-3 col-form-label"
@@ -1047,16 +1418,17 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              name="instagram"
-                              type="text"
-                              className="form-control"
-                              id="Instagram"
                               value=""
+                              type="text"
+                              id="Instagram"
+                              name="instagram"
+                              className="form-control"
                             />
                           </div>
-                        </div> */}
+                        </div>
+
                         {/* Linkedin Profile */}
-                        {/* <div className="row mb-3">
+                        <div className="row mb-3">
                           <label
                             htmlFor="Linkedin"
                             className="col-md-4 col-lg-3 col-form-label"
@@ -1065,117 +1437,35 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              name="linkedin"
-                              type="text"
-                              className="form-control"
-                              id="Linkedin"
                               value=""
+                              type="text"
+                              id="Linkedin"
+                              name="linkedin"
+                              className="form-control"
                             />
                           </div>
-                        </div> */}
+                        </div>
                         {/* Social Media Profile Section End */}
 
                         {/* Submit Button */}
                         <div className="text-center">
-                          <button type="submit" className="btn btn-primary">
-                            Save Changes
+                          <button type="submit" className="btn btn-success">
+                            Update Profile
                           </button>
                         </div>
                       </form>
                     </div>
                     {/* Edit Profile Section End */}
 
-                    {/* Setting Section Start */}
-                    {/* <div
-                      className={`tab-pane fade profile-edit pt-3 ${
-                        tabLiNum === 3 ? `show active` : ``
-                      }`}
-                      id="profile-settings"
-                    >
-                      <form>
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="fullName"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Email Notifications
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="changesMade"
-                                checked
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="changesMade"
-                              >
-                                Changes made to your account
-                              </label>
-                            </div>
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="newProducts"
-                                checked
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="newProducts"
-                              >
-                                Information on new products and services
-                              </label>
-                            </div>
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="proOffers"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="proOffers"
-                              >
-                                Marketing and promo offers
-                              </label>
-                            </div>
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="securityNotify"
-                                checked
-                                disabled
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="securityNotify"
-                              >
-                                Security alerts
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-center">
-                          <button type="submit" className="btn btn-primary">
-                            Save Changes
-                          </button>
-                        </div>
-                      </form>
-                    </div> */}
-                    {/* Setting Section Start End */}
-
                     {/* Change Password Section */}
                     <div
+                      id="profile-change-password"
                       className={`tab-pane fade profile-edit pt-3 ${
                         tabLiNum === 4 ? `show active` : ``
                       }`}
-                      id="profile-change-password"
                     >
-                      <form onSubmit={handleSubmit}>
+                      <form onSubmit={handlePasswordUpdateSubmit}>
+                        {/* Current Password */}
                         <div className="row mb-3">
                           <label
                             htmlFor="currentPassword"
@@ -1193,6 +1483,7 @@ const MyProfile = () => {
                                 name="password"
                                 id="currentPassword"
                                 value={currentpassword}
+                                // value={password?.password || "password"}
                                 className="form-control"
                                 pattern="[A-Z,a-z,0-9,@,#]*"
                                 onChange={handlecurrentpasswordChange}
@@ -1213,7 +1504,7 @@ const MyProfile = () => {
                             {!currentpasswordValid &&
                               currentpassword.length > 0 && ( // Display warning only if password is not empty
                                 <small style={{ color: "red" }} id="warn">
-                                  Password should be at least 8 characters long
+                                  {/* Password should be at least 8 characters long */}
                                 </small>
                               )}
                             {/* {errorMessage && (
@@ -1223,6 +1514,7 @@ const MyProfile = () => {
                             )} */}
                           </div>
                         </div>
+                        {/* New Password */}
                         <div className="row mb-3">
                           <label
                             htmlFor="newPassword"
@@ -1256,14 +1548,15 @@ const MyProfile = () => {
                             {!newPasswordValid &&
                               newPassword.length > 0 && ( // Display warning only if password is not empty
                                 <small style={{ color: "red" }} id="warn">
-                                  Password should be at least 8 characters long
+                                  {/* Password should be at least 8 characters long */}
                                 </small>
                               )}
                           </div>
                         </div>
+                        {/* Re-entered Password */}
                         <div className="row mb-3">
                           <label
-                            htmlFor="renewPassword"
+                            htmlFor="reEnterPassword"
                             className="col-md-4 col-lg-3 col-form-label"
                           >
                             Re-enter New Password
@@ -1275,26 +1568,30 @@ const MyProfile = () => {
                                 required
                                 minLength={8}
                                 maxLength={15}
-                                id="renewPassword"
-                                name="renewpassword"
-                                value={renewPassword}
+                                id="reEnterPassword"
+                                name="reEnterPassword"
+                                value={reEnterPassword}
                                 className="form-control"
                                 pattern="[A-Z,a-z,0-9,@,#]*"
-                                onChange={handlerenewPasswordChange}
-                                type={showrenewPassword ? "text" : "password"}
+                                onChange={handlereEnterPasswordChange}
+                                type={showreEnterPassword ? "text" : "password"}
                               />
                               <span
                                 style={{ cursor: "pointer" }}
                                 className="input-group-text"
-                                onClick={togglerenewPasswordVisibility}
+                                onClick={togglereEnterPasswordVisibility}
                               >
-                                {showrenewPassword ? <FaEye /> : <FaEyeSlash />}
+                                {showreEnterPassword ? (
+                                  <FaEye />
+                                ) : (
+                                  <FaEyeSlash />
+                                )}
                               </span>
                             </div>
-                            {!renewPasswordValid &&
-                              renewPassword.length > 0 && ( // Display warning only if password is not empty
+                            {!reEnterPasswordValid &&
+                              reEnterPassword.length > 0 && ( // Display warning only if password is not empty
                                 <small style={{ color: "red" }} id="warn">
-                                  Password should be at least 8 characters long
+                                  {/* Password should be at least 8 characters long */}
                                 </small>
                               )}
                           </div>
@@ -1307,6 +1604,164 @@ const MyProfile = () => {
                       </form>
                     </div>
                     {/* Change Password Section End */}
+
+                    {/* Accont Setting Section Start */}
+                    <div
+                      className={`tab-pane fade profile-edit pt-3 ${
+                        tabLiNum === 3 ? `show active` : ``
+                      }`}
+                      id="profile-settings"
+                    >
+                      <form onSubmit={handleDeleteAccountSubmit}>
+                        <h4 style={{ color: "#dc3545" }}>
+                          <strong>Delete Account</strong>
+                        </h4>
+                        <hr />
+                        <div className="row mb-3">
+                          <label
+                            htmlFor="fullName"
+                            className="col-md-4 col-lg-3 col-form-label"
+                          >
+                            Confirm Deletion
+                          </label>
+                          <div className="col-md-8 col-lg-9">
+                            <div className="form-check">
+                              <input
+                                required
+                                type="checkbox"
+                                id="changesMade"
+                                style={{ cursor: "pointer" }}
+                                className="form-check-input"
+                                onChange={handleCheckboxChange}
+                              />
+                              <label
+                                htmlFor="changesMade"
+                                className="form-check-label"
+                              >
+                                All your data is permenantally deleted, if once
+                                account deleted?
+                              </label>
+                            </div>
+                            <div className="form-check">
+                              <input
+                                required
+                                type="checkbox"
+                                id="newProducts"
+                                style={{ cursor: "pointer" }}
+                                className="form-check-input"
+                                onChange={handleCheckboxChange}
+                              />
+                              <label
+                                htmlFor="newProducts"
+                                className="form-check-label"
+                              >
+                                You did not recover your account ever, if once
+                                account deleted?
+                              </label>
+                            </div>
+                            {/* <div className="form-check">
+                              <input
+                                required
+                                id="proOffers"
+                                type="checkbox"
+                                className="form-check-input"
+                              />
+                              <label
+                                htmlFor="proOffers"
+                                className="form-check-label"
+                              >
+                                Warning 3
+                              </label>
+                            </div> */}
+                            {/* Add more warning */}
+                            {/* <div className="form-check">
+                              <input
+                                required
+                                type="checkbox"
+                                id="securityNotify"
+                                className="form-check-input"
+                              />
+                              <label
+                                htmlFor="securityNotify"
+                                className="form-check-label"
+                              >
+                                Warning 4
+                              </label>
+                            </div> */}
+                          </div>
+                        </div>
+
+                        {/* <div className="text-center"> */}
+                        <div className="row mb-3">
+                          {/* <button type="submit" className="">
+                            Button
+                          </button> */}
+
+                          {/* Delete Account Button */}
+                          <div className="text-center">
+                            {/* <button> */}
+                            <span
+                              // type="submit"
+                              className="btn btn-outline-danger"
+                              onClick={handleDeleteClick}
+                              style={{
+                                display: isDeleteConfirmationVisible
+                                  ? "none"
+                                  : "block",
+                              }}
+                            >
+                              Delete Account
+                            </span>
+                            {/* <button> */}
+                          </div>
+
+                          {/* Delete Confirmation Modal */}
+                          {isDeleteConfirmationVisible && (
+                            <div className="delete-confirmation-modal">
+                              <p
+                                style={{
+                                  color: "#dc3545",
+                                  marginTop: "10px",
+                                  marginBottom: "10px",
+                                }}
+                              >
+                                Are you sure you wants to delete your account?
+                              </p>
+                              <input
+                                required
+                                type="text"
+                                className="form-control"
+                                style={{ marginBottom: "10px" }}
+                                placeholder="Any Reason to delete your account?"
+                              />
+                              <div className="row">
+                                <div className="col">
+                                  <button
+                                    type="submit"
+                                    style={{ width: "100%" }}
+                                    className="btn btn-danger"
+                                    onClick={handleDeleteAccountSubmit}
+                                  >
+                                    Yes, Delete Account
+                                  </button>
+                                </div>
+                                <div className="col">
+                                  <button
+                                    type="submit"
+                                    style={{ width: "100%" }}
+                                    className="btn btn-success"
+                                    onClick={handleCancelClick}
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </form>
+                    </div>
+                    {/* Accont Setting Section Start End */}
                   </div>
                 </div>
               </div>
