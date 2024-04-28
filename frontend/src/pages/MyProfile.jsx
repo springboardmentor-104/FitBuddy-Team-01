@@ -9,6 +9,7 @@ import profile_icn from "../Assets/profile.png";
 import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaLink } from "react-icons/fa";
 
 import {
   faDumbbell,
@@ -20,6 +21,8 @@ import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+
+import { FaLinkedin, FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -96,14 +99,14 @@ const MyProfile = () => {
   // End
 
   // My User - Password - Password Data(fetch) - From Registration Form
-  const [password, setpassword] = useState({});
-  useEffect(() => {
-    let password = localStorage.getItem("user");
-    if (password) {
-      password = JSON.parse(password);
-      setpassword(password);
-    }
-  }, []);
+  // const [password, setpassword] = useState({});
+  // useEffect(() => {
+  //   let password = localStorage.getItem("user");
+  //   if (password) {
+  //     password = JSON.parse(password);
+  //     setpassword(password);
+  //   }
+  // }, []);
   // End
 
   // My User - Phone - Phone Data(fetch) - From Edit Profile Form
@@ -271,7 +274,7 @@ const MyProfile = () => {
     event.preventDefault();
 
     // Check current password is correct or not
-    // if (currentpassword !== password) {
+    // if (oldpassword !== password) {
     //   alert("Current password does not match.");
     //   return;
     // }
@@ -449,31 +452,92 @@ const MyProfile = () => {
   };
   // End
 
+  const [socialMedia1, setSocialMedia1] = useState("");
+  const [socialMedia2, setSocialMedia2] = useState("");
+  const [socialMedia3, setSocialMedia3] = useState("");
+  const [socialMedia4, setSocialMedia4] = useState("");
+
   // Social Link 1 - New - Edit Profile
-  const [twitter, settwitter] = useState("");
-  const handletwitterChange = (e) => {
-    settwitter(e.target.value);
+  const [link1, setlink1] = useState("");
+  const handlelink1Change = (e) => {
+    setlink1(e.target.value);
+    const url = e.target.value;
+    setlink1(url);
+    // Check if the input URL matches with any of the social media URLs
+    if (url.includes("linkedin.com")) {
+      setSocialMedia1("LinkedIn");
+    } else if (url.includes("twitter.com")) {
+      setSocialMedia1("Twitter");
+    } else if (url.includes("facebook.com")) {
+      setSocialMedia1("Facebook");
+    } else if (url.includes("instagram.com")) {
+      setSocialMedia1("Instagram");
+    } else {
+      setSocialMedia1("");
+    }
   };
   // End
 
   // Social Link 2 - New - Edit Profile
-  const [facebook, setfacebook] = useState("");
-  const handlefacebookChange = (e) => {
-    setfacebook(e.target.value);
+  const [link2, setlink2] = useState("");
+  const handlelink2Change = (e) => {
+    setlink2(e.target.value);
+    const url = e.target.value;
+    setlink2(url);
+    // Check if the input URL matches with any of the social media URLs
+    if (url.includes("linkedin.com")) {
+      setSocialMedia2("LinkedIn");
+    } else if (url.includes("twitter.com")) {
+      setSocialMedia2("Twitter");
+    } else if (url.includes("facebook.com")) {
+      setSocialMedia2("Facebook");
+    } else if (url.includes("instagram.com")) {
+      setSocialMedia2("Instagram");
+    } else {
+      setSocialMedia2("");
+    }
   };
   // End
 
   // Social Link 3 - New - Edit Profile
-  const [instagram, setinstagram] = useState("");
-  const handleinstagramChange = (e) => {
-    setinstagram(e.target.value);
+  const [link3, setlink3] = useState("");
+  const handlelink3Change = (e) => {
+    setlink3(e.target.value);
+    const url = e.target.value;
+    setlink3(url);
+    // Check if the input URL matches with any of the social media URLs
+    if (url.includes("linkedin.com")) {
+      setSocialMedia3("LinkedIn");
+    } else if (url.includes("twitter.com")) {
+      setSocialMedia3("Twitter");
+    } else if (url.includes("facebook.com")) {
+      setSocialMedia3("Facebook");
+    } else if (url.includes("instagram.com")) {
+      setSocialMedia3("Instagram");
+    } else {
+      setSocialMedia3("");
+    }
   };
   // End
 
   // Social Link 4 - New - Edit Profile
-  const [linkedin, setlinkedin] = useState("");
-  const handlelinkedinChange = (e) => {
-    setlinkedin(e.target.value);
+  const [link4, setlink4] = useState("");
+  const handlelink4Change = (e) => {
+    setlink4(e.target.value);
+    const url = e.target.value;
+    setlink4(url);
+    // Check if the input URL matches with any of the social media URLs
+    if (url.includes("linkedin.com")) {
+      setSocialMedia4("LinkedIn");
+    } else if (url.includes("twitter.com")) {
+      setSocialMedia4("Twitter");
+    } else if (url.includes("facebook.com")) {
+      setSocialMedia4("Facebook");
+    } else if (url.includes("instagram.com")) {
+      setSocialMedia4("Instagram");
+    } else {
+      setSocialMedia4("");
+    }
   };
   // End
 
@@ -589,7 +653,8 @@ const MyProfile = () => {
   const handleDeleteImage = () => {
     // Show confirmation dialog
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete your current profile image?"
+      // "Are you sure you want to delete your current profile image?"
+      "Are you sure you want to reset your current avatar?"
     );
     // If user confirms, delete the image
     if (confirmDelete) {
@@ -826,17 +891,41 @@ const MyProfile = () => {
                   <h2>{user?.name || "N/A"}</h2>
                   <h3>{Occupation || "N/A"}</h3>
                   <div className="social-links mt-2">
-                    <Link to={twitter} className="twitter">
-                      <FontAwesomeIcon icon={faTwitter} />
+                    <Link to={link1} className="twitter">
+                      {/* <FontAwesomeIcon icon={faTwitter} /> */}
+
+                      {/* Dynamically add icon 1 */}
+                      {socialMedia1 === "LinkedIn" && <FaLinkedin />}
+                      {socialMedia1 === "Twitter" && <FaTwitter />}
+                      {socialMedia1 === "Facebook" && <FaFacebook />}
+                      {socialMedia1 === "Instagram" && <FaInstagram />}
                     </Link>
-                    <Link to={facebook} className="facebook">
-                      <FontAwesomeIcon icon={faFacebook} />
+                    <Link to={link2} className="facebook">
+                      {/* <FontAwesomeIcon icon={faFacebook} /> */}
+
+                      {/* Dynamically add icon 2 */}
+                      {socialMedia2 === "LinkedIn" && <FaLinkedin />}
+                      {socialMedia2 === "Twitter" && <FaTwitter />}
+                      {socialMedia2 === "Facebook" && <FaFacebook />}
+                      {socialMedia2 === "Instagram" && <FaInstagram />}
                     </Link>
-                    <Link to={instagram} className="instagram">
-                      <FontAwesomeIcon icon={faInstagram} />
+                    <Link to={link3} className="instagram">
+                      {/* <FontAwesomeIcon icon={faInstagram} /> */}
+
+                      {/* Dynamically add icon 3 */}
+                      {socialMedia3 === "LinkedIn" && <FaLinkedin />}
+                      {socialMedia3 === "Twitter" && <FaTwitter />}
+                      {socialMedia3 === "Facebook" && <FaFacebook />}
+                      {socialMedia3 === "Instagram" && <FaInstagram />}
                     </Link>
-                    <Link to={linkedin} className="linkedin">
-                      <FontAwesomeIcon icon={faLinkedin} />
+                    <Link to={link4} className="linkedin">
+                      {/* <FontAwesomeIcon icon={faLinkedin} /> */}
+
+                      {/* Dynamically add icon 4 */}
+                      {socialMedia4 === "LinkedIn" && <FaLinkedin />}
+                      {socialMedia4 === "Twitter" && <FaTwitter />}
+                      {socialMedia4 === "Facebook" && <FaFacebook />}
+                      {socialMedia4 === "Instagram" && <FaInstagram />}
                     </Link>
                   </div>
                 </div>
@@ -939,7 +1028,7 @@ const MyProfile = () => {
                             }`}
                             onClick={() => handleTabClick(6)}
                           >
-                            Body Status
+                            Body &amp; Health Status
                           </button>
                         </li>
                         <li className="nav-item">
@@ -1128,37 +1217,41 @@ const MyProfile = () => {
                           {/* Link 1 */}
                           <div className="row">
                             <div className="col-lg-3 col-md-4 label">
-                              Twitter
+                              {/* Link 1 */}
+                              {socialMedia1 || "Profile N/A"}
                             </div>
                             <div className="col-lg-9 col-md-8">
-                              {twitter || "N/A"}
+                              {link1 || "url N/A"}
                             </div>
                           </div>
                           {/* Link 2 */}
                           <div className="row">
                             <div className="col-lg-3 col-md-4 label">
-                              Facebook
+                              {/* Link 2 */}
+                              {socialMedia2 || "Profile N/A"}
                             </div>
                             <div className="col-lg-9 col-md-8">
-                              {facebook || "N/A"}
+                              {link2 || "url N/A"}
                             </div>
                           </div>
                           {/* Link 3 */}
                           <div className="row">
                             <div className="col-lg-3 col-md-4 label">
-                              Instagram
+                              {/* Link 3 */}
+                              {socialMedia3 || "Profile N/A"}
                             </div>
                             <div className="col-lg-9 col-md-8">
-                              {instagram || "N/A"}
+                              {link3 || "url N/A"}
                             </div>
                           </div>
                           {/* Link 4 */}
                           <div className="row">
                             <div className="col-lg-3 col-md-4 label">
-                              Linkedin
+                              {/* Link 4 */}
+                              {socialMedia4 || "Profile N/A"}
                             </div>
                             <div className="col-lg-9 col-md-8">
-                              {linkedin || "N/A"}
+                              {link4 || "url N/A"}
                             </div>
                           </div>
                         </div>
@@ -1197,6 +1290,7 @@ const MyProfile = () => {
                             <div className="pt-2">
                               <input
                                 name="Image"
+                                // value={image}
                                 type="file"
                                 accept="image/jpej, image/png, image/jpg"
                                 id="input-file"
@@ -1247,11 +1341,11 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              // value=""
                               required
                               type="text"
                               id="fullName"
                               name="fullName"
+                              // value=""
                               // value={fullName}
                               value={user?.name || fullName || "User"}
                               pattern="[A-Z,a-z, ]*"
@@ -1535,87 +1629,215 @@ const MyProfile = () => {
                         </div>
 
                         {/* Social Media Profile Section Starts */}
-                        {/* Twitter Profile */}
+                        {/* Link 1 */}
                         <div className="row mb-3">
                           <label
                             htmlFor="Twitter"
                             className="col-md-4 col-lg-3 col-form-label"
                           >
-                            Twitter Profile
+                            {/* Link 1 Profile */}
+                            {socialMedia1 && (
+                              <div>
+                                <span>
+                                  {/* Social Media :  */}
+                                  {socialMedia1}
+                                </span>
+                                {/* Leave space for the icon */}
+                              </div>
+                            )}
                           </label>
                           <div className="col-md-8 col-lg-9">
-                            <input
-                              value={twitter}
-                              type="url"
-                              id="Twitter"
-                              name="twitter"
-                              className="form-control"
-                              placeholder="Link to social profile"
-                              onChange={handletwitterChange}
-                            />
+                            <div className="input-group">
+                              <span className="input-group-text">
+                                {/* Conditionally render the link icon or a default icon */}
+                                {socialMedia1 ? (
+                                  <>
+                                    {socialMedia1 === "LinkedIn" && (
+                                      <FaLinkedin />
+                                    )}
+                                    {socialMedia1 === "Twitter" && (
+                                      <FaTwitter />
+                                    )}
+                                    {socialMedia1 === "Facebook" && (
+                                      <FaFacebook />
+                                    )}
+                                    {socialMedia1 === "Instagram" && (
+                                      <FaInstagram />
+                                    )}
+                                  </>
+                                ) : (
+                                  <FaLink />
+                                )}
+                              </span>
+                              <input
+                                value={link1}
+                                type="url"
+                                id="link1"
+                                name="link1"
+                                className="form-control"
+                                placeholder="Link to social profile"
+                                onChange={handlelink1Change}
+                              />
+                            </div>
                           </div>
                         </div>
 
-                        {/* Facebook Profile */}
+                        {/* Link 2 */}
                         <div className="row mb-3">
                           <label
                             htmlFor="Facebook"
                             className="col-md-4 col-lg-3 col-form-label"
                           >
-                            Facebook Profile
+                            {/* Link 2 Profile */}
+                            {socialMedia2 && (
+                              <div>
+                                <span>
+                                  {/* Social Media :  */}
+                                  {socialMedia2}
+                                </span>
+                                {/* Leave space for the icon */}
+                              </div>
+                            )}
                           </label>
                           <div className="col-md-8 col-lg-9">
-                            <input
-                              value={facebook}
-                              type="url"
-                              id="Facebook"
-                              name="facebook"
-                              className="form-control"
-                              placeholder="Link to social profile"
-                              onChange={handlefacebookChange}
-                            />
+                            <div className="input-group">
+                              <span className="input-group-text">
+                                {/* Conditionally render the link icon or a default icon */}
+                                {socialMedia2 ? (
+                                  <>
+                                    {socialMedia2 === "LinkedIn" && (
+                                      <FaLinkedin />
+                                    )}
+                                    {socialMedia2 === "Twitter" && (
+                                      <FaTwitter />
+                                    )}
+                                    {socialMedia2 === "Facebook" && (
+                                      <FaFacebook />
+                                    )}
+                                    {socialMedia2 === "Instagram" && (
+                                      <FaInstagram />
+                                    )}
+                                  </>
+                                ) : (
+                                  <FaLink />
+                                )}
+                              </span>
+                              <input
+                                value={link2}
+                                type="url"
+                                id="link2"
+                                name="link2"
+                                className="form-control"
+                                placeholder="Link to social profile"
+                                onChange={handlelink2Change}
+                              />
+                            </div>
                           </div>
                         </div>
 
-                        {/* Instagram Profile */}
+                        {/* Link 3 */}
                         <div className="row mb-3">
                           <label
                             htmlFor="Instagram"
                             className="col-md-4 col-lg-3 col-form-label"
                           >
-                            Instagram Profile
+                            {/* Link 3 Profile */}
+                            {socialMedia3 && (
+                              <div>
+                                <span>
+                                  {/* Social Media :  */}
+                                  {socialMedia3}
+                                </span>
+                                {/* Leave space for the icon */}
+                              </div>
+                            )}
                           </label>
                           <div className="col-md-8 col-lg-9">
-                            <input
-                              value={instagram}
-                              id="Instagram"
-                              name="instagram"
-                              className="form-control"
-                              type="url"
-                              placeholder="Link to social profile"
-                              onChange={handleinstagramChange}
-                            />
+                            <div className="input-group">
+                              <span className="input-group-text">
+                                {/* Conditionally render the link icon or a default icon */}
+                                {socialMedia3 ? (
+                                  <>
+                                    {socialMedia3 === "LinkedIn" && (
+                                      <FaLinkedin />
+                                    )}
+                                    {socialMedia3 === "Twitter" && (
+                                      <FaTwitter />
+                                    )}
+                                    {socialMedia3 === "Facebook" && (
+                                      <FaFacebook />
+                                    )}
+                                    {socialMedia3 === "Instagram" && (
+                                      <FaInstagram />
+                                    )}
+                                  </>
+                                ) : (
+                                  <FaLink />
+                                )}
+                              </span>
+                              <input
+                                value={link3}
+                                id="link3"
+                                name="link3"
+                                className="form-control"
+                                type="url"
+                                placeholder="Link to social profile"
+                                onChange={handlelink3Change}
+                              />
+                            </div>
                           </div>
                         </div>
 
-                        {/* Linkedin Profile */}
+                        {/* Link 4 */}
                         <div className="row mb-3">
                           <label
                             htmlFor="Linkedin"
                             className="col-md-4 col-lg-3 col-form-label"
                           >
-                            Linkedin Profile
+                            {/* Link 4 Profile */}
+                            {socialMedia4 && (
+                              <div>
+                                <span>
+                                  {/* Social Media :  */}
+                                  {socialMedia4}
+                                </span>
+                                {/* Leave space for the icon */}
+                              </div>
+                            )}
                           </label>
                           <div className="col-md-8 col-lg-9">
-                            <input
-                              value={linkedin}
-                              type="url"
-                              id="Linkedin"
-                              name="linkedin"
-                              className="form-control"
-                              placeholder="Link to social profile"
-                              onChange={handlelinkedinChange}
-                            />
+                            <div className="input-group">
+                              <span className="input-group-text">
+                                {/* Conditionally render the link icon or a default icon */}
+                                {socialMedia4 ? (
+                                  <>
+                                    {socialMedia4 === "LinkedIn" && (
+                                      <FaLinkedin />
+                                    )}
+                                    {socialMedia4 === "Twitter" && (
+                                      <FaTwitter />
+                                    )}
+                                    {socialMedia4 === "Facebook" && (
+                                      <FaFacebook />
+                                    )}
+                                    {socialMedia4 === "Instagram" && (
+                                      <FaInstagram />
+                                    )}
+                                  </>
+                                ) : (
+                                  <FaLink />
+                                )}
+                              </span>
+                              <input
+                                value={link4}
+                                type="url"
+                                id="link4"
+                                name="link4"
+                                className="form-control"
+                                placeholder="Link to social profile"
+                                onChange={handlelink4Change}
+                              />
+                            </div>
                           </div>
                         </div>
                         {/* Social Media Profile Section End */}
@@ -1656,7 +1878,7 @@ const MyProfile = () => {
                                 name="password"
                                 id="currentPassword"
                                 value={currentpassword}
-                                // value={password?.password || "password"}
+                                // value={password?.password || "N/A"}
                                 className="form-control"
                                 pattern="[A-Z,a-z,0-9,@,#]*"
                                 onChange={handlecurrentpasswordChange}
