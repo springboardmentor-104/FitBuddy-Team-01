@@ -17,10 +17,10 @@ import {
   // faBicycle,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+// import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+// import { faFacebook } from "@fortawesome/free-brands-svg-icons";
+// import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
+// import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 import { FaLinkedin, FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 
@@ -99,15 +99,26 @@ const MyProfile = () => {
   // End
 
   // My User - Password - Password Data(fetch) - From Registration Form
-  // const [password, setpassword] = useState({});
-  // useEffect(() => {
-  //   let password = localStorage.getItem("user");
-  //   if (password) {
-  //     password = JSON.parse(password);
-  //     setpassword(password);
-  //   }
-  // }, []);
+  const [password, setpassword] = useState({});
+  useEffect(() => {
+    let password = localStorage.getItem("user");
+    if (password) {
+      password = JSON.parse(password);
+      setpassword(password);
+    }
+  }, []);
   // End
+
+  // My User - userId - userId Data(fetch) - From Registration Form
+  const [userId, setuserId] = useState({});
+  useEffect(() => {
+    let userId = localStorage.getItem("user");
+    if (userId) {
+      userId = JSON.parse(userId);
+      setuserId(userId);
+    }
+  }, []);
+  //
 
   // My User - Phone - Phone Data(fetch) - From Edit Profile Form
   // const [Phone, setPhone] = useState({});
@@ -366,23 +377,71 @@ const MyProfile = () => {
   };
 
   // For Full Names - New - Edit Profile
-  const [fullName, setfullName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [fullNameError, setFullNameError] = useState("");
+  // const [touched, setTouched] = useState(false);
+
   const handleFullNameChange = (e) => {
-    setfullName(e.target.value);
+    const inputValue = e.target.value;
+    setFullName(inputValue);
+    setTouched(true);
+
+    // Regular expression for full name validation (letters and spaces only)
+    const fullNameRegex = /^[A-Za-z\s]*$/;
+
+    if (!inputValue.trim()) {
+      setFullNameError(""); // Clear error message if field is empty
+    } else if (!fullNameRegex.test(inputValue)) {
+      setFullNameError("Please enter a valid full name");
+    } else {
+      setFullNameError("");
+    }
   };
   // End
 
   // For username - New - Edit Profile
-  const [userName, setuserName] = useState("");
-  const handleuserNameChange = (e) => {
-    setuserName(e.target.value);
+  const [userName, setUserName] = useState("");
+  const [userNameError, setUserNameError] = useState("");
+  const [touched, setTouched] = useState(false);
+
+  const handleUserNameChange = (e) => {
+    const inputValue = e.target.value;
+    setUserName(inputValue);
+    setTouched(true);
+
+    // Regular expression for username validation
+    const userNameRegex = /^[A-Za-z0-9@#]+$/;
+
+    if (!inputValue.trim()) {
+      setUserNameError("");
+    } else if (!userNameRegex.test(inputValue)) {
+      setUserNameError("Please enter a valid username");
+    } else {
+      setUserNameError("");
+    }
   };
   // End
 
   // For Email - New - Edit Profile
   const [Email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  // const [touched, setTouched] = useState(false);
+
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    const inputValue = e.target.value;
+    setEmail(inputValue);
+    setTouched(true);
+
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!inputValue.trim()) {
+      setEmailError("");
+    } else if (!emailRegex.test(inputValue)) {
+      setEmailError("Please enter a valid email address");
+    } else {
+      setEmailError("");
+    }
   };
   // End
 
@@ -398,43 +457,139 @@ const MyProfile = () => {
 
   // For Country - New - Edit Profile
   const [Country, setCountry] = useState("");
+  const [countryError, setCountryError] = useState("");
+  // const [touched, setTouched] = useState(false);
+
   const handleCountryChange = (e) => {
-    setCountry(e.target.value);
+    const inputValue = e.target.value;
+    setCountry(inputValue);
+    setTouched(true);
+
+    // Regular expression for country validation
+    const countryRegex = /^[A-Za-z\s]+$/;
+
+    if (!inputValue.trim()) {
+      setCountryError(""); // Clear error message if field is empty
+    } else if (!countryRegex.test(inputValue)) {
+      setCountryError("Please enter a valid country name");
+    } else {
+      setCountryError("");
+    }
   };
   // End
 
   // For Address - New - Edit Profile
   const [Address, setAddress] = useState("");
+  const [addressError, setAddressError] = useState("");
+  // const [touched, setTouched] = useState(false);
+
   const handleAddressChange = (e) => {
-    setAddress(e.target.value);
+    const inputValue = e.target.value;
+    setAddress(inputValue);
+    setTouched(true);
+
+    // Regular expression for address validation
+    const addressRegex = /^[A-Za-z0-9\s,-]*$/;
+
+    if (!inputValue.trim()) {
+      setAddressError(""); // Clear error message if field is empty
+    } else if (!addressRegex.test(inputValue)) {
+      setAddressError("Please enter a valid address");
+    } else {
+      setAddressError("");
+    }
   };
   // End
 
   // For Height - New - Edit Profile
   const [Height, setHeight] = useState("");
+  const [heightError, setHeightError] = useState("");
+  // const [touched, setTouched] = useState(false);
+
   const handleHeightChange = (e) => {
-    setHeight(e.target.value);
+    const inputValue = e.target.value;
+    setHeight(inputValue);
+    setTouched(true);
+
+    // Regular expression for height validation (allowing only numbers)
+    const heightRegex = /^[0-9]*$/;
+
+    if (!inputValue.trim()) {
+      setHeightError(""); // Clear error message if field is empty
+    } else if (!heightRegex.test(inputValue)) {
+      setHeightError("Please enter a valid height (only numbers)");
+    } else {
+      setHeightError("");
+    }
   };
   // End
 
   // Weight - New - Edit Profile
   const [Weight, setWeight] = useState("");
+  const [weightError, setWeightError] = useState("");
+  // const [touched, setTouched] = useState(false);
+
   const handleWeightChange = (e) => {
-    setWeight(e.target.value);
+    const inputValue = e.target.value;
+    setWeight(inputValue);
+    setTouched(true);
+
+    // Regular expression for weight validation (only allowing digits)
+    const weightRegex = /^[0-9]*$/;
+
+    if (!inputValue.trim()) {
+      setWeightError(""); // Clear error message if field is empty
+    } else if (!weightRegex.test(inputValue)) {
+      setWeightError("Please enter a valid weight (only digits)");
+    } else {
+      setWeightError("");
+    }
   };
   // End
 
   // About - New - Edit Profile
   const [About, setAbout] = useState("");
+  const [aboutError, setAboutError] = useState("");
+  // const [touched, setTouched] = useState(false);
+
   const handleAboutChange = (e) => {
-    setAbout(e.target.value);
+    const inputValue = e.target.value;
+    setAbout(inputValue);
+    setTouched(true);
+
+    // Regular expression for validation
+    const regex = /^[A-Za-z0-9\s,-]*$/;
+
+    if (!inputValue.trim()) {
+      setAboutError(""); // Clear error message if field is empty
+    } else if (!regex.test(inputValue)) {
+      setAboutError("Please enter a valid value for About");
+    } else {
+      setAboutError("");
+    }
   };
   // End
 
   // Occupation - New - Edit Profile
   const [Occupation, setOccupation] = useState("");
+  const [occupationError, setOccupationError] = useState("");
+  // const [touched, setTouched] = useState(false);
+
   const handleOccupationChange = (e) => {
-    setOccupation(e.target.value);
+    const inputValue = e.target.value;
+    setOccupation(inputValue);
+    setTouched(true);
+
+    // Regular expression for occupation validation
+    const occupationRegex = /^[A-Za-z\s]+$/;
+
+    if (!inputValue.trim()) {
+      setOccupationError(""); // Clear error message if field is empty
+    } else if (!occupationRegex.test(inputValue)) {
+      setOccupationError("Please enter a valid occupation");
+    } else {
+      setOccupationError("");
+    }
   };
   // End
 
@@ -458,82 +613,136 @@ const MyProfile = () => {
   const [socialMedia4, setSocialMedia4] = useState("");
 
   // Social Link 1 - New - Edit Profile
-  const [link1, setlink1] = useState("");
+  const [link1, setLink1] = useState("");
+  const [link1Error, setLink1Error] = useState("");
+
   const handlelink1Change = (e) => {
-    setlink1(e.target.value);
     const url = e.target.value;
-    setlink1(url);
-    // Check if the input URL matches with any of the social media URLs
-    if (url.includes("linkedin.com")) {
+    setLink1(url);
+
+    // Regular expression for URL validation
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+
+    if (!url.trim()) {
+      setSocialMedia1("");
+      setLink1Error("");
+    } else if (!urlRegex.test(url)) {
+      setLink1Error("Please enter a valid URL");
+    } else if (url.includes("linkedin.com")) {
       setSocialMedia1("LinkedIn");
+      setLink1Error("");
     } else if (url.includes("twitter.com")) {
       setSocialMedia1("Twitter");
+      setLink1Error("");
     } else if (url.includes("facebook.com")) {
       setSocialMedia1("Facebook");
+      setLink1Error("");
     } else if (url.includes("instagram.com")) {
       setSocialMedia1("Instagram");
+      setLink1Error("");
     } else {
       setSocialMedia1("");
+      setLink1Error("Please enter a valid social media URL");
     }
   };
   // End
 
   // Social Link 2 - New - Edit Profile
   const [link2, setlink2] = useState("");
+  const [link2Error, setlink2Error] = useState("");
+
   const handlelink2Change = (e) => {
-    setlink2(e.target.value);
-    const url = e.target.value;
-    setlink2(url);
-    // Check if the input URL matches with any of the social media URLs
-    if (url.includes("linkedin.com")) {
-      setSocialMedia2("LinkedIn");
-    } else if (url.includes("twitter.com")) {
-      setSocialMedia2("Twitter");
-    } else if (url.includes("facebook.com")) {
-      setSocialMedia2("Facebook");
-    } else if (url.includes("instagram.com")) {
-      setSocialMedia2("Instagram");
+    const inputValue = e.target.value;
+    setlink2(inputValue);
+    setTouched(true);
+
+    // Regular expression for URL validation
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+
+    if (!inputValue.trim()) {
+      setlink2Error(""); // Clear error message if field is empty
+    } else if (!urlRegex.test(inputValue)) {
+      setlink2Error("Please enter a valid URL");
     } else {
-      setSocialMedia2("");
+      setlink2Error("");
+      // Check if the input URL matches with any of the social media URLs
+      if (inputValue.includes("linkedin.com")) {
+        setSocialMedia2("LinkedIn");
+      } else if (inputValue.includes("twitter.com")) {
+        setSocialMedia2("Twitter");
+      } else if (inputValue.includes("facebook.com")) {
+        setSocialMedia2("Facebook");
+      } else if (inputValue.includes("instagram.com")) {
+        setSocialMedia2("Instagram");
+      } else {
+        setSocialMedia2("");
+      }
     }
   };
   // End
 
   // Social Link 3 - New - Edit Profile
   const [link3, setlink3] = useState("");
+  const [link3Error, setlink3Error] = useState("");
   const handlelink3Change = (e) => {
-    setlink3(e.target.value);
-    const url = e.target.value;
-    setlink3(url);
-    // Check if the input URL matches with any of the social media URLs
-    if (url.includes("linkedin.com")) {
-      setSocialMedia3("LinkedIn");
-    } else if (url.includes("twitter.com")) {
-      setSocialMedia3("Twitter");
-    } else if (url.includes("facebook.com")) {
-      setSocialMedia3("Facebook");
-    } else if (url.includes("instagram.com")) {
-      setSocialMedia3("Instagram");
+    const inputValue = e.target.value;
+    setlink3(inputValue);
+    setTouched(true);
+
+    // Regular expression for URL validation
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+
+    if (!inputValue.trim()) {
+      setlink3Error(""); // Clear error message if field is empty
+    } else if (!urlRegex.test(inputValue)) {
+      setlink3Error("Please enter a valid URL");
     } else {
-      setSocialMedia3("");
+      setlink3Error("");
+
+      // Check if the input URL matches with any of the social media URLs
+      if (inputValue.includes("linkedin.com")) {
+        setSocialMedia3("LinkedIn");
+      } else if (inputValue.includes("twitter.com")) {
+        setSocialMedia3("Twitter");
+      } else if (inputValue.includes("facebook.com")) {
+        setSocialMedia3("Facebook");
+      } else if (inputValue.includes("instagram.com")) {
+        setSocialMedia3("Instagram");
+      } else {
+        setSocialMedia3("");
+      }
     }
   };
   // End
 
   // Social Link 4 - New - Edit Profile
   const [link4, setlink4] = useState("");
+  const [link4Error, setlink4Error] = useState("");
+
   const handlelink4Change = (e) => {
-    setlink4(e.target.value);
-    const url = e.target.value;
-    setlink4(url);
+    const inputValue = e.target.value;
+    setlink4(inputValue);
+    setTouched(true);
+
+    // Regular expression for URL validation
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+
+    if (!inputValue.trim()) {
+      setlink4Error(""); // Clear error message if field is empty
+    } else if (!urlRegex.test(inputValue)) {
+      setlink4Error("Please enter a valid URL");
+    } else {
+      setlink4Error("");
+    }
+
     // Check if the input URL matches with any of the social media URLs
-    if (url.includes("linkedin.com")) {
+    if (inputValue.includes("linkedin.com")) {
       setSocialMedia4("LinkedIn");
-    } else if (url.includes("twitter.com")) {
+    } else if (inputValue.includes("twitter.com")) {
       setSocialMedia4("Twitter");
-    } else if (url.includes("facebook.com")) {
+    } else if (inputValue.includes("facebook.com")) {
       setSocialMedia4("Facebook");
-    } else if (url.includes("instagram.com")) {
+    } else if (inputValue.includes("instagram.com")) {
       setSocialMedia4("Instagram");
     } else {
       setSocialMedia4("");
@@ -543,6 +752,7 @@ const MyProfile = () => {
 
   // Edit Form Submission Logic
   const [EditFormSubmitted, setEditFormSubmitted] = useState(false);
+
   const handleEditFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -555,37 +765,29 @@ const MyProfile = () => {
     });
     console.log("formData2", formData2);
 
-    // Check if the phone number is filled in
-    if (Phone) {
-      // Phone number is filled, proceed with form submission logic
-      let userData = localStorage.getItem("user");
-      userData = JSON.parse(userData);
-      let data = formData2;
-      let headers = {
-        Authorization: userData?.token || "",
-        "Content-Type": "application/json",
-      };
-      console.log(headers);
-      await axios
-        .put("http://localhost:8080/api/v1/auth/update-profile", data, {
-          headers: headers,
-        })
-        .then(
-          (response) => {
-            alert(response.data.message);
-          },
-          (error) => {
-            console.log(error);
-            // alert(error?.data?.error || error?.response?.data?.error);
-          }
-        );
-      // Reset phone input after form submission if needed
-      // setPhone('');
-    } else {
-      // Phone number is not filled, prevent form submission
-      alert("Please fill in the phone number");
-      console.log("Please fill in the phone number");
-    }
+    // Proceed with form submission logic
+    let userData = localStorage.getItem("user");
+    userData = JSON.parse(userData);
+    let data = formData2;
+    let headers = {
+      Authorization: userData?.token || "",
+      "Content-Type": "application/json",
+    };
+
+    await axios
+      .put("http://localhost:8080/api/v1/auth/update-profile", data, {
+        headers: headers,
+      })
+      .then(
+        (response) => {
+          alert("Update profile successfully!");
+          setEditFormSubmitted(true); // Update state to indicate form submission
+        },
+        (error) => {
+          console.log(error);
+          // alert(error?.data?.error || error?.response?.data?.error);
+        }
+      );
   };
   // End
 
@@ -650,16 +852,36 @@ const MyProfile = () => {
   // Account Deletion Logic End
 
   // On clicking Trash of profile Image, shown an alert
+  const [profilepic, setprofilepic] = useState(""); // Add state for user ID
   const handleDeleteImage = () => {
-    // Show confirmation dialog
     const confirmDelete = window.confirm(
-      // "Are you sure you want to delete your current profile image?"
       "Are you sure you want to reset your current avatar?"
     );
-    // If user confirms, delete the image
     if (confirmDelete) {
-      // Add logic to delete the image from the database
-      console.log("Image deleted");
+      // Send a request to the backend to delete the image
+      fetch("/api/v1/auth/profile/image", {
+        // Update the endpoint here
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // Pass any necessary data in the request body, such as user ID or image ID
+        body: JSON.stringify({
+          userId: userId,
+          imageId: profilepic,
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Image deleted successfully");
+            // Optionally, update the UI to reflect the deletion
+          } else {
+            console.error("Failed to delete image");
+          }
+        })
+        .catch((error) => {
+          console.error("Error deleting image:", error);
+        });
     }
   };
   // End
@@ -713,7 +935,8 @@ const MyProfile = () => {
                 onClick={toggleProfileDropdown}
               >
                 <img
-                  src={person_icn}
+                  style={{ width: "35px", height: "35px" }}
+                  src={profilepic || person_icn}
                   alt="Profile"
                   className="rounded-circle"
                 />
@@ -885,8 +1108,9 @@ const MyProfile = () => {
                 <div className="card-body profile-card pt-4 d-flex flex-column align-items-center">
                   <img
                     alt="Profile"
-                    src={person_icn}
+                    src={profilepic || person_icn}
                     className="rounded-circle"
+                    style={{ width: "100px", height: "100px" }}
                   />
                   <h2>{user?.name || "N/A"}</h2>
                   <h3>{Occupation || "N/A"}</h3>
@@ -1218,7 +1442,7 @@ const MyProfile = () => {
                           <div className="row">
                             <div className="col-lg-3 col-md-4 label">
                               {/* Link 1 */}
-                              {socialMedia1 || "Profile N/A"}
+                              <strong>{socialMedia1 || "Profile N/A"}</strong>
                             </div>
                             <div className="col-lg-9 col-md-8">
                               {link1 || "url N/A"}
@@ -1228,7 +1452,7 @@ const MyProfile = () => {
                           <div className="row">
                             <div className="col-lg-3 col-md-4 label">
                               {/* Link 2 */}
-                              {socialMedia2 || "Profile N/A"}
+                              <strong>{socialMedia2 || "Profile N/A"}</strong>
                             </div>
                             <div className="col-lg-9 col-md-8">
                               {link2 || "url N/A"}
@@ -1238,7 +1462,7 @@ const MyProfile = () => {
                           <div className="row">
                             <div className="col-lg-3 col-md-4 label">
                               {/* Link 3 */}
-                              {socialMedia3 || "Profile N/A"}
+                              <strong>{socialMedia3 || "Profile N/A"}</strong>
                             </div>
                             <div className="col-lg-9 col-md-8">
                               {link3 || "url N/A"}
@@ -1248,7 +1472,7 @@ const MyProfile = () => {
                           <div className="row">
                             <div className="col-lg-3 col-md-4 label">
                               {/* Link 4 */}
-                              {socialMedia4 || "Profile N/A"}
+                              <strong>{socialMedia4 || "Profile N/A"}</strong>
                             </div>
                             <div className="col-lg-9 col-md-8">
                               {link4 || "url N/A"}
@@ -1278,13 +1502,16 @@ const MyProfile = () => {
                           <div className="col-md-8 col-lg-9">
                             <img
                               alt="Profile"
-                              id="profile-pic"
-                              src={profile_icn}
+                              id="profilepic"
+                              // src={profile_icn}
+                              src={profilepic || profile_icn}
+                              className={`profilepic`}
                               style={{
                                 // width: "200px",
                                 // height: "200px",
                                 borderRadius: "0%",
-                                border: "1px solid #191919",
+                                // border: "1px solid #191919",
+                                border: "1px solid #919191",
                               }}
                             />
                             <div className="pt-2">
@@ -1299,12 +1526,7 @@ const MyProfile = () => {
                                   var tmppath = URL.createObjectURL(
                                     event.target.files[0]
                                   );
-                                  console.log("eee", tmppath);
-                                  let profilePic =
-                                    document.getElementById("profile-pic");
-                                  let inputFile =
-                                    document.getElementById("input-file");
-                                  profilePic.src = tmppath;
+                                  setprofilepic(tmppath);
                                   // inputFile.onchange = function () {
                                   //   console.log("Hell");
                                   //   console.log(profilePic);
@@ -1331,6 +1553,8 @@ const MyProfile = () => {
                           </div>
                         </div>
 
+                        <h5 className="card-title">Basic Inforamtion</h5>
+
                         {/* Full Name */}
                         <div className="row mb-3">
                           <label
@@ -1347,11 +1571,16 @@ const MyProfile = () => {
                               name="fullName"
                               // value=""
                               // value={fullName}
-                              value={user?.name || fullName || "User"}
+                              // value={user?.name || fullName || "User"}
                               pattern="[A-Z,a-z, ]*"
                               className="form-control"
                               onChange={handleFullNameChange}
                             />
+                            {touched && fullNameError && (
+                              <div className="text-danger">
+                                <small>{fullNameError}</small>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -1371,13 +1600,18 @@ const MyProfile = () => {
                               required
                               type="text"
                               // value={userName}
-                              value={
-                                username?.username || userName || "username"
-                              }
+                              // value={
+                              //   username?.username || userName || "username"
+                              // }
                               className="form-control"
                               pattern="[A-Z,a-z,0-9,@,#]*"
-                              onChange={handleuserNameChange}
+                              onChange={handleUserNameChange}
                             />
+                            {touched && userNameError && (
+                              <div className="text-danger">
+                                <small>{userNameError}</small>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -1396,12 +1630,17 @@ const MyProfile = () => {
                               id="Email"
                               type="email"
                               name="Email"
-                              // value={Email}
-                              value={email?.email || Email || "email"}
+                              value={Email}
+                              // value={email?.email || Email || "email"}
                               className="form-control"
                               pattern="[A-Z,a-z,0-9,@,.]*"
                               onChange={handleEmailChange}
                             />
+                            {touched && emailError && (
+                              <div className="text-danger">
+                                <small>{emailError}</small>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -1427,7 +1666,7 @@ const MyProfile = () => {
                             /> */}
 
                             <PhoneInput
-                              required
+                              // required
                               id="Phone"
                               name="Phone"
                               type="phone"
@@ -1458,7 +1697,7 @@ const MyProfile = () => {
                               id="dob"
                               name="DOB"
                               type="date"
-                              required
+                              // required
                               value={DOB}
                               min="1950-01-01"
                               max="2025-01-01"
@@ -1478,7 +1717,7 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <select
-                              required
+                              // required
                               id="gen"
                               name="Gender"
                               class="form-control"
@@ -1503,15 +1742,20 @@ const MyProfile = () => {
                           <div className="col-md-8 col-lg-9">
                             <input
                               // value=""
-                              required
+                              // required
                               type="text"
                               id="Country"
                               name="Country"
                               value={Country}
-                              // pattern="[A-Z,a-z]*"
+                              pattern="[A-Z,a-z]*"
                               className="form-control"
                               onChange={handleCountryChange}
                             />
+                            {touched && countryError && (
+                              <div className="text-danger">
+                                <small>{countryError}</small>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -1526,7 +1770,7 @@ const MyProfile = () => {
                           <div className="col-md-8 col-lg-9">
                             <input
                               // value=""
-                              required
+                              // required
                               type="text"
                               id="Address"
                               name="Address"
@@ -1535,6 +1779,11 @@ const MyProfile = () => {
                               // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
                               onChange={handleAddressChange}
                             />
+                            {touched && addressError && (
+                              <div className="text-danger">
+                                <small>{addressError}</small>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -1548,7 +1797,7 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <input
-                              required
+                              // required
                               type="text"
                               id="company"
                               // name="company"
@@ -1557,6 +1806,11 @@ const MyProfile = () => {
                               className="form-control"
                               onChange={handleOccupationChange}
                             />
+                            {touched && occupationError && (
+                              <div className="text-danger">
+                                <small>{occupationError}</small>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -1570,7 +1824,7 @@ const MyProfile = () => {
                           </label>
                           <div className="col-md-8 col-lg-9">
                             <textarea
-                              required
+                              // required
                               id="about"
                               name="About"
                               value={About}
@@ -1579,8 +1833,15 @@ const MyProfile = () => {
                               // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
                               onChange={handleAboutChange}
                             ></textarea>
+                            {touched && aboutError && (
+                              <div className="text-danger">
+                                <small>{aboutError}</small>
+                              </div>
+                            )}
                           </div>
                         </div>
+
+                        <h5 className="card-title">Body &amp; Health Status</h5>
 
                         {/* Height */}
                         <div className="row mb-3">
@@ -1593,15 +1854,18 @@ const MyProfile = () => {
                           <div className="col-md-8 col-lg-9">
                             <input
                               // value=""
+                              // required
+                              // pattern="[0-9,A-Z]*"
                               id=""
                               name="Height"
-                              required
                               type="text"
                               value={Height}
-                              // pattern="[0-9,A-Z]*"
                               className="form-control"
                               onChange={handleHeightChange}
                             />
+                            {touched && heightError && (
+                              <div className="text-danger">{heightError}</div>
+                            )}
                           </div>
                         </div>
 
@@ -1616,19 +1880,25 @@ const MyProfile = () => {
                           <div className="col-md-8 col-lg-9">
                             <input
                               // value=""
+                              // required
+                              // pattern="[0-9,A-Z]*"
                               id=""
                               name="Weight"
-                              required
                               type="text"
                               value={Weight}
-                              // pattern="[0-9,A-Z]*"
                               className="form-control"
                               onChange={handleWeightChange}
                             />
+                            {touched && weightError && (
+                              <div className="text-danger">{weightError}</div>
+                            )}
                           </div>
                         </div>
 
                         {/* Social Media Profile Section Starts */}
+
+                        <h5 className="card-title">Social accounts</h5>
+
                         {/* Link 1 */}
                         <div className="row mb-3">
                           <label
@@ -1679,6 +1949,11 @@ const MyProfile = () => {
                                 onChange={handlelink1Change}
                               />
                             </div>
+                            {link1Error && (
+                              <div className="text-danger">
+                                <small>{link1Error}</small>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -1732,6 +2007,11 @@ const MyProfile = () => {
                                 onChange={handlelink2Change}
                               />
                             </div>
+                            {touched && link2Error && (
+                              <div className="text-danger">
+                                <small>{link2Error}</small>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -1785,6 +2065,9 @@ const MyProfile = () => {
                                 onChange={handlelink3Change}
                               />
                             </div>
+                            {touched && link3Error && (
+                              <div className="text-danger">{link3Error}</div>
+                            )}
                           </div>
                         </div>
 
@@ -1838,6 +2121,9 @@ const MyProfile = () => {
                                 onChange={handlelink4Change}
                               />
                             </div>
+                            {touched && link4Error && (
+                              <div className="text-danger">{link4Error}</div>
+                            )}
                           </div>
                         </div>
                         {/* Social Media Profile Section End */}

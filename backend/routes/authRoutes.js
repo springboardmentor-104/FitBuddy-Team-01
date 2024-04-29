@@ -1,29 +1,35 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const {registerController, loginController, verifyOtpController, resendOtpController, forgotOtpController, resetPasswordController, updatePasswordController} = require('../controllers/authController')
-const {requireSignIn} = require('../middleware/authMiddleware');
-
+const {
+  registerController,
+  loginController,
+  verifyOtpController,
+  resendOtpController,
+  forgotOtpController,
+  resetPasswordController,
+  updatePasswordController,
+} = require("../controllers/authController");
+const { requireSignIn } = require("../middleware/authMiddleware");
 
 // register
-router.post('/register',registerController);
+router.post("/register", registerController);
 
-// login 
-router.post('/login', loginController);
+// login
+router.post("/login", loginController);
 
 // verify otp
-router.post('/verify',verifyOtpController);
+router.post("/verify", verifyOtpController);
 
 // resend otp
-router.post('/resend', resendOtpController );
+router.post("/resend", resendOtpController);
 
 //forgot OTP
-router.post('/forgot', forgotOtpController);
+router.post("/forgot", forgotOtpController);
 
 // reset password
-router.put('/reset-password', resetPasswordController);
+router.put("/reset-password", resetPasswordController);
 
 // update password
-router.put('/update-password', requireSignIn, updatePasswordController);
+router.put("/update-password", requireSignIn, updatePasswordController);
 
-
-module.exports = router
+module.exports = router;
