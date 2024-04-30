@@ -1,25 +1,31 @@
-import React, { useEffect, useState } from "react";
 import "./Userdashboard.css";
 import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
-import { BiCog } from "react-icons/bi";
-import { BiGrid } from "react-icons/bi";
-import { BiTime } from "react-icons/bi";
-import { BiTask } from "react-icons/bi";
-import { BiUser } from "react-icons/bi";
-import { BiSearch } from "react-icons/bi";
-import { BiLogOut } from "react-icons/bi";
-import { BiHelpCircle } from "react-icons/bi";
-import { BsList } from "react-icons/bs";
-import { BsArrowUp } from "react-icons/bs";
-import { BsPersonFill } from "react-icons/bs";
-import { BsCartPlusFill } from "react-icons/bs";
-import { BsFillPlusCircleFill } from "react-icons/bs";
-import { FaDumbbell } from "react-icons/fa";
-import { FaChevronDown } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+
+import {
+  BiCog,
+  BiGrid,
+  BiTime,
+  BiTask,
+  BiUser,
+  BiSearch,
+  BiLogOut,
+  BiHelpCircle,
+} from "react-icons/bi";
+
+import {
+  BsList,
+  BsArrowUp,
+  BsPersonFill,
+  BsCartPlusFill,
+  BsFillPlusCircleFill,
+} from "react-icons/bs";
+
+import { FaDumbbell, FaChevronDown } from "react-icons/fa";
 
 const Userdashboard = () => {
-  // My User
+  // My user - For opening dashboard of a user
   const [user, setUser] = useState({});
   const [openToggleMenu, setOpenToggleMenu] = useState("");
   useEffect(() => {
@@ -30,7 +36,7 @@ const Userdashboard = () => {
     }
   }, []);
 
-  // Side Bar Toggale
+  // Side bar toggale
   useEffect(() => {
     const toggleSidebar = () => {
       document.body.classList.toggle("toggle-sidebar");
@@ -91,18 +97,14 @@ const Userdashboard = () => {
 
   return (
     <div>
-      {/* <div className="centeredDiv ">
-        <h1 className="">Welcome {user?.name || "User"} !</h1>
-        <p className="">Welcome to Fit Buddy</p>
-      </div> */}
-
+      {/* Header Section */}
       <header
         id="header"
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
           <Link to="" class="logo d-flex align-items-center">
-            {/* <img src={person_icn} alt="" /> */}
+            {/* <img src={mylogo_icn} alt="" /> */}
             <span class="d-none d-lg-block">Fit Buddy</span>
           </Link>
           <BsList className="toggle-sidebar-btn" />
@@ -224,6 +226,7 @@ const Userdashboard = () => {
         </nav>
       </header>
 
+      {/* Aside Section */}
       <aside id="sidebar" className="sidebar">
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
@@ -284,13 +287,14 @@ const Userdashboard = () => {
                   <span>Exercises</span>
                 </Link>
               </li>
-              {/* <li>
-                <a href="forms-layouts.html">
-                  <i class="bi bi-circle"></i>
-                  <span>Form Layouts</span>
-                </a>
-              </li>
               <li>
+                <Link to="/Desktop">
+                  <BsFillPlusCircleFill />
+                  &nbsp;
+                  <span>Create Goals</span>
+                </Link>
+              </li>
+              {/* <li>
                 <a href="forms-editors.html">
                   <i class="bi bi-circle"></i>
                   <span>Form Editors</span>
@@ -345,6 +349,7 @@ const Userdashboard = () => {
         </ul>
       </aside>
 
+      {/* Main Section */}
       <main id="main" className="main">
         <div className="pagetitle">
           <h1>Dashboard</h1>
@@ -362,6 +367,7 @@ const Userdashboard = () => {
         </section>
       </main>
 
+      {/* Back to Top */}
       <Link
         to=""
         onClick={scrollToTop}

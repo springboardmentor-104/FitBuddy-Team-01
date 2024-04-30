@@ -1,0 +1,23 @@
+.alignCenterIcon {
+  position: absolute;
+  height: 100%;
+  width: 75%;
+  top: 0;
+  right: 12.5%;
+  bottom: 0;
+  left: 12.5%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.fiRsUser {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  width: 24px;
+  position: relative;
+  height: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+}

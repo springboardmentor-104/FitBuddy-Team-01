@@ -1,31 +1,28 @@
-import React, { useEffect, useState } from "react";
-import "./Userdashboard.css";
-import "./MyProfile.css";
-
+import axios from "axios";
 import { Link } from "react-router-dom";
+import PhoneInput from "react-phone-input-2";
+import React, { useEffect, useState } from "react";
+
+import "./MyProfile.css";
+import "./Userdashboard.css";
+import "react-phone-input-2/lib/style.css";
+
 import person_icn from "../Assets/person.png";
 import profile_icn from "../Assets/profile.png";
 
-import axios from "axios";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaLink } from "react-icons/fa";
 
 import {
-  faDumbbell,
-  // faRunning,
-  // faBicycle,
-} from "@fortawesome/free-solid-svg-icons";
+  FaLink,
+  FaEye,
+  FaEyeSlash,
+  FaLinkedin,
+  FaTwitter,
+  FaFacebook,
+  FaInstagram,
+} from "react-icons/fa";
 
-// import { faTwitter } from "@fortawesome/free-brands-svg-icons";
-// import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-// import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
-// import { faInstagram } from "@fortawesome/free-brands-svg-icons";
-
-import { FaLinkedin, FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
-
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 
 import {
   BiCog,
@@ -40,8 +37,6 @@ import {
   BiHelpCircle,
 } from "react-icons/bi";
 
-// BsArrowUpShort
-
 import {
   BsList,
   BsPersonFill,
@@ -49,8 +44,6 @@ import {
   BsCartPlusFill,
   BsFillPlusCircleFill,
 } from "react-icons/bs";
-
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const MyProfile = () => {
   // const navigate = useNavigate();
@@ -380,15 +373,12 @@ const MyProfile = () => {
   const [fullName, setFullName] = useState("");
   const [fullNameError, setFullNameError] = useState("");
   // const [touched, setTouched] = useState(false);
-
   const handleFullNameChange = (e) => {
     const inputValue = e.target.value;
     setFullName(inputValue);
     setTouched(true);
-
     // Regular expression for full name validation (letters and spaces only)
     const fullNameRegex = /^[A-Za-z\s]*$/;
-
     if (!inputValue.trim()) {
       setFullNameError(""); // Clear error message if field is empty
     } else if (!fullNameRegex.test(inputValue)) {
@@ -403,15 +393,12 @@ const MyProfile = () => {
   const [userName, setUserName] = useState("");
   const [userNameError, setUserNameError] = useState("");
   const [touched, setTouched] = useState(false);
-
   const handleUserNameChange = (e) => {
     const inputValue = e.target.value;
     setUserName(inputValue);
     setTouched(true);
-
     // Regular expression for username validation
     const userNameRegex = /^[A-Za-z0-9@#]+$/;
-
     if (!inputValue.trim()) {
       setUserNameError("");
     } else if (!userNameRegex.test(inputValue)) {
@@ -426,15 +413,12 @@ const MyProfile = () => {
   const [Email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   // const [touched, setTouched] = useState(false);
-
   const handleEmailChange = (e) => {
     const inputValue = e.target.value;
     setEmail(inputValue);
     setTouched(true);
-
     // Regular expression for email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (!inputValue.trim()) {
       setEmailError("");
     } else if (!emailRegex.test(inputValue)) {
@@ -450,24 +434,18 @@ const MyProfile = () => {
   const handlePhoneChange = (value) => {
     setPhone(value);
   };
-  // const handlePhoneChange = (e) => {
-  //   setPhone(e.target.value);
-  // };
   // End
 
   // For Country - New - Edit Profile
   const [Country, setCountry] = useState("");
   const [countryError, setCountryError] = useState("");
   // const [touched, setTouched] = useState(false);
-
   const handleCountryChange = (e) => {
     const inputValue = e.target.value;
     setCountry(inputValue);
     setTouched(true);
-
     // Regular expression for country validation
     const countryRegex = /^[A-Za-z\s]+$/;
-
     if (!inputValue.trim()) {
       setCountryError(""); // Clear error message if field is empty
     } else if (!countryRegex.test(inputValue)) {
@@ -482,15 +460,12 @@ const MyProfile = () => {
   const [Address, setAddress] = useState("");
   const [addressError, setAddressError] = useState("");
   // const [touched, setTouched] = useState(false);
-
   const handleAddressChange = (e) => {
     const inputValue = e.target.value;
     setAddress(inputValue);
     setTouched(true);
-
     // Regular expression for address validation
     const addressRegex = /^[A-Za-z0-9\s,-]*$/;
-
     if (!inputValue.trim()) {
       setAddressError(""); // Clear error message if field is empty
     } else if (!addressRegex.test(inputValue)) {
@@ -505,15 +480,12 @@ const MyProfile = () => {
   const [Height, setHeight] = useState("");
   const [heightError, setHeightError] = useState("");
   // const [touched, setTouched] = useState(false);
-
   const handleHeightChange = (e) => {
     const inputValue = e.target.value;
     setHeight(inputValue);
     setTouched(true);
-
     // Regular expression for height validation (allowing only numbers)
     const heightRegex = /^[0-9]*$/;
-
     if (!inputValue.trim()) {
       setHeightError(""); // Clear error message if field is empty
     } else if (!heightRegex.test(inputValue)) {
@@ -528,15 +500,12 @@ const MyProfile = () => {
   const [Weight, setWeight] = useState("");
   const [weightError, setWeightError] = useState("");
   // const [touched, setTouched] = useState(false);
-
   const handleWeightChange = (e) => {
     const inputValue = e.target.value;
     setWeight(inputValue);
     setTouched(true);
-
     // Regular expression for weight validation (only allowing digits)
     const weightRegex = /^[0-9]*$/;
-
     if (!inputValue.trim()) {
       setWeightError(""); // Clear error message if field is empty
     } else if (!weightRegex.test(inputValue)) {
@@ -551,15 +520,12 @@ const MyProfile = () => {
   const [About, setAbout] = useState("");
   const [aboutError, setAboutError] = useState("");
   // const [touched, setTouched] = useState(false);
-
   const handleAboutChange = (e) => {
     const inputValue = e.target.value;
     setAbout(inputValue);
     setTouched(true);
-
     // Regular expression for validation
     const regex = /^[A-Za-z0-9\s,-]*$/;
-
     if (!inputValue.trim()) {
       setAboutError(""); // Clear error message if field is empty
     } else if (!regex.test(inputValue)) {
@@ -574,15 +540,12 @@ const MyProfile = () => {
   const [Occupation, setOccupation] = useState("");
   const [occupationError, setOccupationError] = useState("");
   // const [touched, setTouched] = useState(false);
-
   const handleOccupationChange = (e) => {
     const inputValue = e.target.value;
     setOccupation(inputValue);
     setTouched(true);
-
     // Regular expression for occupation validation
     const occupationRegex = /^[A-Za-z\s]+$/;
-
     if (!inputValue.trim()) {
       setOccupationError(""); // Clear error message if field is empty
     } else if (!occupationRegex.test(inputValue)) {
@@ -615,14 +578,11 @@ const MyProfile = () => {
   // Social Link 1 - New - Edit Profile
   const [link1, setLink1] = useState("");
   const [link1Error, setLink1Error] = useState("");
-
   const handlelink1Change = (e) => {
     const url = e.target.value;
     setLink1(url);
-
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-
     if (!url.trim()) {
       setSocialMedia1("");
       setLink1Error("");
@@ -650,15 +610,12 @@ const MyProfile = () => {
   // Social Link 2 - New - Edit Profile
   const [link2, setlink2] = useState("");
   const [link2Error, setlink2Error] = useState("");
-
   const handlelink2Change = (e) => {
     const inputValue = e.target.value;
     setlink2(inputValue);
     setTouched(true);
-
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-
     if (!inputValue.trim()) {
       setlink2Error(""); // Clear error message if field is empty
     } else if (!urlRegex.test(inputValue)) {
@@ -688,17 +645,14 @@ const MyProfile = () => {
     const inputValue = e.target.value;
     setlink3(inputValue);
     setTouched(true);
-
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-
     if (!inputValue.trim()) {
       setlink3Error(""); // Clear error message if field is empty
     } else if (!urlRegex.test(inputValue)) {
       setlink3Error("Please enter a valid URL");
     } else {
       setlink3Error("");
-
       // Check if the input URL matches with any of the social media URLs
       if (inputValue.includes("linkedin.com")) {
         setSocialMedia3("LinkedIn");
@@ -718,15 +672,12 @@ const MyProfile = () => {
   // Social Link 4 - New - Edit Profile
   const [link4, setlink4] = useState("");
   const [link4Error, setlink4Error] = useState("");
-
   const handlelink4Change = (e) => {
     const inputValue = e.target.value;
     setlink4(inputValue);
     setTouched(true);
-
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-
     if (!inputValue.trim()) {
       setlink4Error(""); // Clear error message if field is empty
     } else if (!urlRegex.test(inputValue)) {
@@ -734,7 +685,6 @@ const MyProfile = () => {
     } else {
       setlink4Error("");
     }
-
     // Check if the input URL matches with any of the social media URLs
     if (inputValue.includes("linkedin.com")) {
       setSocialMedia4("LinkedIn");
@@ -750,7 +700,7 @@ const MyProfile = () => {
   };
   // End
 
-  // Edit Form Submission Logic
+  // Edit form submission logic
   const [EditFormSubmitted, setEditFormSubmitted] = useState(false);
 
   const handleEditFormSubmit = async (event) => {
@@ -791,29 +741,25 @@ const MyProfile = () => {
   };
   // End
 
-  // Account Deletion Logic
+  // Account deletion logic
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
   const [isCheckboxesChecked, setIsCheckboxesChecked] = useState(false);
-
   const handleDeleteAccountSubmit = () => {
     // Check if all checkboxes are checked
     const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     const allChecked = Array.from(allCheckboxes).every(
       (checkbox) => checkbox.checked
     );
-
     if (!allChecked) {
       alert("Please check all checkboxes before deleting your account.");
       return;
     }
-
     // Your logic for handling the delete account submission goes here
     // For example, you can make an API call to delete the account
     // or update the state to reflect that the account has been deleted
     console.log("Account deleted");
   };
-
   const handleCheckboxChange = () => {
     // Check if all checkboxes are checked
     const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -827,13 +773,11 @@ const MyProfile = () => {
       setIsDeleteConfirmationVisible(false);
     }
   };
-
   const handleCancelClick = () => {
     // Uncheck all checkboxes and hide confirmation modal
     resetCheckboxes();
     setIsDeleteConfirmationVisible(false);
   };
-
   const handleDeleteClick = () => {
     if (!isCheckboxesChecked) {
       alert("Please check all checkboxes before deleting your account.");
@@ -841,7 +785,6 @@ const MyProfile = () => {
     }
     setIsDeleteConfirmationVisible(true);
   };
-
   const resetCheckboxes = () => {
     const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     allCheckboxes.forEach((checkbox) => {
@@ -851,7 +794,7 @@ const MyProfile = () => {
   };
   // Account Deletion Logic End
 
-  // On clicking Trash of profile Image, shown an alert
+  // For deletion of profile Image
   const [profilepic, setprofilepic] = useState(""); // Add state for user ID
   const handleDeleteImage = () => {
     const confirmDelete = window.confirm(
@@ -897,8 +840,6 @@ const MyProfile = () => {
           <Link to="" className="logo d-flex align-items-center">
             {/* <img src={} alt="" /> */}
             <FontAwesomeIcon icon={faDumbbell} /> {/* Dumbbell icon */}
-            {/* <FontAwesomeIcon icon={faRunning} /> Running icon */}
-            {/* <FontAwesomeIcon icon={faBicycle} /> Bicycle icon */}
             &nbsp;
             <span className="d-none d-lg-block">Fit Buddy</span>
           </Link>
@@ -1116,8 +1057,6 @@ const MyProfile = () => {
                   <h3>{Occupation || "N/A"}</h3>
                   <div className="social-links mt-2">
                     <Link to={link1} className="twitter">
-                      {/* <FontAwesomeIcon icon={faTwitter} /> */}
-
                       {/* Dynamically add icon 1 */}
                       {socialMedia1 === "LinkedIn" && <FaLinkedin />}
                       {socialMedia1 === "Twitter" && <FaTwitter />}
@@ -1125,8 +1064,6 @@ const MyProfile = () => {
                       {socialMedia1 === "Instagram" && <FaInstagram />}
                     </Link>
                     <Link to={link2} className="facebook">
-                      {/* <FontAwesomeIcon icon={faFacebook} /> */}
-
                       {/* Dynamically add icon 2 */}
                       {socialMedia2 === "LinkedIn" && <FaLinkedin />}
                       {socialMedia2 === "Twitter" && <FaTwitter />}
@@ -1134,8 +1071,6 @@ const MyProfile = () => {
                       {socialMedia2 === "Instagram" && <FaInstagram />}
                     </Link>
                     <Link to={link3} className="instagram">
-                      {/* <FontAwesomeIcon icon={faInstagram} /> */}
-
                       {/* Dynamically add icon 3 */}
                       {socialMedia3 === "LinkedIn" && <FaLinkedin />}
                       {socialMedia3 === "Twitter" && <FaTwitter />}
@@ -1143,8 +1078,6 @@ const MyProfile = () => {
                       {socialMedia3 === "Instagram" && <FaInstagram />}
                     </Link>
                     <Link to={link4} className="linkedin">
-                      {/* <FontAwesomeIcon icon={faLinkedin} /> */}
-
                       {/* Dynamically add icon 4 */}
                       {socialMedia4 === "LinkedIn" && <FaLinkedin />}
                       {socialMedia4 === "Twitter" && <FaTwitter />}

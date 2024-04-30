@@ -13,6 +13,7 @@ import MyProfile from "./pages/MyProfile";
 import NotFound from "./pages/NotFound";
 // import ExerciseCard from "./pages/ExerciseCard";
 // import Card from "./pages/Card";
+import Desktop from "./pages/Desktop";
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Route exact path="/MyProfile" element={<MyProfile />} />
         {/* <Route exact path="/ExerciseCard" element={<ExerciseCard />} /> */}
         {/* <Route exact path="/Card" element={<Card />} /> */}
+        <Route exact path="/Desktop" element={<Desktop />} />
       </Routes>
     </Router>
   );
