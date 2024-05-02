@@ -1,44 +1,81 @@
-.card-list-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.dropdown {
-  margin: 10px 10px;
-  padding: 8px 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #333;
-  outline: none;
-  cursor: pointer;
-  width: 200px; /* Adjust width as needed */
-}
-
-.dropdown:focus {
-  border-color: #007bff; /* Change border color on focus */
-}
-
-.line {
+.exercise-card {
+  min-width: 300px;
   width: 100%;
-  height: 1px;
-  background-color: #ccc;
-  margin-bottom: 10px;
+  margin: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease; /* Add transition for smoother animation */
+  border: 1px solid #ccc; /* Add border with a light gray color */
 }
 
-/* Media Queries for Responsive Design */
-@media (max-width: 576px) {
-  .dropdown {
-    width: 100%; /* Full width on small screens */
-  }
+/* Apply the transform when hovered */
+.exercise-card:hover {
+  transform: scale(1.05); /* Scale the card slightly */
 }
 
-@media (min-width: 576px) and (max-width: 768px) {
-  .card-list-container {
-    padding: 0 10px; /* Adjust padding for medium screens */
-  }
+.exercise-image {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
 
-/* Add more media queries as needed for larger devices */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+}
+
+.exercise-name {
+  font-size: 16px;
+  color: white;
+  text-align: center;
+}
+
+.exercise-details {
+  font-size: 14px;
+  color: white;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+  background-color: transparent;
+}
+
+.add-button,
+.remove-button {
+  width: 100px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.add-button {
+  background-color: blue; /* Change button color to blue */
+  color: white;
+  transition: background-color 0.3s ease; /* Add transition for smoother color change */
+}
+
+.remove-button {
+  background-color: blue; /* Change button color to blue */
+  color: white;
+  transition: background-color 0.3s ease; /* Add transition for smoother color change */
+}
+
+.add-button:hover {
+  background-color: rgb(107, 250, 107); /* Change button color to green on hover */
+}
+
+.remove-button:hover {
+  background-color: rgb(254, 76, 76); /* Change button color to red on hover */
+}
+

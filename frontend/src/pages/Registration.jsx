@@ -172,7 +172,7 @@ const Registration = (props) => {
         },
         (error) => {
           console.log(error);
-          alert(error?.data?.error || error?.response?.data?.error);
+          alert("error",error);
           setRegisteredUserId("");
           setIsRegistered(false);
         }
@@ -246,7 +246,7 @@ const Registration = (props) => {
         }
       } catch (error) {
         console.error("Error during registration:", error);
-        alert(error.message || "Registration failed");
+        alert(error || "Registration failed");
       }
     } else {
       alert("Please fill in all fields.");

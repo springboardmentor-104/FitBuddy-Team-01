@@ -10,6 +10,7 @@ import "react-phone-input-2/lib/style.css";
 import person_icn from "../Assets/person.png";
 import profile_icn from "../Assets/profile.png";
 
+import Userdashboard from "../pages/Userdashboard"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -124,18 +125,18 @@ const MyProfile = () => {
   // }, []);
   // End
 
-  // Side Bar Toggale
-  useEffect(() => {
-    const toggleSidebar = () => {
-      document.body.classList.toggle("toggle-sidebar");
-    };
-    const sidebarBtn = document.querySelector(".toggle-sidebar-btn");
-    sidebarBtn.addEventListener("click", toggleSidebar);
-    return () => {
-      sidebarBtn.removeEventListener("click", toggleSidebar);
-    };
-  }, []);
-  // End
+  // // Side Bar Toggale
+  // useEffect(() => {
+  //   const toggleSidebar = () => {
+  //     document.body.classList.toggle("toggle-sidebar");
+  //   };
+  //   const sidebarBtn = document.querySelector(".toggle-sidebar-btn");
+  //   sidebarBtn.addEventListener("click", toggleSidebar);
+  //   return () => {
+  //     sidebarBtn.removeEventListener("click", toggleSidebar);
+  //   };
+  // }, []);
+  // // End
 
   // Back to Top
   useEffect(() => {
@@ -831,202 +832,7 @@ const MyProfile = () => {
 
   return (
     <div>
-      {/* Header Section */}
-      <header
-        id="header"
-        className="header fixed-top d-flex align-items-center"
-      >
-        <div className="d-flex align-items-center justify-content-between">
-          <Link to="" className="logo d-flex align-items-center">
-            {/* <img src={} alt="" /> */}
-            <FontAwesomeIcon icon={faDumbbell} /> {/* Dumbbell icon */}
-            &nbsp;
-            <span className="d-none d-lg-block">Fit Buddy</span>
-          </Link>
-          <BsList className="toggle-sidebar-btn" />
-        </div>
-        <div className="search-bar">
-          <form className="search-form d-flex align-items-center">
-            <input
-              type="text"
-              name="query"
-              placeholder="Search"
-              title="Enter search keyword"
-            />
-            <button type="submit" title="Search">
-              <BiSearch />
-            </button>
-          </form>
-        </div>
-        <nav className="header-nav ms-auto">
-          <ul className="d-flex align-items-center">
-            {/* Search Bar */}
-            <li className="nav-item d-block d-lg-none">
-              <Link className="nav-link nav-icon search-bar-toggle " to="">
-                <BiSearch />
-              </Link>
-            </li>
-
-            {/* User Profie */}
-            <li className="nav-item dropdown pe-3">
-              <Link
-                className="nav-link nav-profile d-flex align-items-center pe-0"
-                to=""
-                data-bs-toggle="dropdown"
-                onClick={toggleProfileDropdown}
-              >
-                <img
-                  style={{ width: "35px", height: "35px" }}
-                  src={profilepic || person_icn}
-                  alt="Profile"
-                  className="rounded-circle"
-                />
-                <span className="d-none d-md-block dropdown-toggle ps-2">
-                  {user?.name || "User"}
-                </span>
-              </Link>
-              {isProfileOpen === true && (
-                <ul
-                  className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile active"
-                  style={{
-                    position: "absolute",
-                    inset: "0px 0px auto auto",
-                    margin: "0px",
-                    transform: "translate(-25px, 35px)",
-                  }}
-                >
-                  <li className="dropdown-header">
-                    <h6>{user?.name || "User"}</h6>
-                    <span>Designation</span>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item d-flex align-items-center"
-                      to=""
-                    >
-                      <BiUser />
-                      &nbsp;
-                      <span>My Profile</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item d-flex align-items-center"
-                      to=""
-                    >
-                      <BiCog />
-                      &nbsp;
-                      <span>Account Settings</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item d-flex align-items-center"
-                      to=""
-                    >
-                      <BiHelpCircle />
-                      &nbsp;
-                      <span>Need Help?</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item d-flex align-items-center"
-                      to="/"
-                      onClick={() => {
-                        localStorage.removeItem("user");
-                      }}
-                    >
-                      <BiLogOut />
-                      &nbsp;
-                      <span>Sign Out</span>
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-          </ul>
-        </nav>
-      </header>
-
-      {/* Aside Menu */}
-      <aside id="sidebar" className="sidebar">
-        <ul className="sidebar-nav" id="sidebar-nav">
-          <li className="nav-item">
-            <Link className="nav-link " to="">
-              <BiGrid />
-              &nbsp;
-              <span>Dashboard</span>
-            </Link>
-          </li>
-          <li className="nav-heading">Pages</li>
-          <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <BiTask />
-              &nbsp;
-              <span>Manage Goals</span>
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <BsFillPlusCircleFill />
-              &nbsp;
-              <span>Create Goals</span>
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <BsCartPlusFill />
-              &nbsp;
-              <span>Buy Subscription</span>
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link className="nav-link collapsed" to="/MyProfile">
-              <BsPersonFill />
-              &nbsp;
-              <span>My Profile</span>
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link className="nav-link collapsed" to="/History">
-              <BiTime />
-              &nbsp;
-              <span>History</span>
-            </Link>
-          </li>
-
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <i className="bi bi-dash-circle"></i>
-              <span>Section 6</span>
-            </Link>
-          </li> */}
-
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <i className="bi bi-file-earmark"></i>
-              <span>Section 7</span>
-            </Link>
-          </li> */}
-        </ul>
-      </aside>
+      <Userdashboard/>
 
       {/* Main Section */}
       <main id="main" className="main">

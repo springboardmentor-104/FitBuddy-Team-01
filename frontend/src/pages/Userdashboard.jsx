@@ -281,14 +281,14 @@ const Userdashboard = () => {
               data-bs-parent="#sidebar-nav-create-goals"
             >
               <li>
-                <Link to="/ExerciseCard">
+                <Link to="/ExercisePage">
                   <FaDumbbell />
                   &nbsp;
                   <span>Exercises</span>
                 </Link>
               </li>
               <li>
-                <Link to="/Desktop">
+                <Link to="/create-goals">
                   <BsFillPlusCircleFill />
                   &nbsp;
                   <span>Create Goals</span>

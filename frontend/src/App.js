@@ -11,9 +11,12 @@ import Userdashboard from "./pages/Userdashboard";
 import History from "./pages/History";
 import MyProfile from "./pages/MyProfile";
 import NotFound from "./pages/NotFound";
-// import ExerciseCard from "./pages/ExerciseCard";
-// import Card from "./pages/Card";
-import Desktop from "./pages/Desktop";
+
+import ExerciseCard from "./pages/ExerciseCard";
+import ExerciseForm from "./pages/ExerciseForm";
+import ExercisePage from "./pages/ExercisePage";
+
+import CreateGoals from "./pages/CreateGoals";
 
 const App = () => {
   return (
@@ -30,9 +33,12 @@ const App = () => {
         <Route exact path="/reset-password" element={<ResetPassword />} />
         <Route exact path="/History" element={<History />} />
         <Route exact path="/MyProfile" element={<MyProfile />} />
-        {/* <Route exact path="/ExerciseCard" element={<ExerciseCard />} /> */}
-        {/* <Route exact path="/Card" element={<Card />} /> */}
-        <Route exact path="/Desktop" element={<Desktop />} />
+
+        <Route exact path="/ExerciseCard" element={<ExerciseCard />} />
+        <Route exact path="/ExerciseForm" element={<ExerciseForm />} />
+        <Route exact path="/ExercisePage" element={<ExercisePage />} />
+
+        <Route exact path="/CreateGoals" element={<CreateGoals />} />
       </Routes>
     </Router>
   );
