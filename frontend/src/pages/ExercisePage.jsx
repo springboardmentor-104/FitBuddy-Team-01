@@ -3,6 +3,7 @@ import axios from 'axios';
 import ExerciseCard from './ExerciseCard';
 import ExerciseForm from './ExerciseForm';
 import './ExercisePage.css';
+import Userdashboard from './Userdashboard';
 
 const ExercisePage = () => {
   const [selectedType, setSelectedType] = useState('');
@@ -55,7 +56,9 @@ const ExercisePage = () => {
   };
 
   return (
-    <div className="exercise-page">
+    <>
+    <Userdashboard/>
+    <div className="exercise-page" id="exerciseSidebarAdjustment">
       <div className={`dropdown-container ${dropdownVisible ? 'visible' : 'hidden'}`}>
         <div className="select-wrapper">
           <select value={selectedType} onChange={handleTypeChange}>
@@ -88,6 +91,7 @@ const ExercisePage = () => {
         </>
       )}
     </div>
+    </>
   );
 };
 

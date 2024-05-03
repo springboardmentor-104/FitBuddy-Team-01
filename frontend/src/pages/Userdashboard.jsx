@@ -170,7 +170,7 @@ const Userdashboard = () => {
                   <li>
                     <Link
                       className="dropdown-item d-flex align-items-center"
-                      to=""
+                      to="/MyProfile"
                     >
                       <BiUser />
                       &nbsp;
@@ -179,32 +179,6 @@ const Userdashboard = () => {
                   </li>
                   <li>
                     <hr class="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item d-flex align-items-center"
-                      to=""
-                    >
-                      <BiCog />
-                      &nbsp;
-                      <span>Account Settings</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <hr class="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item d-flex align-items-center"
-                      to=""
-                    >
-                      <BiHelpCircle />
-                      &nbsp;
-                      <span>Need Help?</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link

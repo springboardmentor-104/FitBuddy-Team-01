@@ -116,9 +116,8 @@ const CreateGoals = () => {
 
   return (
     <div>
-      <div>
         <Userdashboard />
-      </div>
+
 
       <div className="d-flex justify-content-center">
         <form onSubmit={activeSection === 'exercise' ? handleExerciseSubmit : handleDietSubmit} className="mt-5 w-50">

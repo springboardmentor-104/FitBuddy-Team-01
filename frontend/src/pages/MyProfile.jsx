@@ -9,8 +9,8 @@ import "react-phone-input-2/lib/style.css";
 
 import person_icn from "../Assets/person.png";
 import profile_icn from "../Assets/profile.png";
-
 import Userdashboard from "../pages/Userdashboard"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -833,7 +833,6 @@ const MyProfile = () => {
   return (
     <div>
       <Userdashboard/>
-
       {/* Main Section */}
       <main id="main" className="main">
         <div className="pagetitle">
@@ -894,7 +893,8 @@ const MyProfile = () => {
                 </div>
               </div>
             </div>
-            <div className="col-xl-8 ">
+            <div className="col-xl-8">
+              <div className="card">
                 <div className="card-body pt-3">
                   <ul className="nav nav-tabs nav-tabs-bordered">
                     {/* Overview */}
@@ -2183,6 +2183,7 @@ const MyProfile = () => {
                     {/* Accont Setting Section Start End */}
                   </div>
                 </div>
+              </div>
             </div>
           </div>
         </section>

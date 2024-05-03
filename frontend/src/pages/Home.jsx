@@ -2,70 +2,82 @@ import "./Home.css";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+
+
+
+function Home() {
+  const [click, setClick] = React.useState(false);
+
+  const handleClick = () => setClick(!click);
+  const Close = () => setClick(false);
+  
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            FIT BUDDY
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/About">
-                  About
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/ContactUs">
-                  ContactUs
-                </Link>
-              </li>
-            </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                className="btn btn-outline-secondary"
-                type="submit"
-                id="srch-btn"
-              >
-                Search
-              </button>
-            </form>
-            <div className="lgn-sgn-btn">
+     <div className={click ? "main-container" : ""}  onClick={()=>Close()} />
+      <nav className="navbar" onClick={e => e.stopPropagation()}>
+        <div className="nav-container">
+          <Link exact to="/" className="nav-logo">
+          FIT BUDDY
+          </Link>
+          <ul className={click ? "nav-menu active" : "nav-menu"}>
+            <li className="nav-item">
               <Link
+                exact
+                to="/"
+                activeClassName="active"
+                className="nav-links"
+                onClick={click ? handleClick : null}
+              >
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                exact
+                to="/about"
+                activeClassName="active"
+                className="nav-links"
+                onClick={click ? handleClick : null}
+              >
+                About
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                exact
+                to="/about"
+                activeClassName="active"
+                className="nav-links"
+                onClick={click ? handleClick : null}
+              >
+                ContactUs
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                exact
+                to="/login"
+                activeClassName="active"
+                className="nav-links btn btn-success"
+                onClick={click ? handleClick : null}
+              >
+               Login
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                exact
                 to="/registration"
-                className="btn btn-success"
-                id="snup-btn"
+                activeClassName="active"
+                className="nav-links btn btn-danger"
+               onClick={click ? handleClick : null}
               >
                 SignUp
               </Link>
-              <Link to="/login" className="btn btn-danger">
-                Login
-              </Link>
-            </div>
+            </li>
+          </ul>
+          <div className="nav-icon" onClick={handleClick}>
+            <i className={click ? "fa fa-times" : "fa fa-bars"}></i>
           </div>
         </div>
       </nav>
@@ -98,9 +110,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="container-fluid" id="footer"></div>
-    </div>
+    </ div>
   );
-};
+}
 
 export default Home;
