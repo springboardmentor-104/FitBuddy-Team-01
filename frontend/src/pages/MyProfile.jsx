@@ -894,8 +894,7 @@ const MyProfile = () => {
                 </div>
               </div>
             </div>
-            <div className="col-xl-8">
-              <div className="card">
+            <div className="col-xl-8 ">
                 <div className="card-body pt-3">
                   <ul className="nav nav-tabs nav-tabs-bordered">
                     {/* Overview */}
@@ -2184,7 +2183,6 @@ const MyProfile = () => {
                     {/* Accont Setting Section Start End */}
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </section>
