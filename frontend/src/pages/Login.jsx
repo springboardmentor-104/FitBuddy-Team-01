@@ -71,7 +71,7 @@ const Login = (props) => {
               ...response?.data?.user,
             };
             localStorage.setItem("user", JSON.stringify(localData));
-            navigate("/dashboard");
+            navigate("/Userdashboard");
           } else {
             setLoginUserId("");
           }

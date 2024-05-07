@@ -1,7 +1,7 @@
 import "./Userdashboard.css";
 import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   BiCog,
@@ -24,10 +24,12 @@ import {
 
 import { FaDumbbell, FaChevronDown } from "react-icons/fa";
 
-const Userdashboard = () => {
+const Userdashboard = (props) => {
+  const ref = useRef(null);
   // My user - For opening dashboard of a user
   const [user, setUser] = useState({});
   const [openToggleMenu, setOpenToggleMenu] = useState("");
+  const [showLeftSidebar, setShowLeftSidebar] = useState(true);
   useEffect(() => {
     let user = localStorage.getItem("user");
     if (user) {
@@ -37,42 +39,10 @@ const Userdashboard = () => {
   }, []);
 
   // Side bar toggale
-  useEffect(() => {
-    const toggleSidebar = () => {
-      document.body.classList.toggle("toggle-sidebar");
-    };
-    const sidebarBtn = document.querySelector(".toggle-sidebar-btn");
-    sidebarBtn.addEventListener("click", toggleSidebar);
-    return () => {
-      sidebarBtn.removeEventListener("click", toggleSidebar);
-    };
-  }, []);
 
   // Back to Top
-  useEffect(() => {
-    const handleScroll = () => {
-      const backToTopButton = document.querySelector(".back-to-top");
-      if (backToTopButton) {
-        if (window.scrollY > 100) {
-          backToTopButton.classList.add("active");
-        } else {
-          backToTopButton.classList.remove("active");
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
 
-  // For User
+  // For profile open in navbar in headeer
   // State to control the visibility of the profile dropdown
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -83,17 +53,12 @@ const Userdashboard = () => {
   };
 
   // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isProfileOpen && !event.target.closest(".dropdown")) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isProfileOpen]);
+
+  const handleClickOutside = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
 
   return (
     <div>
@@ -103,11 +68,22 @@ const Userdashboard = () => {
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
-          <Link to="" class="logo d-flex align-items-center">
+          <Link
+            to=""
+            class="logo d-flex align-items-center"
+            style={{ textDecoration: "none" }}
+          >
             {/* <img src={mylogo_icn} alt="" /> */}
             <span class="d-none d-lg-block">Fit Buddy</span>
           </Link>
-          <BsList className="toggle-sidebar-btn" />
+          <BsList
+            className="toggle-sidebar-btn"
+            onClick={() => {
+              setShowLeftSidebar((show) => {
+                return !show;
+              });
+            }}
+          />
         </div>
 
         <div className="search-bar">
@@ -134,7 +110,11 @@ const Userdashboard = () => {
             </li>
 
             {/* User Profie */}
-            <li class="nav-item dropdown pe-3">
+            <li
+              class="nav-item dropdown pe-3"
+              ref={ref}
+              onClick={handleClickOutside}
+            >
               <Link
                 to=""
                 data-bs-toggle="dropdown"
@@ -201,7 +181,11 @@ const Userdashboard = () => {
       </header>
 
       {/* Aside Section */}
-      <aside id="sidebar" className="sidebar">
+      <aside
+        id="sidebar"
+        className="sidebar"
+        style={showLeftSidebar === true ? {} : { left: "-300px" }}
+      >
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
             <Link className="nav-link " to="">
@@ -255,14 +239,14 @@ const Userdashboard = () => {
               data-bs-parent="#sidebar-nav-create-goals"
             >
               <li>
-                <Link to="/ExercisePage">
+                <Link to="/ExercisePage" style={{ textDecoration: "none" }}>
                   <FaDumbbell />
                   &nbsp;
                   <span>Exercises</span>
                 </Link>
               </li>
               <li>
-                <Link to="/create-goals">
+                <Link to="/create-goals" style={{ textDecoration: "none" }}>
                   <BsFillPlusCircleFill />
                   &nbsp;
                   <span>Create Goals</span>
@@ -324,8 +308,12 @@ const Userdashboard = () => {
       </aside>
 
       {/* Main Section */}
-      <main id="main" className="main">
-        <div className="pagetitle">
+      <main
+        id="main"
+        className="main"
+        style={showLeftSidebar ? {} : { marginLeft: 0 }}
+      >
+        {/* <div className="pagetitle">
           <h1>Dashboard</h1>
           <nav>
             <ol className="breadcrumb">
@@ -335,16 +323,19 @@ const Userdashboard = () => {
               <li className="breadcrumb-item active">Dashboard</li>
             </ol>
           </nav>
-        </div>
-        <section className="section dashboard">
-          <p></p>
-        </section>
+        </div> */}
+        <section className="section dashboard">{props?.content}</section>
       </main>
 
       {/* Back to Top */}
       <Link
         to=""
-        onClick={scrollToTop}
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }}
         className="back-to-top d-flex align-items-center justify-content-center"
       >
         <BsArrowUp style={{ color: "#fff" }} />

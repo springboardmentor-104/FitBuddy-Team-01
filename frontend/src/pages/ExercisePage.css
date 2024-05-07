@@ -13,7 +13,9 @@
   left: 50%; /* Move to the center horizontally */
   transform: translateX(-50%); /* Adjust for centering */
   width: 200px; /* Set a fixed width for the dropdown */
-  margin-top: 20px; /* Add margin from the top */
+  /* margin-top: 20px; Add margin from the top */
+
+  margin-top: 100px; /* new change */
 }
 
 .select-wrapper select {
@@ -100,7 +102,7 @@
 
 @media (min-width: 1200px) {
   .toggle-sidebar #exerciseSidebarAdjustment,
-  .toggle-sidebar  {
+  .toggle-sidebar {
     margin-left: 0;
   }
 }

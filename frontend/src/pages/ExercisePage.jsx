@@ -1,22 +1,30 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import ExerciseCard from './ExerciseCard';
-import ExerciseForm from './ExerciseForm';
-import './ExercisePage.css';
-import Userdashboard from './Userdashboard';
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import ExerciseCard from "./ExerciseCard";
+import ExerciseForm from "./ExerciseForm";
+import "./ExercisePage.css";
+import Userdashboard from "./Userdashboard";
 
 const ExercisePage = () => {
-  const [selectedType, setSelectedType] = useState('');
+  const [selectedType, setSelectedType] = useState("");
   const [exercises, setExercises] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dropdownVisible, setDropdownVisible] = useState(true);
   const [showExerciseForm, setShowExerciseForm] = useState(false);
-  const [selectedExerciseName, setSelectedExerciseName] = useState('');
+  const [selectedExercise, setSelectedExercise] = useState(null);
+  const [userId, setUserId] = useState(""); // State to hold user ID
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("user");
+    if (storedUserId) {
+      setUserId(String(storedUserId)); // Ensure userId is stored as a string
+    }
+  }, []);
 
   const fetchExercises = useCallback(async () => {
     try {
       setLoading(true);
-      let url = 'http://localhost:8080/api/exercises/all';
+      let url = "http://localhost:8080/api/exercises/all";
       if (selectedType) {
         url += `/search/${selectedType}`;
       }
@@ -24,7 +32,7 @@ const ExercisePage = () => {
       setExercises(response.data.exercises || []);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching exercises:', error);
+      console.error("Error fetching exercises:", error);
     }
   }, [selectedType]);
 
@@ -34,14 +42,15 @@ const ExercisePage = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
       setDropdownVisible(scrollTop === 0);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -50,47 +59,62 @@ const ExercisePage = () => {
     setSelectedType(type);
   };
 
-  const toggleExerciseForm = (exerciseName) => {
-    setSelectedExerciseName(exerciseName);
+  const toggleExerciseForm = (exerciseName, exerciseId, category, userId) => {
+    setSelectedExercise({ name: exerciseName, id: exerciseId, category });
     setShowExerciseForm(!showExerciseForm);
   };
 
   return (
     <>
-    <Userdashboard/>
-    <div className="exercise-page" id="exerciseSidebarAdjustment">
-      <div className={`dropdown-container ${dropdownVisible ? 'visible' : 'hidden'}`}>
-        <div className="select-wrapper">
-          <select value={selectedType} onChange={handleTypeChange}>
-            <option value="">All Exercises</option>
-            <option value="strength">Strength</option>
-            <option value="yoga">Yoga</option>
-            <option value="cardio">Cardio</option>
-            <option value="powerlifting">Powerlifting</option>
-            <option value="other">Other</option>
-          </select>
+      <Userdashboard />
+      <div className="exercise-page" id="exerciseSidebarAdjustment">
+        <div
+          className={`dropdown-container ${
+            dropdownVisible ? "visible" : "hidden"
+          }`}
+        >
+          <div className="select-wrapper">
+            <select value={selectedType} onChange={handleTypeChange}>
+              <option value="">All Exercises</option>
+              <option value="strength">Strength</option>
+              <option value="yoga">Yoga</option>
+              <option value="cardio">Cardio</option>
+              <option value="powerlifting">Powerlifting</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
         </div>
-      </div>
 
-      <div className="card-container" style={{ marginTop: dropdownVisible ? '50px' : '0' }}>
-        {loading ? (
-          <div className="loading">Loading...</div>
-        ) : exercises.length === 0 ? (
-          <div className="no-exercises">No exercises found for the selected category.</div>
-        ) : (
-          exercises.map((exercise) => (
-            <ExerciseCard key={exercise._id} exercise={exercise} onAdd={toggleExerciseForm} />
-          ))
+        <div
+          className="card-container"
+          style={{ marginTop: dropdownVisible ? "50px" : "0" }}
+        >
+          {loading ? (
+            <div className="loading">Loading...</div>
+          ) : exercises.length === 0 ? (
+            <div className="no-exercises">
+              No exercises found for the selected category.
+            </div>
+          ) : (
+            exercises.map((exercise) => (
+              <ExerciseCard
+                key={exercise._id}
+                exercise={exercise}
+                onAdd={(exerciseName, exerciseId, category) => toggleExerciseForm(exerciseName, exerciseId, category, userId)}
+                userId={userId}
+              />
+            ))
+          )}
+        </div>
+
+        {showExerciseForm && selectedExercise && (
+          <ExerciseForm
+            exercise={selectedExercise}
+            userId={userId}
+            onClose={() => setShowExerciseForm(false)}
+          />
         )}
       </div>
-
-      {showExerciseForm && (
-        <>
-          <div className="exercise-form-overlay" onClick={() => setShowExerciseForm(false)}></div>
-          <ExerciseForm exerciseName={selectedExerciseName} onClose={() => setShowExerciseForm(false)} />
-        </>
-      )}
-    </div>
     </>
   );
 };

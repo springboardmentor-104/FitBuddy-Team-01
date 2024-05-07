@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
-import PhoneInput from "react-phone-input-2";
+// import PhoneInput from "react-phone-input-2";
 import React, { useEffect, useState } from "react";
 
 import "./MyProfile.css";
@@ -9,7 +9,7 @@ import "react-phone-input-2/lib/style.css";
 
 import person_icn from "../Assets/person.png";
 import profile_icn from "../Assets/profile.png";
-import Userdashboard from "../pages/Userdashboard"
+import Userdashboard from "../pages/Userdashboard";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -67,6 +67,7 @@ const MyProfile = () => {
       user = JSON.parse(user);
       setUser(user);
     }
+    getProfileDetails();
   }, []);
   // End
 
@@ -114,13 +115,13 @@ const MyProfile = () => {
   }, []);
   //
 
-  // My User - Phone - Phone Data(fetch) - From Edit Profile Form
-  // const [Phone, setPhone] = useState({});
+  // My User - about - about Data(fetch) - From Edit Profile Form
+  // const [about, setabout] = useState({});
   // useEffect(() => {
-  //   let Phone = localStorage.getItem("user");
-  //   if (Phone) {
-  //     Phone = JSON.parse(Phone);
-  //     setPhone(Phone);
+  //   let about = localStorage.getItem("user");
+  //   if (about) {
+  //     about = JSON.parse(Phone);
+  //     setabout(about);
   //   }
   // }, []);
   // End
@@ -139,53 +140,53 @@ const MyProfile = () => {
   // // End
 
   // Back to Top
-  useEffect(() => {
-    const handleScroll = () => {
-      const backToTopButton = document.querySelector(".back-to-top");
-      if (backToTopButton) {
-        if (window.scrollY > 100) {
-          backToTopButton.classList.add("active");
-        } else {
-          backToTopButton.classList.remove("active");
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const backToTopButton = document.querySelector(".back-to-top");
+  //     if (backToTopButton) {
+  //       if (window.scrollY > 100) {
+  //         backToTopButton.classList.add("active");
+  //       } else {
+  //         backToTopButton.classList.remove("active");
+  //       }
+  //     }
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+  // const scrollToTop = () => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  // };
   // End
 
   // For User
   // State to control the visibility of the profile dropdown
-  const [isOpen, setIsOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  // Function to toggle the profile dropdown
-  const toggleProfileDropdown = () => {
-    setIsProfileOpen(!isProfileOpen);
-  };
-  // End
+  // // Function to toggle the profile dropdown
+  // const toggleProfileDropdown = () => {
+  //   setIsProfileOpen(!isProfileOpen);
+  // };
+  // // End
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isProfileOpen && !event.target.closest(".dropdown")) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isProfileOpen]);
+  // // Close dropdown when clicking outside
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (isProfileOpen && !event.target.closest(".dropdown")) {
+  //       setIsOpen(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [isProfileOpen]);
   // End
 
   // If Password length is less than 8 then show another alert and if Password Expression is Wrong then there shown another alert
@@ -269,7 +270,8 @@ const MyProfile = () => {
   };
   // End
 
-  const [setError] = useState(null);
+  // const [setError] = useState(null); // Remove this
+  // const [error, setError] = useState(""); // Added this
   const [isPasswordUpdate, setIsPasswordUpdate] = useState(false);
   const [PasswordUpdateUserId, setPasswordUpdateUserId] = useState("");
   const [registrationPassword, setRegistrationPassword] = useState("");
@@ -285,41 +287,59 @@ const MyProfile = () => {
     // }
 
     // currentpassword and new password do not matched
-    if (currentpassword === newPassword) {
-      alert("Current Password and New Password Matched ! , Try another");
-    }
-    // if newPassword and reEnteredPassword Matching
-    if (newPassword !== reEnterPassword) {
-      alert("New Password and Re-entered New Password not Matched !");
-    }
+    // if (currentpassword === newPassword) {
+    //   alert("Current Password and New Password Matched ! , Try another");
+    // }
+
+    // for newPassword and reEnteredPassword Matching
+    // if (newPassword !== reEnterPassword) {
+    //   alert("New Password and Re-entered New Password not Matched !");
+    // }
 
     // currentpassword
-    if (currentpassword.length < 8) {
-      alert("Current Password must be at least 8 characters long");
-    }
-    if (!isValidPassword(currentpassword)) {
-      alert("Current Password does not match the required pattern");
-    }
+    // if (currentpassword.length < 8) {
+    //   alert("Current Password must be at least 8 characters long");
+    // }
+    // if (!isValidPassword(currentpassword)) {
+    //   alert("Current Password does not match the required pattern");
+    // }
 
     // newPassword
-    if (newPassword.length < 8) {
-      alert("New Password must be at least 8 characters long");
-    }
-    if (!isValidPassword(newPassword)) {
-      alert("New Password does not match the required pattern");
-    }
+    // if (newPassword.length < 8) {
+    //   alert("New Password must be at least 8 characters long");
+    // }
+    // if (!isValidPassword(newPassword)) {
+    //   alert("New Password does not match the required pattern");
+    // }
 
     // reEnterPassword
-    if (reEnterPassword.length < 8) {
-      alert("Re-entered Password must be at least 8 characters long");
-    }
-    if (!isValidPassword(reEnterPassword)) {
-      alert("Re-entered Password does not match the required pattern");
-    }
+    // if (reEnterPassword.length < 8) {
+    //   alert("Re-entered Password must be at least 8 characters long");
+    // }
+    // if (!isValidPassword(reEnterPassword)) {
+    //   alert("Re-entered Password does not match the required pattern");
+    // }
 
     // Call API for Update Password
     if (currentpassword && newPassword && reEnterPassword) {
       // All fields are filled, mark registration as completed
+      if (currentpassword === newPassword) {
+        return alert("Current Password and New Password Matched!, Try another");
+      } else if (newPassword !== reEnterPassword) {
+        return alert("New Password and Re-entered New Password not Matched !");
+      } else if (currentpassword.length < 8) {
+        return alert("Current Password must be at least 8 characters long");
+      } else if (!isValidPassword(currentpassword)) {
+        return alert("Current Password does not match the required pattern");
+      } else if (newPassword.length < 8) {
+        return alert("New Password must be at least 8 characters long");
+      } else if (!isValidPassword(newPassword)) {
+        return alert("New Password does not match the required pattern");
+      } else if (reEnterPassword.length < 8) {
+        return alert("Re-entered Password must be at least 8 characters long");
+      } else if (!isValidPassword(reEnterPassword)) {
+        return alert("Re-entered Password does not match the required pattern");
+      }
       let userData = localStorage.getItem("user");
       userData = JSON.parse(userData);
       let data = {
@@ -371,21 +391,21 @@ const MyProfile = () => {
   };
 
   // For Full Names - New - Edit Profile
-  const [fullName, setFullName] = useState("");
-  const [fullNameError, setFullNameError] = useState("");
+  const [name, setname] = useState("");
+  const [nameError, setnameError] = useState("");
   // const [touched, setTouched] = useState(false);
-  const handleFullNameChange = (e) => {
+  const handlenameChange = (e) => {
     const inputValue = e.target.value;
-    setFullName(inputValue);
+    setname(inputValue);
     setTouched(true);
     // Regular expression for full name validation (letters and spaces only)
-    const fullNameRegex = /^[A-Za-z\s]*$/;
+    const nameRegex = /^[A-Za-z\s]*$/;
     if (!inputValue.trim()) {
-      setFullNameError(""); // Clear error message if field is empty
-    } else if (!fullNameRegex.test(inputValue)) {
-      setFullNameError("Please enter a valid full name");
+      setnameError(""); // Clear error message if field is empty
+    } else if (!nameRegex.test(inputValue)) {
+      setnameError("Please enter a valid full name");
     } else {
-      setFullNameError("");
+      setnameError("");
     }
   };
   // End
@@ -431,143 +451,167 @@ const MyProfile = () => {
   // End
 
   // For Phone - New - Edit Profile
-  const [Phone, setPhone] = useState("");
-  const handlePhoneChange = (value) => {
-    setPhone(value);
+  const [phoneno, setPhone] = useState("");
+  const [error, setError] = useState("");
+
+  const handlePhoneChange = (e) => {
+    const inputValue = e.target.value;
+    setPhone(inputValue);
+
+    // Check if input value is not empty and does not match the pattern
+    if (inputValue && !/^\d*$/.test(inputValue)) {
+      setError("Invalid phone number");
+    } else {
+      setError(""); // Reset error message if input is valid
+    }
   };
   // End
 
   // For Country - New - Edit Profile
-  const [Country, setCountry] = useState("");
-  const [countryError, setCountryError] = useState("");
+  const [country, setcountry] = useState("");
+  const [countryError, setcountryError] = useState("");
   // const [touched, setTouched] = useState(false);
-  const handleCountryChange = (e) => {
+  const handlecountryChange = (e) => {
     const inputValue = e.target.value;
-    setCountry(inputValue);
+    setcountry(inputValue);
     setTouched(true);
     // Regular expression for country validation
     const countryRegex = /^[A-Za-z\s]+$/;
     if (!inputValue.trim()) {
-      setCountryError(""); // Clear error message if field is empty
+      setcountryError(""); // Clear error message if field is empty
     } else if (!countryRegex.test(inputValue)) {
-      setCountryError("Please enter a valid country name");
+      setcountryError("Please enter a valid country name");
     } else {
-      setCountryError("");
+      setcountryError("");
     }
   };
   // End
 
   // For Address - New - Edit Profile
-  const [Address, setAddress] = useState("");
-  const [addressError, setAddressError] = useState("");
+  const [address, setaddress] = useState("");
+  const [addressError, setaddressError] = useState("");
   // const [touched, setTouched] = useState(false);
-  const handleAddressChange = (e) => {
+  const handleaddressChange = (e) => {
     const inputValue = e.target.value;
-    setAddress(inputValue);
+    setaddress(inputValue);
     setTouched(true);
     // Regular expression for address validation
     const addressRegex = /^[A-Za-z0-9\s,-]*$/;
     if (!inputValue.trim()) {
-      setAddressError(""); // Clear error message if field is empty
+      setaddressError(""); // Clear error message if field is empty
     } else if (!addressRegex.test(inputValue)) {
-      setAddressError("Please enter a valid address");
+      setaddressError("Please enter a valid address");
     } else {
-      setAddressError("");
+      setaddressError("");
     }
   };
   // End
 
   // For Height - New - Edit Profile
-  const [Height, setHeight] = useState("");
-  const [heightError, setHeightError] = useState("");
+  const [height, setheight] = useState("");
+  const [heightError, setheightError] = useState("");
   // const [touched, setTouched] = useState(false);
-  const handleHeightChange = (e) => {
+  const handleheightChange = (e) => {
     const inputValue = e.target.value;
-    setHeight(inputValue);
+    setheight(inputValue);
     setTouched(true);
     // Regular expression for height validation (allowing only numbers)
-    const heightRegex = /^[0-9]*$/;
+    // const heightRegex = /^[0-9]*$/; // original
+    const heightRegex = /^[0-9.]*$/;
     if (!inputValue.trim()) {
-      setHeightError(""); // Clear error message if field is empty
+      setheightError(""); // Clear error message if field is empty
     } else if (!heightRegex.test(inputValue)) {
-      setHeightError("Please enter a valid height (only numbers)");
+      setheightError("Please enter a valid height (only numbers)");
     } else {
-      setHeightError("");
+      setheightError("");
     }
+  };
+
+  // const [heightUnit, setHeightUnit] = useState("cm"); // original
+  const [heightUnit, setHeightUnit] = useState("");
+  const handleHeightUnitChange = (e) => {
+    setHeightUnit(e.target.value);
   };
   // End
 
   // Weight - New - Edit Profile
-  const [Weight, setWeight] = useState("");
-  const [weightError, setWeightError] = useState("");
+  const [weight, setweight] = useState("");
+  const [weightError, setweightError] = useState("");
   // const [touched, setTouched] = useState(false);
-  const handleWeightChange = (e) => {
+  const handleweightChange = (e) => {
     const inputValue = e.target.value;
-    setWeight(inputValue);
+    setweight(inputValue);
     setTouched(true);
     // Regular expression for weight validation (only allowing digits)
-    const weightRegex = /^[0-9]*$/;
+    // const weightRegex = /^[0-9]*$/; // original
+    const weightRegex = /^[0-9.]*$/;
     if (!inputValue.trim()) {
-      setWeightError(""); // Clear error message if field is empty
+      setweightError(""); // Clear error message if field is empty
     } else if (!weightRegex.test(inputValue)) {
-      setWeightError("Please enter a valid weight (only digits)");
+      setweightError("Please enter a valid weight (only digits)");
     } else {
-      setWeightError("");
+      setweightError("");
     }
+  };
+
+  // const [WeightUnit, setWeightUnit] = useState("kg"); // default unit is kg - original
+  const [WeightUnit, setWeightUnit] = useState("");
+  const handleWeightUnitChange = (e) => {
+    setWeightUnit(e.target.value);
   };
   // End
 
-  // About - New - Edit Profile
-  const [About, setAbout] = useState("");
-  const [aboutError, setAboutError] = useState("");
+  // about - New - Edit Profile
+  const [about, setabout] = useState("");
+  const [aboutError, setaboutError] = useState("");
   // const [touched, setTouched] = useState(false);
-  const handleAboutChange = (e) => {
+  const handleaboutChange = (e) => {
     const inputValue = e.target.value;
-    setAbout(inputValue);
+    setabout(inputValue);
     setTouched(true);
     // Regular expression for validation
     const regex = /^[A-Za-z0-9\s,-]*$/;
     if (!inputValue.trim()) {
-      setAboutError(""); // Clear error message if field is empty
+      setaboutError(""); // Clear error message if field is empty
     } else if (!regex.test(inputValue)) {
-      setAboutError("Please enter a valid value for About");
+      setaboutError("Please enter a valid value for about");
     } else {
-      setAboutError("");
+      setaboutError("");
     }
   };
   // End
 
   // Occupation - New - Edit Profile
-  const [Occupation, setOccupation] = useState("");
-  const [occupationError, setOccupationError] = useState("");
+  const [occupation, setoccupation] = useState("");
+  const [occupationError, setoccupationError] = useState("");
   // const [touched, setTouched] = useState(false);
-  const handleOccupationChange = (e) => {
+  const handleoccupationChange = (e) => {
     const inputValue = e.target.value;
-    setOccupation(inputValue);
+    setoccupation(inputValue);
     setTouched(true);
     // Regular expression for occupation validation
     const occupationRegex = /^[A-Za-z\s]+$/;
     if (!inputValue.trim()) {
-      setOccupationError(""); // Clear error message if field is empty
+      setoccupationError(""); // Clear error message if field is empty
     } else if (!occupationRegex.test(inputValue)) {
-      setOccupationError("Please enter a valid occupation");
+      setoccupationError("Please enter a valid occupation");
     } else {
-      setOccupationError("");
+      setoccupationError("");
     }
   };
   // End
 
   // DOB - New - Edit Profile
-  const [DOB, setDOB] = useState("");
-  const handleDOBChange = (e) => {
-    setDOB(e.target.value);
+  const [dob, setdob] = useState("");
+  const handledobChange = (e) => {
+    setdob(e.target.value);
   };
   // End
 
   // Gender - New - Edit Profile
-  const [Gender, setGender] = useState("");
-  const handleGenderChange = (e) => {
-    setGender(e.target.value);
+  const [gender, setgender] = useState("");
+  const handlegenderChange = (e) => {
+    setgender(e.target.value);
   };
   // End
 
@@ -706,7 +750,7 @@ const MyProfile = () => {
 
   const handleEditFormSubmit = async (event) => {
     event.preventDefault();
-
+    // console.log("event.target", event);
     let formData = Array.from(event.target.elements).map((e) => {
       return { [e.getAttribute("name")]: e.value };
     });
@@ -715,6 +759,9 @@ const MyProfile = () => {
       formData2 = { ...formData2, ...element };
     });
     console.log("formData2", formData2);
+    // if (profilepic) {
+    //   formData2.Image = profilepic;
+    // }
 
     // Proceed with form submission logic
     let userData = localStorage.getItem("user");
@@ -830,580 +877,682 @@ const MyProfile = () => {
   };
   // End
 
+  // GEt User Details
+  const getProfileDetails = async () => {
+    let userData = localStorage.getItem("user");
+    userData = JSON.parse(userData);
+
+    let headers = {
+      Authorization: userData?.token || "",
+      "Content-Type": "application/json",
+    };
+    await axios
+      .get("http://localhost:8080/api/v1/auth/profile", {
+        headers: headers,
+      })
+      .then(
+        (response) => {
+          console.log(response?.data);
+          if (response.data.success) {
+            setPasswordUpdateUserId(response?.data?.user?._id);
+            setname(response?.data?.user?.name);
+            setUserName(response?.data?.user?.username);
+            setEmail(response?.data?.user?.email);
+            setPhone(response?.data?.user?.phoneno);
+            setdob(response?.data?.user?.dob);
+            setgender(response?.data?.user?.gender);
+            setcountry(response?.data?.user?.country);
+            setaddress(response?.data?.user?.address);
+            setoccupation(response?.data?.user?.occupation);
+            setabout(response?.data?.user?.about);
+            setheight(response?.data?.user?.height);
+            setHeightUnit(response?.data?.user?.heightUnit);
+            setweight(response?.data?.user?.weight);
+            setWeightUnit(response?.data?.user?.WeightUnit);
+            setLink1(response?.data?.user?.link1);
+            handlelink1Change({
+              target: { value: response?.data?.user?.link1 },
+            });
+            setlink2(response?.data?.user?.link2);
+            handlelink2Change({
+              target: { value: response?.data?.user?.link2 },
+            });
+            setlink3(response?.data?.user?.link3);
+            handlelink3Change({
+              target: { value: response?.data?.user?.link3 },
+            });
+            setlink4(response?.data?.user?.link4);
+            handlelink4Change({
+              target: { value: response?.data?.user?.link4 },
+            });
+          } else {
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  };
   return (
-    <div>
-      <Userdashboard/>
-      {/* Main Section */}
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <h1>My Profile</h1>
-          <nav>
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <Link to="">Home</Link>
-              </li>
-              <li className="breadcrumb-item">Users</li>
-              <li className="breadcrumb-item active">My Profile</li>
-            </ol>
-          </nav>
-        </div>
-        <section className="section profile">
-          <div className="row">
-            <div className="col-xl-4">
-              <div className="card">
-                <div className="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                  <img
-                    alt="Profile"
-                    src={profilepic || person_icn}
-                    className="rounded-circle"
-                    style={{ width: "100px", height: "100px" }}
-                  />
-                  <h2>{user?.name || "N/A"}</h2>
-                  <h3>{Occupation || "N/A"}</h3>
-                  <div className="social-links mt-2">
-                    <Link to={link1} className="twitter">
-                      {/* Dynamically add icon 1 */}
-                      {socialMedia1 === "LinkedIn" && <FaLinkedin />}
-                      {socialMedia1 === "Twitter" && <FaTwitter />}
-                      {socialMedia1 === "Facebook" && <FaFacebook />}
-                      {socialMedia1 === "Instagram" && <FaInstagram />}
+    <Userdashboard
+      content={
+        <div>
+          {/* Main Section */}
+          <div>
+            <div className="pagetitle">
+              <h1>My Profile</h1>
+              <nav>
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <Link
+                      to="/Userdashboard"
+                      style={{ textDecoration: "none" }}
+                    >
+                      Home
                     </Link>
-                    <Link to={link2} className="facebook">
-                      {/* Dynamically add icon 2 */}
-                      {socialMedia2 === "LinkedIn" && <FaLinkedin />}
-                      {socialMedia2 === "Twitter" && <FaTwitter />}
-                      {socialMedia2 === "Facebook" && <FaFacebook />}
-                      {socialMedia2 === "Instagram" && <FaInstagram />}
-                    </Link>
-                    <Link to={link3} className="instagram">
-                      {/* Dynamically add icon 3 */}
-                      {socialMedia3 === "LinkedIn" && <FaLinkedin />}
-                      {socialMedia3 === "Twitter" && <FaTwitter />}
-                      {socialMedia3 === "Facebook" && <FaFacebook />}
-                      {socialMedia3 === "Instagram" && <FaInstagram />}
-                    </Link>
-                    <Link to={link4} className="linkedin">
-                      {/* Dynamically add icon 4 */}
-                      {socialMedia4 === "LinkedIn" && <FaLinkedin />}
-                      {socialMedia4 === "Twitter" && <FaTwitter />}
-                      {socialMedia4 === "Facebook" && <FaFacebook />}
-                      {socialMedia4 === "Instagram" && <FaInstagram />}
-                    </Link>
+                  </li>
+                  <li className="breadcrumb-item">Users</li>
+                  <li className="breadcrumb-item active">My Profile</li>
+                </ol>
+              </nav>
+            </div>
+            <section className="section profile">
+              <div className="row">
+                <div className="col-xl-4">
+                  <div className="card">
+                    <div className="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                      <img
+                        alt="Profile"
+                        src={profilepic || person_icn}
+                        className="rounded-circle"
+                        style={{ width: "100px", height: "100px" }}
+                      />
+                      <h2>{user?.name || "N/A"}</h2>
+                      <h3>{occupation || "N/A"}</h3>
+                      <div className="social-links mt-2">
+                        <Link to={link1} className="twitter">
+                          {/* Dynamically add icon 1 */}
+                          {socialMedia1 === "LinkedIn" && <FaLinkedin />}
+                          {socialMedia1 === "Twitter" && <FaTwitter />}
+                          {socialMedia1 === "Facebook" && <FaFacebook />}
+                          {socialMedia1 === "Instagram" && <FaInstagram />}
+                        </Link>
+                        <Link to={link2} className="facebook">
+                          {/* Dynamically add icon 2 */}
+                          {socialMedia2 === "LinkedIn" && <FaLinkedin />}
+                          {socialMedia2 === "Twitter" && <FaTwitter />}
+                          {socialMedia2 === "Facebook" && <FaFacebook />}
+                          {socialMedia2 === "Instagram" && <FaInstagram />}
+                        </Link>
+                        <Link to={link3} className="instagram">
+                          {/* Dynamically add icon 3 */}
+                          {socialMedia3 === "LinkedIn" && <FaLinkedin />}
+                          {socialMedia3 === "Twitter" && <FaTwitter />}
+                          {socialMedia3 === "Facebook" && <FaFacebook />}
+                          {socialMedia3 === "Instagram" && <FaInstagram />}
+                        </Link>
+                        <Link to={link4} className="linkedin">
+                          {/* Dynamically add icon 4 */}
+                          {socialMedia4 === "LinkedIn" && <FaLinkedin />}
+                          {socialMedia4 === "Twitter" && <FaTwitter />}
+                          {socialMedia4 === "Facebook" && <FaFacebook />}
+                          {socialMedia4 === "Instagram" && <FaInstagram />}
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="col-xl-8">
-              <div className="card">
-                <div className="card-body pt-3">
-                  <ul className="nav nav-tabs nav-tabs-bordered">
-                    {/* Overview */}
-                    <li className="nav-item">
-                      <button
-                        data-bs-toggle="tab"
-                        data-bs-target="#profile-overview"
-                        className={`nav-link ${tabLiNum === 1 ? "active" : ""}`}
-                        onClick={() => {
-                          setTabLiNum(1);
-                        }}
-                      >
-                        Overview
-                      </button>
-                    </li>
-
-                    {/* Edit Profile */}
-                    <li className="nav-item">
-                      <button
-                        data-bs-toggle="tab"
-                        data-bs-target="#profile-edit"
-                        className={`nav-link ${tabLiNum === 2 ? "active" : ""}`}
-                        onClick={() => {
-                          setTabLiNum(2);
-                        }}
-                      >
-                        Edit Profile
-                      </button>
-                    </li>
-
-                    {/* Change Password */}
-                    <li className="nav-item">
-                      <button
-                        // className="nav-link"
-                        data-bs-toggle="tab"
-                        data-bs-target="#profile-change-password"
-                        className={`nav-link ${tabLiNum === 4 ? "active" : ""}`}
-                        onClick={() => {
-                          setTabLiNum(4);
-                        }}
-                      >
-                        Change Password
-                      </button>
-                    </li>
-
-                    {/* Account Settings */}
-                    <li className="nav-item">
-                      <button
-                        // className="nav-link"
-                        data-bs-toggle="tab"
-                        data-bs-target="#profile-settings"
-                        className={`nav-link ${tabLiNum === 3 ? "active" : ""}`}
-                        onClick={() => {
-                          setTabLiNum(3);
-                        }}
-                      >
-                        Account Settings
-                      </button>
-                    </li>
-                  </ul>
-
-                  <div className="tab-content pt-2">
-                    {/* Overview Section Start */}
-                    <div
-                      className={`tab-pane fade profile-edit pt-3 ${
-                        tabLiNum === 1 ? `show active` : ``
-                      }`}
-                      id="profile-overview"
-                    >
-                      {/* About */}
-                      <h5 className="card-title">About</h5>
-                      {/* <p className="small fst-italic"> */}
-                      <p className="">{About || "N/A"}</p>
-
-                      <h5 className="card-title">Profile Details</h5>
-
-                      {/* Tab System for all type of content */}
+                <div className="col-xl-8">
+                  <div className="card">
+                    <div className="card-body pt-3">
                       <ul className="nav nav-tabs nav-tabs-bordered">
+                        {/* Overview */}
                         <li className="nav-item">
                           <button
+                            data-bs-toggle="tab"
+                            data-bs-target="#profile-overview"
                             className={`nav-link ${
-                              activeTab === 5 ? "active" : ""
+                              tabLiNum === 1 ? "active" : ""
                             }`}
-                            onClick={() => handleTabClick(5)}
+                            onClick={() => {
+                              setTabLiNum(1);
+                            }}
                           >
-                            Basic Information
+                            Overview
                           </button>
                         </li>
+
+                        {/* Edit Profile */}
                         <li className="nav-item">
                           <button
+                            data-bs-toggle="tab"
+                            data-bs-target="#profile-edit"
                             className={`nav-link ${
-                              activeTab === 6 ? "active" : ""
+                              tabLiNum === 2 ? "active" : ""
                             }`}
-                            onClick={() => handleTabClick(6)}
+                            onClick={() => {
+                              setTabLiNum(2);
+                            }}
                           >
-                            Body &amp; Health Status
+                            Edit Profile
                           </button>
                         </li>
+
+                        {/* Change Password */}
                         <li className="nav-item">
                           <button
+                            // className="nav-link"
+                            data-bs-toggle="tab"
+                            data-bs-target="#profile-change-password"
                             className={`nav-link ${
-                              activeTab === 7 ? "active" : ""
+                              tabLiNum === 4 ? "active" : ""
                             }`}
-                            onClick={() => handleTabClick(7)}
+                            onClick={() => {
+                              setTabLiNum(4);
+                            }}
                           >
-                            Social accounts
+                            Change Password
+                          </button>
+                        </li>
+
+                        {/* Account Settings */}
+                        <li
+                          className="nav-item"
+                          style={{ marginRight: "0rem" }}
+                        >
+                          <button
+                            // className="nav-link"
+                            data-bs-toggle="tab"
+                            data-bs-target="#profile-settings"
+                            className={`nav-link ${
+                              tabLiNum === 3 ? "active" : ""
+                            }`}
+                            onClick={() => {
+                              setTabLiNum(3);
+                            }}
+                          >
+                            Account Settings
                           </button>
                         </li>
                       </ul>
 
                       <div className="tab-content pt-2">
-                        {/* Basic Information */}
+                        {/* Overview Section Start */}
                         <div
                           className={`tab-pane fade profile-edit pt-3 ${
-                            activeTab === 5 ? "show active" : ""
+                            tabLiNum === 1 ? `show active` : ``
                           }`}
                           id="profile-overview"
                         >
-                          {/* Full Name */}
-                          <div className="row">
-                            <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
-                            >
-                              <strong>Full Name</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {/* {user?.name || "User"} */}
-                              {user?.name || fullName || "N/A"}
-                            </div>
-                          </div>
+                          {/* about */}
+                          <h5 className="card-title" id="crd-ttl">
+                            About
+                          </h5>
+                          {/* <p className="small fst-italic"> */}
+                          <p className="">{about || "N/A"}</p>
 
-                          {/* User Name */}
-                          <div className="row">
-                            <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
-                            >
-                              <strong>User Name</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {/* {username?.username || "username"} */}
-                              {username?.username || userName || "N/A"}
-                            </div>
-                          </div>
+                          <h5 className="card-title" id="crd-ttl">
+                            Profile Details
+                          </h5>
 
-                          {/* Email */}
-                          <div className="row">
-                            <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
-                            >
-                              <strong>Email</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {/* {email?.email || "email"} */}
-                              {email?.email || Email || "N/A"}
-                            </div>
-                          </div>
+                          {/* Tab System for all type of content */}
+                          <ul className="nav nav-tabs nav-tabs-bordered">
+                            <li className="nav-item">
+                              <button
+                                className={`nav-link ${
+                                  activeTab === 5 ? "active" : ""
+                                }`}
+                                onClick={() => handleTabClick(5)}
+                                id="my-prf-prdt-sec-hd"
+                              >
+                                Basic Information
+                              </button>
+                            </li>
+                            <li className="nav-item">
+                              <button
+                                className={`nav-link ${
+                                  activeTab === 6 ? "active" : ""
+                                }`}
+                                onClick={() => handleTabClick(6)}
+                                id="my-prf-prdt-sec-hd"
+                              >
+                                Body &amp; Health Status
+                              </button>
+                            </li>
+                            <li className="nav-item">
+                              <button
+                                className={`nav-link ${
+                                  activeTab === 7 ? "active" : ""
+                                }`}
+                                onClick={() => handleTabClick(7)}
+                                id="my-prf-prdt-sec-hd"
+                              >
+                                Social accounts
+                              </button>
+                            </li>
+                          </ul>
 
-                          {/* Phone No. */}
-                          <div className="row">
+                          <div className="tab-content pt-2">
+                            {/* Basic Information */}
                             <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
+                              className={`tab-pane fade profile-edit pt-3 ${
+                                activeTab === 5 ? "show active" : ""
+                              }`}
+                              id="profile-overview"
                             >
-                              <strong>Phone No.</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {/* Phone */}
-                              {Phone || "N/A"}
-                            </div>
-                          </div>
+                              {/* Full Name */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Full Name</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {/* {user?.name || "User"} */}
+                                  {user?.name || name || "N/A"}
+                                </div>
+                              </div>
 
-                          {/* Date of Birth */}
-                          <div className="row">
+                              {/* User Name */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>User Name</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {/* {username?.username || "username"} */}
+                                  {username?.username || userName || "N/A"}
+                                </div>
+                              </div>
+
+                              {/* Email */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Email</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {/* {email?.email || "email"} */}
+                                  {email?.email || Email || "N/A"}
+                                </div>
+                              </div>
+
+                              {/* Phone No. */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Phone No.</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {/* Phone */}
+                                  {phoneno || "N/A"}
+                                </div>
+                              </div>
+
+                              {/* Date of Birth */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Date of Birth</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {dob || "N/A"}
+                                </div>
+                              </div>
+
+                              {/* Gender */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Gender</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {gender || "N/A"}
+                                </div>
+                              </div>
+
+                              {/* Country */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Country</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {country || "N/A"}
+                                </div>
+                              </div>
+
+                              {/* Address */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Address</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {address || "N/A"}
+                                </div>
+                              </div>
+
+                              {/* Occupation */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Occupation</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {occupation || "N/A"}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Body Status */}
                             <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
+                              className={`tab-pane fade profile-edit pt-3 ${
+                                activeTab === 6 ? "show active" : ""
+                              }`}
+                              id="profile-edit"
                             >
-                              <strong>Date of Birth</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {DOB || "N/A"}
-                            </div>
-                          </div>
+                              {/* Height */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Height</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {height + heightUnit || "N/A"}
+                                </div>
+                              </div>
 
-                          {/* Gender */}
-                          <div className="row">
+                              {/* Weight */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Weight</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {weight + WeightUnit || "N/A"}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Social Links */}
                             <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
+                              className={`tab-pane fade profile-edit pt-3 ${
+                                activeTab === 7 ? "show active" : ""
+                              }`}
+                              id="profile-edit"
                             >
-                              <strong>Gender</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {Gender || "N/A"}
-                            </div>
-                          </div>
-
-                          {/* Country */}
-                          <div className="row">
-                            <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
-                            >
-                              <strong>Country</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {Country || "N/A"}
-                            </div>
-                          </div>
-
-                          {/* Address */}
-                          <div className="row">
-                            <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
-                            >
-                              <strong>Address</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {Address || "N/A"}
-                            </div>
-                          </div>
-
-                          {/* Occupation */}
-                          <div className="row">
-                            <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
-                            >
-                              <strong>Occupation</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {Occupation || "N/A"}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Body Status */}
-                        <div
-                          className={`tab-pane fade profile-edit pt-3 ${
-                            activeTab === 6 ? "show active" : ""
-                          }`}
-                          id="profile-edit"
-                        >
-                          {/* Height */}
-                          <div className="row">
-                            <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
-                            >
-                              <strong>Height</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {Height || "N/A"}
-                            </div>
-                          </div>
-
-                          {/* Weight */}
-                          <div className="row">
-                            <div
-                              className="col-lg-3 col-md-4 label"
-                              id="Orv-Pr-Dt-hd"
-                            >
-                              <strong>Weight</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {Weight || "N/A"}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Social Links */}
-                        <div
-                          className={`tab-pane fade profile-edit pt-3 ${
-                            activeTab === 7 ? "show active" : ""
-                          }`}
-                          id="profile-edit"
-                        >
-                          {/* Link 1 */}
-                          <div className="row">
-                            <div className="col-lg-3 col-md-4 label">
                               {/* Link 1 */}
-                              <strong>{socialMedia1 || "Profile N/A"}</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {link1 || "url N/A"}
-                            </div>
-                          </div>
-                          {/* Link 2 */}
-                          <div className="row">
-                            <div className="col-lg-3 col-md-4 label">
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  {/* Link 1 */}
+                                  <strong>
+                                    {socialMedia1 || "Profile N/A"}
+                                  </strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {link1 || "url N/A"}
+                                </div>
+                              </div>
                               {/* Link 2 */}
-                              <strong>{socialMedia2 || "Profile N/A"}</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {link2 || "url N/A"}
-                            </div>
-                          </div>
-                          {/* Link 3 */}
-                          <div className="row">
-                            <div className="col-lg-3 col-md-4 label">
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  {/* Link 2 */}
+                                  <strong>
+                                    {socialMedia2 || "Profile N/A"}
+                                  </strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {link2 || "url N/A"}
+                                </div>
+                              </div>
                               {/* Link 3 */}
-                              <strong>{socialMedia3 || "Profile N/A"}</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {link3 || "url N/A"}
-                            </div>
-                          </div>
-                          {/* Link 4 */}
-                          <div className="row">
-                            <div className="col-lg-3 col-md-4 label">
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  {/* Link 3 */}
+                                  <strong>
+                                    {socialMedia3 || "Profile N/A"}
+                                  </strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {link3 || "url N/A"}
+                                </div>
+                              </div>
                               {/* Link 4 */}
-                              <strong>{socialMedia4 || "Profile N/A"}</strong>
-                            </div>
-                            <div className="col-lg-9 col-md-8">
-                              {link4 || "url N/A"}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  {/* Link 4 */}
+                                  <strong>
+                                    {socialMedia4 || "Profile N/A"}
+                                  </strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {link4 || "url N/A"}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    {/* Overview Section End */}
+                        {/* Overview Section End */}
 
-                    {/* Edit Profile Section Start */}
-                    <div
-                      className={`tab-pane fade profile-edit pt-3 ${
-                        tabLiNum === 2 ? `show active` : ``
-                      }`}
-                      id="profile-edit"
-                    >
-                      <form onSubmit={handleEditFormSubmit}>
-                        {/* Profile Image */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="profileImage"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Profile Image
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <img
-                              alt="Profile"
-                              id="profilepic"
-                              // src={profile_icn}
-                              src={profilepic || profile_icn}
-                              className={`profilepic`}
-                              style={{
-                                // width: "200px",
-                                // height: "200px",
-                                borderRadius: "0%",
-                                // border: "1px solid #191919",
-                                border: "1px solid #919191",
-                              }}
-                            />
-                            <div className="pt-2">
-                              <input
-                                name="Image"
-                                // value={image}
-                                type="file"
-                                accept="image/jpej, image/png, image/jpg"
-                                id="input-file"
-                                style={{ display: "none" }}
-                                onChange={(event) => {
-                                  var tmppath = URL.createObjectURL(
-                                    event.target.files[0]
-                                  );
-                                  setprofilepic(tmppath);
-                                  // inputFile.onchange = function () {
-                                  //   console.log("Hell");
-                                  //   console.log(profilePic);
-                                  // };
-                                }}
-                              />
+                        {/* Edit Profile Section Start */}
+                        <div
+                          className={`tab-pane fade profile-edit pt-3 ${
+                            tabLiNum === 2 ? `show active` : ``
+                          }`}
+                          id="profile-edit"
+                        >
+                          <form onSubmit={handleEditFormSubmit}>
+                            {/* Profile Image */}
+                            <div className="row mb-3">
                               <label
-                                htmlFor="input-file"
-                                className="btn btn-primary btn-sm"
-                                title="Upload new profile image"
+                                htmlFor="profileImage"
+                                className="col-md-4 col-lg-3 col-form-label"
                               >
-                                <BiUpload style={{ color: "#fff" }} />
+                                Profile Image
                               </label>
-                              &nbsp;
-                              <label
-                                to=""
-                                className="btn btn-danger btn-sm"
-                                title="Remove my profile image"
-                                onClick={handleDeleteImage}
-                              >
-                                <BiTrash style={{ color: "#fff" }} />
-                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <img
+                                  alt="Profile"
+                                  id="profilepic"
+                                  // src={profile_icn}
+                                  src={profilepic || profile_icn}
+                                  className={`profilepic`}
+                                  style={{
+                                    // width: "200px",
+                                    // height: "200px",
+                                    borderRadius: "0%",
+                                    // border: "1px solid #191919",
+                                    border: "1px solid #919191",
+                                  }}
+                                />
+                                <div className="pt-2">
+                                  <input
+                                    name="Image"
+                                    // value={image}
+                                    type="file"
+                                    accept="image/jpej, image/png, image/jpg"
+                                    id="input-file"
+                                    style={{ display: "none" }}
+                                    onChange={(event) => {
+                                      var tmppath = URL.createObjectURL(
+                                        event.target.files[0]
+                                      );
+                                      setprofilepic(tmppath);
+                                      // inputFile.onchange = function () {
+                                      //   console.log("Hell");
+                                      //   console.log(profilePic);
+                                      // };
+                                    }}
+                                  />
+                                  <label
+                                    htmlFor="input-file"
+                                    className="btn btn-primary btn-sm"
+                                    title="Upload new profile image"
+                                  >
+                                    <BiUpload style={{ color: "#fff" }} />
+                                  </label>
+                                  &nbsp;
+                                  <label
+                                    to=""
+                                    className="btn btn-danger btn-sm"
+                                    title="Remove my profile image"
+                                    onClick={handleDeleteImage}
+                                  >
+                                    <BiTrash style={{ color: "#fff" }} />
+                                  </label>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
 
-                        <h5 className="card-title">Basic Inforamtion</h5>
+                            <h5 className="card-title">Basic Inforamtion</h5>
 
-                        {/* Full Name */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="fullName"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Full Name
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              required
-                              type="text"
-                              id="fullName"
-                              name="fullName"
-                              // value=""
-                              // value={fullName}
-                              // value={user?.name || fullName || "User"}
-                              pattern="[A-Z,a-z, ]*"
-                              className="form-control"
-                              onChange={handleFullNameChange}
-                            />
-                            {touched && fullNameError && (
-                              <div className="text-danger">
-                                <small>{fullNameError}</small>
+                            {/* Full Name */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="name"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Full Name
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <input
+                                  required
+                                  type="text"
+                                  id="name"
+                                  name="name"
+                                  // value=""
+                                  // value={name}
+                                  value={name}
+                                  pattern="[A-Z,a-z, ]*"
+                                  className="form-control"
+                                  onChange={handlenameChange}
+                                />
+                                {touched && nameError && (
+                                  <div className="text-danger">
+                                    <small>{nameError}</small>
+                                  </div>
+                                )}
                               </div>
-                            )}
-                          </div>
-                        </div>
+                            </div>
 
-                        {/* User Name */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Job"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            User Name
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              name="userName"
-                              // value=""
-                              id="Job"
-                              required
-                              type="text"
-                              // value={userName}
-                              // value={
-                              //   username?.username || userName || "username"
-                              // }
-                              className="form-control"
-                              pattern="[A-Z,a-z,0-9,@,#]*"
-                              onChange={handleUserNameChange}
-                            />
-                            {touched && userNameError && (
-                              <div className="text-danger">
-                                <small>{userNameError}</small>
+                            {/* User Name */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Job"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                User Name
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <input
+                                  name="userName"
+                                  // value=""
+                                  id="Job"
+                                  required
+                                  type="text"
+                                  // value={userName}
+                                  value={userName}
+                                  className="form-control"
+                                  pattern="[A-Z,a-z,0-9,@,#]*"
+                                  onChange={handleUserNameChange}
+                                />
+                                {touched && userNameError && (
+                                  <div className="text-danger">
+                                    <small>{userNameError}</small>
+                                  </div>
+                                )}
                               </div>
-                            )}
-                          </div>
-                        </div>
+                            </div>
 
-                        {/* Email */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Email"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Email
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              required
-                              // value=""
-                              id="Email"
-                              type="email"
-                              name="Email"
-                              value={Email}
-                              // value={email?.email || Email || "email"}
-                              className="form-control"
-                              pattern="[A-Z,a-z,0-9,@,.]*"
-                              onChange={handleEmailChange}
-                            />
-                            {touched && emailError && (
-                              <div className="text-danger">
-                                <small>{emailError}</small>
+                            {/* Email */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Email"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Email
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <input
+                                  required
+                                  // value=""
+                                  id="Email"
+                                  type="email"
+                                  name="Email"
+                                  // value={Email}
+                                  value={Email}
+                                  className="form-control"
+                                  pattern="[A-Z,a-z,0-9,@,.]*"
+                                  onChange={handleEmailChange}
+                                />
+                                {touched && emailError && (
+                                  <div className="text-danger">
+                                    <small>{emailError}</small>
+                                  </div>
+                                )}
                               </div>
-                            )}
-                          </div>
-                        </div>
+                            </div>
 
-                        {/* Phone No. */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Phone"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Phone No.
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            {/* <input
-                              // value=""
-                              required
-                              id="Phone"
-                              type="text"
-                              name="phone"
-                              pattern="[0-9]*"
-                              value={Phone}
-                              className="form-control"
-                              onChange={handlePhoneChange}
-                            /> */}
+                            {/* Phone No. */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Phone"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Phone No.
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <input
+                                  type="text"
+                                  value={phoneno}
+                                  name="phoneno"
+                                  id="phoneno"
+                                  pattern="[0-9]*"
+                                  onChange={handlePhoneChange}
+                                  className="form-control"
+                                />
+                                {/* Show error message only if error is not empty */}
+                                {error && (
+                                  <div className="text-danger">
+                                    <small>{error}</small>
+                                  </div>
+                                )}
 
-                            <PhoneInput
+                                {/* <PhoneInput
                               // required
                               id="Phone"
                               name="Phone"
@@ -1412,673 +1561,734 @@ const MyProfile = () => {
                               country={"in"} // Default country code
                               onChange={handlePhoneChange}
                               inputStyle={{ width: "100%" }} // Custom input width
-                            />
-                            {/* Display error message if form is submitted and phone is empty */}
-                            {EditFormSubmitted && !Phone && (
+                            /> */}
+                                {/* Display error message if form is submitted and phone is empty */}
+                                {/* {EditFormSubmitted && !Phone && (
                               <p style={{ color: "red" }}>
-                                {/* Please fill in the phone number */}
+                                Please fill in the phone number
                               </p>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* DOB */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="DOB"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Date of Birth
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              id="dob"
-                              name="DOB"
-                              type="date"
-                              // required
-                              value={DOB}
-                              min="1950-01-01"
-                              max="2025-01-01"
-                              class="form-control"
-                              onChange={handleDOBChange}
-                            />
-                          </div>
-                        </div>
-
-                        {/* Gender */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Phone"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Gender
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <select
-                              // required
-                              id="gen"
-                              name="Gender"
-                              class="form-control"
-                              value={Gender}
-                              onChange={handleGenderChange}
-                            >
-                              <option value="">-SELECT-</option>
-                              <option value="Male">Male</option>
-                              <option value="Female">Female</option>
-                            </select>
-                          </div>
-                        </div>
-
-                        {/* Country */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Country"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Country
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              // value=""
-                              // required
-                              type="text"
-                              id="Country"
-                              name="Country"
-                              value={Country}
-                              pattern="[A-Z,a-z]*"
-                              className="form-control"
-                              onChange={handleCountryChange}
-                            />
-                            {touched && countryError && (
-                              <div className="text-danger">
-                                <small>{countryError}</small>
+                            )} */}
                               </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Address */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Address"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Address
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              // value=""
-                              // required
-                              type="text"
-                              id="Address"
-                              name="Address"
-                              value={Address}
-                              className="form-control"
-                              // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
-                              onChange={handleAddressChange}
-                            />
-                            {touched && addressError && (
-                              <div className="text-danger">
-                                <small>{addressError}</small>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Occupation */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="company"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Occupation
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              // required
-                              type="text"
-                              id="company"
-                              // name="company"
-                              name="Occupation"
-                              value={Occupation}
-                              className="form-control"
-                              onChange={handleOccupationChange}
-                            />
-                            {touched && occupationError && (
-                              <div className="text-danger">
-                                <small>{occupationError}</small>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* About */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="about"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            About
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <textarea
-                              // required
-                              id="about"
-                              name="About"
-                              value={About}
-                              className="form-control"
-                              style={{ height: "100px" }}
-                              // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
-                              onChange={handleAboutChange}
-                            ></textarea>
-                            {touched && aboutError && (
-                              <div className="text-danger">
-                                <small>{aboutError}</small>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        <h5 className="card-title">Body &amp; Health Status</h5>
-
-                        {/* Height */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor=""
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Height
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              // value=""
-                              // required
-                              // pattern="[0-9,A-Z]*"
-                              id=""
-                              name="Height"
-                              type="text"
-                              value={Height}
-                              className="form-control"
-                              onChange={handleHeightChange}
-                            />
-                            {touched && heightError && (
-                              <div className="text-danger">{heightError}</div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Weight */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Weight"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Weight
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <input
-                              // value=""
-                              // required
-                              // pattern="[0-9,A-Z]*"
-                              id=""
-                              name="Weight"
-                              type="text"
-                              value={Weight}
-                              className="form-control"
-                              onChange={handleWeightChange}
-                            />
-                            {touched && weightError && (
-                              <div className="text-danger">{weightError}</div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Social Media Profile Section Starts */}
-
-                        <h5 className="card-title">Social accounts</h5>
-
-                        {/* Link 1 */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Twitter"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            {/* Link 1 Profile */}
-                            {socialMedia1 && (
-                              <div>
-                                <span>
-                                  {/* Social Media :  */}
-                                  {socialMedia1}
-                                </span>
-                                {/* Leave space for the icon */}
-                              </div>
-                            )}
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <div className="input-group">
-                              <span className="input-group-text">
-                                {/* Conditionally render the link icon or a default icon */}
-                                {socialMedia1 ? (
-                                  <>
-                                    {socialMedia1 === "LinkedIn" && (
-                                      <FaLinkedin />
-                                    )}
-                                    {socialMedia1 === "Twitter" && (
-                                      <FaTwitter />
-                                    )}
-                                    {socialMedia1 === "Facebook" && (
-                                      <FaFacebook />
-                                    )}
-                                    {socialMedia1 === "Instagram" && (
-                                      <FaInstagram />
-                                    )}
-                                  </>
-                                ) : (
-                                  <FaLink />
-                                )}
-                              </span>
-                              <input
-                                value={link1}
-                                type="url"
-                                id="link1"
-                                name="link1"
-                                className="form-control"
-                                placeholder="Link to social profile"
-                                onChange={handlelink1Change}
-                              />
                             </div>
-                            {link1Error && (
-                              <div className="text-danger">
-                                <small>{link1Error}</small>
-                              </div>
-                            )}
-                          </div>
-                        </div>
 
-                        {/* Link 2 */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Facebook"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            {/* Link 2 Profile */}
-                            {socialMedia2 && (
-                              <div>
-                                <span>
-                                  {/* Social Media :  */}
-                                  {socialMedia2}
-                                </span>
-                                {/* Leave space for the icon */}
-                              </div>
-                            )}
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <div className="input-group">
-                              <span className="input-group-text">
-                                {/* Conditionally render the link icon or a default icon */}
-                                {socialMedia2 ? (
-                                  <>
-                                    {socialMedia2 === "LinkedIn" && (
-                                      <FaLinkedin />
-                                    )}
-                                    {socialMedia2 === "Twitter" && (
-                                      <FaTwitter />
-                                    )}
-                                    {socialMedia2 === "Facebook" && (
-                                      <FaFacebook />
-                                    )}
-                                    {socialMedia2 === "Instagram" && (
-                                      <FaInstagram />
-                                    )}
-                                  </>
-                                ) : (
-                                  <FaLink />
-                                )}
-                              </span>
-                              <input
-                                value={link2}
-                                type="url"
-                                id="link2"
-                                name="link2"
-                                className="form-control"
-                                placeholder="Link to social profile"
-                                onChange={handlelink2Change}
-                              />
-                            </div>
-                            {touched && link2Error && (
-                              <div className="text-danger">
-                                <small>{link2Error}</small>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Link 3 */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Instagram"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            {/* Link 3 Profile */}
-                            {socialMedia3 && (
-                              <div>
-                                <span>
-                                  {/* Social Media :  */}
-                                  {socialMedia3}
-                                </span>
-                                {/* Leave space for the icon */}
-                              </div>
-                            )}
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <div className="input-group">
-                              <span className="input-group-text">
-                                {/* Conditionally render the link icon or a default icon */}
-                                {socialMedia3 ? (
-                                  <>
-                                    {socialMedia3 === "LinkedIn" && (
-                                      <FaLinkedin />
-                                    )}
-                                    {socialMedia3 === "Twitter" && (
-                                      <FaTwitter />
-                                    )}
-                                    {socialMedia3 === "Facebook" && (
-                                      <FaFacebook />
-                                    )}
-                                    {socialMedia3 === "Instagram" && (
-                                      <FaInstagram />
-                                    )}
-                                  </>
-                                ) : (
-                                  <FaLink />
-                                )}
-                              </span>
-                              <input
-                                value={link3}
-                                id="link3"
-                                name="link3"
-                                className="form-control"
-                                type="url"
-                                placeholder="Link to social profile"
-                                onChange={handlelink3Change}
-                              />
-                            </div>
-                            {touched && link3Error && (
-                              <div className="text-danger">{link3Error}</div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Link 4 */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="Linkedin"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            {/* Link 4 Profile */}
-                            {socialMedia4 && (
-                              <div>
-                                <span>
-                                  {/* Social Media :  */}
-                                  {socialMedia4}
-                                </span>
-                                {/* Leave space for the icon */}
-                              </div>
-                            )}
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <div className="input-group">
-                              <span className="input-group-text">
-                                {/* Conditionally render the link icon or a default icon */}
-                                {socialMedia4 ? (
-                                  <>
-                                    {socialMedia4 === "LinkedIn" && (
-                                      <FaLinkedin />
-                                    )}
-                                    {socialMedia4 === "Twitter" && (
-                                      <FaTwitter />
-                                    )}
-                                    {socialMedia4 === "Facebook" && (
-                                      <FaFacebook />
-                                    )}
-                                    {socialMedia4 === "Instagram" && (
-                                      <FaInstagram />
-                                    )}
-                                  </>
-                                ) : (
-                                  <FaLink />
-                                )}
-                              </span>
-                              <input
-                                value={link4}
-                                type="url"
-                                id="link4"
-                                name="link4"
-                                className="form-control"
-                                placeholder="Link to social profile"
-                                onChange={handlelink4Change}
-                              />
-                            </div>
-                            {touched && link4Error && (
-                              <div className="text-danger">{link4Error}</div>
-                            )}
-                          </div>
-                        </div>
-                        {/* Social Media Profile Section End */}
-
-                        {/* Submit Button */}
-                        <div className="text-center">
-                          <button type="submit" className="btn btn-success">
-                            Update Profile
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                    {/* Edit Profile Section End */}
-
-                    {/* Change Password Section */}
-                    <div
-                      id="profile-change-password"
-                      className={`tab-pane fade profile-edit pt-3 ${
-                        tabLiNum === 4 ? `show active` : ``
-                      }`}
-                    >
-                      <form onSubmit={handlePasswordUpdateSubmit}>
-                        {/* Current Password */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="currentPassword"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Current Password
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <div className="input-group">
-                              <input
-                                // type="password"
-                                required
-                                minLength={8}
-                                maxLength={15}
-                                name="password"
-                                id="currentPassword"
-                                value={currentpassword}
-                                // value={password?.password || "N/A"}
-                                className="form-control"
-                                pattern="[A-Z,a-z,0-9,@,#]*"
-                                onChange={handlecurrentpasswordChange}
-                                type={showcurrentpassword ? "text" : "password"}
-                              />
-                              <span
-                                style={{ cursor: "pointer" }}
-                                className="input-group-text"
-                                onClick={togglecurrentpasswordVisibility}
+                            {/* DOB */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="DOB"
+                                className="col-md-4 col-lg-3 col-form-label"
                               >
-                                {showcurrentpassword ? (
-                                  <FaEye />
-                                ) : (
-                                  <FaEyeSlash />
-                                )}
-                              </span>
+                                Date of Birth
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <input
+                                  id="dob"
+                                  name="dob"
+                                  type="date"
+                                  // required
+                                  value={dob}
+                                  min="1950-01-01"
+                                  max="2025-01-01"
+                                  className="form-control"
+                                  onChange={handledobChange}
+                                />
+                              </div>
                             </div>
-                            {!currentpasswordValid &&
-                              currentpassword.length > 0 && ( // Display warning only if password is not empty
-                                <small style={{ color: "red" }} id="warn">
-                                  {/* Password should be at least 8 characters long */}
-                                </small>
-                              )}
-                            {/* {errorMessage && (
+
+                            {/* Gender */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Phone"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Gender
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <select
+                                  // required
+                                  id="gender"
+                                  name="gender"
+                                  class="form-control"
+                                  value={gender}
+                                  onChange={handlegenderChange}
+                                >
+                                  <option value="">-SELECT-</option>
+                                  <option value="male">Male</option>
+                                  <option value="female">Female</option>
+                                  <option value="other">Other</option>
+                                </select>
+                              </div>
+                            </div>
+
+                            {/* Country */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Country"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Country
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <input
+                                  // value=""
+                                  // required
+                                  type="text"
+                                  id="country"
+                                  name="country"
+                                  value={country}
+                                  pattern="[A-Z,a-z]*"
+                                  className="form-control"
+                                  onChange={handlecountryChange}
+                                />
+                                {touched && countryError && (
+                                  <div className="text-danger">
+                                    <small>{countryError}</small>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Address */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Address"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Address
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <input
+                                  // value=""
+                                  // required
+                                  type="text"
+                                  id="address"
+                                  name="address"
+                                  value={address}
+                                  className="form-control"
+                                  // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
+                                  onChange={handleaddressChange}
+                                />
+                                {touched && addressError && (
+                                  <div className="text-danger">
+                                    <small>{addressError}</small>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Occupation */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="company"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Occupation
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <input
+                                  // required
+                                  type="text"
+                                  id="company"
+                                  // name="company"
+                                  name="occupation"
+                                  value={occupation}
+                                  className="form-control"
+                                  onChange={handleoccupationChange}
+                                />
+                                {touched && occupationError && (
+                                  <div className="text-danger">
+                                    <small>{occupationError}</small>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* about */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="about"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                about
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <textarea
+                                  // required
+                                  id="about"
+                                  name="about"
+                                  value={about}
+                                  className="form-control"
+                                  style={{ height: "100px" }}
+                                  // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
+                                  onChange={handleaboutChange}
+                                ></textarea>
+                                {touched && aboutError && (
+                                  <div className="text-danger">
+                                    <small>{aboutError}</small>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            <h5 className="card-title">
+                              Body &amp; Health Status
+                            </h5>
+
+                            {/* Height */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor=""
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Height
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <div className="input-group">
+                                  <input
+                                    // value=""
+                                    // required
+                                    // pattern="[0-9,A-Z]*"
+                                    id=""
+                                    name="height"
+                                    type="text"
+                                    value={height}
+                                    className="form-control"
+                                    onChange={handleheightChange}
+                                  />
+                                  <span className="input-group-text">
+                                    <select
+                                      id="heightUnit"
+                                      value={heightUnit}
+                                      name="heightUnit"
+                                      onChange={handleHeightUnitChange}
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                      className="form-control"
+                                    >
+                                      <option value="">-unit-</option>
+                                      <option value="mm">mm</option>
+                                      <option value="cm">cm</option>
+                                      <option value="m">m</option>
+                                      <option value="ft">ft</option>
+                                      {/* Add more options for other units if needed */}
+                                    </select>
+                                  </span>
+                                </div>
+                                {touched && heightError && (
+                                  <div className="text-danger">
+                                    <small>{heightError}</small>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Weight */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Weight"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Weight
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <div className="input-group">
+                                  <input
+                                    // value=""
+                                    // required
+                                    // pattern="[0-9,A-Z]*"
+                                    id=""
+                                    name="weight"
+                                    type="text"
+                                    value={weight}
+                                    className="form-control"
+                                    onChange={handleweightChange}
+                                  />
+                                  <span className="input-group-text">
+                                    <select
+                                      id="WeightUnit"
+                                      value={WeightUnit}
+                                      name="WeightUnit"
+                                      onChange={handleWeightUnitChange}
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                      className="form-control"
+                                    >
+                                      <option value="">-unit-</option>
+                                      <option value="gm">gm</option>
+                                      <option value="kg">kg</option>
+                                      <option value="lbs">lbs</option>
+                                      {/* <option value="pound">pound</option> */}
+                                      {/* Add more options for other units if needed */}
+                                    </select>
+                                  </span>
+                                </div>
+                                {touched && weightError && (
+                                  <div className="text-danger">
+                                    <small>{weightError}</small>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Social Media Profile Section Starts */}
+
+                            <h5 className="card-title">Social accounts</h5>
+
+                            {/* Link 1 */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Twitter"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                {/* Link 1 Profile */}
+                                {socialMedia1 && (
+                                  <div>
+                                    <span>
+                                      {/* Social Media :  */}
+                                      {socialMedia1}
+                                    </span>
+                                    {/* Leave space for the icon */}
+                                  </div>
+                                )}
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <div className="input-group">
+                                  <span className="input-group-text">
+                                    {/* Conditionally render the link icon or a default icon */}
+                                    {socialMedia1 ? (
+                                      <>
+                                        {socialMedia1 === "LinkedIn" && (
+                                          <FaLinkedin />
+                                        )}
+                                        {socialMedia1 === "Twitter" && (
+                                          <FaTwitter />
+                                        )}
+                                        {socialMedia1 === "Facebook" && (
+                                          <FaFacebook />
+                                        )}
+                                        {socialMedia1 === "Instagram" && (
+                                          <FaInstagram />
+                                        )}
+                                      </>
+                                    ) : (
+                                      <FaLink />
+                                    )}
+                                  </span>
+                                  <input
+                                    value={link1}
+                                    type="url"
+                                    id="link1"
+                                    name="link1"
+                                    className="form-control"
+                                    placeholder="Link to social profile"
+                                    onChange={handlelink1Change}
+                                  />
+                                </div>
+                                {link1Error && (
+                                  <div className="text-danger">
+                                    <small>{link1Error}</small>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Link 2 */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Facebook"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                {/* Link 2 Profile */}
+                                {socialMedia2 && (
+                                  <div>
+                                    <span>
+                                      {/* Social Media :  */}
+                                      {socialMedia2}
+                                    </span>
+                                    {/* Leave space for the icon */}
+                                  </div>
+                                )}
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <div className="input-group">
+                                  <span className="input-group-text">
+                                    {/* Conditionally render the link icon or a default icon */}
+                                    {socialMedia2 ? (
+                                      <>
+                                        {socialMedia2 === "LinkedIn" && (
+                                          <FaLinkedin />
+                                        )}
+                                        {socialMedia2 === "Twitter" && (
+                                          <FaTwitter />
+                                        )}
+                                        {socialMedia2 === "Facebook" && (
+                                          <FaFacebook />
+                                        )}
+                                        {socialMedia2 === "Instagram" && (
+                                          <FaInstagram />
+                                        )}
+                                      </>
+                                    ) : (
+                                      <FaLink />
+                                    )}
+                                  </span>
+                                  <input
+                                    value={link2}
+                                    type="url"
+                                    id="link2"
+                                    name="link2"
+                                    className="form-control"
+                                    placeholder="Link to social profile"
+                                    onChange={handlelink2Change}
+                                  />
+                                </div>
+                                {touched && link2Error && (
+                                  <div className="text-danger">
+                                    <small>{link2Error}</small>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Link 3 */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Instagram"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                {/* Link 3 Profile */}
+                                {socialMedia3 && (
+                                  <div>
+                                    <span>
+                                      {/* Social Media :  */}
+                                      {socialMedia3}
+                                    </span>
+                                    {/* Leave space for the icon */}
+                                  </div>
+                                )}
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <div className="input-group">
+                                  <span className="input-group-text">
+                                    {/* Conditionally render the link icon or a default icon */}
+                                    {socialMedia3 ? (
+                                      <>
+                                        {socialMedia3 === "LinkedIn" && (
+                                          <FaLinkedin />
+                                        )}
+                                        {socialMedia3 === "Twitter" && (
+                                          <FaTwitter />
+                                        )}
+                                        {socialMedia3 === "Facebook" && (
+                                          <FaFacebook />
+                                        )}
+                                        {socialMedia3 === "Instagram" && (
+                                          <FaInstagram />
+                                        )}
+                                      </>
+                                    ) : (
+                                      <FaLink />
+                                    )}
+                                  </span>
+                                  <input
+                                    value={link3}
+                                    id="link3"
+                                    name="link3"
+                                    className="form-control"
+                                    type="url"
+                                    placeholder="Link to social profile"
+                                    onChange={handlelink3Change}
+                                  />
+                                </div>
+                                {touched && link3Error && (
+                                  <div className="text-danger">
+                                    <small>{link3Error}</small>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Link 4 */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="Linkedin"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                {/* Link 4 Profile */}
+                                {socialMedia4 && (
+                                  <div>
+                                    <span>
+                                      {/* Social Media :  */}
+                                      {socialMedia4}
+                                    </span>
+                                    {/* Leave space for the icon */}
+                                  </div>
+                                )}
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <div className="input-group">
+                                  <span className="input-group-text">
+                                    {/* Conditionally render the link icon or a default icon */}
+                                    {socialMedia4 ? (
+                                      <>
+                                        {socialMedia4 === "LinkedIn" && (
+                                          <FaLinkedin />
+                                        )}
+                                        {socialMedia4 === "Twitter" && (
+                                          <FaTwitter />
+                                        )}
+                                        {socialMedia4 === "Facebook" && (
+                                          <FaFacebook />
+                                        )}
+                                        {socialMedia4 === "Instagram" && (
+                                          <FaInstagram />
+                                        )}
+                                      </>
+                                    ) : (
+                                      <FaLink />
+                                    )}
+                                  </span>
+                                  <input
+                                    value={link4}
+                                    type="url"
+                                    id="link4"
+                                    name="link4"
+                                    className="form-control"
+                                    placeholder="Link to social profile"
+                                    onChange={handlelink4Change}
+                                  />
+                                </div>
+                                {touched && link4Error && (
+                                  <div className="text-danger">
+                                    <small>{link4Error}</small>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            {/* Social Media Profile Section End */}
+
+                            {/* Submit Button */}
+                            <div className="text-center">
+                              <button type="submit" className="btn btn-success">
+                                Update Profile
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                        {/* Edit Profile Section End */}
+
+                        {/* Change Password Section */}
+                        <div
+                          id="profile-change-password"
+                          className={`tab-pane fade profile-edit pt-3 ${
+                            tabLiNum === 4 ? `show active` : ``
+                          }`}
+                        >
+                          <form onSubmit={handlePasswordUpdateSubmit}>
+                            {/* Current Password */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="currentPassword"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Current Password
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <div className="input-group">
+                                  <input
+                                    // type="password"
+                                    required
+                                    minLength={8}
+                                    maxLength={15}
+                                    name="password"
+                                    id="currentPassword"
+                                    value={currentpassword}
+                                    // value={password?.password || "N/A"}
+                                    className="form-control"
+                                    pattern="[A-Z,a-z,0-9,@,#]*"
+                                    onChange={handlecurrentpasswordChange}
+                                    type={
+                                      showcurrentpassword ? "text" : "password"
+                                    }
+                                  />
+                                  <span
+                                    style={{ cursor: "pointer" }}
+                                    className="input-group-text"
+                                    onClick={togglecurrentpasswordVisibility}
+                                  >
+                                    {showcurrentpassword ? (
+                                      <FaEye />
+                                    ) : (
+                                      <FaEyeSlash />
+                                    )}
+                                  </span>
+                                </div>
+                                {!currentpasswordValid &&
+                                  currentpassword.length > 0 && ( // Display warning only if password is not empty
+                                    <small style={{ color: "red" }} id="warn">
+                                      {/* Password should be at least 8 characters long */}
+                                    </small>
+                                  )}
+                                {/* {errorMessage && (
                               <small style={{ color: "red" }}>
                                 {errorMessage}
                               </small>
                             )} */}
-                          </div>
-                        </div>
-                        {/* New Password */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="newPassword"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            New Password
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <div className="input-group">
-                              <input
-                                required
-                                // type="password"
-                                minLength={8}
-                                maxLength={15}
-                                id="newPassword"
-                                name="newpassword"
-                                value={newPassword}
-                                className="form-control"
-                                pattern="[A-Z,a-z,0-9,@,#]*"
-                                onChange={handlenewPasswordChange}
-                                type={shownewPassword ? "text" : "password"}
-                              />
-                              <span
-                                style={{ cursor: "pointer" }}
-                                className="input-group-text"
-                                onClick={togglenewPasswordVisibility}
-                              >
-                                {shownewPassword ? <FaEye /> : <FaEyeSlash />}
-                              </span>
+                              </div>
                             </div>
-                            {!newPasswordValid &&
-                              newPassword.length > 0 && ( // Display warning only if password is not empty
-                                <small style={{ color: "red" }} id="warn">
-                                  {/* Password should be at least 8 characters long */}
-                                </small>
-                              )}
-                          </div>
-                        </div>
-                        {/* Re-entered Password */}
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="reEnterPassword"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Re-enter New Password
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <div className="input-group">
-                              <input
-                                // type="password"
-                                required
-                                minLength={8}
-                                maxLength={15}
-                                id="reEnterPassword"
-                                name="reEnterPassword"
-                                value={reEnterPassword}
-                                className="form-control"
-                                pattern="[A-Z,a-z,0-9,@,#]*"
-                                onChange={handlereEnterPasswordChange}
-                                type={showreEnterPassword ? "text" : "password"}
-                              />
-                              <span
-                                style={{ cursor: "pointer" }}
-                                className="input-group-text"
-                                onClick={togglereEnterPasswordVisibility}
+                            {/* New Password */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="newPassword"
+                                className="col-md-4 col-lg-3 col-form-label"
                               >
-                                {showreEnterPassword ? (
-                                  <FaEye />
-                                ) : (
-                                  <FaEyeSlash />
-                                )}
-                              </span>
+                                New Password
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <div className="input-group">
+                                  <input
+                                    required
+                                    // type="password"
+                                    minLength={8}
+                                    maxLength={15}
+                                    id="newPassword"
+                                    name="newpassword"
+                                    value={newPassword}
+                                    className="form-control"
+                                    pattern="[A-Z,a-z,0-9,@,#]*"
+                                    onChange={handlenewPasswordChange}
+                                    type={shownewPassword ? "text" : "password"}
+                                  />
+                                  <span
+                                    style={{ cursor: "pointer" }}
+                                    className="input-group-text"
+                                    onClick={togglenewPasswordVisibility}
+                                  >
+                                    {shownewPassword ? (
+                                      <FaEye />
+                                    ) : (
+                                      <FaEyeSlash />
+                                    )}
+                                  </span>
+                                </div>
+                                {!newPasswordValid &&
+                                  newPassword.length > 0 && ( // Display warning only if password is not empty
+                                    <small style={{ color: "red" }} id="warn">
+                                      {/* Password should be at least 8 characters long */}
+                                    </small>
+                                  )}
+                              </div>
                             </div>
-                            {!reEnterPasswordValid &&
-                              reEnterPassword.length > 0 && ( // Display warning only if password is not empty
-                                <small style={{ color: "red" }} id="warn">
-                                  {/* Password should be at least 8 characters long */}
-                                </small>
-                              )}
-                          </div>
+                            {/* Re-entered Password */}
+                            <div className="row mb-3">
+                              <label
+                                htmlFor="reEnterPassword"
+                                className="col-md-4 col-lg-3 col-form-label"
+                              >
+                                Re-enter New Password
+                              </label>
+                              <div className="col-md-8 col-lg-9">
+                                <div className="input-group">
+                                  <input
+                                    // type="password"
+                                    required
+                                    minLength={8}
+                                    maxLength={15}
+                                    id="reEnterPassword"
+                                    name="reEnterPassword"
+                                    value={reEnterPassword}
+                                    className="form-control"
+                                    pattern="[A-Z,a-z,0-9,@,#]*"
+                                    onChange={handlereEnterPasswordChange}
+                                    type={
+                                      showreEnterPassword ? "text" : "password"
+                                    }
+                                  />
+                                  <span
+                                    style={{ cursor: "pointer" }}
+                                    className="input-group-text"
+                                    onClick={togglereEnterPasswordVisibility}
+                                  >
+                                    {showreEnterPassword ? (
+                                      <FaEye />
+                                    ) : (
+                                      <FaEyeSlash />
+                                    )}
+                                  </span>
+                                </div>
+                                {!reEnterPasswordValid &&
+                                  reEnterPassword.length > 0 && ( // Display warning only if password is not empty
+                                    <small style={{ color: "red" }} id="warn">
+                                      {/* Password should be at least 8 characters long */}
+                                    </small>
+                                  )}
+                              </div>
+                            </div>
+                            <div className="text-center">
+                              <button type="submit" className="btn btn-primary">
+                                Change Password
+                              </button>
+                            </div>
+                          </form>
                         </div>
-                        <div className="text-center">
-                          <button type="submit" className="btn btn-primary">
-                            Change Password
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                    {/* Change Password Section End */}
+                        {/* Change Password Section End */}
 
-                    {/* Accont Setting Section Start */}
-                    <div
-                      className={`tab-pane fade profile-edit pt-3 ${
-                        tabLiNum === 3 ? `show active` : ``
-                      }`}
-                      id="profile-settings"
-                    >
-                      <form onSubmit={handleDeleteAccountSubmit}>
-                        <h4 style={{ color: "#dc3545" }}>
-                          <strong>Delete Account</strong>
-                        </h4>
-                        <hr />
-                        <div className="row mb-3">
-                          <label
-                            htmlFor="fullName"
-                            className="col-md-4 col-lg-3 col-form-label"
-                          >
-                            Confirm Deletion
-                          </label>
-                          <div className="col-md-8 col-lg-9">
-                            <div className="form-check">
-                              <input
-                                required
-                                type="checkbox"
-                                id="changesMade"
-                                style={{ cursor: "pointer" }}
-                                className="form-check-input"
-                                onChange={handleCheckboxChange}
-                              />
+                        {/* Accont Setting Section Start */}
+                        <div
+                          className={`tab-pane fade profile-edit pt-3 ${
+                            tabLiNum === 3 ? `show active` : ``
+                          }`}
+                          id="profile-settings"
+                        >
+                          <form onSubmit={handleDeleteAccountSubmit}>
+                            <h4 style={{ color: "#dc3545" }}>
+                              <strong>Delete Account</strong>
+                            </h4>
+                            <hr />
+                            <div className="row mb-3">
                               <label
-                                htmlFor="changesMade"
-                                className="form-check-label"
+                                htmlFor="name"
+                                className="col-md-4 col-lg-3 col-form-label"
                               >
-                                All your data is permenantally deleted, if once
-                                account deleted?
+                                Confirm Deletion
                               </label>
-                            </div>
-                            <div className="form-check">
-                              <input
-                                required
-                                type="checkbox"
-                                id="newProducts"
-                                style={{ cursor: "pointer" }}
-                                className="form-check-input"
-                                onChange={handleCheckboxChange}
-                              />
-                              <label
-                                htmlFor="newProducts"
-                                className="form-check-label"
-                              >
-                                You did not recover your account ever, if once
-                                account deleted?
-                              </label>
-                            </div>
-                            {/* <div className="form-check">
+                              <div className="col-md-8 col-lg-9">
+                                <div className="form-check">
+                                  <input
+                                    required
+                                    type="checkbox"
+                                    id="changesMade"
+                                    style={{ cursor: "pointer" }}
+                                    className="form-check-input"
+                                    onChange={handleCheckboxChange}
+                                  />
+                                  <label
+                                    htmlFor="changesMade"
+                                    className="form-check-label"
+                                  >
+                                    All your data is permenantally deleted, if
+                                    once account deleted?
+                                  </label>
+                                </div>
+                                <div className="form-check">
+                                  <input
+                                    required
+                                    type="checkbox"
+                                    id="newProducts"
+                                    style={{ cursor: "pointer" }}
+                                    className="form-check-input"
+                                    onChange={handleCheckboxChange}
+                                  />
+                                  <label
+                                    htmlFor="newProducts"
+                                    className="form-check-label"
+                                  >
+                                    You did not recover your account ever, if
+                                    once account deleted?
+                                  </label>
+                                </div>
+                                {/* <div className="form-check">
                               <input
                                 required
                                 id="proOffers"
@@ -2092,8 +2302,8 @@ const MyProfile = () => {
                                 Warning 3
                               </label>
                             </div> */}
-                            {/* Add more warning */}
-                            {/* <div className="form-check">
+                                {/* Add more warning */}
+                                {/* <div className="form-check">
                               <input
                                 required
                                 type="checkbox"
@@ -2107,97 +2317,105 @@ const MyProfile = () => {
                                 Warning 4
                               </label>
                             </div> */}
-                          </div>
-                        </div>
+                              </div>
+                            </div>
 
-                        {/* <div className="text-center"> */}
-                        <div className="row mb-3">
-                          {/* <button type="submit" className="">
+                            {/* <div className="text-center"> */}
+                            <div className="row mb-3">
+                              {/* <button type="submit" className="">
                             Button
                           </button> */}
 
-                          {/* Delete Account Button */}
-                          <div className="text-center">
-                            {/* <button> */}
-                            <span
-                              // type="submit"
-                              className="btn btn-outline-danger"
-                              onClick={handleDeleteClick}
-                              style={{
-                                display: isDeleteConfirmationVisible
-                                  ? "none"
-                                  : "block",
-                              }}
-                            >
-                              Delete Account
-                            </span>
-                            {/* <button> */}
-                          </div>
-
-                          {/* Delete Confirmation Modal */}
-                          {isDeleteConfirmationVisible && (
-                            <div className="delete-confirmation-modal">
-                              <p
-                                style={{
-                                  color: "#dc3545",
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                }}
-                              >
-                                Are you sure you wants to delete your account?
-                              </p>
-                              <input
-                                required
-                                type="text"
-                                className="form-control"
-                                style={{ marginBottom: "10px" }}
-                                placeholder="Any Reason to delete your account?"
-                              />
-                              <div className="row">
-                                <div className="col">
-                                  <button
-                                    type="submit"
-                                    style={{ width: "100%" }}
-                                    className="btn btn-danger"
-                                    onClick={handleDeleteAccountSubmit}
-                                  >
-                                    Yes, Delete Account
-                                  </button>
-                                </div>
-                                <div className="col">
-                                  <button
-                                    type="submit"
-                                    style={{ width: "100%" }}
-                                    className="btn btn-success"
-                                    onClick={handleCancelClick}
-                                  >
-                                    Cancel
-                                  </button>
-                                </div>
+                              {/* Delete Account Button */}
+                              <div className="text-center">
+                                {/* <button> */}
+                                <span
+                                  // type="submit"
+                                  className="btn btn-outline-danger"
+                                  onClick={handleDeleteClick}
+                                  style={{
+                                    display: isDeleteConfirmationVisible
+                                      ? "none"
+                                      : "block",
+                                  }}
+                                >
+                                  Delete Account
+                                </span>
+                                {/* <button> */}
                               </div>
+
+                              {/* Delete Confirmation Modal */}
+                              {isDeleteConfirmationVisible && (
+                                <div className="delete-confirmation-modal">
+                                  <p
+                                    style={{
+                                      color: "#dc3545",
+                                      marginTop: "10px",
+                                      marginBottom: "10px",
+                                    }}
+                                  >
+                                    Are you sure you wants to delete your
+                                    account?
+                                  </p>
+                                  <input
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    style={{ marginBottom: "10px" }}
+                                    placeholder="Any Reason to delete your account?"
+                                  />
+                                  <div className="row">
+                                    <div className="col">
+                                      <button
+                                        type="submit"
+                                        style={{ width: "100%" }}
+                                        className="btn btn-danger"
+                                        onClick={handleDeleteAccountSubmit}
+                                      >
+                                        Yes, Delete Account
+                                      </button>
+                                    </div>
+                                    <div className="col">
+                                      <button
+                                        type="submit"
+                                        style={{ width: "100%" }}
+                                        className="btn btn-success"
+                                        onClick={handleCancelClick}
+                                      >
+                                        Cancel
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                          )}
+                          </form>
                         </div>
-                      </form>
+                        {/* Accont Setting Section Start End */}
+                      </div>
                     </div>
-                    {/* Accont Setting Section Start End */}
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
-        </section>
-      </main>
 
-      {/* Top to Bottom arrow */}
-      <Link
-        to=""
-        className="back-to-top d-flex align-items-center justify-content-center"
-        onClick={scrollToTop}
-      >
-        <BsArrowUp style={{ color: "#fff" }} />
-      </Link>
-    </div>
+          {/* Back to Top */}
+          <Link
+            to=""
+            onClick={() => {
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              });
+            }}
+            className="back-to-top d-flex align-items-center justify-content-center"
+          >
+            <BsArrowUp style={{ color: "#fff" }} />
+          </Link>
+        </div>
+      }
+    />
   );
 };
 

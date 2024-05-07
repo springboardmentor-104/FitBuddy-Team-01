@@ -172,7 +172,7 @@ const Registration = (props) => {
         },
         (error) => {
           console.log(error);
-          alert("error",error);
+          alert("error", error);
           setRegisteredUserId("");
           setIsRegistered(false);
         }
@@ -237,8 +237,8 @@ const Registration = (props) => {
         );
         if (response.data && response.data.success) {
           console.log(response.data);
-          setRegisteredUserId(response.data.data.userId); // Set the user ID
-          setUserId(response.data.data.userId); // Update the user ID state
+          setRegisteredUserId(response.data.user.userId); // Set the user ID
+          setUserId(response.data.user.userId); // Update the user ID state
           // setEmail(response.data.data.email); // Update the email state
           setIsRegistered(true);
         } else {

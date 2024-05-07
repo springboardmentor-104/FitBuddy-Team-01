@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./ExerciseForm.css"; // Import the CSS file
+import "./ExerciseForm.css";
 
-const ExerciseForm = ({ exercise, userId, onClose }) => {
+const ExerciseForm2 = ({ exercise, userId, onClose, onSubmit }) => {
   const [sets, setSets] = useState("");
   const [timeToPerformExercise, setTimeToPerformExercise] = useState("");
   const [errors, setErrors] = useState({});
@@ -101,4 +101,4 @@ const ExerciseForm = ({ exercise, userId, onClose }) => {
   );
 };
 
-export default ExerciseForm;
+export default ExerciseForm2;

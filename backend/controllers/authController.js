@@ -8,14 +8,14 @@ const { hashPassword, comparePassword } = require("../helper/authHelper");
 const { isEmail } = require("validator");
 const xss = require("xss");
 
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../middleware/uploadImageMiddleware");
+
 // send otp vefication email for registration
 const sendOtpVerificationEmail = async ({ _id, name, email }, res) => {
   try {
-    // const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
     const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
-    console.log("otp", otp);
-    // const message = `<p>Hello ${name} here is your otp <b>${otp}</b> for registration </p> <p> otp will expire in 1hr`;
-    const message = `<p>Hello ${name} here is your otp <b>${otp}</b> for registration </p> <p> otp will expire in 5 min`;
+    const message = `<p>Hello ${name} here is your otp <b>${otp}</b> for registration </p> <p> otp will expire in 5min only`;
     await sendMail(email, "Fit-buddy email verification", message);
 
     // hash the otp
@@ -38,29 +38,30 @@ const registerController = async (req, res) => {
 
     // Validation
     if (!name || !email || !username || !password || !cpassword) {
-      return res.status(400).send({ error: "All fields are required" });
+      return res.send({ success: false, message: "All fields are required" });
     }
 
     if (password !== cpassword) {
-      return res.status(400).send({ error: "Passwords do not match" });
+      return res.send({ success: false, message: "Passwords do not match" });
     }
     // Check if username is unique
     const existingUsername = await userModel.findOne({ username });
     if (existingUsername) {
-      return res.status(400).send({ error: "Username is already taken" });
+      return res.send({ success: false, message: "Username is already taken" });
     }
 
     // Check if email format is valid
     if (!isEmail(email)) {
-      return res.status(400).send({ error: "Invalid email format" });
+      return res.send({ success: false, message: "Invalid email format" });
     }
 
     // Check if email is already registered
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      return res
-        .status(400)
-        .send({ error: "Email is already registered. Please login instead." });
+      return res.send({
+        success: false,
+        message: "Email is already registered. Please login instead.",
+      });
     }
 
     // Hash password
@@ -79,10 +80,14 @@ const registerController = async (req, res) => {
 
     // Respond with success message
     res.status(201).send({
-      data: { userId: user?._id },
       success: true,
       message:
         "Registration successful. Please verify your email to activate your account.",
+      user: {
+        userId: user._id,
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
     // Handle error
@@ -102,7 +107,7 @@ const loginController = async (req, res) => {
 
     // Validation
     if (!emailOrUsername || !password) {
-      return res.status(400).send({
+      return res.send({
         success: false,
         message: "Please provide email/username and password",
       });
@@ -113,7 +118,7 @@ const loginController = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).send({
+      return res.send({
         success: false,
         message: "Invalid email/username or password",
       });
@@ -123,18 +128,33 @@ const loginController = async (req, res) => {
       let oldOtp = await userOtpVerification.findOne({ userId: user._id });
       if (!oldOtp) {
         await sendOtpVerificationEmail(user, res);
-        return;
+        return res.send({
+          success: true,
+          verify: false,
+          message: "An otp is sent to please verify first",
+          user: {
+            userId: user._id,
+            name: user.name,
+            email: user.email,
+          },
+        });
       } else {
-        return res.status(400).send({
-          success: false,
+        return res.send({
+          success: true,
+          verify: false,
           message: "An email has already been sent to verify your account",
+          user: {
+            userId: user._id,
+            name: user.name,
+            email: user.email,
+          },
         });
       }
     }
 
     const match = await comparePassword(password, user.password);
     if (!match) {
-      return res.status(404).send({
+      return res.send({
         success: false,
         message: "Invalid email/username or password",
       });
@@ -148,9 +168,13 @@ const loginController = async (req, res) => {
     // Send success response with user details and token
     res.status(200).send({
       success: true,
-      // message: "Login successful",
-      message: "Login successfully!",
-      user,
+      message: "Login successful",
+      verify: true,
+      user: {
+        userId: user._id,
+        name: user.name,
+        email: user.email,
+      },
       token,
     });
   } catch (error) {
@@ -198,7 +222,7 @@ const verifyOtpController = async (req, res) => {
 
     return res.status(202).send({
       success: true,
-      // message: "User email verified successfully",
+      message: "User email verified successfully",
     });
   } catch (error) {
     res.status(500).send({
@@ -248,9 +272,21 @@ const forgotOtpController = async (req, res) => {
       });
     }
 
-    // Generate OTP
-    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    // Check if OTP already exists for the user
+    const existingOtpVerification = await userOtpVerification.findOne({
+      userId: user._id,
+    });
 
+    if (existingOtpVerification) {
+      return res.send({
+        success: true,
+        message: "An OTP has already been sent. Please verify your email.",
+        userId: user._id,
+      });
+    }
+
+    // Generate OTP
+    const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
     // Save OTP in database
     const hashedOtp = await hashPassword(otp);
     const newOtpVerification = new userOtpVerification({
@@ -266,6 +302,7 @@ const forgotOtpController = async (req, res) => {
     return res.status(200).send({
       success: true,
       message: "OTP sent to your email",
+      userId: user._id,
     });
   } catch (error) {
     return res.status(500).send({
@@ -279,12 +316,19 @@ const forgotOtpController = async (req, res) => {
 // reset password
 const resetPasswordController = async (req, res) => {
   try {
-    const { userId, otp, newPassword } = req.body;
-    if (!userId || !otp || !newPassword) {
-      return res.status(400).send({
+    const { userId, otp, newPassword, cpassword } = req.body;
+
+    if (!userId || !otp || !newPassword || cpassword) {
+      return res.send({
         success: false,
-        message:
-          "User ID, OTP, and new password are required. Please provide them.",
+        message: "OTP and new password are required. Please provide them.",
+      });
+    }
+
+    if (newPassword != cpassword) {
+      return res.send({
+        success: false,
+        message: "password doest not matched with confirm password",
       });
     }
 
@@ -293,7 +337,7 @@ const resetPasswordController = async (req, res) => {
       userId,
     });
     if (!userVerificationRecord) {
-      return res.status(404).send({
+      return res.send({
         success: false,
         message:
           "No OTP verification record found. Please initiate the forgot password process again.",
@@ -304,7 +348,7 @@ const resetPasswordController = async (req, res) => {
     const hashedOtp = userVerificationRecord.otp;
     const validOtp = await comparePassword(otp, hashedOtp);
     if (!validOtp) {
-      return res.status(404).send({
+      return res.send({
         success: false,
         message: "Invalid OTP, please try again.",
       });
@@ -336,9 +380,8 @@ const resetPasswordController = async (req, res) => {
 // update password
 const updatePasswordController = async (req, res) => {
   try {
-    console.log(req.body);
     // Accessing user ID from req.body.user
-    const { user } = req.body;
+    const { user } = req;
     const { oldpassword, newPassword } = req.body;
 
     // Validation
@@ -350,6 +393,7 @@ const updatePasswordController = async (req, res) => {
     }
 
     // Fetch user details using the user ID
+    console.log("Page Change");
     const userDetails = await userModel.findById(user._id);
     console.log(userDetails);
 
@@ -357,7 +401,7 @@ const updatePasswordController = async (req, res) => {
     const match = await comparePassword(oldpassword, userDetails.password);
     console.log(match);
     if (!match) {
-      return res.status(400).send({
+      return res.send({
         success: false,
         message: "Old password is incorrect",
       });
@@ -383,6 +427,107 @@ const updatePasswordController = async (req, res) => {
   }
 };
 
+// to get all deatails
+const getUserProfileController = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await userModel.findById(userId).select("-password");
+    // Check if user exists
+    if (!user) {
+      return res.send({ success: false, message: "User not found" });
+    }
+
+    // Return user details
+    return res.status(200).send({ success: true, user });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+// to update profile
+
+const updateProfileController = async (req, res) => {
+  try {
+    const userId = req.user._id; // Assuming you have authenticated the user and have access to their user ID
+
+    // Extract fields from request body
+    const {
+      name,
+      about,
+      phoneno,
+      dob,
+      gender,
+      height,
+      weight,
+      country,
+      address,
+      occupation,
+      link1, // Shivankush replace insta to link1
+      link2, // Shivankush replace fb to link2
+      link3, // Shivankush replace twitter to link3
+      link4, // Shivankush added link4
+      heightUnit, // Shivankush added heightUnit
+      WeightUnit, // Shivankush added WeightUnit
+    } = req.body;
+
+    // Construct update object with allowed fields
+    const updateFields = {};
+    if (name) updateFields.name = name;
+    if (about) updateFields.about = about;
+    if (phoneno) updateFields.phoneno = phoneno;
+    if (dob) updateFields.dob = dob;
+    if (gender) updateFields.gender = gender;
+    if (height) updateFields.height = height;
+    if (weight) updateFields.weight = weight;
+    if (country) updateFields.country = country;
+    if (address) updateFields.address = address;
+    if (occupation) updateFields.occupation = occupation;
+    if (link1) updateFields.link1 = link1; // Shivankush replace insta to link1
+    if (link2) updateFields.link2 = link2; // Shivankush replace fb to link2
+    if (link3) updateFields.link3 = link3; // Shivankush replace twitter to link3
+    if (link4) updateFields.link4 = link4; // Shivankush added link4
+    if (heightUnit) updateFields.heightUnit = heightUnit; // Shivankush added heightUnit
+    if (WeightUnit) updateFields.WeightUnit = WeightUnit; // Shivankush added WeightUnit
+
+    // Check if an image was provided in the request body
+    if (req.file) {
+      // Upload image to Cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path);
+
+      // Add image URL to updateFields
+      updateFields.photo = result.secure_url;
+    }
+
+    // Update user profile
+    const updatedUser = await userModel.findByIdAndUpdate(
+      userId,
+      updateFields,
+      { new: true }
+    );
+
+    // Check if user exists
+    if (!updatedUser) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    // Return updated user profile
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+module.exports = { updateProfileController, upload };
+
 module.exports = {
   registerController,
   loginController,
@@ -391,4 +536,6 @@ module.exports = {
   forgotOtpController,
   resetPasswordController,
   updatePasswordController,
+  getUserProfileController,
+  updateProfileController,
 };
