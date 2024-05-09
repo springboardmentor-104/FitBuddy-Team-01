@@ -2705,4 +2705,5 @@ const MyProfile = () => {
   );
 };
 
+// code is too big divide into components
 export default MyProfile;
