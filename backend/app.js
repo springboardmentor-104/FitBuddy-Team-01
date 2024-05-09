@@ -5,6 +5,7 @@ const colors = require("colors");
 const connectDB = require("./config/db");
 const authRoute = require("./routes/authRoutes");
 const exerciseRoute = require("./routes/exercisesRoute");
+const dietRoute = require("./routes/dietRoutes");
 var cors = require("cors");
 dotenv.config();
 // // This should already be declared in your API file
@@ -34,6 +35,8 @@ app.use(cors());
 app.use("/api/v1/auth", authRoute);
 
 app.use("/api/exercises", exerciseRoute);
+
+app.use("/api/diet", dietRoute);
 
 app.get("/", (req, res) => {
   res.send("<h1>hello everyone</h1>");

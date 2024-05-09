@@ -4,14 +4,14 @@ import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
 
 import {
-  BiCog,
+  // BiCog,
   BiGrid,
   BiTime,
   BiTask,
   BiUser,
   BiSearch,
   BiLogOut,
-  BiHelpCircle,
+  // BiHelpCircle,
 } from "react-icons/bi";
 
 import {
@@ -37,10 +37,6 @@ const Userdashboard = (props) => {
       setUser(user);
     }
   }, []);
-
-  // Side bar toggale
-
-  // Back to Top
 
   // For profile open in navbar in headeer
   // State to control the visibility of the profile dropdown
@@ -284,7 +280,7 @@ const Userdashboard = (props) => {
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="/History">
+            <Link className="nav-link collapsed" to="/Histo">
               <BiTime />
               &nbsp;
               <span>History</span>

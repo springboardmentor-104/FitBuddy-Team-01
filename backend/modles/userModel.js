@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema(
       // type: Date, // Remove by Shivankush
       type: String, // Added by Shivankush
     },
+    // Shivankush added Age
+    Age: {
+      type: Number,
+    },
     gender: {
       type: String,
       enum: ["male", "female", "other"],

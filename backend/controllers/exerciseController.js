@@ -1,70 +1,7 @@
+const mongoose = require("mongoose");
 const Exercise = require("../modles/exerciseModel");
-
-// const createExerciseController = async (req, res) => {
-//   try {
-//     const {
-//       name,
-//       description,
-//       category,
-//       muscle,
-//       equipment,
-//       difficulty,
-//       photo,
-//     } = req.body;
-
-//     // Check if required fields are present
-//     if (
-//       !name ||
-//       !description ||
-//       !category ||
-//       !muscle ||
-//       !equipment ||
-//       !difficulty ||
-//       !photo
-//     ) {
-//       return res
-//         .status(400)
-//         .json({ success: false, message: "All fields are required" });
-//     }
-
-//     // Validate difficulty level
-//     const validDifficultyLevels = ["easy", "intermediate", "hard", "other"];
-//     if (!validDifficultyLevels.includes(difficulty.toLowerCase())) {
-//       return res
-//         .status(400)
-//         .json({ success: false, message: "Invalid difficulty level" });
-//     }
-
-//     // Create new exercise instance
-//     const exercise = new Exercise({
-//       name,
-//       description,
-//       category,
-//       muscle,
-//       equipment,
-//       difficulty: difficulty.toLowerCase(), // Convert to lowercase for consistency
-//       photo,
-//     });
-
-//     // Save the exercise to the database
-//     const savedExercise = await exercise.save();
-
-//     // Return success response
-//     return res
-//       .status(201)
-//       .json({
-//         success: true,
-//         message: "Exercise created successfully",
-//         exercise: savedExercise,
-//       });
-//   } catch (error) {
-//     // Handle errors
-//     console.error("Error creating exercise:", error);
-//     return res
-//       .status(500)
-//       .json({ success: false, message: "Internal server error" });
-//   }
-// };
+const UserExercise = require("../modles/userExercise");
+const goalexercise = require("../modles/createExerciseGoal");
 
 const userCreateExerciseController = async (req, res) => {
   try {
@@ -102,22 +39,18 @@ const userCreateExerciseController = async (req, res) => {
 
     await exercise.save();
 
-    return res
-      .status(201)
-      .json({
-        success: true,
-        message: "Exercise created successfully",
-        exercise,
-      });
+    return res.status(201).json({
+      success: true,
+      message: "Exercise created successfully",
+      exercise,
+    });
   } catch (error) {
     console.error("Error creating exercise:", error);
-    return res
-      .status(500)
-      .json({
-        success: false,
-        message: "Error creating exercise",
-        error: error.message,
-      });
+    return res.status(500).json({
+      success: false,
+      message: "Error creating exercise",
+      error: error.message,
+    });
   }
 };
 
@@ -237,11 +170,71 @@ const searchExercisesByCategoryController = async (req, res) => {
   }
 };
 
+const createExerciseController = async (req, res) => {
+  try {
+    let { userId, exerciseArr } = req.body;
+    let resArr = [];
+    for (let exerciseObj in exerciseArr) {
+      console.log(exerciseObj);
+      let { name, category, sets, time } = exerciseArr[exerciseObj];
+      console.log(name, category, sets, time);
+      // Check if required fields are present
+      if (!userId || !name || !category || !sets || !time) {
+        return res
+          .status(400)
+          .json({ success: false, message: "All fields are required" });
+      }
+
+      //validate Category
+      // const validCategories = [
+      //   "strength",
+      //   "yoga",
+      //   "cardio",
+      //   "powerlifting",
+      //   "other",
+      // ];
+      // if (!validCategories.includes(category)) {
+      //   return res
+      //     .status(400)
+      //     .json({ success: false, message: "Invalid category" });
+      // }
+
+      name = name.toLowerCase();
+      category = category.toLowerCase();
+
+      // Create new exercise instance
+      const exercise = new goalexercise({
+        userId,
+        name,
+        category,
+        sets,
+        time,
+      });
+
+      // Save the exercise to the database
+      const savedExercise = await exercise.save();
+      resArr.push(savedExercise);
+    }
+    // Return success response
+    return res.status(201).json({
+      success: true,
+      message: "Exercise created successfully",
+      exercise: resArr,
+    });
+  } catch (error) {
+    // Handle errors
+    console.error("Error creating exercise:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
 module.exports = {
-  // createExerciseController,
+  userCreateExerciseController,
   getAllExercisesController,
   getExerciseByIdController,
   findExercisesByCategoryAndDifficulty,
   searchExercisesByCategoryController,
-  userCreateExerciseController,
+  createExerciseController,
 };

@@ -281,7 +281,7 @@ const Registration = (props) => {
       id="reg-sec"
     >
       <div className="container px-lg-5">
-        <div className="row" id="rg-rw">
+        <div className="row" id="rg-rw" style={{ margin: "125px" }}>
           <div className="col-sm-12 col-md-6 bg-white">
             <div className="text-center p-3">
               {/* <div className="bc-bx">

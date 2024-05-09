@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const exerciseSchema = new mongoose.Schema({
   userId: {
-    type: String,
-    ref: "User",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User", // Reference to the user who created this personal exercise
     required: true,
   },
   name: {
@@ -12,21 +12,18 @@ const exerciseSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ["strength", "yoga", "cardio", "powerlifting", "other"],
+    // enum: ["strength", "yoga", "cardio", "powerlifting", "other"],
     required: true,
   },
+
   sets: {
     type: Number,
     required: true,
   },
-  timeToPerformExercise: {
+  time: {
     type: Number,
     required: true,
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
 });
 
-module.exports = mongoose.model("userExercise", exerciseSchema);
+module.exports = mongoose.model("goalExercise", exerciseSchema);

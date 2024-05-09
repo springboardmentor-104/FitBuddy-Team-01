@@ -10,9 +10,9 @@ import { BiCog } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { BiHelpCircle } from "react-icons/bi";
 import { BsList } from "react-icons/bs";
-import { BsPersonFill } from "react-icons/bs";
+import { BsPersonFill, BsArrowUp } from "react-icons/bs";
 import { BsCartPlusFill } from "react-icons/bs";
-import { BsArrowUpShort } from "react-icons/bs";
+// import { BsArrowUpShort } from "react-icons/bs";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 
 const History = () => {
@@ -38,30 +38,6 @@ const History = () => {
     };
   }, []);
 
-  // Back to Top
-  useEffect(() => {
-    const handleScroll = () => {
-      const backToTopButton = document.querySelector(".back-to-top");
-      if (backToTopButton) {
-        if (window.scrollY > 100) {
-          backToTopButton.classList.add("active");
-        } else {
-          backToTopButton.classList.remove("active");
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
   // For User
   // State to control the visibility of the profile dropdown
   const [isOpen, setIsOpen] = useState(false);
@@ -84,6 +60,7 @@ const History = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isProfileOpen]);
+
   return (
     <div>
       <header
@@ -278,7 +255,9 @@ const History = () => {
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
-                <Link to="">Home</Link>
+                <Link to="" style={{ textDecoration: "none" }}>
+                  Home
+                </Link>
               </li>
               <li className="breadcrumb-item active">History</li>
             </ol>
@@ -289,12 +268,18 @@ const History = () => {
         </section>
       </main>
 
+      {/* Back to Top */}
       <Link
         to=""
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }}
         className="back-to-top d-flex align-items-center justify-content-center"
-        onClick={scrollToTop}
       >
-        <BsArrowUpShort />
+        <BsArrowUp style={{ color: "#fff" }} />
       </Link>
     </div>
   );

@@ -12,8 +12,8 @@ import ResetPassword from "./pages/ResetPassword";
 import Userdashboard from "./pages/Userdashboard";
 import MyProfile from "./pages/MyProfile";
 //
-import History from "./pages/History";
-// import Histo from "./pages/Histo";
+// import History from "./pages/History";
+import Histo from "./pages/Histo";
 //
 import Card from "./pages/Card";
 //
@@ -23,7 +23,7 @@ import ExercisePage from "./pages/ExercisePage";
 import SingleExercisePage from "./pages/SingleExercisePage";
 //
 import CreateGoals from "./pages/CreateGoals";
-
+//
 // import ExerciseCard from "./pages/ExerciseCard";
 // import CreateGoals from "./pages/CreateGoals";
 
@@ -43,8 +43,8 @@ const App = () => {
         <Route exact path="/Userdashboard" element={<Userdashboard />} />
         <Route exact path="/MyProfile" element={<MyProfile />} />
 
-        <Route exact path="/History" element={<History />} />
-        {/* <Route exact path="/Histo" element={<Histo />} /> */}
+        {/* <Route exact path="/History" element={<History />} /> */}
+        <Route exact path="/Histo" element={<Histo />} />
 
         <Route exact path="/Card" element={<Card />} />
         <Route exact path="/ExerciseCard" element={<ExerciseCard />} />

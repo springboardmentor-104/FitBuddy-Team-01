@@ -458,6 +458,7 @@ const updateProfileController = async (req, res) => {
       about,
       phoneno,
       dob,
+      Age, // Shivankush added Age
       gender,
       height,
       weight,
@@ -478,6 +479,7 @@ const updateProfileController = async (req, res) => {
     if (about) updateFields.about = about;
     if (phoneno) updateFields.phoneno = phoneno;
     if (dob) updateFields.dob = dob;
+    if (Age) updateFields.Age = Age; // Shivankush added Age
     if (gender) updateFields.gender = gender;
     if (height) updateFields.height = height;
     if (weight) updateFields.weight = weight;

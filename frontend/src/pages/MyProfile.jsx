@@ -1,6 +1,9 @@
+// import PhoneInput from "react-phone-input-2";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
+
 import axios from "axios";
 import { Link } from "react-router-dom";
-// import PhoneInput from "react-phone-input-2";
 import React, { useEffect, useState } from "react";
 
 import "./MyProfile.css";
@@ -10,8 +13,6 @@ import "react-phone-input-2/lib/style.css";
 import person_icn from "../Assets/person.png";
 import profile_icn from "../Assets/profile.png";
 import Userdashboard from "../pages/Userdashboard";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   FaLink,
@@ -23,28 +24,27 @@ import {
   FaInstagram,
 } from "react-icons/fa";
 
-import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
-
 import {
-  BiCog,
-  BiGrid,
-  BiTime,
-  BiTask,
-  BiUser,
+  // BiCog,
+  // BiGrid,
+  // BiTime,
+  // BiTask,
+  // BiUser,
   BiTrash,
   BiUpload,
-  BiLogOut,
-  BiSearch,
-  BiHelpCircle,
+  // BiLogOut,
+  // BiSearch,
+  // BiHelpCircle,
 } from "react-icons/bi";
 
 import {
-  BsList,
-  BsPersonFill,
+  // BsList,
+  // BsPersonFill,
   BsArrowUp,
-  BsCartPlusFill,
-  BsFillPlusCircleFill,
+  // BsCartPlusFill,
+  // BsFillPlusCircleFill,
 } from "react-icons/bs";
+import { Button, Modal } from "react-bootstrap";
 
 const MyProfile = () => {
   // const navigate = useNavigate();
@@ -58,6 +58,11 @@ const MyProfile = () => {
     setActiveTab(tabNumber);
   };
   // End
+
+  const [EactiveTab, setEActiveTab] = useState(8);
+  const handleETabClick = (tabNumber) => {
+    setEActiveTab(tabNumber);
+  };
 
   // My User - Name - Previous Name(fetch) - From Registration Data
   const [user, setUser] = useState({});
@@ -608,6 +613,13 @@ const MyProfile = () => {
   };
   // End
 
+  // Age - New - Edit Profile
+  const [age, setAge] = useState("");
+  const handleAgeChange = (event) => {
+    setAge(event.target.value);
+  };
+  // End
+
   // Gender - New - Edit Profile
   const [gender, setgender] = useState("");
   const handlegenderChange = (e) => {
@@ -900,6 +912,7 @@ const MyProfile = () => {
             setEmail(response?.data?.user?.email);
             setPhone(response?.data?.user?.phoneno);
             setdob(response?.data?.user?.dob);
+            setAge(response?.data?.user?.Age);
             setgender(response?.data?.user?.gender);
             setcountry(response?.data?.user?.country);
             setaddress(response?.data?.user?.address);
@@ -933,6 +946,100 @@ const MyProfile = () => {
         }
       );
   };
+
+  // BMI Calculator
+  // State variables for weight, height, and BMI
+  const [bmi, setBMI] = useState("");
+  const [bmiStatus, setBMIStatus] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  console.log(height + heightUnit);
+  console.log(weight + WeightUnit);
+
+  // Define a function to determine the text color based on the BMI status
+  const getTextColor = () => {
+    switch (bmiStatus) {
+      case "Underweight":
+        return "blue"; // Change this to your desired color for underweight
+      // case "Normal weight":
+      case "Normal":
+        return "green"; // Change this to your desired color for normal weight
+      case "Overweight":
+        return "orange"; // Change this to your desired color for overweight
+      case "Obesity":
+        return "red"; // Change this to your desired color for obesity
+      default:
+        return "black"; // Default color
+    }
+  };
+
+  // Define a function to generate suggestions based on BMI status and value
+  const generateSuggestions = () => {
+    switch (bmiStatus) {
+      case "Underweight":
+        return [
+          "You may want to consider increasing your calorie intake.",
+          "Include healthy fats and proteins in your diet to gain weight.",
+        ];
+      case "Normal":
+        return ["Maintain your current lifestyle for a healthy weight."];
+      case "Overweight":
+        return [
+          "Focus on portion control and increasing physical activity.",
+          "Consider incorporating more fruits and vegetables into your diet.",
+        ];
+      case "Obesity":
+        return [
+          "Consult with a healthcare professional for personalized advice.",
+          "Focus on gradual weight loss through a balanced diet and exercise.",
+        ];
+      default:
+        return [];
+    }
+  };
+
+  // useEffect hook to calculate BMI whenever weight or height changes
+  useEffect(() => {
+    // Check if weight and height are both valid numbers
+    if (weight && height && !isNaN(weight) && !isNaN(height)) {
+      // Convert height from cm to meters
+      const heightInMeters = height / 100;
+
+      // Calculate BMI using the formula
+      const calculatedBMI = weight / (heightInMeters * heightInMeters);
+
+      // Update the state with the calculated BMI
+      setBMI(calculatedBMI.toFixed(2)); // Round BMI to 2 decimal places
+
+      // Determine BMI status
+      if (calculatedBMI < 18.5) {
+        setBMIStatus("Underweight");
+      } else if (calculatedBMI >= 18.5 && calculatedBMI < 25) {
+        // setBMIStatus("Normal weight");
+        setBMIStatus("Normal");
+      } else if (calculatedBMI >= 25 && calculatedBMI < 30) {
+        setBMIStatus("Overweight");
+      } else {
+        setBMIStatus("Obesity");
+      }
+    } else {
+      // Reset BMI if weight or height is not a valid number
+      setBMI("");
+      setBMIStatus("");
+    }
+  }, [weight, height]);
+
+  // useEffect hook to update suggestions whenever BMI status changes
+  useEffect(() => {
+    // Generate suggestions based on BMI status
+    const generatedSuggestions = generateSuggestions();
+    setSuggestions(generatedSuggestions);
+  }, [bmiStatus]);
+  // BMI Calculator End
+
+  // State to manage modal visibility
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <Userdashboard
       content={
@@ -1095,7 +1202,7 @@ const MyProfile = () => {
                             Profile Details
                           </h5>
 
-                          {/* Tab System for all type of content */}
+                          {/* Tab System for all type of content in Overview Section*/}
                           <ul className="nav nav-tabs nav-tabs-bordered">
                             <li className="nav-item">
                               <button
@@ -1209,6 +1316,19 @@ const MyProfile = () => {
                                 </div>
                               </div>
 
+                              {/* Age */}
+                              <div className="row">
+                                <div
+                                  className="col-lg-3 col-md-4"
+                                  id="Orv-Pr-Dt-hd"
+                                >
+                                  <strong>Age</strong>
+                                </div>
+                                <div className="col-lg-9 col-md-8">
+                                  {age || "N/A"}
+                                </div>
+                              </div>
+
                               {/* Gender */}
                               <div className="row">
                                 <div
@@ -1294,6 +1414,100 @@ const MyProfile = () => {
                                   {weight + WeightUnit || "N/A"}
                                 </div>
                               </div>
+
+                              {/* Button to trigger modal */}
+                              <div style={{ textAlign: "right" }}>
+                                <Button
+                                  type="button"
+                                  variant="primary"
+                                  onClick={() => {
+                                    setShowModal(!showModal);
+                                  }}
+                                  size="sm"
+                                >
+                                  Check BMI
+                                </Button>
+                              </div>
+
+                              {/* model */}
+                              <Modal
+                                show={showModal}
+                                onHide={() => {
+                                  setShowModal(!showModal);
+                                }}
+                                centered
+                              >
+                                <Modal.Header className="py-1" closeButton>
+                                  <Modal.Title
+                                    style={{
+                                      fontFamily: "Nunito, sans-serif",
+                                      fontWeight: "600",
+                                      color: "#4154f1",
+                                    }}
+                                  >
+                                    BMI(Body Mass Index)
+                                  </Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body className="py-1">
+                                  {/* Display BMI */}
+                                  <div style={{ marginTop: "15px" }}>
+                                    <div
+                                      className="row"
+                                      style={{
+                                        fontFamily: "Nunito, sans-serif",
+                                        color: getTextColor(), // Apply color based on BMI status
+                                      }}
+                                    >
+                                      <div className="col-lg-3 col-md-4">
+                                        <strong>Your BMI is</strong>{" "}
+                                      </div>
+                                      <div className="col-lg-9 col-md-8">
+                                        {bmi ? bmi + " kg/m²" : "N/A"}
+                                      </div>
+                                      <div className="col-lg-3 col-md-4">
+                                        {bmiStatus && <strong>Status</strong>}{" "}
+                                      </div>
+                                      <div className="col-lg-9 col-md-8">
+                                        {bmiStatus}
+                                      </div>
+                                      {suggestions.length > 0 && (
+                                        <div>
+                                          <strong>Suggestions :</strong>
+                                          <ul>
+                                            {suggestions.map(
+                                              (suggestion, index) => (
+                                                <li key={index}>
+                                                  {suggestion}
+                                                </li>
+                                              )
+                                            )}
+                                          </ul>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </Modal.Body>
+                                <Modal.Footer className="py-1">
+                                  <Button
+                                    variant="secondary"
+                                    onClick={() => {
+                                      setShowModal(!showModal);
+                                    }}
+                                    size="sm"
+                                  >
+                                    Close
+                                  </Button>
+                                  {/* <Button
+                                    variant="primary"
+                                    onClick={() => {
+                                      setShowModal(!showModal);
+                                    }}
+                                    size="sm"
+                                  >
+                                    Save Changes
+                                  </Button> */}
+                                </Modal.Footer>
+                              </Modal>
                             </div>
 
                             {/* Social Links */}
@@ -1438,121 +1652,165 @@ const MyProfile = () => {
                               </div>
                             </div>
 
-                            <h5 className="card-title">Basic Inforamtion</h5>
+                            {/* Tab */}
+                            <ul className="nav nav-tabs nav-tabs-bordered">
+                              <li className="nav-item">
+                                <span
+                                  className={`nav-link ${
+                                    EactiveTab === 8 ? "active" : ""
+                                  }`}
+                                  onClick={() => handleETabClick(8)}
+                                  style={{ cursor: "pointer" }}
+                                  id="my-prf-prdt-sec-hd"
+                                >
+                                  Basic Information
+                                </span>
+                              </li>
+                              <li className="nav-item">
+                                <span
+                                  className={`nav-link ${
+                                    EactiveTab === 9 ? "active" : ""
+                                  }`}
+                                  onClick={() => handleETabClick(9)}
+                                  style={{ cursor: "pointer" }}
+                                  id="my-prf-prdt-sec-hd"
+                                >
+                                  Body &amp; Health Status
+                                </span>
+                              </li>
+                              <li className="nav-item">
+                                <span
+                                  className={`nav-link ${
+                                    EactiveTab === 10 ? "active" : ""
+                                  }`}
+                                  onClick={() => handleETabClick(10)}
+                                  style={{ cursor: "pointer" }}
+                                  id="my-prf-prdt-sec-hd"
+                                >
+                                  Social accounts
+                                </span>
+                              </li>
+                            </ul>
 
-                            {/* Full Name */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="name"
-                                className="col-md-4 col-lg-3 col-form-label"
+                            <div className="tab-content pt-2">
+                              {/* Basic Inforamtion Section Starts */}
+                              <div
+                                className={`tab-pane fade profile-edit pt-3 ${
+                                  EactiveTab === 8 ? "show active" : ""
+                                }`}
+                                id="profile-edit"
                               >
-                                Full Name
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <input
-                                  required
-                                  type="text"
-                                  id="name"
-                                  name="name"
-                                  // value=""
-                                  // value={name}
-                                  value={name}
-                                  pattern="[A-Z,a-z, ]*"
-                                  className="form-control"
-                                  onChange={handlenameChange}
-                                />
-                                {touched && nameError && (
-                                  <div className="text-danger">
-                                    <small>{nameError}</small>
+                                {/* <h5 className="card-title">Basic Inforamtion</h5> */}
+                                {/* Full Name */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="name"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Full Name
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <input
+                                      required
+                                      type="text"
+                                      id="name"
+                                      name="name"
+                                      // value=""
+                                      // value={name}
+                                      value={name}
+                                      pattern="[A-Z,a-z, ]*"
+                                      className="form-control"
+                                      onChange={handlenameChange}
+                                    />
+                                    {touched && nameError && (
+                                      <div className="text-danger">
+                                        <small>{nameError}</small>
+                                      </div>
+                                    )}
                                   </div>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* User Name */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Job"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                User Name
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <input
-                                  name="userName"
-                                  // value=""
-                                  id="Job"
-                                  required
-                                  type="text"
-                                  // value={userName}
-                                  value={userName}
-                                  className="form-control"
-                                  pattern="[A-Z,a-z,0-9,@,#]*"
-                                  onChange={handleUserNameChange}
-                                />
-                                {touched && userNameError && (
-                                  <div className="text-danger">
-                                    <small>{userNameError}</small>
+                                </div>
+                                {/* User Name */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Job"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    User Name
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <input
+                                      name="userName"
+                                      // value=""
+                                      id="Job"
+                                      required
+                                      type="text"
+                                      // value={userName}
+                                      value={userName}
+                                      className="form-control"
+                                      pattern="[A-Z,a-z,0-9,@,#]*"
+                                      onChange={handleUserNameChange}
+                                    />
+                                    {touched && userNameError && (
+                                      <div className="text-danger">
+                                        <small>{userNameError}</small>
+                                      </div>
+                                    )}
                                   </div>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Email */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Email"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                Email
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <input
-                                  required
-                                  // value=""
-                                  id="Email"
-                                  type="email"
-                                  name="Email"
-                                  // value={Email}
-                                  value={Email}
-                                  className="form-control"
-                                  pattern="[A-Z,a-z,0-9,@,.]*"
-                                  onChange={handleEmailChange}
-                                />
-                                {touched && emailError && (
-                                  <div className="text-danger">
-                                    <small>{emailError}</small>
+                                </div>
+                                {/* Email */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Email"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Email
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <input
+                                      required
+                                      // value=""
+                                      id="Email"
+                                      type="email"
+                                      name="Email"
+                                      // value={Email}
+                                      value={Email}
+                                      className="form-control"
+                                      pattern="[A-Z,a-z,0-9,@,.]*"
+                                      onChange={handleEmailChange}
+                                    />
+                                    {touched && emailError && (
+                                      <div className="text-danger">
+                                        <small>{emailError}</small>
+                                      </div>
+                                    )}
                                   </div>
-                                )}
-                              </div>
-                            </div>
+                                </div>
+                                {/* Phone No. */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Phone"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Phone No.
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <input
+                                      type="text"
+                                      value={phoneno}
+                                      name="phoneno"
+                                      id="phoneno"
+                                      pattern="[0-9]*"
+                                      onChange={handlePhoneChange}
+                                      className="form-control"
+                                    />
+                                    {/* Show error message only if error is not empty */}
+                                    {error && (
+                                      <div className="text-danger">
+                                        <small>{error}</small>
+                                      </div>
+                                    )}
 
-                            {/* Phone No. */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Phone"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                Phone No.
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <input
-                                  type="text"
-                                  value={phoneno}
-                                  name="phoneno"
-                                  id="phoneno"
-                                  pattern="[0-9]*"
-                                  onChange={handlePhoneChange}
-                                  className="form-control"
-                                />
-                                {/* Show error message only if error is not empty */}
-                                {error && (
-                                  <div className="text-danger">
-                                    <small>{error}</small>
-                                  </div>
-                                )}
-
-                                {/* <PhoneInput
+                                    {/* <PhoneInput
                               // required
                               id="Phone"
                               name="Phone"
@@ -1562,511 +1820,539 @@ const MyProfile = () => {
                               onChange={handlePhoneChange}
                               inputStyle={{ width: "100%" }} // Custom input width
                             /> */}
-                                {/* Display error message if form is submitted and phone is empty */}
-                                {/* {EditFormSubmitted && !Phone && (
+                                    {/* Display error message if form is submitted and phone is empty */}
+                                    {/* {EditFormSubmitted && !Phone && (
                               <p style={{ color: "red" }}>
                                 Please fill in the phone number
                               </p>
                             )} */}
-                              </div>
-                            </div>
-
-                            {/* DOB */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="DOB"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                Date of Birth
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <input
-                                  id="dob"
-                                  name="dob"
-                                  type="date"
-                                  // required
-                                  value={dob}
-                                  min="1950-01-01"
-                                  max="2025-01-01"
-                                  className="form-control"
-                                  onChange={handledobChange}
-                                />
-                              </div>
-                            </div>
-
-                            {/* Gender */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Phone"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                Gender
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <select
-                                  // required
-                                  id="gender"
-                                  name="gender"
-                                  class="form-control"
-                                  value={gender}
-                                  onChange={handlegenderChange}
-                                >
-                                  <option value="">-SELECT-</option>
-                                  <option value="male">Male</option>
-                                  <option value="female">Female</option>
-                                  <option value="other">Other</option>
-                                </select>
-                              </div>
-                            </div>
-
-                            {/* Country */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Country"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                Country
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <input
-                                  // value=""
-                                  // required
-                                  type="text"
-                                  id="country"
-                                  name="country"
-                                  value={country}
-                                  pattern="[A-Z,a-z]*"
-                                  className="form-control"
-                                  onChange={handlecountryChange}
-                                />
-                                {touched && countryError && (
-                                  <div className="text-danger">
-                                    <small>{countryError}</small>
                                   </div>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Address */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Address"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                Address
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <input
-                                  // value=""
-                                  // required
-                                  type="text"
-                                  id="address"
-                                  name="address"
-                                  value={address}
-                                  className="form-control"
-                                  // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
-                                  onChange={handleaddressChange}
-                                />
-                                {touched && addressError && (
-                                  <div className="text-danger">
-                                    <small>{addressError}</small>
+                                </div>
+                                {/* DOB */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="DOB"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Date of Birth
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <input
+                                      id="dob"
+                                      name="dob"
+                                      type="date"
+                                      // required
+                                      value={dob}
+                                      min="1950-01-01"
+                                      max="2025-01-01"
+                                      className="form-control"
+                                      onChange={handledobChange}
+                                    />
                                   </div>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Occupation */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="company"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                Occupation
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <input
-                                  // required
-                                  type="text"
-                                  id="company"
-                                  // name="company"
-                                  name="occupation"
-                                  value={occupation}
-                                  className="form-control"
-                                  onChange={handleoccupationChange}
-                                />
-                                {touched && occupationError && (
-                                  <div className="text-danger">
-                                    <small>{occupationError}</small>
+                                </div>
+                                {/* Age */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Age"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Age
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <input
+                                      id="Age"
+                                      name="Age"
+                                      type="number"
+                                      // required
+                                      value={age}
+                                      min="0"
+                                      max=""
+                                      className="form-control"
+                                      onChange={handleAgeChange}
+                                    />
                                   </div>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* about */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="about"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                about
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <textarea
-                                  // required
-                                  id="about"
-                                  name="about"
-                                  value={about}
-                                  className="form-control"
-                                  style={{ height: "100px" }}
-                                  // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
-                                  onChange={handleaboutChange}
-                                ></textarea>
-                                {touched && aboutError && (
-                                  <div className="text-danger">
-                                    <small>{aboutError}</small>
+                                </div>
+                                {/* Gender */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Phone"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Gender
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <select
+                                      // required
+                                      id="gender"
+                                      name="gender"
+                                      class="form-control"
+                                      value={gender}
+                                      onChange={handlegenderChange}
+                                    >
+                                      <option value="">-SELECT-</option>
+                                      <option value="male">Male</option>
+                                      <option value="female">Female</option>
+                                      <option value="other">Other</option>
+                                    </select>
                                   </div>
-                                )}
+                                </div>
+                                {/* Country */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Country"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Country
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <input
+                                      // value=""
+                                      // required
+                                      type="text"
+                                      id="country"
+                                      name="country"
+                                      value={country}
+                                      pattern="[A-Z,a-z]*"
+                                      className="form-control"
+                                      onChange={handlecountryChange}
+                                    />
+                                    {touched && countryError && (
+                                      <div className="text-danger">
+                                        <small>{countryError}</small>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                {/* Address */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Address"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Address
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <input
+                                      // value=""
+                                      // required
+                                      type="text"
+                                      id="address"
+                                      name="address"
+                                      value={address}
+                                      className="form-control"
+                                      // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
+                                      onChange={handleaddressChange}
+                                    />
+                                    {touched && addressError && (
+                                      <div className="text-danger">
+                                        <small>{addressError}</small>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                {/* Occupation */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="company"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Occupation
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <input
+                                      // required
+                                      type="text"
+                                      id="company"
+                                      // name="company"
+                                      name="occupation"
+                                      value={occupation}
+                                      className="form-control"
+                                      onChange={handleoccupationChange}
+                                    />
+                                    {touched && occupationError && (
+                                      <div className="text-danger">
+                                        <small>{occupationError}</small>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                {/* about */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="about"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    about
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <textarea
+                                      // required
+                                      id="about"
+                                      name="about"
+                                      value={about}
+                                      className="form-control"
+                                      style={{ height: "100px" }}
+                                      // pattern="[a-z,A-Z,0-9,-,_,@,#, ]*"
+                                      onChange={handleaboutChange}
+                                    ></textarea>
+                                    {touched && aboutError && (
+                                      <div className="text-danger">
+                                        <small>{aboutError}</small>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
                               </div>
-                            </div>
+                              {/* Basic Inforamtion Section End */}
 
-                            <h5 className="card-title">
+                              {/* Body & Health Status Starts */}
+                              <div
+                                className={`tab-pane fade profile-edit pt-3 ${
+                                  EactiveTab === 9 ? "show active" : ""
+                                }`}
+                                id="profile-edit"
+                              >
+                                {/* <h5 className="card-title">
                               Body &amp; Health Status
-                            </h5>
-
-                            {/* Height */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor=""
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                Height
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <div className="input-group">
-                                  <input
-                                    // value=""
-                                    // required
-                                    // pattern="[0-9,A-Z]*"
-                                    id=""
-                                    name="height"
-                                    type="text"
-                                    value={height}
-                                    className="form-control"
-                                    onChange={handleheightChange}
-                                  />
-                                  <span className="input-group-text">
-                                    <select
-                                      id="heightUnit"
-                                      value={heightUnit}
-                                      name="heightUnit"
-                                      onChange={handleHeightUnitChange}
-                                      style={{
-                                        cursor: "pointer",
-                                      }}
-                                      className="form-control"
-                                    >
-                                      <option value="">-unit-</option>
-                                      <option value="mm">mm</option>
-                                      <option value="cm">cm</option>
-                                      <option value="m">m</option>
-                                      <option value="ft">ft</option>
-                                      {/* Add more options for other units if needed */}
-                                    </select>
-                                  </span>
-                                </div>
-                                {touched && heightError && (
-                                  <div className="text-danger">
-                                    <small>{heightError}</small>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Weight */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Weight"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                Weight
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <div className="input-group">
-                                  <input
-                                    // value=""
-                                    // required
-                                    // pattern="[0-9,A-Z]*"
-                                    id=""
-                                    name="weight"
-                                    type="text"
-                                    value={weight}
-                                    className="form-control"
-                                    onChange={handleweightChange}
-                                  />
-                                  <span className="input-group-text">
-                                    <select
-                                      id="WeightUnit"
-                                      value={WeightUnit}
-                                      name="WeightUnit"
-                                      onChange={handleWeightUnitChange}
-                                      style={{
-                                        cursor: "pointer",
-                                      }}
-                                      className="form-control"
-                                    >
-                                      <option value="">-unit-</option>
-                                      <option value="gm">gm</option>
-                                      <option value="kg">kg</option>
-                                      <option value="lbs">lbs</option>
-                                      {/* <option value="pound">pound</option> */}
-                                      {/* Add more options for other units if needed */}
-                                    </select>
-                                  </span>
-                                </div>
-                                {touched && weightError && (
-                                  <div className="text-danger">
-                                    <small>{weightError}</small>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Social Media Profile Section Starts */}
-
-                            <h5 className="card-title">Social accounts</h5>
-
-                            {/* Link 1 */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Twitter"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                {/* Link 1 Profile */}
-                                {socialMedia1 && (
-                                  <div>
-                                    <span>
-                                      {/* Social Media :  */}
-                                      {socialMedia1}
-                                    </span>
-                                    {/* Leave space for the icon */}
-                                  </div>
-                                )}
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <div className="input-group">
-                                  <span className="input-group-text">
-                                    {/* Conditionally render the link icon or a default icon */}
-                                    {socialMedia1 ? (
-                                      <>
-                                        {socialMedia1 === "LinkedIn" && (
-                                          <FaLinkedin />
-                                        )}
-                                        {socialMedia1 === "Twitter" && (
-                                          <FaTwitter />
-                                        )}
-                                        {socialMedia1 === "Facebook" && (
-                                          <FaFacebook />
-                                        )}
-                                        {socialMedia1 === "Instagram" && (
-                                          <FaInstagram />
-                                        )}
-                                      </>
-                                    ) : (
-                                      <FaLink />
+                            </h5> */}
+                                {/* Height */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor=""
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Height
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <div className="input-group">
+                                      <input
+                                        // value=""
+                                        // required
+                                        // pattern="[0-9,A-Z]*"
+                                        id=""
+                                        name="height"
+                                        type="text"
+                                        value={height}
+                                        className="form-control"
+                                        onChange={handleheightChange}
+                                      />
+                                      <span className="input-group-text">
+                                        <select
+                                          id="heightUnit"
+                                          value={heightUnit}
+                                          name="heightUnit"
+                                          onChange={handleHeightUnitChange}
+                                          style={{
+                                            cursor: "pointer",
+                                          }}
+                                          className="form-control"
+                                        >
+                                          <option value="">-unit-</option>
+                                          <option value="mm">mm</option>
+                                          <option value="cm">cm</option>
+                                          <option value="m">m</option>
+                                          <option value="ft">ft</option>
+                                          {/* Add more options for other units if needed */}
+                                        </select>
+                                      </span>
+                                    </div>
+                                    {touched && heightError && (
+                                      <div className="text-danger">
+                                        <small>{heightError}</small>
+                                      </div>
                                     )}
-                                  </span>
-                                  <input
-                                    value={link1}
-                                    type="url"
-                                    id="link1"
-                                    name="link1"
-                                    className="form-control"
-                                    placeholder="Link to social profile"
-                                    onChange={handlelink1Change}
-                                  />
+                                  </div>
                                 </div>
-                                {link1Error && (
-                                  <div className="text-danger">
-                                    <small>{link1Error}</small>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Link 2 */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Facebook"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                {/* Link 2 Profile */}
-                                {socialMedia2 && (
-                                  <div>
-                                    <span>
-                                      {/* Social Media :  */}
-                                      {socialMedia2}
-                                    </span>
-                                    {/* Leave space for the icon */}
-                                  </div>
-                                )}
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <div className="input-group">
-                                  <span className="input-group-text">
-                                    {/* Conditionally render the link icon or a default icon */}
-                                    {socialMedia2 ? (
-                                      <>
-                                        {socialMedia2 === "LinkedIn" && (
-                                          <FaLinkedin />
-                                        )}
-                                        {socialMedia2 === "Twitter" && (
-                                          <FaTwitter />
-                                        )}
-                                        {socialMedia2 === "Facebook" && (
-                                          <FaFacebook />
-                                        )}
-                                        {socialMedia2 === "Instagram" && (
-                                          <FaInstagram />
-                                        )}
-                                      </>
-                                    ) : (
-                                      <FaLink />
+                                {/* Weight */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Weight"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    Weight
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <div className="input-group">
+                                      <input
+                                        // value=""
+                                        // required
+                                        // pattern="[0-9,A-Z]*"
+                                        id=""
+                                        name="weight"
+                                        type="text"
+                                        value={weight}
+                                        className="form-control"
+                                        onChange={handleweightChange}
+                                      />
+                                      <span className="input-group-text">
+                                        <select
+                                          id="WeightUnit"
+                                          value={WeightUnit}
+                                          name="WeightUnit"
+                                          onChange={handleWeightUnitChange}
+                                          style={{
+                                            cursor: "pointer",
+                                          }}
+                                          className="form-control"
+                                        >
+                                          <option value="">-unit-</option>
+                                          <option value="gm">gm</option>
+                                          <option value="kg">kg</option>
+                                          <option value="lbs">lbs</option>
+                                          {/* <option value="pound">pound</option> */}
+                                          {/* Add more options for other units if needed */}
+                                        </select>
+                                      </span>
+                                    </div>
+                                    {touched && weightError && (
+                                      <div className="text-danger">
+                                        <small>{weightError}</small>
+                                      </div>
                                     )}
-                                  </span>
-                                  <input
-                                    value={link2}
-                                    type="url"
-                                    id="link2"
-                                    name="link2"
-                                    className="form-control"
-                                    placeholder="Link to social profile"
-                                    onChange={handlelink2Change}
-                                  />
-                                </div>
-                                {touched && link2Error && (
-                                  <div className="text-danger">
-                                    <small>{link2Error}</small>
                                   </div>
-                                )}
+                                </div>
                               </div>
-                            </div>
+                              {/* Body & Health Status End */}
 
-                            {/* Link 3 */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Instagram"
-                                className="col-md-4 col-lg-3 col-form-label"
+                              {/* Social Media Profile Section Starts */}
+                              <div
+                                className={`tab-pane fade profile-edit pt-3 ${
+                                  EactiveTab === 10 ? "show active" : ""
+                                }`}
+                                id="profile-edit"
                               >
-                                {/* Link 3 Profile */}
-                                {socialMedia3 && (
-                                  <div>
-                                    <span>
-                                      {/* Social Media :  */}
-                                      {socialMedia3}
-                                    </span>
-                                    {/* Leave space for the icon */}
-                                  </div>
-                                )}
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <div className="input-group">
-                                  <span className="input-group-text">
-                                    {/* Conditionally render the link icon or a default icon */}
-                                    {socialMedia3 ? (
-                                      <>
-                                        {socialMedia3 === "LinkedIn" && (
-                                          <FaLinkedin />
-                                        )}
-                                        {socialMedia3 === "Twitter" && (
-                                          <FaTwitter />
-                                        )}
-                                        {socialMedia3 === "Facebook" && (
-                                          <FaFacebook />
-                                        )}
-                                        {socialMedia3 === "Instagram" && (
-                                          <FaInstagram />
-                                        )}
-                                      </>
-                                    ) : (
-                                      <FaLink />
+                                {/* <h5 className="card-title">Social accounts</h5> */}
+                                {/* Link 1 */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Twitter"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    {/* Link 1 Profile */}
+                                    {socialMedia1 && (
+                                      <div>
+                                        <span>
+                                          {/* Social Media :  */}
+                                          {socialMedia1}
+                                        </span>
+                                        {/* Leave space for the icon */}
+                                      </div>
                                     )}
-                                  </span>
-                                  <input
-                                    value={link3}
-                                    id="link3"
-                                    name="link3"
-                                    className="form-control"
-                                    type="url"
-                                    placeholder="Link to social profile"
-                                    onChange={handlelink3Change}
-                                  />
-                                </div>
-                                {touched && link3Error && (
-                                  <div className="text-danger">
-                                    <small>{link3Error}</small>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Link 4 */}
-                            <div className="row mb-3">
-                              <label
-                                htmlFor="Linkedin"
-                                className="col-md-4 col-lg-3 col-form-label"
-                              >
-                                {/* Link 4 Profile */}
-                                {socialMedia4 && (
-                                  <div>
-                                    <span>
-                                      {/* Social Media :  */}
-                                      {socialMedia4}
-                                    </span>
-                                    {/* Leave space for the icon */}
-                                  </div>
-                                )}
-                              </label>
-                              <div className="col-md-8 col-lg-9">
-                                <div className="input-group">
-                                  <span className="input-group-text">
-                                    {/* Conditionally render the link icon or a default icon */}
-                                    {socialMedia4 ? (
-                                      <>
-                                        {socialMedia4 === "LinkedIn" && (
-                                          <FaLinkedin />
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <div className="input-group">
+                                      <span className="input-group-text">
+                                        {/* Conditionally render the link icon or a default icon */}
+                                        {socialMedia1 ? (
+                                          <>
+                                            {socialMedia1 === "LinkedIn" && (
+                                              <FaLinkedin />
+                                            )}
+                                            {socialMedia1 === "Twitter" && (
+                                              <FaTwitter />
+                                            )}
+                                            {socialMedia1 === "Facebook" && (
+                                              <FaFacebook />
+                                            )}
+                                            {socialMedia1 === "Instagram" && (
+                                              <FaInstagram />
+                                            )}
+                                          </>
+                                        ) : (
+                                          <FaLink />
                                         )}
-                                        {socialMedia4 === "Twitter" && (
-                                          <FaTwitter />
-                                        )}
-                                        {socialMedia4 === "Facebook" && (
-                                          <FaFacebook />
-                                        )}
-                                        {socialMedia4 === "Instagram" && (
-                                          <FaInstagram />
-                                        )}
-                                      </>
-                                    ) : (
-                                      <FaLink />
+                                      </span>
+                                      <input
+                                        value={link1}
+                                        type="url"
+                                        id="link1"
+                                        name="link1"
+                                        className="form-control"
+                                        placeholder="Link to social profile"
+                                        onChange={handlelink1Change}
+                                      />
+                                    </div>
+                                    {link1Error && (
+                                      <div className="text-danger">
+                                        <small>{link1Error}</small>
+                                      </div>
                                     )}
-                                  </span>
-                                  <input
-                                    value={link4}
-                                    type="url"
-                                    id="link4"
-                                    name="link4"
-                                    className="form-control"
-                                    placeholder="Link to social profile"
-                                    onChange={handlelink4Change}
-                                  />
-                                </div>
-                                {touched && link4Error && (
-                                  <div className="text-danger">
-                                    <small>{link4Error}</small>
                                   </div>
-                                )}
+                                </div>
+                                {/* Link 2 */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Facebook"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    {/* Link 2 Profile */}
+                                    {socialMedia2 && (
+                                      <div>
+                                        <span>
+                                          {/* Social Media :  */}
+                                          {socialMedia2}
+                                        </span>
+                                        {/* Leave space for the icon */}
+                                      </div>
+                                    )}
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <div className="input-group">
+                                      <span className="input-group-text">
+                                        {/* Conditionally render the link icon or a default icon */}
+                                        {socialMedia2 ? (
+                                          <>
+                                            {socialMedia2 === "LinkedIn" && (
+                                              <FaLinkedin />
+                                            )}
+                                            {socialMedia2 === "Twitter" && (
+                                              <FaTwitter />
+                                            )}
+                                            {socialMedia2 === "Facebook" && (
+                                              <FaFacebook />
+                                            )}
+                                            {socialMedia2 === "Instagram" && (
+                                              <FaInstagram />
+                                            )}
+                                          </>
+                                        ) : (
+                                          <FaLink />
+                                        )}
+                                      </span>
+                                      <input
+                                        value={link2}
+                                        type="url"
+                                        id="link2"
+                                        name="link2"
+                                        className="form-control"
+                                        placeholder="Link to social profile"
+                                        onChange={handlelink2Change}
+                                      />
+                                    </div>
+                                    {touched && link2Error && (
+                                      <div className="text-danger">
+                                        <small>{link2Error}</small>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                {/* Link 3 */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Instagram"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    {/* Link 3 Profile */}
+                                    {socialMedia3 && (
+                                      <div>
+                                        <span>
+                                          {/* Social Media :  */}
+                                          {socialMedia3}
+                                        </span>
+                                        {/* Leave space for the icon */}
+                                      </div>
+                                    )}
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <div className="input-group">
+                                      <span className="input-group-text">
+                                        {/* Conditionally render the link icon or a default icon */}
+                                        {socialMedia3 ? (
+                                          <>
+                                            {socialMedia3 === "LinkedIn" && (
+                                              <FaLinkedin />
+                                            )}
+                                            {socialMedia3 === "Twitter" && (
+                                              <FaTwitter />
+                                            )}
+                                            {socialMedia3 === "Facebook" && (
+                                              <FaFacebook />
+                                            )}
+                                            {socialMedia3 === "Instagram" && (
+                                              <FaInstagram />
+                                            )}
+                                          </>
+                                        ) : (
+                                          <FaLink />
+                                        )}
+                                      </span>
+                                      <input
+                                        value={link3}
+                                        id="link3"
+                                        name="link3"
+                                        className="form-control"
+                                        type="url"
+                                        placeholder="Link to social profile"
+                                        onChange={handlelink3Change}
+                                      />
+                                    </div>
+                                    {touched && link3Error && (
+                                      <div className="text-danger">
+                                        <small>{link3Error}</small>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                {/* Link 4 */}
+                                <div className="row mb-3">
+                                  <label
+                                    htmlFor="Linkedin"
+                                    className="col-md-4 col-lg-3 col-form-label"
+                                  >
+                                    {/* Link 4 Profile */}
+                                    {socialMedia4 && (
+                                      <div>
+                                        <span>
+                                          {/* Social Media :  */}
+                                          {socialMedia4}
+                                        </span>
+                                        {/* Leave space for the icon */}
+                                      </div>
+                                    )}
+                                  </label>
+                                  <div className="col-md-8 col-lg-9">
+                                    <div className="input-group">
+                                      <span className="input-group-text">
+                                        {/* Conditionally render the link icon or a default icon */}
+                                        {socialMedia4 ? (
+                                          <>
+                                            {socialMedia4 === "LinkedIn" && (
+                                              <FaLinkedin />
+                                            )}
+                                            {socialMedia4 === "Twitter" && (
+                                              <FaTwitter />
+                                            )}
+                                            {socialMedia4 === "Facebook" && (
+                                              <FaFacebook />
+                                            )}
+                                            {socialMedia4 === "Instagram" && (
+                                              <FaInstagram />
+                                            )}
+                                          </>
+                                        ) : (
+                                          <FaLink />
+                                        )}
+                                      </span>
+                                      <input
+                                        value={link4}
+                                        type="url"
+                                        id="link4"
+                                        name="link4"
+                                        className="form-control"
+                                        placeholder="Link to social profile"
+                                        onChange={handlelink4Change}
+                                      />
+                                    </div>
+                                    {touched && link4Error && (
+                                      <div className="text-danger">
+                                        <small>{link4Error}</small>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
                               </div>
+                              {/* Social Media Profile Section End */}
                             </div>
-                            {/* Social Media Profile Section End */}
 
                             {/* Submit Button */}
                             <div className="text-center">
