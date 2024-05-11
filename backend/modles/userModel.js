@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Exercise'
     }],
+    about:{
+        type:String
+    },
     phoneno: {
         type: String
     },

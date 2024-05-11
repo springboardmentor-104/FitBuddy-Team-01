@@ -393,7 +393,7 @@ const updatePasswordController = async (req, res) => {
         const match = await comparePassword(oldpassword, userDetails.password)
         console.log(match)
         if (!match) {
-            return res.status(400).send({
+            return res.send({
                 success: false,
                 message: "Old password is incorrect"
             });
@@ -443,11 +443,12 @@ const updateProfileController = async (req, res) => {
         const userId = req.user._id; // Assuming you have authenticated the user and have access to their user ID
 
         // Extract fields from request body
-        const { name, phoneno, dob, gender, height, weight, country, address, occupation, insta, fb, twitter } = req.body;
+        const { name,about, phoneno, dob, gender, height, weight, country, address, occupation, insta, fb, twitter } = req.body;
 
         // Construct update object with allowed fields
         const updateFields = {};
         if (name) updateFields.name = name;
+        if (about) updateFields.about = about;
         if (phoneno) updateFields.phoneno = phoneno;
         if (dob) updateFields.dob = dob;
         if (gender) updateFields.gender = gender;
@@ -468,14 +469,13 @@ const updateProfileController = async (req, res) => {
             // Add image URL to updateFields
             updateFields.photo = result.secure_url;
         }
-        console.log(updateFields)
 
         // Update user profile
         const updatedUser = await userModel.findByIdAndUpdate(userId, updateFields, { new: true });
 
         // Check if user exists
         if (!updatedUser) {
-            return res.status(404).json({ success: false, message: "User not found" });
+            return res.json({ success: false, message: "User not found" });
         }
 
         // Return updated user profile

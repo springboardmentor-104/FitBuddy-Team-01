@@ -2,34 +2,33 @@ const mongoose = require('mongoose');
 
 // Schema for the Meal
 const mealSchema = new mongoose.Schema({
+    category:{
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true
     },
     calories: {
-        type: Number,
+        type: String,
         required: true
     },
     protein: {
-        type: Number,
-        required: true
-    },
-    carbs: {
-        type: Number,
+        type: String,
         required: true
     },
     fat: {
-        type: Number,
+        type: String,
         required: true
     },
     ingredients: {
         type: [String],
         required: true
     },
-    instructions: {
-        type: String,
-        required: true
+    photo:{
+        type:String
     }
 });
 
-module.exports = mongoose.model('meal', exerciseSchema);
+module.exports = mongoose.model('meal', mealSchema);
