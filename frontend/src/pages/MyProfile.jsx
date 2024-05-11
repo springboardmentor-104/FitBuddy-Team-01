@@ -51,6 +51,7 @@ const MyProfile = () => {
 
   // Tab system for overview , Edit profile, change password and Account setting section
   const [tabLiNum, setTabLiNum] = useState(1);
+  
 
   // In overview section tab system for Basic Information, Your Body Status and Social Links
   const [activeTab, setActiveTab] = useState(5);
@@ -405,7 +406,8 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for full name validation (letters and spaces only)
     const nameRegex = /^[A-Za-z\s]*$/;
-    if (!inputValue.trim()) {
+    const ip = inputValue.trim()
+    if (!ip) {
       setnameError(""); // Clear error message if field is empty
     } else if (!nameRegex.test(inputValue)) {
       setnameError("Please enter a valid full name");
@@ -425,7 +427,8 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for username validation
     const userNameRegex = /^[A-Za-z0-9@#]+$/;
-    if (!inputValue.trim()) {
+    const ip = inputValue.trim()
+    if (!ip) {
       setUserNameError("");
     } else if (!userNameRegex.test(inputValue)) {
       setUserNameError("Please enter a valid username");
@@ -445,8 +448,9 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!inputValue.trim()) {
-      setEmailError("");
+    const ip = inputValue.trim()
+    if (!ip) {
+       setEmailError("");
     } else if (!emailRegex.test(inputValue)) {
       setEmailError("Please enter a valid email address");
     } else {
@@ -482,8 +486,9 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for country validation
     const countryRegex = /^[A-Za-z\s]+$/;
-    if (!inputValue.trim()) {
-      setcountryError(""); // Clear error message if field is empty
+    const ip = inputValue.trim()
+    if (!ip) {
+            setcountryError(""); // Clear error message if field is empty
     } else if (!countryRegex.test(inputValue)) {
       setcountryError("Please enter a valid country name");
     } else {
@@ -502,8 +507,9 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for address validation
     const addressRegex = /^[A-Za-z0-9\s,-]*$/;
-    if (!inputValue.trim()) {
-      setaddressError(""); // Clear error message if field is empty
+    const ip = inputValue.trim()
+    if (!ip) {
+            setaddressError(""); // Clear error message if field is empty
     } else if (!addressRegex.test(inputValue)) {
       setaddressError("Please enter a valid address");
     } else {
@@ -523,8 +529,8 @@ const MyProfile = () => {
     // Regular expression for height validation (allowing only numbers)
     // const heightRegex = /^[0-9]*$/; // original
     const heightRegex = /^[0-9.]*$/;
-    if (!inputValue.trim()) {
-      setheightError(""); // Clear error message if field is empty
+    const ip = inputValue.trim()
+    if (!ip) {      setheightError(""); // Clear error message if field is empty
     } else if (!heightRegex.test(inputValue)) {
       setheightError("Please enter a valid height (only numbers)");
     } else {
@@ -550,8 +556,8 @@ const MyProfile = () => {
     // Regular expression for weight validation (only allowing digits)
     // const weightRegex = /^[0-9]*$/; // original
     const weightRegex = /^[0-9.]*$/;
-    if (!inputValue.trim()) {
-      setweightError(""); // Clear error message if field is empty
+    const ip = inputValue.trim()
+    if (!ip) {      setweightError(""); // Clear error message if field is empty
     } else if (!weightRegex.test(inputValue)) {
       setweightError("Please enter a valid weight (only digits)");
     } else {
@@ -576,8 +582,9 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for validation
     const regex = /^[A-Za-z0-9\s,-]*$/;
-    if (!inputValue.trim()) {
-      setaboutError(""); // Clear error message if field is empty
+ const ip = inputValue.trim()
+    if (!ip) {
+            setaboutError(""); // Clear error message if field is empty
     } else if (!regex.test(inputValue)) {
       setaboutError("Please enter a valid value for about");
     } else {
@@ -596,8 +603,9 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for occupation validation
     const occupationRegex = /^[A-Za-z\s]+$/;
-    if (!inputValue.trim()) {
-      setoccupationError(""); // Clear error message if field is empty
+    const ip = inputValue.trim()
+    if (!ip) {
+            setoccupationError(""); // Clear error message if field is empty
     } else if (!occupationRegex.test(inputValue)) {
       setoccupationError("Please enter a valid occupation");
     } else {
@@ -640,7 +648,8 @@ const MyProfile = () => {
     setLink1(url);
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (!url.trim()) {
+    const urlvalue = url && typeof url === 'string' ? url.trim() : '';
+    if (!urlvalue) {
       setSocialMedia1("");
       setLink1Error("");
     } else if (!urlRegex.test(url)) {
@@ -673,8 +682,9 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (!inputValue.trim()) {
-      setlink2Error(""); // Clear error message if field is empty
+    const ip = inputValue && typeof inputValue === 'string' ? inputValue.trim() : '';
+    if (!ip) {
+            setlink2Error(""); // Clear error message if field is empty
     } else if (!urlRegex.test(inputValue)) {
       setlink2Error("Please enter a valid URL");
     } else {
@@ -704,8 +714,8 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (!inputValue.trim()) {
-      setlink3Error(""); // Clear error message if field is empty
+    const ip = inputValue && typeof inputValue === 'string' ? inputValue.trim() : '';
+    if (!ip) {      setlink3Error(""); // Clear error message if field is empty
     } else if (!urlRegex.test(inputValue)) {
       setlink3Error("Please enter a valid URL");
     } else {
@@ -735,53 +745,141 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (!inputValue.trim()) {
+  
+    // Check if inputValue is defined and not null before calling includes()
+    const ip = inputValue && typeof inputValue === 'string' ? inputValue.trim() : '';
+  
+    if (!ip) {
       setlink4Error(""); // Clear error message if field is empty
     } else if (!urlRegex.test(inputValue)) {
       setlink4Error("Please enter a valid URL");
     } else {
       setlink4Error("");
     }
-    // Check if the input URL matches with any of the social media URLs
-    if (inputValue.includes("linkedin.com")) {
-      setSocialMedia4("LinkedIn");
-    } else if (inputValue.includes("twitter.com")) {
-      setSocialMedia4("Twitter");
-    } else if (inputValue.includes("facebook.com")) {
-      setSocialMedia4("Facebook");
-    } else if (inputValue.includes("instagram.com")) {
-      setSocialMedia4("Instagram");
-    } else {
-      setSocialMedia4("");
+  
+    // Check if inputValue is defined and not null before checking includes
+    if (typeof inputValue === 'string' && inputValue.includes) {
+      // Check if the input URL matches with any of the social media URLs
+      if (inputValue.includes("linkedin.com")) {
+        setSocialMedia4("LinkedIn");
+      } else if (inputValue.includes("twitter.com")) {
+        setSocialMedia4("Twitter");
+      } else if (inputValue.includes("facebook.com")) {
+        setSocialMedia4("Facebook");
+      } else if (inputValue.includes("instagram.com")) {
+        setSocialMedia4("Instagram");
+      } else {
+        setSocialMedia4("");
+      }
     }
   };
+  
+  // const handlelink4Change = (e) => {
+  //   const inputValue = e.target.value;
+  //   setlink4(inputValue);
+  //   setTouched(true);
+  //   // Regular expression for URL validation
+  //   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+  //   const ip = inputValue && typeof inputValue === 'string' ? inputValue.trim() : '';
+  //   if (!ip) {      setlink4Error(""); // Clear error message if field is empty
+  //   } else if (!urlRegex.test(inputValue)) {
+  //     setlink4Error("Please enter a valid URL");
+  //   } else {
+  //     setlink4Error("");
+  //   }
+  //   // Check if the input URL matches with any of the social media URLs
+  //   if (inputValue.includes("linkedin.com")) {
+  //     setSocialMedia4("LinkedIn");
+  //   } else if (inputValue.includes("twitter.com")) {
+  //     setSocialMedia4("Twitter");
+  //   } else if (inputValue.includes("facebook.com")) {
+  //     setSocialMedia4("Facebook");
+  //   } else if (inputValue.includes("instagram.com")) {
+  //     setSocialMedia4("Instagram");
+  //   } else {
+  //     setSocialMedia4("");
+  //   }
+  // };
   // End
 
+  const [photo, setPhoto] = useState(null);
+  const [photoUrl, setPhotoUrl] = useState('');
+  const handlePhotoChange = (e) => {
+    const selectedPhoto = e.target.files[0];
+    setPhoto(selectedPhoto);
+  };
   // Edit form submission logic
   const [EditFormSubmitted, setEditFormSubmitted] = useState(false);
 
   const handleEditFormSubmit = async (event) => {
     event.preventDefault();
     // console.log("event.target", event);
-    let formData = Array.from(event.target.elements).map((e) => {
-      return { [e.getAttribute("name")]: e.value };
-    });
-    let formData2 = {};
-    formData.forEach((element) => {
-      formData2 = { ...formData2, ...element };
-    });
-    console.log("formData2", formData2);
-    // if (profilepic) {
-    //   formData2.Image = profilepic;
-    // }
+    // let formData = Array.from(event.target.elements).map((e) => {
+    //   return { [e.getAttribute("name")]: e.value };
+    // });
+    // let formData2 = {};
+    // formData.forEach((element) => {
+    //   formData2 = { ...formData2, ...element };
+    // });
+    // console.log("formData2", formData2);
+    // // if (profilepic) {
+    // //   formData2.Image = profilepic;
+    // // }
 
-    // Proceed with form submission logic
+    // // Proceed with form submission logic
+    const formData = new FormData();
+
+if (name) {
+  formData.append("name", name);
+}
+if (phoneno) {
+  formData.append("phoneno", phoneno);
+}
+if (dob) {
+  formData.append("dob", dob);
+}
+if (age) {
+  formData.append("Age", age);
+}
+if (gender) {
+  formData.append("gender", gender);
+}
+if (height) {
+  formData.append("height", height);
+}
+if (weight) {
+  formData.append("weight", weight);
+}
+if (country) {
+  formData.append("country", country);
+}
+if (address) {
+  formData.append("address", address);
+}
+if (occupation) {
+  formData.append("occupation", occupation);
+}
+if (photo) {
+  formData.append("image", photo);
+}
+if (link1) {
+  formData.append("link1", link1);
+}
+if (link2) {
+  formData.append("link2", link2);
+}
+if (link3) {
+  formData.append("link3", link3);
+}
+
+console.log(formData)
+
+
     let userData = localStorage.getItem("user");
     userData = JSON.parse(userData);
-    let data = formData2;
+    let data = formData;
     let headers = {
-      Authorization: userData?.token || "",
-      "Content-Type": "application/json",
+      Authorization: userData?.token || ""
     };
 
     await axios
@@ -856,37 +954,31 @@ const MyProfile = () => {
 
   // For deletion of profile Image
   const [profilepic, setprofilepic] = useState(""); // Add state for user ID
+
   const handleDeleteImage = () => {
     const confirmDelete = window.confirm(
       "Are you sure you want to reset your current avatar?"
     );
     if (confirmDelete) {
+      // Assuming userId, profilepic, and token are defined somewhere in your code
+  
+      let headers = {
+        Authorization: userData?.token || ""  
+        };
       // Send a request to the backend to delete the image
-      fetch("/api/v1/auth/profile/image", {
-        // Update the endpoint here
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // Pass any necessary data in the request body, such as user ID or image ID
-        body: JSON.stringify({
-          userId: userId,
-          imageId: profilepic,
-        }),
+      axios.delete("http://localhost:8080/api/v1/auth/profile-pic", {
+        headers: headers
       })
-        .then((response) => {
-          if (response.ok) {
-            console.log("Image deleted successfully");
-            // Optionally, update the UI to reflect the deletion
-          } else {
-            console.error("Failed to delete image");
-          }
-        })
-        .catch((error) => {
-          console.error("Error deleting image:", error);
-        });
+      .then((response) => {
+        console.log("Image deleted successfully");
+        // Optionally, update the UI to reflect the deletion
+      })
+      .catch((error) => {
+        console.error("Error deleting image:", error);
+      });
     }
   };
+  
   // End
 
   // GEt User Details
@@ -895,16 +987,14 @@ const MyProfile = () => {
     userData = JSON.parse(userData);
 
     let headers = {
-      Authorization: userData?.token || "",
-      "Content-Type": "application/json",
-    };
+      Authorization: userData?.token || ""  
+      };
     await axios
       .get("http://localhost:8080/api/v1/auth/profile", {
         headers: headers,
       })
       .then(
         (response) => {
-          console.log(response?.data);
           if (response.data.success) {
             setPasswordUpdateUserId(response?.data?.user?._id);
             setname(response?.data?.user?.name);
@@ -922,6 +1012,7 @@ const MyProfile = () => {
             setHeightUnit(response?.data?.user?.heightUnit);
             setweight(response?.data?.user?.weight);
             setWeightUnit(response?.data?.user?.WeightUnit);
+            setPhotoUrl(response?.data?.user?.photo);
             setLink1(response?.data?.user?.link1);
             handlelink1Change({
               target: { value: response?.data?.user?.link1 },
@@ -1002,32 +1093,65 @@ const MyProfile = () => {
   useEffect(() => {
     // Check if weight and height are both valid numbers
     if (weight && height && !isNaN(weight) && !isNaN(height)) {
-      // Convert height from cm to meters
-      const heightInMeters = height / 100;
+      // Convert height to meters
+      let heightInMeters;
+      switch (heightUnit) {
+        case "mm":
+          heightInMeters = parseFloat(height) / 1000;
+          break;
+        case "cm":
+          heightInMeters = parseFloat(height) / 100;
+          break;
+        case "m":
+          heightInMeters = parseFloat(height);
+          break;
+        case "ft":
+          heightInMeters = parseFloat(height) * 0.3048;
+          break;
+        default:
+          heightInMeters = 0;
+      }
 
-      // Calculate BMI using the formula
-      const calculatedBMI = weight / (heightInMeters * heightInMeters);
+      // Convert weight to kilograms
+      let weightInKilograms;
+      switch (WeightUnit) {
+        case "gm":
+          weightInKilograms = parseFloat(weight) / 1000;
+          break;
+        case "kg":
+          weightInKilograms = parseFloat(weight);
+          break;
+        case "lbs":
+          weightInKilograms = parseFloat(weight) * 0.453592;
+          break;
+        default:
+          weightInKilograms = 0;
+      }
 
-      // Update the state with the calculated BMI
-      setBMI(calculatedBMI.toFixed(2)); // Round BMI to 2 decimal places
+      // Calculate BMI
+      const calculatedBMI =
+        weightInKilograms / (heightInMeters * heightInMeters);
+      const roundedBMI = calculatedBMI.toFixed(2); // Round BMI to 2 decimal places
+      setBMI(roundedBMI);
 
       // Determine BMI status
+      let status;
       if (calculatedBMI < 18.5) {
-        setBMIStatus("Underweight");
+        status = "Underweight";
       } else if (calculatedBMI >= 18.5 && calculatedBMI < 25) {
-        // setBMIStatus("Normal weight");
-        setBMIStatus("Normal");
+        status = "Normal";
       } else if (calculatedBMI >= 25 && calculatedBMI < 30) {
-        setBMIStatus("Overweight");
+        status = "Overweight";
       } else {
-        setBMIStatus("Obesity");
+        status = "Obesity";
       }
+      setBMIStatus(status);
     } else {
       // Reset BMI if weight or height is not a valid number
       setBMI("");
       setBMIStatus("");
     }
-  }, [weight, height]);
+  }, [weight, height, heightUnit, WeightUnit]);
 
   // useEffect hook to update suggestions whenever BMI status changes
   useEffect(() => {
@@ -1068,12 +1192,13 @@ const MyProfile = () => {
                 <div className="col-xl-4">
                   <div className="card">
                     <div className="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                      <img
-                        alt="Profile"
-                        src={profilepic || person_icn}
-                        className="rounded-circle"
-                        style={{ width: "100px", height: "100px" }}
-                      />
+                    <img
+  alt="Profile"
+  src={photoUrl ? photoUrl : "person_icn.png"} // Use ternary operator to conditionally set src
+  className="rounded-circle"
+  style={{ width: "100px", height: "100px" }}
+/>
+
                       <h2>{user?.name || "N/A"}</h2>
                       <h3>{occupation || "N/A"}</h3>
                       <div className="social-links mt-2">
@@ -1118,11 +1243,20 @@ const MyProfile = () => {
                           <button
                             data-bs-toggle="tab"
                             data-bs-target="#profile-overview"
-                            className={`nav-link ${
-                              tabLiNum === 1 ? "active" : ""
-                            }`}
+                            className={`nav-link ${tabLiNum === 1 ? "active" : ""
+                              }`}
                             onClick={() => {
                               setTabLiNum(1);
+                            }}
+                            style={{
+                              lineHeight: "20px",
+                              ...(tabLiNum === 1
+                                ? {
+                                  color: `#fff`,
+                                  backgroundColor: `#17a2b8`,
+                                  borderColor: `#17a2b8`,
+                                }
+                                : {}),
                             }}
                           >
                             Overview
@@ -1134,11 +1268,20 @@ const MyProfile = () => {
                           <button
                             data-bs-toggle="tab"
                             data-bs-target="#profile-edit"
-                            className={`nav-link ${
-                              tabLiNum === 2 ? "active" : ""
-                            }`}
+                            className={`nav-link ${tabLiNum === 2 ? "active" : ""
+                              }`}
                             onClick={() => {
                               setTabLiNum(2);
+                            }}
+                            style={{
+                              lineHeight: "20px",
+                              ...(tabLiNum === 2
+                                ? {
+                                  color: `#fff`,
+                                  backgroundColor: `#198754`,
+                                  borderColor: `#198754`,
+                                }
+                                : {}),
                             }}
                           >
                             Edit Profile
@@ -1151,11 +1294,20 @@ const MyProfile = () => {
                             // className="nav-link"
                             data-bs-toggle="tab"
                             data-bs-target="#profile-change-password"
-                            className={`nav-link ${
-                              tabLiNum === 4 ? "active" : ""
-                            }`}
+                            className={`nav-link ${tabLiNum === 4 ? "active" : ""
+                              }`}
                             onClick={() => {
                               setTabLiNum(4);
+                            }}
+                            style={{
+                              lineHeight: "20px",
+                              ...(tabLiNum === 4
+                                ? {
+                                  color: `#fff`,
+                                  backgroundColor: `#0d6efd`,
+                                  borderColor: `#0d6efd`,
+                                }
+                                : {}),
                             }}
                           >
                             Change Password
@@ -1171,11 +1323,20 @@ const MyProfile = () => {
                             // className="nav-link"
                             data-bs-toggle="tab"
                             data-bs-target="#profile-settings"
-                            className={`nav-link ${
-                              tabLiNum === 3 ? "active" : ""
-                            }`}
+                            className={`nav-link ${tabLiNum === 3 ? "active" : ""
+                              }`}
                             onClick={() => {
                               setTabLiNum(3);
+                            }}
+                            style={{
+                              lineHeight: "20px",
+                              ...(tabLiNum === 3
+                                ? {
+                                  color: `#fff`,
+                                  backgroundColor: `#dc3545`,
+                                  borderColor: `#dc3545`,
+                                }
+                                : {}),
                             }}
                           >
                             Account Settings
@@ -1186,9 +1347,8 @@ const MyProfile = () => {
                       <div className="tab-content pt-2">
                         {/* Overview Section Start */}
                         <div
-                          className={`tab-pane fade profile-edit pt-3 ${
-                            tabLiNum === 1 ? `show active` : ``
-                          }`}
+                          className={`tab-pane fade profile-edit pt-3 ${tabLiNum === 1 ? `show active` : ``
+                            }`}
                           id="profile-overview"
                         >
                           {/* about */}
@@ -1206,21 +1366,39 @@ const MyProfile = () => {
                           <ul className="nav nav-tabs nav-tabs-bordered">
                             <li className="nav-item">
                               <button
-                                className={`nav-link ${
-                                  activeTab === 5 ? "active" : ""
-                                }`}
+                                className={`nav-link ${activeTab === 5 ? "active" : ""
+                                  }`}
                                 onClick={() => handleTabClick(5)}
                                 id="my-prf-prdt-sec-hd"
+                                style={{
+                                  lineHeight: "20px",
+                                  ...(activeTab === 5
+                                    ? {
+                                      color: `#fff`,
+                                      backgroundColor: `#A9A9A9`,
+                                      borderColor: `#A9A9A9`,
+                                    }
+                                    : {}),
+                                }}
                               >
                                 Basic Information
                               </button>
                             </li>
                             <li className="nav-item">
                               <button
-                                className={`nav-link ${
-                                  activeTab === 6 ? "active" : ""
-                                }`}
+                                className={`nav-link ${activeTab === 6 ? "active" : ""
+                                  }`}
                                 onClick={() => handleTabClick(6)}
+                                style={{
+                                  lineHeight: "20px",
+                                  ...(activeTab === 6
+                                    ? {
+                                      color: `#fff`,
+                                      backgroundColor: `rgb(25, 135, 84)`,
+                                      borderColor: `rgb(25, 135, 84)`,
+                                    }
+                                    : {}),
+                                }}
                                 id="my-prf-prdt-sec-hd"
                               >
                                 Body &amp; Health Status
@@ -1228,11 +1406,20 @@ const MyProfile = () => {
                             </li>
                             <li className="nav-item">
                               <button
-                                className={`nav-link ${
-                                  activeTab === 7 ? "active" : ""
-                                }`}
+                                className={`nav-link ${activeTab === 7 ? "active" : ""
+                                  }`}
                                 onClick={() => handleTabClick(7)}
                                 id="my-prf-prdt-sec-hd"
+                                style={{
+                                  lineHeight: "20px",
+                                  ...(activeTab === 7
+                                    ? {
+                                      color: `#fff`,
+                                      backgroundColor: `#007bff`,
+                                      borderColor: `#007bff`,
+                                    }
+                                    : {}),
+                                }}
                               >
                                 Social accounts
                               </button>
@@ -1242,9 +1429,8 @@ const MyProfile = () => {
                           <div className="tab-content pt-2">
                             {/* Basic Information */}
                             <div
-                              className={`tab-pane fade profile-edit pt-3 ${
-                                activeTab === 5 ? "show active" : ""
-                              }`}
+                              className={`tab-pane fade profile-edit pt-3 ${activeTab === 5 ? "show active" : ""
+                                }`}
                               id="profile-overview"
                             >
                               {/* Full Name */}
@@ -1384,9 +1570,8 @@ const MyProfile = () => {
 
                             {/* Body Status */}
                             <div
-                              className={`tab-pane fade profile-edit pt-3 ${
-                                activeTab === 6 ? "show active" : ""
-                              }`}
+                              className={`tab-pane fade profile-edit pt-3 ${activeTab === 6 ? "show active" : ""
+                                }`}
                               id="profile-edit"
                             >
                               {/* Height */}
@@ -1476,7 +1661,12 @@ const MyProfile = () => {
                                           <ul>
                                             {suggestions.map(
                                               (suggestion, index) => (
-                                                <li key={index}>
+                                                <li
+                                                  key={index}
+                                                  style={{
+                                                    textAlign: "justify",
+                                                  }}
+                                                >
                                                   {suggestion}
                                                 </li>
                                               )
@@ -1512,9 +1702,8 @@ const MyProfile = () => {
 
                             {/* Social Links */}
                             <div
-                              className={`tab-pane fade profile-edit pt-3 ${
-                                activeTab === 7 ? "show active" : ""
-                              }`}
+                              className={`tab-pane fade profile-edit pt-3 ${activeTab === 7 ? "show active" : ""
+                                }`}
                               id="profile-edit"
                             >
                               {/* Link 1 */}
@@ -1584,9 +1773,8 @@ const MyProfile = () => {
 
                         {/* Edit Profile Section Start */}
                         <div
-                          className={`tab-pane fade profile-edit pt-3 ${
-                            tabLiNum === 2 ? `show active` : ``
-                          }`}
+                          className={`tab-pane fade profile-edit pt-3 ${tabLiNum === 2 ? `show active` : ``
+                            }`}
                           id="profile-edit"
                         >
                           <form onSubmit={handleEditFormSubmit}>
@@ -1602,8 +1790,7 @@ const MyProfile = () => {
                                 <img
                                   alt="Profile"
                                   id="profilepic"
-                                  // src={profile_icn}
-                                  src={profilepic || profile_icn}
+                                  src={photo ? URL.createObjectURL(photo) : profile_icn}
                                   className={`profilepic`}
                                   style={{
                                     // width: "200px",
@@ -1621,16 +1808,7 @@ const MyProfile = () => {
                                     accept="image/jpej, image/png, image/jpg"
                                     id="input-file"
                                     style={{ display: "none" }}
-                                    onChange={(event) => {
-                                      var tmppath = URL.createObjectURL(
-                                        event.target.files[0]
-                                      );
-                                      setprofilepic(tmppath);
-                                      // inputFile.onchange = function () {
-                                      //   console.log("Hell");
-                                      //   console.log(profilePic);
-                                      // };
-                                    }}
+                                    onChange={handlePhotoChange}
                                   />
                                   <label
                                     htmlFor="input-file"
@@ -1656,23 +1834,41 @@ const MyProfile = () => {
                             <ul className="nav nav-tabs nav-tabs-bordered">
                               <li className="nav-item">
                                 <span
-                                  className={`nav-link ${
-                                    EactiveTab === 8 ? "active" : ""
-                                  }`}
+                                  className={`nav-link ${EactiveTab === 8 ? "active" : ""
+                                    }`}
                                   onClick={() => handleETabClick(8)}
-                                  style={{ cursor: "pointer" }}
                                   id="my-prf-prdt-sec-hd"
+                                  style={{
+                                    cursor: "pointer",
+                                    lineHeight: "20px",
+                                    ...(EactiveTab === 8
+                                      ? {
+                                        color: `#fff`,
+                                        backgroundColor: `#A9A9A9`,
+                                        borderColor: `#A9A9A9`,
+                                      }
+                                      : {}),
+                                  }}
                                 >
                                   Basic Information
                                 </span>
                               </li>
                               <li className="nav-item">
                                 <span
-                                  className={`nav-link ${
-                                    EactiveTab === 9 ? "active" : ""
-                                  }`}
+                                  className={`nav-link ${EactiveTab === 9 ? "active" : ""
+                                    }`}
                                   onClick={() => handleETabClick(9)}
-                                  style={{ cursor: "pointer" }}
+                                  style={{
+                                    cursor: "pointer",
+                                    lineHeight: "20px",
+                                    ...(EactiveTab === 9
+                                      ? {
+                                        color: `#fff`,
+                                        backgroundColor: `#198754`,
+                                        borderColor: `#198754`,
+                                      }
+                                      : {}),
+                                  }}
                                   id="my-prf-prdt-sec-hd"
                                 >
                                   Body &amp; Health Status
@@ -1680,11 +1876,20 @@ const MyProfile = () => {
                               </li>
                               <li className="nav-item">
                                 <span
-                                  className={`nav-link ${
-                                    EactiveTab === 10 ? "active" : ""
-                                  }`}
+                                  className={`nav-link ${EactiveTab === 10 ? "active" : ""
+                                    }`}
                                   onClick={() => handleETabClick(10)}
-                                  style={{ cursor: "pointer" }}
+                                  style={{
+                                    cursor: "pointer",
+                                    lineHeight: "20px",
+                                    ...(EactiveTab === 10
+                                      ? {
+                                        color: `#fff`,
+                                        backgroundColor: `#007bff`,
+                                        borderColor: `#007bff`,
+                                      }
+                                      : {}),
+                                  }}
                                   id="my-prf-prdt-sec-hd"
                                 >
                                   Social accounts
@@ -1695,9 +1900,8 @@ const MyProfile = () => {
                             <div className="tab-content pt-2">
                               {/* Basic Inforamtion Section Starts */}
                               <div
-                                className={`tab-pane fade profile-edit pt-3 ${
-                                  EactiveTab === 8 ? "show active" : ""
-                                }`}
+                                className={`tab-pane fade profile-edit pt-3 ${EactiveTab === 8 ? "show active" : ""
+                                  }`}
                                 id="profile-edit"
                               >
                                 {/* <h5 className="card-title">Basic Inforamtion</h5> */}
@@ -1772,7 +1976,6 @@ const MyProfile = () => {
                                       id="Email"
                                       type="email"
                                       name="Email"
-                                      // value={Email}
                                       value={Email}
                                       className="form-control"
                                       pattern="[A-Z,a-z,0-9,@,.]*"
@@ -1885,7 +2088,7 @@ const MyProfile = () => {
                                       // required
                                       id="gender"
                                       name="gender"
-                                      class="form-control"
+                                      className="form-control"
                                       value={gender}
                                       onChange={handlegenderChange}
                                     >
@@ -2007,9 +2210,8 @@ const MyProfile = () => {
 
                               {/* Body & Health Status Starts */}
                               <div
-                                className={`tab-pane fade profile-edit pt-3 ${
-                                  EactiveTab === 9 ? "show active" : ""
-                                }`}
+                                className={`tab-pane fade profile-edit pt-3 ${EactiveTab === 9 ? "show active" : ""
+                                  }`}
                                 id="profile-edit"
                               >
                                 {/* <h5 className="card-title">
@@ -2116,9 +2318,8 @@ const MyProfile = () => {
 
                               {/* Social Media Profile Section Starts */}
                               <div
-                                className={`tab-pane fade profile-edit pt-3 ${
-                                  EactiveTab === 10 ? "show active" : ""
-                                }`}
+                                className={`tab-pane fade profile-edit pt-3 ${EactiveTab === 10 ? "show active" : ""
+                                  }`}
                                 id="profile-edit"
                               >
                                 {/* <h5 className="card-title">Social accounts</h5> */}
@@ -2367,9 +2568,8 @@ const MyProfile = () => {
                         {/* Change Password Section */}
                         <div
                           id="profile-change-password"
-                          className={`tab-pane fade profile-edit pt-3 ${
-                            tabLiNum === 4 ? `show active` : ``
-                          }`}
+                          className={`tab-pane fade profile-edit pt-3 ${tabLiNum === 4 ? `show active` : ``
+                            }`}
                         >
                           <form onSubmit={handlePasswordUpdateSubmit}>
                             {/* Current Password */}
@@ -2522,9 +2722,8 @@ const MyProfile = () => {
 
                         {/* Accont Setting Section Start */}
                         <div
-                          className={`tab-pane fade profile-edit pt-3 ${
-                            tabLiNum === 3 ? `show active` : ``
-                          }`}
+                          className={`tab-pane fade profile-edit pt-3 ${tabLiNum === 3 ? `show active` : ``
+                            }`}
                           id="profile-settings"
                         >
                           <form onSubmit={handleDeleteAccountSubmit}>

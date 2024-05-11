@@ -15,7 +15,6 @@ const exerciseSchema = new mongoose.Schema({
     // enum: ["strength", "yoga", "cardio", "powerlifting", "other"],
     required: true,
   },
-
   sets: {
     type: Number,
     required: true,

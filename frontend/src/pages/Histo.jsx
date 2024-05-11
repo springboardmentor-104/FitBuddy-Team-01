@@ -85,7 +85,16 @@ const Histo = (props) => {
                           : "bg-gray-300"
                       }`}
                       onClick={() => handleTabChange("exercise")}
-                      style={{ borderRadius: "0px" }}
+                      style={{
+                        borderRadius: "0px",
+                        ...(activeTab === "exercise"
+                          ? {
+                              color: `#fff`,
+                              backgroundColor: `#0d6efd`,
+                              borderColor: `#0d6efd`,
+                            }
+                          : {}),
+                      }}
                     >
                       Exercise History
                     </button>
@@ -96,7 +105,16 @@ const Histo = (props) => {
                           : "bg-gray-300"
                       }`}
                       onClick={() => handleTabChange("diet")}
-                      style={{ borderRadius: "0px" }}
+                      style={{
+                        borderRadius: "0px",
+                        ...(activeTab === "diet"
+                          ? {
+                              color: `#fff`,
+                              backgroundColor: `#198754`,
+                              borderColor: `#198754`,
+                            }
+                          : {}),
+                      }}
                     >
                       Diet History
                     </button>

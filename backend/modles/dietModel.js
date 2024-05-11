@@ -29,7 +29,10 @@ const mealSchema = new mongoose.Schema({
     instructions: {
         type: String,
         required: true
+    },
+    photo:{
+        type:String,
     }
 });
 
-module.exports = mongoose.model('meal', exerciseSchema);
+module.exports = mongoose.model('meal', mealSchema);

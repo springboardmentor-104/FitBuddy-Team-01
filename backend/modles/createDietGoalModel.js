@@ -25,4 +25,4 @@ const dietSchema = new mongoose.Schema({
     }
 
 });
-module.exports = mongoose.model('Diets', dietSchema);
+module.exports = mongoose.model('goalDiets', dietSchema);
