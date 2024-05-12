@@ -1002,32 +1002,65 @@ const MyProfile = () => {
   useEffect(() => {
     // Check if weight and height are both valid numbers
     if (weight && height && !isNaN(weight) && !isNaN(height)) {
-      // Convert height from cm to meters
-      const heightInMeters = height / 100;
+      // Convert height to meters
+      let heightInMeters;
+      switch (heightUnit) {
+        case "mm":
+          heightInMeters = parseFloat(height) / 1000;
+          break;
+        case "cm":
+          heightInMeters = parseFloat(height) / 100;
+          break;
+        case "m":
+          heightInMeters = parseFloat(height);
+          break;
+        case "ft":
+          heightInMeters = parseFloat(height) * 0.3048;
+          break;
+        default:
+          heightInMeters = 0;
+      }
 
-      // Calculate BMI using the formula
-      const calculatedBMI = weight / (heightInMeters * heightInMeters);
+      // Convert weight to kilograms
+      let weightInKilograms;
+      switch (WeightUnit) {
+        case "gm":
+          weightInKilograms = parseFloat(weight) / 1000;
+          break;
+        case "kg":
+          weightInKilograms = parseFloat(weight);
+          break;
+        case "lbs":
+          weightInKilograms = parseFloat(weight) * 0.453592;
+          break;
+        default:
+          weightInKilograms = 0;
+      }
 
-      // Update the state with the calculated BMI
-      setBMI(calculatedBMI.toFixed(2)); // Round BMI to 2 decimal places
+      // Calculate BMI
+      const calculatedBMI =
+        weightInKilograms / (heightInMeters * heightInMeters);
+      const roundedBMI = calculatedBMI.toFixed(2); // Round BMI to 2 decimal places
+      setBMI(roundedBMI);
 
       // Determine BMI status
+      let status;
       if (calculatedBMI < 18.5) {
-        setBMIStatus("Underweight");
+        status = "Underweight";
       } else if (calculatedBMI >= 18.5 && calculatedBMI < 25) {
-        // setBMIStatus("Normal weight");
-        setBMIStatus("Normal");
+        status = "Normal";
       } else if (calculatedBMI >= 25 && calculatedBMI < 30) {
-        setBMIStatus("Overweight");
+        status = "Overweight";
       } else {
-        setBMIStatus("Obesity");
+        status = "Obesity";
       }
+      setBMIStatus(status);
     } else {
       // Reset BMI if weight or height is not a valid number
       setBMI("");
       setBMIStatus("");
     }
-  }, [weight, height]);
+  }, [weight, height, heightUnit, WeightUnit]);
 
   // useEffect hook to update suggestions whenever BMI status changes
   useEffect(() => {
@@ -1124,6 +1157,16 @@ const MyProfile = () => {
                             onClick={() => {
                               setTabLiNum(1);
                             }}
+                            style={{
+                              lineHeight: "20px",
+                              ...(tabLiNum === 1
+                                ? {
+                                    color: `#fff`,
+                                    backgroundColor: `#17a2b8`,
+                                    borderColor: `#17a2b8`,
+                                  }
+                                : {}),
+                            }}
                           >
                             Overview
                           </button>
@@ -1139,6 +1182,16 @@ const MyProfile = () => {
                             }`}
                             onClick={() => {
                               setTabLiNum(2);
+                            }}
+                            style={{
+                              lineHeight: "20px",
+                              ...(tabLiNum === 2
+                                ? {
+                                    color: `#fff`,
+                                    backgroundColor: `#198754`,
+                                    borderColor: `#198754`,
+                                  }
+                                : {}),
                             }}
                           >
                             Edit Profile
@@ -1156,6 +1209,16 @@ const MyProfile = () => {
                             }`}
                             onClick={() => {
                               setTabLiNum(4);
+                            }}
+                            style={{
+                              lineHeight: "20px",
+                              ...(tabLiNum === 4
+                                ? {
+                                    color: `#fff`,
+                                    backgroundColor: `#0d6efd`,
+                                    borderColor: `#0d6efd`,
+                                  }
+                                : {}),
                             }}
                           >
                             Change Password
@@ -1176,6 +1239,16 @@ const MyProfile = () => {
                             }`}
                             onClick={() => {
                               setTabLiNum(3);
+                            }}
+                            style={{
+                              lineHeight: "20px",
+                              ...(tabLiNum === 3
+                                ? {
+                                    color: `#fff`,
+                                    backgroundColor: `#dc3545`,
+                                    borderColor: `#dc3545`,
+                                  }
+                                : {}),
                             }}
                           >
                             Account Settings
@@ -1211,6 +1284,16 @@ const MyProfile = () => {
                                 }`}
                                 onClick={() => handleTabClick(5)}
                                 id="my-prf-prdt-sec-hd"
+                                style={{
+                                  lineHeight: "20px",
+                                  ...(activeTab === 5
+                                    ? {
+                                        color: `#fff`,
+                                        backgroundColor: `#A9A9A9`,
+                                        borderColor: `#A9A9A9`,
+                                      }
+                                    : {}),
+                                }}
                               >
                                 Basic Information
                               </button>
@@ -1221,6 +1304,16 @@ const MyProfile = () => {
                                   activeTab === 6 ? "active" : ""
                                 }`}
                                 onClick={() => handleTabClick(6)}
+                                style={{
+                                  lineHeight: "20px",
+                                  ...(activeTab === 6
+                                    ? {
+                                        color: `#fff`,
+                                        backgroundColor: `rgb(25, 135, 84)`,
+                                        borderColor: `rgb(25, 135, 84)`,
+                                      }
+                                    : {}),
+                                }}
                                 id="my-prf-prdt-sec-hd"
                               >
                                 Body &amp; Health Status
@@ -1233,6 +1326,16 @@ const MyProfile = () => {
                                 }`}
                                 onClick={() => handleTabClick(7)}
                                 id="my-prf-prdt-sec-hd"
+                                style={{
+                                  lineHeight: "20px",
+                                  ...(activeTab === 7
+                                    ? {
+                                        color: `#fff`,
+                                        backgroundColor: `#007bff`,
+                                        borderColor: `#007bff`,
+                                      }
+                                    : {}),
+                                }}
                               >
                                 Social accounts
                               </button>
@@ -1476,7 +1579,12 @@ const MyProfile = () => {
                                           <ul>
                                             {suggestions.map(
                                               (suggestion, index) => (
-                                                <li key={index}>
+                                                <li
+                                                  key={index}
+                                                  style={{
+                                                    textAlign: "justify",
+                                                  }}
+                                                >
                                                   {suggestion}
                                                 </li>
                                               )
@@ -1660,8 +1768,18 @@ const MyProfile = () => {
                                     EactiveTab === 8 ? "active" : ""
                                   }`}
                                   onClick={() => handleETabClick(8)}
-                                  style={{ cursor: "pointer" }}
                                   id="my-prf-prdt-sec-hd"
+                                  style={{
+                                    cursor: "pointer",
+                                    lineHeight: "20px",
+                                    ...(EactiveTab === 8
+                                      ? {
+                                          color: `#fff`,
+                                          backgroundColor: `#A9A9A9`,
+                                          borderColor: `#A9A9A9`,
+                                        }
+                                      : {}),
+                                  }}
                                 >
                                   Basic Information
                                 </span>
@@ -1672,7 +1790,17 @@ const MyProfile = () => {
                                     EactiveTab === 9 ? "active" : ""
                                   }`}
                                   onClick={() => handleETabClick(9)}
-                                  style={{ cursor: "pointer" }}
+                                  style={{
+                                    cursor: "pointer",
+                                    lineHeight: "20px",
+                                    ...(EactiveTab === 9
+                                      ? {
+                                          color: `#fff`,
+                                          backgroundColor: `#198754`,
+                                          borderColor: `#198754`,
+                                        }
+                                      : {}),
+                                  }}
                                   id="my-prf-prdt-sec-hd"
                                 >
                                   Body &amp; Health Status
@@ -1684,7 +1812,17 @@ const MyProfile = () => {
                                     EactiveTab === 10 ? "active" : ""
                                   }`}
                                   onClick={() => handleETabClick(10)}
-                                  style={{ cursor: "pointer" }}
+                                  style={{
+                                    cursor: "pointer",
+                                    lineHeight: "20px",
+                                    ...(EactiveTab === 10
+                                      ? {
+                                          color: `#fff`,
+                                          backgroundColor: `#007bff`,
+                                          borderColor: `#007bff`,
+                                        }
+                                      : {}),
+                                  }}
                                   id="my-prf-prdt-sec-hd"
                                 >
                                   Social accounts

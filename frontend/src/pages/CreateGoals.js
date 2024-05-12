@@ -173,89 +173,100 @@ const CreateGoals = () => {
   };
 
   return (
-    <div>
-      <Userdashboard />
-
-      <div className="d-flex justify-content-center">
-        <form
-          onSubmit={
-            activeSection === "exercise"
-              ? handleExerciseSubmit
-              : handleDietSubmit
-          }
-          className="mt-5 w-50"
-        >
-          <div className="border border-info p-5">
-            <Button
-              variant={activeSection === "exercise" ? "contained" : "outlined"}
-              color={activeSection === "exercise" ? "primary" : "default"}
-              style={{
-                backgroundColor:
-                  activeSection === "exercise" ? "orange" : "white",
-                color: activeSection === "exercise" ? "white" : "black",
-              }}
-              onClick={() => toggleSection("exercise")}
-              className="me-3"
-            >
-              Exercise
-            </Button>
-            <Button
-              variant={activeSection === "diet" ? "contained" : "outlined"}
-              color={activeSection === "diet" ? "primary" : "default"}
-              style={{
-                backgroundColor: activeSection === "diet" ? "orange" : "white",
-                color: activeSection === "diet" ? "white" : "black",
-              }}
-              onClick={() => toggleSection("diet")}
-            >
-              Diet
-            </Button>
-            {activeSection === "exercise" ? (
-              <>
-                <h2 className="text-center mt-2 mb-4">Create Exercises</h2>
-                {exercises.map((student, index) => (
-                  <div key={index} className="row align-items-center mb-3">
-                    <div className="col-lg-3 col-md-6">
-                      <TextField
-                        className="me-3"
-                        name="name"
-                        label="Exercise Name"
-                        value={student.exercise_name}
-                        onChange={(e) => handleExerciseChange(e, index)}
-                        fullWidth
-                      />
-                    </div>
-                    <div className="col-lg-3 col-md-6">
-                      <TextField
-                        className="me-3"
-                        name="category"
-                        label="Exercise Category"
-                        value={student.category}
-                        onChange={(e) => handleExerciseChange(e, index)}
-                        fullWidth
-                      />
-                    </div>
-                    <div className="col-lg-3 col-md-6">
-                      <TextField
-                        className="me-3"
-                        name="sets"
-                        label="Exercise Sets"
-                        value={student.sets}
-                        onChange={(e) => handleExerciseChange(e, index)}
-                        fullWidth
-                      />
-                    </div>
-                    <div className="col-lg-3 col-md-6">
-                      <TextField
-                        className="me-3"
-                        name="time"
-                        label="Estimated Time(Mins)"
-                        value={student.estimated_time}
-                        onChange={(e) => handleExerciseChange(e, index)}
-                        fullWidth
-                      />
-                    </div>
-                    {/* {exercises.length > 1 && index !== exercises.length - 1 && (
+    <>
+      <Userdashboard
+        content={
+          <>
+            <div className="d-flex justify-content-center">
+              <form
+                onSubmit={
+                  activeSection === "exercise"
+                    ? handleExerciseSubmit
+                    : handleDietSubmit
+                }
+                className="mt-5 w-75"
+              >
+                <div className="border border-info p-5">
+                  <Button
+                    variant={
+                      activeSection === "exercise" ? "contained" : "outlined"
+                    }
+                    color={activeSection === "exercise" ? "primary" : "default"}
+                    style={{
+                      backgroundColor:
+                        activeSection === "exercise" ? "orange" : "white",
+                      color: activeSection === "exercise" ? "white" : "black",
+                    }}
+                    onClick={() => toggleSection("exercise")}
+                    className="me-3"
+                  >
+                    Exercise
+                  </Button>
+                  <Button
+                    variant={
+                      activeSection === "diet" ? "contained" : "outlined"
+                    }
+                    color={activeSection === "diet" ? "primary" : "default"}
+                    style={{
+                      backgroundColor:
+                        activeSection === "diet" ? "orange" : "white",
+                      color: activeSection === "diet" ? "white" : "black",
+                    }}
+                    onClick={() => toggleSection("diet")}
+                  >
+                    Diet
+                  </Button>
+                  {activeSection === "exercise" ? (
+                    <>
+                      <h2 className="text-center mt-2 mb-4">
+                        Create Exercises
+                      </h2>
+                      {exercises.map((student, index) => (
+                        <div
+                          key={index}
+                          className="row align-items-center mb-3"
+                        >
+                          <div className="col-lg-3 col-md-6">
+                            <TextField
+                              className="me-3"
+                              name="name"
+                              label="Exercise Name"
+                              value={student.exercise_name}
+                              onChange={(e) => handleExerciseChange(e, index)}
+                              fullWidth
+                            />
+                          </div>
+                          <div className="col-lg-3 col-md-6">
+                            <TextField
+                              className="me-3"
+                              name="category"
+                              label="Exercise Category"
+                              value={student.category}
+                              onChange={(e) => handleExerciseChange(e, index)}
+                              fullWidth
+                            />
+                          </div>
+                          <div className="col-lg-3 col-md-6">
+                            <TextField
+                              className="me-3"
+                              name="sets"
+                              label="Exercise Sets"
+                              value={student.sets}
+                              onChange={(e) => handleExerciseChange(e, index)}
+                              fullWidth
+                            />
+                          </div>
+                          <div className="col-lg-3 col-md-6">
+                            <TextField
+                              className="me-3"
+                              name="time"
+                              label="Estimated Time(Mins)"
+                              value={student.estimated_time}
+                              onChange={(e) => handleExerciseChange(e, index)}
+                              fullWidth
+                            />
+                          </div>
+                          {/* {exercises.length > 1 && index !== exercises.length - 1 && (
                       
                       <div className="col-auto mt-3">
                         <Button onClick={() => removeExercises(index)} style={{ backgroundColor: '#f74563', color: 'white'}} className="ms-3">
@@ -263,97 +274,103 @@ const CreateGoals = () => {
                         </Button>
                       </div>
                     )} */}
-                    {/* {index === exercises.length - 1 && (
+                          {/* {index === exercises.length - 1 && (
                       <div className="col-auto mt-3">
                         <Button onClick={addExercises} variant="contained" style={{ backgroundColor: '#59a2eb', color: 'white'}} className="ms-3">
                           Add
                         </Button>
                       </div>
                     )} */}
-                  </div>
-                ))}
-              </>
-            ) : (
-              <>
-                <h2 className="text-center mt-2 mb-4">Create Diets</h2>
-                {diets.map((student, index) => (
-                  <div key={index} className="row align-items-center mb-3">
-                    <div className="col-lg-3 col-md-6">
-                      <TextField
-                        className="me-3"
-                        name="name"
-                        label="Diet Name"
-                        value={student.exercise_name}
-                        onChange={(e) => handleDietChange(e, index)}
-                        fullWidth
-                      />
-                    </div>
-                    <div className="col-lg-3 col-md-6">
-                      <TextField
-                        className="me-3"
-                        name="timeToEat"
-                        label="Time to Eat"
-                        select
-                        value={student.category}
-                        onChange={(e) => handleDietChange(e, index)}
-                        fullWidth
-                      >
-                        <MenuItem value="breakfast">Breakfast</MenuItem>
-                        <MenuItem value="lunch">Lunch</MenuItem>
-                        <MenuItem value="dinner">Dinner</MenuItem>
-                      </TextField>
-                    </div>
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="text-center mt-2 mb-4">Create Diets</h2>
+                      {diets.map((student, index) => (
+                        <div
+                          key={index}
+                          className="row align-items-center mb-3"
+                        >
+                          <div className="col-lg-3 col-md-6">
+                            <TextField
+                              className="me-3"
+                              name="name"
+                              label="Diet Name"
+                              value={student.exercise_name}
+                              onChange={(e) => handleDietChange(e, index)}
+                              fullWidth
+                            />
+                          </div>
+                          <div className="col-lg-3 col-md-6">
+                            <TextField
+                              className="me-3"
+                              name="timeToEat"
+                              label="Time to Eat"
+                              select
+                              value={student.category}
+                              onChange={(e) => handleDietChange(e, index)}
+                              fullWidth
+                            >
+                              <MenuItem value="breakfast">Breakfast</MenuItem>
+                              <MenuItem value="lunch">Lunch</MenuItem>
+                              <MenuItem value="dinner">Dinner</MenuItem>
+                            </TextField>
+                          </div>
 
-                    <div className="col-lg-3 col-md-6">
-                      <TextField
-                        className="me-3"
-                        name="quantity"
-                        label="Quantity"
-                        value={student.sets}
-                        onChange={(e) => handleDietChange(e, index)}
-                        fullWidth
-                      />
-                    </div>
-                    <div className="col-lg-3 col-md-6">
-                      <TextField
-                        className="me-3"
-                        name="calories"
-                        label="Total Calories"
-                        value={student.estimated_time}
-                        onChange={(e) => handleDietChange(e, index)}
-                        fullWidth
-                      />
-                    </div>
-                    {/* {diets.length > 1 && index !== diets.length - 1 && (
+                          <div className="col-lg-3 col-md-6">
+                            <TextField
+                              className="me-3"
+                              name="quantity"
+                              label="Quantity"
+                              value={student.sets}
+                              onChange={(e) => handleDietChange(e, index)}
+                              fullWidth
+                            />
+                          </div>
+                          <div className="col-lg-3 col-md-6">
+                            <TextField
+                              className="me-3"
+                              name="calories"
+                              label="Total Calories"
+                              value={student.estimated_time}
+                              onChange={(e) => handleDietChange(e, index)}
+                              fullWidth
+                            />
+                          </div>
+                          {/* {diets.length > 1 && index !== diets.length - 1 && (
                       <div className="col-auto mt-3">
                         <Button onClick={() => removeDiet(index)} style={{ backgroundColor: '#f74563', color: 'white'}} className="ms-3">
                           Delete
                         </Button>
                       </div> 
                     )} */}
-                    {/* {index === diets.length - 1 && (
+                          {/* {index === diets.length - 1 && (
                       <div className="col-auto mt-3">
                         <Button onClick={addDiets} variant="contained" style={{ backgroundColor: '#59a2eb', color: 'white'}}  className="ms-3">
                           Add
                         </Button>
                       </div>
                     )} */}
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-          <Button
-            type="submit"
-            variant="contained"
-            style={{ backgroundColor: "#59a2eb", color: "white" }}
-            className="mt-4"
-          >
-            Save
-          </Button>
-        </form>
-      </div>
-    </div>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  style={{ backgroundColor: "#59a2eb", color: "white" }}
+                  className="mt-4"
+                >
+                  Save
+                </Button>
+              </form>
+            </div>
+          </>
+        }
+      />
+    </>
   );
 };
 
