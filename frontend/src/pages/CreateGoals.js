@@ -4,6 +4,8 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Dropdown, SplitButton } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import CreateGoalsExerciseTable from "./../components/CreateGoalsExerciseTable";
+import CreateGoalsDietTable from "./../components/CreateGoalsDietTable";
 
 // import MenuBar1 from "../components/MenuBar1";
 import Userdashboard from "./Userdashboard";
@@ -172,19 +174,23 @@ const CreateGoals = () => {
     setActiveSection(section);
   };
 
+  const [loading] = useState(false);
+
   return (
     <>
       <Userdashboard
         content={
           <>
-            <div className="d-flex justify-content-center">
+            {/* <div className="d-flex justify-content-center"> */}
+            <div>
               <form
                 onSubmit={
                   activeSection === "exercise"
                     ? handleExerciseSubmit
                     : handleDietSubmit
                 }
-                className="mt-5 w-75"
+                // className="mt-5 w-75"
+                className="mt-5 w-100"
               >
                 <div className="border border-info p-5">
                   <Button
@@ -266,21 +272,36 @@ const CreateGoals = () => {
                               fullWidth
                             />
                           </div>
-                          {/* {exercises.length > 1 && index !== exercises.length - 1 && (
-                      
-                      <div className="col-auto mt-3">
-                        <Button onClick={() => removeExercises(index)} style={{ backgroundColor: '#f74563', color: 'white'}} className="ms-3">
-                          Delete
-                        </Button>
-                      </div>
-                    )} */}
-                          {/* {index === exercises.length - 1 && (
-                      <div className="col-auto mt-3">
-                        <Button onClick={addExercises} variant="contained" style={{ backgroundColor: '#59a2eb', color: 'white'}} className="ms-3">
-                          Add
-                        </Button>
-                      </div>
-                    )} */}
+                          {exercises.length > 1 &&
+                            index !== exercises.length - 1 && (
+                              <div className="col-auto mt-3">
+                                <Button
+                                  onClick={() => removeExercises(index)}
+                                  style={{
+                                    backgroundColor: "#f74563",
+                                    color: "white",
+                                  }}
+                                  className="ms-3"
+                                >
+                                  Delete
+                                </Button>
+                              </div>
+                            )}
+                          {index === exercises.length - 1 && (
+                            <div className="col-auto mt-3">
+                              <Button
+                                onClick={addExercises}
+                                variant="contained"
+                                style={{
+                                  backgroundColor: "#59a2eb",
+                                  color: "white",
+                                }}
+                                className="ms-3"
+                              >
+                                Add
+                              </Button>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </>
@@ -338,20 +359,35 @@ const CreateGoals = () => {
                               fullWidth
                             />
                           </div>
-                          {/* {diets.length > 1 && index !== diets.length - 1 && (
-                      <div className="col-auto mt-3">
-                        <Button onClick={() => removeDiet(index)} style={{ backgroundColor: '#f74563', color: 'white'}} className="ms-3">
-                          Delete
-                        </Button>
-                      </div> 
-                    )} */}
-                          {/* {index === diets.length - 1 && (
-                      <div className="col-auto mt-3">
-                        <Button onClick={addDiets} variant="contained" style={{ backgroundColor: '#59a2eb', color: 'white'}}  className="ms-3">
-                          Add
-                        </Button>
-                      </div>
-                    )} */}
+                          {diets.length > 1 && index !== diets.length - 1 && (
+                            <div className="col-auto mt-3">
+                              <Button
+                                onClick={() => removeDiet(index)}
+                                style={{
+                                  backgroundColor: "#f74563",
+                                  color: "white",
+                                }}
+                                className="ms-3"
+                              >
+                                Delete
+                              </Button>
+                            </div>
+                          )}
+                          {index === diets.length - 1 && (
+                            <div className="col-auto mt-3">
+                              <Button
+                                onClick={addDiets}
+                                variant="contained"
+                                style={{
+                                  backgroundColor: "#59a2eb",
+                                  color: "white",
+                                }}
+                                className="ms-3"
+                              >
+                                Add
+                              </Button>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </>
@@ -366,6 +402,15 @@ const CreateGoals = () => {
                   Save
                 </Button>
               </form>
+              {(() => {
+                if (activeSection === "exercise") {
+                  return <CreateGoalsExerciseTable />;
+                }
+                if (activeSection === "diet") {
+                  return <CreateGoalsDietTable />;
+                }
+                return "";
+              })()}
             </div>
           </>
         }

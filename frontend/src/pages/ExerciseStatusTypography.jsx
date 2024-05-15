@@ -1,28 +1,30 @@
 import React from "react";
 import { Typography } from "@mui/material";
 
-const ExerciseStatusTypography = ({ done }) => {
-  const statusColor = done ? "#218838" : "#ffc107";
-  const textColor = done ? "black" : "white";
-  const backgroundColor = done ? "#218838" : "#ffc107";
-  const padding = done ? "7px" : "7px";
-  const borderRadius = done ? "3px" : "3px";
+const colors = {
+  complete: "#218838",
+  done: "#218838",
+  pending: "#ffc107",
+  na: "#00000073",
+};
 
+const ExerciseStatusTypography = ({ done }) => {
   return (
     <Typography
       variant="small"
       style={{
-        color: textColor,
-        backgroundColor: backgroundColor,
-        padding: padding,
-        borderRadius: borderRadius,
+        color: "#fff",
+        backgroundColor: colors[done?.replace("/", "")?.toLowerCase()],
       }}
-      className="font-normal"
-      align="center"
+      className="font-normal px-3 py-2 rounded text-center"
     >
-      {done ? "Done" : "Pending"}
+      {done}
     </Typography>
   );
+};
+
+ExerciseStatusTypography.defaultProps = {
+  done: "N/A",
 };
 
 export default ExerciseStatusTypography;

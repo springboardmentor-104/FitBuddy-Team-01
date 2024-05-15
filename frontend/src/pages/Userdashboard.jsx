@@ -194,7 +194,8 @@ const Userdashboard = (props) => {
           <li className="nav-heading">Pages</li>
 
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
+            {/* /ManageGoals */}
+            <Link className="nav-link collapsed" to="/ManageGoals">
               <BiTask />
               &nbsp;
               <span>Manage Goals</span>

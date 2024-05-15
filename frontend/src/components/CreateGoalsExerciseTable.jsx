@@ -1,16 +1,16 @@
 import { Table } from "antd";
 import React from "react";
-import ExerciseStatusTypography from "../pages/ExerciseStatusTypography";
+import CreateGoalsExerciseActions from "./CreateGoalsExerciseActions";
 
-const TableComponentExercise = () => {
+const CreateGoalsExerciseTable = () => {
   const [exerciseHistory, setExerciseHistory] = React.useState([]);
   // const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
 
   React.useEffect(() => {
-    fetchData();
+    fetchExerciseData();
   }, []);
 
-  const fetchData = async () => {
+  const fetchExerciseData = async () => {
     try {
       const exerciseResponse = await fetch(
         "https://api.github.com/users/mralexgray/repos"
@@ -26,26 +26,29 @@ const TableComponentExercise = () => {
   };
 
   const columns = [
-    { dataIndex: "id", title: "S.No.", width: 50 },
-    { dataIndex: "name", title: "Exercise Name", width: 130 },
-    { dataIndex: "category", title: "Category", width: 130 },
+    { dataIndex: "id", title: "S.No.", width: 20 },
+    { dataIndex: "name", title: "Exercise Name", width: 20 },
+    { dataIndex: "category", title: "Exercise Category", width: 20 },
     {
       dataIndex: "sets",
-      title: "Sets",
-      width: 90,
+      title: "Exercise Sets",
+      width: 20,
     },
     {
       dataIndex: "estimatedTime",
-      title: "Estimated Time",
-    },
-    {
-      dataIndex: "status",
-      title: "Status",
-      render: (value, row) => <ExerciseStatusTypography done={value} />,
+      title: "Estimated Time(Mins)",
+      width: 20,
     },
     {
       dataIndex: "date",
       title: "Date",
+      width: 20,
+    },
+    {
+      dataIndex: "status",
+      title: "Actions",
+      render: (value, row) => <CreateGoalsExerciseActions />,
+      width: 20,
     },
   ];
 
@@ -61,10 +64,13 @@ const TableComponentExercise = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-between">
+      <div
+        className="d-flex justify-content-between"
+        style={{ marginTop: "40px" }}
+      >
         <div>
           <h4 className="text-lg font-bold mb-2" style={{ color: "#4154f1" }}>
-            <strong>Exercise History</strong>
+            {/* <strong>Exercise Table</strong> */}
           </h4>
         </div>
         {/* <div>
@@ -89,4 +95,4 @@ const TableComponentExercise = () => {
   );
 };
 
-export default TableComponentExercise;
+export default CreateGoalsExerciseTable;

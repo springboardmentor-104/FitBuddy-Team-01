@@ -4,7 +4,7 @@ import DietStatusTypography from "../pages/DietStatusTypography";
 
 const TableComponentDiet = () => {
   const [dietHistory, setDietHistory] = React.useState([]);
-  const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
+  // const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
 
   React.useEffect(() => {
     fetchData();
@@ -12,7 +12,9 @@ const TableComponentDiet = () => {
 
   const fetchData = async () => {
     try {
-      const dietResponse = await fetch("https://fakestoreapi.com/products");
+      const dietResponse = await fetch(
+        "https://api.github.com/users/mralexgray/repos"
+      );
       if (dietResponse.status !== 200) {
         throw new Error("Failed to fetch diet data");
       }
@@ -24,7 +26,7 @@ const TableComponentDiet = () => {
   };
 
   const columns = [
-    { dataIndex: "id", title: "ID", width: 50 },
+    { dataIndex: "id", title: "S.No.", width: 50 },
     { dataIndex: "name", title: "Diet Name", width: 130 },
     { dataIndex: "category", title: "Quantity", width: 130 },
     { dataIndex: "sets", title: "Calories", width: 90 },
@@ -37,15 +39,15 @@ const TableComponentDiet = () => {
     { dataIndex: "date", title: "Date" },
   ];
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  // const onSelectChange = (newSelectedRowKeys) => {
+  //   console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+  //   setSelectedRowKeys(newSelectedRowKeys);
+  // };
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectChange,
+  // };
 
   return (
     <>
@@ -55,17 +57,17 @@ const TableComponentDiet = () => {
             <strong>Diet History</strong>
           </h4>
         </div>
-        <div>
+        {/* <div>
           {selectedRowKeys?.length > 0 && (
             <button className="btn btn-sm btn-danger">Delete</button>
           )}
-        </div>
+        </div> */}
       </div>
       <Table
         rowKey={(record) => record.id}
         dataSource={dietHistory}
         columns={columns}
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,
           total: dietHistory.length,

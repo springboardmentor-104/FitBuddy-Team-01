@@ -1,51 +1,54 @@
 import { Table } from "antd";
 import React from "react";
-import ExerciseStatusTypography from "../pages/ExerciseStatusTypography";
+import CreateGoalsDietActions from "./CreateGoalsDietActions";
 
-const TableComponentExercise = () => {
-  const [exerciseHistory, setExerciseHistory] = React.useState([]);
+const CreateGoalsDietTable = () => {
+  const [DietHistory, setDietHistory] = React.useState([]);
   // const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
 
   React.useEffect(() => {
-    fetchData();
+    fetchDietData();
   }, []);
 
-  const fetchData = async () => {
+  const fetchDietData = async () => {
     try {
-      const exerciseResponse = await fetch(
+      const DietResponse = await fetch(
         "https://api.github.com/users/mralexgray/repos"
       );
-      if (exerciseResponse.status !== 200) {
+      if (DietResponse.status !== 200) {
         throw new Error("Failed to fetch exercise data");
       }
-      const exerciseData = await exerciseResponse.json();
-      setExerciseHistory(exerciseData);
+      const DietData = await DietResponse.json();
+      setDietHistory(DietData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
   const columns = [
-    { dataIndex: "id", title: "S.No.", width: 50 },
-    { dataIndex: "name", title: "Exercise Name", width: 130 },
-    { dataIndex: "category", title: "Category", width: 130 },
+    { dataIndex: "id", title: "S.No.", width: 20 },
+    { dataIndex: "name", title: "Diet Name", width: 20 },
+    { dataIndex: "category", title: "Time to Eat", width: 20 },
     {
       dataIndex: "sets",
-      title: "Sets",
-      width: 90,
+      title: "Quantity",
+      width: 20,
     },
     {
       dataIndex: "estimatedTime",
-      title: "Estimated Time",
-    },
-    {
-      dataIndex: "status",
-      title: "Status",
-      render: (value, row) => <ExerciseStatusTypography done={value} />,
+      title: "Total Calories",
+      width: 20,
     },
     {
       dataIndex: "date",
       title: "Date",
+      width: 20,
+    },
+    {
+      dataIndex: "status",
+      title: "Actions",
+      render: (value, row) => <CreateGoalsDietActions />,
+      width: 20,
     },
   ];
 
@@ -61,10 +64,13 @@ const TableComponentExercise = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-between">
+      <div
+        className="d-flex justify-content-between"
+        style={{ marginTop: "40px" }}
+      >
         <div>
           <h4 className="text-lg font-bold mb-2" style={{ color: "#4154f1" }}>
-            <strong>Exercise History</strong>
+            {/* <strong>Exercise Table</strong> */}
           </h4>
         </div>
         {/* <div>
@@ -75,12 +81,12 @@ const TableComponentExercise = () => {
       </div>
       <Table
         rowKey={(record) => record.id}
-        dataSource={exerciseHistory}
+        dataSource={DietHistory}
         columns={columns}
         // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,
-          total: exerciseHistory.length,
+          total: DietHistory.length,
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
@@ -89,4 +95,4 @@ const TableComponentExercise = () => {
   );
 };
 
-export default TableComponentExercise;
+export default CreateGoalsDietTable;

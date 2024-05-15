@@ -1,12 +1,15 @@
 // import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
 
 import "./ResetPassword.css";
+import axios from "axios";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import OtpVrfo_icon from "./../Assets/otpvrfo.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 const ResetPassword = (props) => {
+  const location = useLocation();
   // const [password, setPassword] = useState("");
   // const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -119,6 +122,30 @@ const ResetPassword = (props) => {
       // Passwords match and length is valid, allow form submission
       // alert("Form submitted successfully!");
       // Here you can proceed with further actions like submitting the form to a server
+      let data = JSON.stringify({
+        userId: location?.state?.userId,
+        otp: location?.state?.otp,
+        newPassword: password,
+      });
+
+      let config = {
+        method: "put",
+        maxBodyLength: Infinity,
+        url: "http://localhost:8080/api/v1/auth/reset-password",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios
+        .request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -129,7 +156,7 @@ const ResetPassword = (props) => {
           className="d-flex align-items-center justify-content-center"
           style={{ height: window.innerHeight }}
         >
-          <div className="card border-0">
+          <div className="card border-0" style={{ margin: "100px" }}>
             <div className="card-body p-0 shadow">
               <div className="row">
                 <div className="col-md-6 col-sm-12 p-5">

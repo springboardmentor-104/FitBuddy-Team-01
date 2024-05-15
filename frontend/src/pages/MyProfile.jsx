@@ -1761,7 +1761,10 @@ const MyProfile = () => {
                             </div>
 
                             {/* Tab */}
-                            <ul className="nav nav-tabs nav-tabs-bordered">
+                            <ul
+                              className="nav nav-tabs nav-tabs-bordered"
+                              style={{ marginTop: "25px" }}
+                            >
                               <li className="nav-item">
                                 <span
                                   className={`nav-link ${
