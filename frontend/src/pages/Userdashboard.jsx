@@ -82,7 +82,7 @@ const Userdashboard = (props) => {
           />
         </div>
 
-        <div className="search-bar">
+        {/* <div className="search-bar">
           <form className="search-form d-flex align-items-center">
             <input
               type="text"
@@ -94,7 +94,7 @@ const Userdashboard = (props) => {
               <BiSearch />
             </button>
           </form>
-        </div>
+        </div> */}
 
         <nav className="header-nav ms-auto">
           <ul className="d-flex align-items-center">
@@ -194,7 +194,8 @@ const Userdashboard = (props) => {
           <li className="nav-heading">Pages</li>
 
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
+            {/* /ManageGoals */}
+            <Link className="nav-link collapsed" to="/ManageGoals">
               <BiTask />
               &nbsp;
               <span>Manage Goals</span>
