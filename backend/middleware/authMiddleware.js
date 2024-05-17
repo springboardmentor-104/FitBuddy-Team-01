@@ -15,6 +15,7 @@ const requireSignIn = async (req, res, next) => {
     // Verify JWT token
     const decoded = JWT.verify(token, process.env.JWT_SECRET);
     // Attach user information to request body
+    console.log(decoded)
     req.user = decoded;
     next();
   } catch (error) {
