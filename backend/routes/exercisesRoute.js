@@ -11,7 +11,7 @@ const {
 
 // exercise
 router.post('/createExercise', createExerciseController);
-router.get('/exercises', getAllExercisesController);
+router.get('/all', getAllExercisesController);
 router.get('/exercises/:id', getExerciseByIdController);
 router.get('/exercises/:category/:difficulty', findExercisesByCategoryAndDifficulty);
 
