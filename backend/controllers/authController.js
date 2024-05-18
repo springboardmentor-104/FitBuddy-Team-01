@@ -528,6 +528,62 @@ const updateProfileController = async (req, res) => {
   }
 };
 
+// const deletePhotoFromCloudinary = async (photoUrl) => {
+//   try {
+//     console.log("Deleting photo from Cloudinary...");
+//     console.log("Photo URL:", photoUrl);
+
+//     // Extract public ID from photo URL
+//     const publicId = photoUrl.split("/").pop().split(".")[0];
+//     console.log("Public ID:", publicId);
+
+//     // Delete photo from Cloudinary
+//     await cloudinary.uploader.destroy(publicId);
+//     console.log("Photo deleted from Cloudinary");
+//   } catch (error) {
+//     console.error("Error deleting photo from Cloudinary:", error);
+//     throw error;
+//   }
+// };
+
+// const deletePhotoController = async (req, res) => {
+//   try {
+//     const userId = req.user._id; // Assuming you have authenticated the user and have access to their user ID
+
+//     // Find user by ID
+//     const user = await userModel.findById(userId);
+
+//     // Check if user exists
+//     if (!user) {
+//       return res.json({ success: false, message: "User not found" });
+//     }
+
+//     // Check if user has a photo
+//     if (!user.photo) {
+//       return res.json({
+//         success: false,
+//         message: "No photo found for this user",
+//       });
+//     }
+
+//     // Delete photo from Cloudinary
+//     await deletePhotoFromCloudinary(user.photo);
+//     console.log("print");
+//     // Remove photo reference from user profile
+//     user.photo = undefined;
+//     await user.save();
+
+//     return res
+//       .status(200)
+//       .json({ success: true, message: "Photo deleted successfully" });
+//   } catch (error) {
+//     console.error("Error deleting photo:", error);
+//     return res
+//       .status(500)
+//       .json({ success: false, message: "Internal server error" });
+//   }
+// };
+
 module.exports = { updateProfileController, upload };
 
 module.exports = {
@@ -540,4 +596,5 @@ module.exports = {
   updatePasswordController,
   getUserProfileController,
   updateProfileController,
+  // deletePhotoController,
 };

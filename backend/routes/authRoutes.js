@@ -10,6 +10,7 @@ const {
   updatePasswordController,
   getUserProfileController,
   updateProfileController,
+  // deletePhotoController,
 } = require("../controllers/authController");
 const { requireSignIn } = require("../middleware/authMiddleware");
 const { upload } = require("../middleware/uploadImageMiddleware");
@@ -44,5 +45,7 @@ router.put(
   upload.single("image"),
   updateProfileController
 );
+
+// router.delete("/profile-pic", requireSignIn, deletePhotoController);
 
 module.exports = router;
