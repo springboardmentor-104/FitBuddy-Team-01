@@ -110,37 +110,39 @@ const findExercisesByCategoryAndDifficulty = async (req, res) => {
   }
 };
 
-const searchExercisesByCategoryController = async (req, res) => {
-  try {
-    let { category } = req.params;
+const findExercisesByCategory = async (req, res) => {
+    try {
+        const { category } = req.params; // Assuming category is passed as a URL parameter
 
-    // Check if category is undefined
-    if (!category) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Category parameter is missing" });
+        // Validate category
+        const validCategories = ['strength', 'yoga', 'cardio', 'powerlifting','other'];
+
+        let query = {};
+
+        if (category && validCategories.includes(category)) {
+            query.category = category;
+        } else {
+            return res.status(400).json({ success: false, message: "Invalid category" });
+        }
+
+        // Find exercises based on the constructed query
+        const exercises = await Exercise.find(query);
+
+        // Check if exercises were found
+        if (exercises.length === 0) {
+            return res.send({ success: false, message: "No exercises found matching the criteria" });
+        }
+
+        // Return found exercises
+        return res.status(200).json({ success: true, exercises });
+    } catch (error) {
+        console.error("Error finding exercises by category:", error);
+        return res
+            .status(500)
+            .json({ success: false, message: "Internal server error" });
     }
+};
 
-    // Convert category to lowercase
-    category = category.toLowerCase();
-
-    // Validate category
-    const validCategories = [
-      "strength",
-      "yoga",
-      "cardio",
-      "powerlifting",
-      "other",
-    ];
-    if (!validCategories.includes(category)) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid category" });
-    }
-  }catch(error){
-    console.log(error);
-  }
-}
 
 
 // ******************* to make personal exercise api are here ***********************//
@@ -233,4 +235,5 @@ module.exports = {
     getAllExercisesController, 
     getExerciseByIdController, 
     findExercisesByCategoryAndDifficulty, 
+    findExercisesByCategory
 };

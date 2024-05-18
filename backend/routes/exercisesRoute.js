@@ -6,6 +6,7 @@ const {
         getAllExercisesController, 
         getExerciseByIdController, 
         findExercisesByCategoryAndDifficulty,
+        findExercisesByCategory
      } = require('../controllers/exerciseController')
 
 
@@ -14,6 +15,7 @@ router.post('/createExercise', createExerciseController);
 router.get('/all', getAllExercisesController);
 router.get('/exercises/:id', getExerciseByIdController);
 router.get('/exercises/:category/:difficulty', findExercisesByCategoryAndDifficulty);
+router.get('/all/search/:category', findExercisesByCategory);
 
 
 
