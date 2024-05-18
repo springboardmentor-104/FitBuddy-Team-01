@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 // Schema for the Meal
 const mealSchema = new mongoose.Schema({
+    category: {
+        type: String,
+        enum: ['breakfast', 'lunch', 'dinner'],
+        required: true
+    },
     name: {
         type: String,
         required: true
@@ -32,4 +37,4 @@ const mealSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('meal', exerciseSchema);
+module.exports = mongoose.model('meal', mealSchema);
