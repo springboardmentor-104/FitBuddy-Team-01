@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
-const dietSchema = new mongoose.Schema({
+const personalDietSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Reference to the user who created this personal exercise
+        ref: 'users', // Reference to the user who created this personal exercise
         required: true
     },
     name: {
         type: String,
         required: true
     },
-    timeToEat: {
+    category: {
         type: String,
         enum: ['breakfast', 'lunch', 'dinner'],
         required: true
@@ -21,8 +21,11 @@ const dietSchema = new mongoose.Schema({
     },
     calories:{
         type: Number,
+    },
+    date:{
+        type:String,
         required:true
-    }
-
+    },
 });
-module.exports = mongoose.model('Diets', dietSchema);
+
+module.exports = mongoose.model('goalDiet', personalDietSchema);

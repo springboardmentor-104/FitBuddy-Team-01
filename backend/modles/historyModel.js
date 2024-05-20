@@ -1,31 +1,28 @@
-// History Schema
-const mongoose = require('mongoose');
-
+const mongoose = require('mongoose')
 const historySchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    exercise: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Exercise'
-    },
-    dietPlan: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'DietPlan'
-    },
-    exerciseCompleted: {
-        type: Boolean,
-        default: false
-    },
-    dietPlanCompleted: {
-        type: Boolean,
-        default: false
-    },
-    dateCompleted: {
-        type: Date,
-        default: Date.now
-    }
+  userId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'users',
+    required: true
+  },
+  goalId: {
+    type:mongoose.Schema.Types.ObjectId,
+    required: true
+  },
+  type: {
+    type: String, // Define type as a string
+    required: true
+  },
+  status: {
+    type: String,
+    default: 'pending'
+  },
+  createdAt: {
+    type: String,
+    required:true
+  },
+  completedAt: {
+    type: Date
+  }
 });
-
-module.exports = mongoose.model('History', historySchema);
+module.exports = mongoose.model("history", historySchema);

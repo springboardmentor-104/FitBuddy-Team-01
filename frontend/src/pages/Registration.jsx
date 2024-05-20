@@ -1,7 +1,3 @@
-// import React from "react";
-// import { useForm } from "react-hook-form";
-// import { FaEye, FaEyeSlash, FaZhihu } from "react-icons/fa";
-
 import axios from "axios";
 import "./Registration.css";
 import { Link } from "react-router-dom";
@@ -9,6 +5,8 @@ import React, { useState } from "react";
 import bgImg from "./../Assets/img1.jpg";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Registration = (props) => {
   const navigate = useNavigate();
@@ -24,13 +22,6 @@ const Registration = (props) => {
     }
   };
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm();
-  // const onSubmit = (data) => console.log(data);
 
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
@@ -102,34 +93,33 @@ const Registration = (props) => {
   console.log("registeredUserId", registeredUserId);
   const handleOtpSubmit = async (event) => {
     event.preventDefault();
-
-    // Check if OTP is correct
-    let data = {
-      otp: otp,
-      userId: registeredUserId,
-    };
-
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/verify",
-        data
-      );
-
-      // Check if the OTP is verified successfully
-      if (response.data && response.data.success) {
-        alert(response.data.message || "Registered Successfully!");
-        navigate(`/login`);
+      // Check if OTP is correct
+      let data = {
+        userId: registeredUserId,
+        otp: otp,
+      };
+      
+      const response = await axios.post("http://localhost:8080/api/v1/auth/verify", data);
+      const responseData = response.data;
+  
+      if (responseData.success) {
+        toast.success(responseData.message); // Display success message using toast
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
+        setOtpVerified(true); // Update state to indicate OTP verification success
       } else {
-        alert("OTP not verified. Please try again.");
+        toast.error(responseData.message); // Display error message using toast
       }
     } catch (error) {
-      // Handle error if the OTP verification request fails
-      alert(
-        error.response?.data?.error ||
-          "OTP not verified, Registration process incomplete."
-      );
+      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+        toast.error("Something went wrong");
+      } 
+     // Display generic error message using toast
     }
   };
+
 
   const handleFullNameChange = (event) => {
     setFullName(event.target.value);
@@ -165,9 +155,7 @@ const Registration = (props) => {
       };
       await axios.post("http://localhost:8080/api/v1/auth/register", data).then(
         (response) => {
-          console.log(response?.data);
           setRegisteredUserId(response?.data?.data?.userId);
-          // alert("Registered Successfully");
           setIsRegistered(true);
         },
         (error) => {
@@ -222,34 +210,31 @@ const Registration = (props) => {
 
   const handleRegistrationSubmit1 = async (event) => {
     event.preventDefault();
-    if (email && fullName && userName && password && confirmedPassword) {
-      let data = {
-        name: fullName,
-        email: email,
-        username: userName,
-        password: password,
-        cpassword: confirmedPassword,
-      };
-      try {
-        const response = await axios.post(
-          "http://localhost:8080/api/v1/auth/register",
-          data
-        );
-        if (response.data && response.data.success) {
-          console.log(response.data);
-          setRegisteredUserId(response.data.user.userId); // Set the user ID
-          setUserId(response.data.user.userId); // Update the user ID state
-          // setEmail(response.data.data.email); // Update the email state
-          setIsRegistered(true);
-        } else {
-          alert(response.data.message || "Registration failed");
-        }
-      } catch (error) {
-        console.error("Error during registration:", error);
-        alert(error || "Registration failed");
+
+    const response = await axios.post("http://localhost:8080/api/v1/auth/register",  {
+      name: fullName,
+      email: email,
+      username: userName,
+      password: password,
+      cpassword: confirmedPassword,
+    });
+
+    try {
+      // Check if all fields are filled
+      if (response.data.success) {
+        setIsRegistered(true);
+        const responseData = response.data;
+        setRegisteredUserId(responseData.user.userId);
+        toast.success(responseData.message);
+      } else {
+        toast.error(response.data.message);
       }
-    } else {
-      alert("Please fill in all fields.");
+    } catch (error) {
+      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+        toast.error(response.data.message);
+      }
+      setRegisteredUserId("");
+      setIsRegistered(false);
     }
   };
 
@@ -280,6 +265,7 @@ const Registration = (props) => {
       style={{ height: window.innerHeight }}
       id="reg-sec"
     >
+      <ToastContainer/>
       <div className="container px-lg-5">
         <div className="row" id="rg-rw" style={{ margin: "125px" }}>
           <div className="col-sm-12 col-md-6 bg-white">

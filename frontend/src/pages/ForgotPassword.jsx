@@ -1,6 +1,7 @@
 // import "./../Components/forgotpassword/forgotpassword.css";
 
 import React from "react";
+import axios from "axios";
 import "./forgotpassword.css";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
@@ -16,10 +17,11 @@ const ForgotPassword = (props) => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
-  const [orignalOtp, setOrignalOtp] = useState(4545);
+  const [orignalOtp, setOrignalOtp] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showOtpField, setShowOtpField] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
+  const [userId, setUserId] = useState("");
 
   const [height, setHeight] = useState(0);
   const onResize = useCallback(() => {
@@ -45,15 +47,45 @@ const ForgotPassword = (props) => {
   };
 
   // Function to handle OTP confirmation
-  const handleConfirmOTP = () => {
+  const handleConfirmOTP = (e) => {
+    e.preventDefault();
     // You can implement OTP confirmation logic here
     if (otp.trim() !== "") {
-      if (orignalOtp.toString() === otp) {
-        setShowResetPassword(true);
-        navigate(`/reset-password`);
-      } else {
-        setOtpError("Incorrect OTP");
-      }
+      let data = JSON.stringify({
+        userId: userId,
+        otp: otp,
+      });
+
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "http://localhost:8080/api/v1/auth/verify",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios
+        .request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          if (response?.data?.success) {
+            setShowResetPassword(true);
+            navigate(`/reset-password`, {
+              state: {
+                email: email,
+                otp: otp,
+                userId: userId,
+              },
+            });
+          } else {
+            setOtpError("Incorrect OTP");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       setOtpError("OTP is required.");
     }
@@ -142,7 +174,7 @@ const ForgotPassword = (props) => {
   // ====================================================
 
   // Function to handle form submission
-  const handleSubmit1 = (e) => {
+  const handleSubmit1 = async (e) => {
     e.preventDefault();
     // Validate form before submission
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
@@ -150,6 +182,30 @@ const ForgotPassword = (props) => {
     } else {
       // Proceed with form submission
       console.log("Form submitted:", { email });
+      let data = JSON.stringify({
+        email: email,
+      });
+
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "http://localhost:8080/api/v1/auth/forgot",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios
+        .request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          handleGetOTP();
+          setUserId(response?.data?.userId);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -162,7 +218,7 @@ const ForgotPassword = (props) => {
           className="d-flex align-items-center justify-content-center"
           style={{ height: window.innerHeight }}
         >
-          <div className="card border-0">
+          <div className="card border-0" style={{ margin: "100px" }}>
             <div className="card-body p-0 bg-light shadow">
               <div className="row">
                 <div className="col-md-6 col-sm-12">
@@ -202,7 +258,6 @@ const ForgotPassword = (props) => {
                           <button
                             id="otp-btn"
                             type="submit"
-                            onClick={handleGetOTP}
                             className="btn btn-primary"
                           >
                             Get OTP
@@ -211,7 +266,7 @@ const ForgotPassword = (props) => {
                       </form>
                     )}
                     {showOtpField && (
-                      <form action="">
+                      <form action="" onSubmit={handleConfirmOTP}>
                         <div>
                           <p id="aut-msg">
                             An authentication code has been sent to your email.
@@ -225,7 +280,7 @@ const ForgotPassword = (props) => {
                                 minLength={6}
                                 maxLength={8}
                                 id="password"
-                                pattern="[0 - 9]*"
+                                // pattern="[0 - 9]*"
                                 placeholder="Enter OTP"
                                 onChange={(e) => {
                                   setOtp(e.target.value);
@@ -248,7 +303,11 @@ const ForgotPassword = (props) => {
                             )}
                             <p id="nt-rc-pr">
                               <span>Didn't recieve a Code?</span>
-                              <button id="rsnd" onClick={handleResendOTP}>
+                              <button
+                                type="button"
+                                id="rsnd"
+                                onClick={handleResendOTP}
+                              >
                                 Resend
                               </button>
                             </p>
@@ -256,7 +315,6 @@ const ForgotPassword = (props) => {
                               type="submit"
                               className="btn btn-success"
                               id="otp-btn"
-                              onClick={handleConfirmOTP}
                             >
                               Confirm
                             </button>

@@ -24,7 +24,7 @@ const ExercisePage = () => {
   const fetchExercises = useCallback(async () => {
     try {
       setLoading(true);
-      let url = "http://localhost:8080/api/exercises/all";
+      let url = "http://localhost:8080/api/v1/exercise/all";
       if (selectedType) {
         url += `/search/${selectedType}`;
       }

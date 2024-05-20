@@ -1,18 +1,17 @@
 import { Card } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Userdashboard from "./Userdashboard";
-import "./Histo.css";
-import TableComponentExercise from "./../components/TableComponentExercise";
-import TableComponentDiet from "../components/TableComponentDiet";
+import TableComponentAll from "./../components/TableComponentAll";
+import TableComponentCompleted from "../components/TableComponentCompleted";
+import TableComponentPending from "../components/TableComponentPending";
 
-const Histo = (props) => {
-  const [activeTab, setActiveTab] = useState("exercise");
+const ManageGoals = () => {
+  const [activeTab, setActiveTab] = useState("All");
   const [loading] = useState(false);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-
   return (
     <>
       <Userdashboard
@@ -51,66 +50,102 @@ const Histo = (props) => {
                   >
                     <button
                       className={`btn ${
-                        activeTab === "exercise"
+                        activeTab === "All"
                           ? "bg-blue-500 hover:bg-blue-600"
                           : "bg-gray-300"
                       }`}
-                      onClick={() => handleTabChange("exercise")}
+                      onClick={() => handleTabChange("All")}
                       style={{
+                        fontFamily: '"Nunito", sans-serif',
                         borderRadius: "3px",
-                        ...(activeTab === "exercise"
+                        width: "9%",
+                        ...(activeTab === "All"
                           ? {
                               color: `#fff`,
-                              backgroundColor: `#0d6efd`,
-                              borderColor: `#0d6efd`,
+                              backgroundColor: `#007bff`,
+                              borderColor: `#007bff`,
                             }
                           : {}),
                       }}
                     >
-                      Exercise History
+                      All
                     </button>
                     <button
                       className={`btn ${
-                        activeTab === "diet"
+                        activeTab === "Completed"
                           ? "bg-blue-500 hover:bg-blue-600"
                           : "bg-gray-300"
                       }`}
-                      onClick={() => handleTabChange("diet")}
+                      onClick={() => handleTabChange("Completed")}
                       style={{
+                        fontFamily: '"Nunito", sans-serif',
                         borderRadius: "3px",
-                        ...(activeTab === "diet"
+                        ...(activeTab === "Completed"
                           ? {
                               color: `#fff`,
-                              backgroundColor: `#198754`,
-                              borderColor: `#198754`,
+                              backgroundColor: `rgb(25, 135, 84)`,
+                              borderColor: `rgb(25, 135, 84)`,
                             }
                           : {}),
                       }}
                     >
-                      Diet History
+                      Completed
+                    </button>
+                    <button
+                      className={`btn ${
+                        activeTab === "Pending"
+                          ? "bg-blue-500 hover:bg-blue-600"
+                          : "bg-gray-300"
+                      }`}
+                      onClick={() => handleTabChange("Pending")}
+                      style={{
+                        fontFamily: '"Nunito", sans-serif',
+                        borderRadius: "3px",
+                        ...(activeTab === "Pending"
+                          ? {
+                              color: `#fff`,
+                              backgroundColor: `rgb(255, 193, 7)`,
+                              borderColor: `rgb(255, 193, 7)`,
+                            }
+                          : {}),
+                      }}
+                    >
+                      Pending
                     </button>
                   </div>
 
                   {/* Display Exercise or Diet History */}
-                  {activeTab === "exercise" && (
+                  {activeTab === "All" && (
                     <div>
                       {loading ? (
                         <p>Loading...</p>
                       ) : (
                         <>
-                          <TableComponentExercise />
+                          <TableComponentAll />
                         </>
                       )}
                     </div>
                   )}
 
-                  {activeTab === "diet" && (
+                  {activeTab === "Completed" && (
                     <div>
                       {loading ? (
                         <p>Loading...</p>
                       ) : (
                         <>
-                          <TableComponentDiet />
+                          <TableComponentCompleted />
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  {activeTab === "Pending" && (
+                    <div>
+                      {loading ? (
+                        <p>Loading...</p>
+                      ) : (
+                        <>
+                          <TableComponentPending />
                         </>
                       )}
                     </div>
@@ -125,4 +160,4 @@ const Histo = (props) => {
   );
 };
 
-export default Histo;
+export default ManageGoals;
