@@ -175,6 +175,7 @@ const History = () => {
                       to="/"
                       onClick={() => {
                         localStorage.removeItem("user");
+                        localStorage.removeItem("isFirstLogin");
                       }}
                     >
                       <BiLogOut />
@@ -213,13 +214,13 @@ const History = () => {
               <span>Create Goals</span>
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link className="nav-link collapsed" to="">
               <BsCartPlusFill />
               &nbsp;
               <span>Buy Subscription</span>
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link className="nav-link collapsed" to="">
               <BsPersonFill />

@@ -17,7 +17,7 @@ const ForgotPassword = (props) => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
-  const [orignalOtp, setOrignalOtp] = useState("");
+  // const [orignalOtp, setOrignalOtp] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showOtpField, setShowOtpField] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
@@ -96,11 +96,6 @@ const ForgotPassword = (props) => {
     // You can implement OTP resend logic here
   };
 
-  // Function to handle password reset
-  const handleResetPassword = () => {
-    // You can implement password reset logic here
-  };
-
   console.log("show", showPassword);
 
   // ==================================================
@@ -128,17 +123,17 @@ const ForgotPassword = (props) => {
   };
 
   // Function to handle form submission
-  const handleSubmit2 = (e) => {
-    e.preventDefault();
+  // const handleSubmit2 = (e) => {
+  //   e.preventDefault();
 
-    if (validateEmail(email)) {
-      // Proceed with form submission
-      console.log("Email is valid");
-    } else {
-      // Display error message or prevent form submission
-      console.log("Email is not valid");
-    }
-  };
+  //   if (validateEmail(email)) {
+  //     // Proceed with form submission
+  //     console.log("Email is valid");
+  //   } else {
+  //     // Display error message or prevent form submission
+  //     console.log("Email is not valid");
+  //   }
+  // };
 
   // =====================================================
 
@@ -158,18 +153,6 @@ const ForgotPassword = (props) => {
     }
   };
 
-  // Function to handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (otp.length === 6) {
-      // Proceed with form submission
-      console.log("OTP is valid");
-    } else {
-      // Display error message or prevent form submission
-      console.log("OTP is not valid");
-    }
-  };
 
   // ====================================================
 

@@ -381,7 +381,7 @@ h6 {
 
 .header .toggle-sidebar-btn {
   font-size: 32px;
-  padding-left: 10px;
+  padding-right: 10px;
   cursor: pointer;
   color: #012970;
 }
