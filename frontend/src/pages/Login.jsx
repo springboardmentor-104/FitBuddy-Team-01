@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import bgImg from "./../Assets/LoginPage.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Login = (props) => {
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
 
-  const [setError] = useState(null);
+  // const [setError] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
   const [LoginUserId, setLoginUserId] = useState("");
 
@@ -63,7 +64,6 @@ const Login = (props) => {
       };
       await axios.post("http://localhost:8080/api/v1/auth/login", data).then(
         (response) => {
-          console.log(response?.data);
           if (response.data.success) {
             setLoginUserId(response?.data?.user?._id);
             let localData = {
@@ -71,17 +71,26 @@ const Login = (props) => {
               ...response?.data?.user,
             };
             localStorage.setItem("user", JSON.stringify(localData));
+            localStorage.setItem("userId", JSON.stringify(localData?.userId));
+            localStorage.setItem("token", JSON.stringify(localData?.token));
+            localStorage.setItem('isFirstLogin', 'true');
+            toast.success(response.data.message+"test", {
+            position: "top-center",
+            autoClose: 20000
+          });
+          let successMessage=response.data.message
             navigate("/Userdashboard");
+            navigate("/Userdashboard", { state: { successMessage } });
           } else {
             setLoginUserId("");
           }
           //
-          alert(response.data.message);
+          
+          // alert(response.data.message);
           setIsLogin(true);
         },
         (error) => {
           console.log(error);
-          // alert(error?.data?.error || error?.response?.data?.error);
           alert(error?.data?.error || "Incorrect data for Login");
           setLoginUserId("");
           setIsLogin(false);
@@ -112,9 +121,10 @@ const Login = (props) => {
       style={{ height: window.innerHeight }}
       id="reg-sec"
     >
+      <ToastContainer />
       <div
         className="container px-lg-4 card card-body"
-        style={{ height: window.innerHeight - 100, maxWidth: 800 }}
+        style={{ maxWidth: 800 }}
       >
         <div className="row h-100">
           <div className="col-sm-12 col-md-6">

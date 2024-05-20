@@ -279,7 +279,7 @@ const MyProfile = () => {
   // const [error, setError] = useState(""); // Added this
   const [isPasswordUpdate, setIsPasswordUpdate] = useState(false);
   const [PasswordUpdateUserId, setPasswordUpdateUserId] = useState("");
-  const [registrationPassword, setRegistrationPassword] = useState("");
+  // const [registrationPassword, setRegistrationPassword] = useState("");
 
   // Change Password Form Submittion
   const handlePasswordUpdateSubmit = async (event) => {

@@ -1,8 +1,6 @@
-import { useCallback } from "react";
 import React, { useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Dropdown, SplitButton } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import CreateGoalsExerciseTable from "./../components/CreateGoalsExerciseTable";
 import CreateGoalsDietTable from "./../components/CreateGoalsDietTable";
@@ -16,41 +14,6 @@ import { MenuItem, TextField } from "@mui/material";
 // import { Delete } from '@material-ui/icons';
 
 const CreateGoals = () => {
-  const onSAVEClick = useCallback(() => {
-    //TODO: alert("saved successfully");
-  }, []);
-
-  const onSAVE1Click = useCallback(() => {
-    //TODO: alert("saved successfully");
-  }, []);
-
-  const onConfirmAndSaveClick = useCallback(() => {
-    //TODO: alert("confirmed");
-  }, []);
-
-  const onAddNewClick = useCallback(() => {
-    //TODO: alert("added");
-  }, []);
-
-  const onAddNew1Click = useCallback(() => {
-    //TODO: alert("added");
-  }, []);
-
-  const onDelete1Click = useCallback(() => {
-    //TODO: alert("deleted");
-  }, []);
-
-  const onDelete2Click = useCallback(() => {
-    //TODO: alert("deleted");
-  }, []);
-
-  const onDelete3Click = useCallback(() => {
-    //TODO: alert("deleted");
-  }, []);
-
-  const onDelete4Click = useCallback(() => {
-    //TODO: alert("deleted");
-  }, []);
 
   const [exercises, setExercises] = useState([
     { name: "", category: "", sets: "", time: "" },
@@ -175,7 +138,6 @@ const CreateGoals = () => {
     setActiveSection(section);
   };
 
-  const [loading] = useState(false);
 
   return (
     <>

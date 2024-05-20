@@ -10,17 +10,17 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Registration = (props) => {
   const navigate = useNavigate();
-  const handleSubmitOTP = (e) => {
-    e.preventDefault();
-    // Validate OTP, for simplicity, compare with a hardcoded value
-    const correctOTP = "123456";
-    if (otp === correctOTP) {
-      setOtpVerified(true);
-      // Proceed with registration
-    } else {
-      alert("Invalid OTP, please try again.");
-    }
-  };
+  // const handleSubmitOTP = (e) => {
+  //   e.preventDefault();
+  //   // Validate OTP, for simplicity, compare with a hardcoded value
+  //   const correctOTP = "123456";
+  //   if (otp === correctOTP) {
+  //     setOtpVerified(true);
+  //     // Proceed with registration
+  //   } else {
+  //     alert("Invalid OTP, please try again.");
+  //   }
+  // };
 
 
   const [email, setEmail] = useState("");
@@ -33,11 +33,11 @@ const Registration = (props) => {
   const [registeredUserId, setRegisteredUserId] = useState("");
   const [otpVerified, setOtpVerified] = useState(false);
 
-  const [isValid, setIsValid] = useState(null);
+  // const [isValid, setIsValid] = useState(null);
 
-  const [passwordValid, setPasswordValid] = useState(true);
-  const [isOtpVerified, setIsOtpVerified] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
+  // const [passwordValid, setPasswordValid] = useState(true);
+  // const [isOtpVerified, setIsOtpVerified] = useState(false);
+  // const [otpSent, setOtpSent] = useState(false);
 
   const [isUsernameValid, setIsUsernameValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);

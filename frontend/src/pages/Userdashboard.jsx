@@ -9,7 +9,7 @@ import {
   BiTime,
   BiTask,
   BiUser,
-  BiSearch,
+  // BiSearch,
   BiLogOut,
   // BiHelpCircle,
 } from "react-icons/bi";
@@ -18,15 +18,19 @@ import {
   BsList,
   BsArrowUp,
   BsPersonFill,
-  BsCartPlusFill,
+  // BsCartPlusFill,
   BsFillPlusCircleFill,
 } from "react-icons/bs";
 
 import { FaDumbbell, FaChevronDown } from "react-icons/fa";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+ 
 const Userdashboard = (props) => {
   const ref = useRef(null);
   // My user - For opening dashboard of a user
+
   const [user, setUser] = useState({});
   const [openToggleMenu, setOpenToggleMenu] = useState("");
   const [showLeftSidebar, setShowLeftSidebar] = useState(true);
@@ -43,6 +47,24 @@ const Userdashboard = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
+
+  // to show success login messsage in userdashboard
+// Retrieve the current value of isFirstLogin from local storage
+console.log("localStorage.getItem('isFirstLogin')",localStorage.getItem('isFirstLogin'))
+const isFirstLogin = localStorage.getItem('isFirstLogin') === 'true';
+console.log("isFirstLogin",isFirstLogin)
+// If isFirstLogin is true, show the login successful message and set isFirstLogin to false
+if (isFirstLogin) {
+  toast.success("Login Successful", {
+    position: "top-center",
+    autoClose: 20000
+  });
+  // Set isFirstLogin to false in local storage to indicate subsequent logins
+  localStorage.setItem('isFirstLogin', 'false');
+  console.log("localStorage.getItem('isFirstLogin')",localStorage.getItem('isFirstLogin'))
+
+}
+
   // Function to toggle the profile dropdown
   const toggleProfileDropdown = () => {
     setIsProfileOpen(!isProfileOpen);
@@ -58,12 +80,21 @@ const Userdashboard = (props) => {
 
   return (
     <div>
+      <ToastContainer/>
       {/* Header Section */}
       <header
         id="header"
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
+        <BsList
+            className="toggle-sidebar-btn"
+            onClick={() => {
+              setShowLeftSidebar((show) => {
+                return !show;
+              });
+            }}
+          />
           <Link
             to=""
             class="logo d-flex align-items-center"
@@ -72,14 +103,7 @@ const Userdashboard = (props) => {
             {/* <img src={mylogo_icn} alt="" /> */}
             <span class="d-none d-lg-block">Fit Buddy</span>
           </Link>
-          <BsList
-            className="toggle-sidebar-btn"
-            onClick={() => {
-              setShowLeftSidebar((show) => {
-                return !show;
-              });
-            }}
-          />
+          
         </div>
 
         {/* <div className="search-bar">
@@ -101,7 +125,7 @@ const Userdashboard = (props) => {
             {/* Search Bar */}
             <li className="nav-item d-block d-lg-none">
               <Link className="nav-link nav-icon search-bar-toggle " to="">
-                <BiSearch />
+                {/* <BiSearch /> */}
               </Link>
             </li>
 
@@ -162,6 +186,7 @@ const Userdashboard = (props) => {
                       to="/"
                       onClick={() => {
                         localStorage.removeItem("user");
+                        localStorage.removeItem("isFirstLogin");
                       }}
                     >
                       <BiLogOut />
@@ -191,7 +216,7 @@ const Userdashboard = (props) => {
             </Link>
           </li>
 
-          <li className="nav-heading">Pages</li>
+          {/* <li className="nav-heading">Pages</li> */}
 
           <li className="nav-item">
             {/* /ManageGoals */}
@@ -264,14 +289,7 @@ const Userdashboard = (props) => {
             </ul>
           </li>
 
-          <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <BsCartPlusFill />
-              &nbsp;
-              <span>Buy Subscription</span>
-            </Link>
-          </li>
-
+        
           <li className="nav-item">
             <Link className="nav-link collapsed" to="/MyProfile">
               <BsPersonFill />

@@ -1,5 +1,5 @@
 import { Card } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Userdashboard from "./Userdashboard";
 import TableComponentAll from "./../components/TableComponentAll";
 import TableComponentCompleted from "../components/TableComponentCompleted";
@@ -12,6 +12,7 @@ const ManageGoals = () => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
+  
   return (
     <>
       <Userdashboard
