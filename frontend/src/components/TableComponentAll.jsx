@@ -155,6 +155,7 @@ const TableComponentAll = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        scroll={{ x: true }}
       />
 
       {/* All Diets */}
@@ -181,6 +182,7 @@ const TableComponentAll = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        scroll={{ x: true }}
       />
     </>
   );

@@ -59,7 +59,6 @@ const ManageGoals = () => {
                       style={{
                         fontFamily: '"Nunito", sans-serif',
                         borderRadius: "3px",
-                        width: "9%",
                         ...(activeTab === "All"
                           ? {
                               color: `#fff`,
