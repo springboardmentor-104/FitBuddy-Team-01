@@ -640,7 +640,7 @@ const MyProfile = () => {
     setLink1(url);
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (!url.trim()) {
+    if (url && !url.trim()) {
       setSocialMedia1("");
       setLink1Error("");
     } else if (!urlRegex.test(url)) {
@@ -673,7 +673,7 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (!inputValue.trim()) {
+    if (inputValue && !inputValue.trim()) {
       setlink2Error(""); // Clear error message if field is empty
     } else if (!urlRegex.test(inputValue)) {
       setlink2Error("Please enter a valid URL");
@@ -704,7 +704,7 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (!inputValue.trim()) {
+    if (inputValue && !inputValue.trim()) {
       setlink3Error(""); // Clear error message if field is empty
     } else if (!urlRegex.test(inputValue)) {
       setlink3Error("Please enter a valid URL");
@@ -735,7 +735,7 @@ const MyProfile = () => {
     setTouched(true);
     // Regular expression for URL validation
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (!inputValue.trim()) {
+    if (inputValue && !inputValue.trim()) {
       setlink4Error(""); // Clear error message if field is empty
     } else if (!urlRegex.test(inputValue)) {
       setlink4Error("Please enter a valid URL");
@@ -743,13 +743,13 @@ const MyProfile = () => {
       setlink4Error("");
     }
     // Check if the input URL matches with any of the social media URLs
-    if (inputValue.includes("linkedin.com")) {
+    if (inputValue && inputValue.includes("linkedin.com")) {
       setSocialMedia4("LinkedIn");
-    } else if (inputValue.includes("twitter.com")) {
+    } else if (inputValue && inputValue.includes("twitter.com")) {
       setSocialMedia4("Twitter");
-    } else if (inputValue.includes("facebook.com")) {
+    } else if (inputValue && inputValue.includes("facebook.com")) {
       setSocialMedia4("Facebook");
-    } else if (inputValue.includes("instagram.com")) {
+    } else if (inputValue && inputValue.includes("instagram.com")) {
       setSocialMedia4("Instagram");
     } else {
       setSocialMedia4("");

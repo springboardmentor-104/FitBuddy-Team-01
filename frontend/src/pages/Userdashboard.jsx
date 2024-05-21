@@ -2,6 +2,8 @@ import "./Userdashboard.css";
 import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
+import { useAuth } from '../context/auth';
+
 
 import {
   // BiCog,
@@ -26,8 +28,10 @@ import { FaDumbbell, FaChevronDown } from "react-icons/fa";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
- 
+
 const Userdashboard = (props) => {
+  const [auth, setAuth] = useAuth();
+
   const ref = useRef(null);
   // My user - For opening dashboard of a user
 
@@ -47,24 +51,6 @@ const Userdashboard = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-
-  // to show success login messsage in userdashboard
-// Retrieve the current value of isFirstLogin from local storage
-console.log("localStorage.getItem('isFirstLogin')",localStorage.getItem('isFirstLogin'))
-const isFirstLogin = localStorage.getItem('isFirstLogin') === 'true';
-console.log("isFirstLogin",isFirstLogin)
-// If isFirstLogin is true, show the login successful message and set isFirstLogin to false
-if (isFirstLogin) {
-  toast.success("Login Successful", {
-    position: "top-center",
-    autoClose: 20000
-  });
-  // Set isFirstLogin to false in local storage to indicate subsequent logins
-  localStorage.setItem('isFirstLogin', 'false');
-  console.log("localStorage.getItem('isFirstLogin')",localStorage.getItem('isFirstLogin'))
-
-}
-
   // Function to toggle the profile dropdown
   const toggleProfileDropdown = () => {
     setIsProfileOpen(!isProfileOpen);
@@ -80,14 +66,14 @@ if (isFirstLogin) {
 
   return (
     <div>
-      <ToastContainer/>
+      <ToastContainer />
       {/* Header Section */}
       <header
         id="header"
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
-        <BsList
+          <BsList
             className="toggle-sidebar-btn"
             onClick={() => {
               setShowLeftSidebar((show) => {
@@ -103,22 +89,8 @@ if (isFirstLogin) {
             {/* <img src={mylogo_icn} alt="" /> */}
             <span class="d-none d-lg-block">Fit Buddy</span>
           </Link>
-          
-        </div>
 
-        {/* <div className="search-bar">
-          <form className="search-form d-flex align-items-center">
-            <input
-              type="text"
-              name="query"
-              placeholder="Search"
-              title="Enter search keyword"
-            />
-            <button type="submit" title="Search">
-              <BiSearch />
-            </button>
-          </form>
-        </div> */}
+        </div>
 
         <nav className="header-nav ms-auto">
           <ul className="d-flex align-items-center">
@@ -185,8 +157,8 @@ if (isFirstLogin) {
                       className="dropdown-item d-flex align-items-center"
                       to="/"
                       onClick={() => {
+                        setAuth({ token: "" });
                         localStorage.removeItem("user");
-                        localStorage.removeItem("isFirstLogin");
                       }}
                     >
                       <BiLogOut />
@@ -227,14 +199,6 @@ if (isFirstLogin) {
             </Link>
           </li>
 
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <BsFillPlusCircleFill />
-              &nbsp;
-              <span>Create Goals</span>
-            </Link>
-          </li> */}
-
           <li className="nav-item">
             <Link
               className="nav-link collapsed"
@@ -253,11 +217,10 @@ if (isFirstLogin) {
             </Link>
             <ul
               id="forms-nav"
-              class={`nav-content  ${
-                "sidebar-nav-create-goals" === openToggleMenu
-                  ? "show"
-                  : "collapse"
-              }`}
+              class={`nav-content  ${"sidebar-nav-create-goals" === openToggleMenu
+                ? "show"
+                : "collapse"
+                }`}
               data-bs-parent="#sidebar-nav-create-goals"
             >
               <li>
@@ -274,22 +237,10 @@ if (isFirstLogin) {
                   <span>Create Goals</span>
                 </Link>
               </li>
-              {/* <li>
-                <a href="forms-editors.html">
-                  <i class="bi bi-circle"></i>
-                  <span>Form Editors</span>
-                </a>
-              </li>
-              <li>
-                <a href="forms-validation.html">
-                  <i class="bi bi-circle"></i>
-                  <span>Form Validation</span>
-                </a>
-              </li> */}
             </ul>
           </li>
 
-        
+
           <li className="nav-item">
             <Link className="nav-link collapsed" to="/MyProfile">
               <BsPersonFill />
@@ -306,19 +257,7 @@ if (isFirstLogin) {
             </Link>
           </li>
 
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <i className="bi bi-dash-circle"></i>
-              <span>Section 6</span>
-            </Link>
-          </li> */}
 
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <i className="bi bi-file-earmark"></i>
-              <span>Section 7</span>
-            </Link>
-          </li> */}
         </ul>
       </aside>
 
@@ -328,17 +267,6 @@ if (isFirstLogin) {
         className="main"
         style={showLeftSidebar ? {} : { marginLeft: 0 }}
       >
-        {/* <div className="pagetitle">
-          <h1>Dashboard</h1>
-          <nav>
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <Link to="">Home</Link>
-              </li>
-              <li className="breadcrumb-item active">Dashboard</li>
-            </ol>
-          </nav>
-        </div> */}
         <section className="section dashboard">{props?.content}</section>
       </main>
 

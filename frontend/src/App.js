@@ -27,7 +27,6 @@ import ManageGoals from "./pages/ManageGoals";
 
 function ProtectedRoute({ Component }) {
   const token = localStorage.getItem("user");
-  console.log(token);
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) {

@@ -1,40 +1,68 @@
 import { Table } from "antd";
 import React from "react";
 import DietStatusTypography from "../pages/DietStatusTypography";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../context/auth'; 
+import axios from 'axios';
 
 const TableComponentDiet = () => {
+  const[auth, setAuth] = useAuth();
+  const token = auth?.token;
   const [dietHistory, setDietHistory] = React.useState([]);
   // const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
 
   React.useEffect(() => {
     fetchData();
+    // eslint-disable-line no-console
   }, []);
 
   const fetchData = async () => {
     try {
-      const dietResponse = await fetch(
-        "https://api.github.com/users/mralexgray/repos"
-      );
-      if (dietResponse.status !== 200) {
-        throw new Error("Failed to fetch diet data");
+      const alldietsResponse = await axios.get("http://localhost:8080/api/v1/history/all/diet", {
+        headers: {
+          Authorization: `${token}`
+        }
+      });
+  
+      if (alldietsResponse.status !== 200) {
+        toast.error(alldietsResponse.message);
       }
-      const dietData = await dietResponse.json();
-      setDietHistory(dietData);
+  
+      const alldietsData = alldietsResponse.data;
+  
+      // Transforming data
+      const transformedData = alldietsData.map((item, index) => ({
+        index: index + 1,
+        id: item._id,
+        name: item.goalId.name,
+        category: item.goalId.category,
+        quantity: item.goalId.quantity,
+        calories: item.goalId.calories,
+        status:item.status,
+        date:item.createdAt
+      }));
+  
+      setDietHistory(transformedData);
     } catch (error) {
-      console.error("Error fetching data:", error);
     }
   };
 
   const columns = [
-    { dataIndex: "id", title: "S.No.", width: 50 },
+    { dataIndex: "index", title: "S.No.", width: 50 },
     { dataIndex: "name", title: "Diet Name", width: 130 },
-    { dataIndex: "category", title: "Quantity", width: 130 },
-    { dataIndex: "sets", title: "Calories", width: 90 },
-    { dataIndex: "estimatedTime", title: "Time to Eat" },
+    { dataIndex: "quantity", title: "Quantity", width: 130 },
+    { dataIndex: "calories", title: "Calories", width: 90 },
+    { dataIndex: "category", title: "Time to Eat" },
     {
       dataIndex: "status",
       title: "Status",
-      render: (value, row) => <DietStatusTypography done={value} />,
+      className: "my-font",
+      render: (value, row) => (
+        <DietStatusTypography
+          done={value}
+        />
+      ),   
     },
     { dataIndex: "date", title: "Date" },
   ];
@@ -51,6 +79,7 @@ const TableComponentDiet = () => {
 
   return (
     <>
+    <ToastContainer/>
       <div className="d-flex justify-content-between">
         <div>
           <h4 className="text-lg font-bold mb-2" style={{ color: "#4caf50" }}>
