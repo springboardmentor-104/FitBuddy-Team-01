@@ -9,7 +9,7 @@ function CreateGoalsExerciseActions({ onEdit, onDelete }) {
       "Are you sure you want to delete this item?"
     );
     if (confirmDelete) {
-      onDelete(); // Call onDelete if user confirms
+      alert()
     }
   };
   return (

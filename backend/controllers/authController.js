@@ -197,10 +197,11 @@ const verifyOtpController = async (req, res) => {
         message: "OTP is required. Please provide the OTP.",
       });
     }
+    console.log(userId)
 
-    const userVerificationRecord = await userOtpVerification.findOne({
-      userId,
-    });
+    const userVerificationRecord = await userOtpVerification.findOne({userId: userId });
+
+    console.log(userVerificationRecord)
     if (!userVerificationRecord) {
       return res.send({
         success: false,

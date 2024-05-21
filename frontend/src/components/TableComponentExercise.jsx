@@ -1,32 +1,56 @@
 import { Table } from "antd";
 import React from "react";
 import ExerciseStatusTypography from "../pages/ExerciseStatusTypography";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../context/auth'; 
+import axios from 'axios'
 
 const TableComponentExercise = () => {
+  const [auth, setAuth] = useAuth();
+  const token = auth?.token;
+
   const [exerciseHistory, setExerciseHistory] = React.useState([]);
   // const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
 
   React.useEffect(() => {
     fetchData();
+    // eslint-disable-line no-console
   }, []);
 
   const fetchData = async () => {
     try {
-      const exerciseResponse = await fetch(
-        "https://api.github.com/users/mralexgray/repos"
-      );
-      if (exerciseResponse.status !== 200) {
-        throw new Error("Failed to fetch exercise data");
+      const allExercisesResponse = await axios.get("http://localhost:8080/api/v1/history/all/exercise", {
+        headers: {
+          Authorization: `${token}`
+        }
+      });
+  
+      if (allExercisesResponse.status !== 200) {
+        toast.error(allExercisesResponse.message);
       }
-      const exerciseData = await exerciseResponse.json();
-      setExerciseHistory(exerciseData);
+  
+      const allExercisesData = allExercisesResponse.data;
+  
+      // Transforming data
+      const transformedData = allExercisesData.map((item, index) => ({
+        index: index + 1,
+        id: item._id,
+        name: item.goalId.name,
+        category: item.goalId.category,
+        sets: item.goalId.sets,
+        time: item.goalId.time,
+        status: item.status,
+        date: item.createdAt
+      }));
+  
+      setExerciseHistory(transformedData); // Assuming you have a state variable named allExercises to store the transformed data
     } catch (error) {
-      console.error("Error fetching data:", error);
     }
   };
 
   const columns = [
-    { dataIndex: "id", title: "S.No.", width: 50 },
+    { dataIndex: "index", title: "S.No.", width: 50 },
     { dataIndex: "name", title: "Exercise Name", width: 130 },
     { dataIndex: "category", title: "Category", width: 130 },
     {
@@ -35,13 +59,18 @@ const TableComponentExercise = () => {
       width: 90,
     },
     {
-      dataIndex: "estimatedTime",
+      dataIndex: "time",
       title: "Estimated Time",
     },
     {
       dataIndex: "status",
       title: "Status",
-      render: (value, row) => <ExerciseStatusTypography done={value} />,
+      className: "my-font",
+      render: (value, row) => (
+        <ExerciseStatusTypography
+          done={value}
+        />
+      ),
     },
     {
       dataIndex: "date",
@@ -61,6 +90,7 @@ const TableComponentExercise = () => {
 
   return (
     <>
+        <ToastContainer/>
       <div className="d-flex justify-content-between">
         <div>
           <h4 className="text-lg font-bold mb-2" style={{ color: "#4154f1" }}>

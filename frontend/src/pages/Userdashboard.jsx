@@ -2,6 +2,8 @@ import "./Userdashboard.css";
 import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
+import { useAuth } from '../context/auth';
+
 
 import {
   // BiCog,
@@ -25,6 +27,8 @@ import {
 import { FaDumbbell, FaChevronDown } from "react-icons/fa";
 
 const Userdashboard = (props) => {
+  const [auth, setAuth] = useAuth();
+
   const ref = useRef(null);
   // My user - For opening dashboard of a user
   const [user, setUser] = useState({});
@@ -161,6 +165,7 @@ const Userdashboard = (props) => {
                       className="dropdown-item d-flex align-items-center"
                       to="/"
                       onClick={() => {
+                        setAuth({ token: "" });
                         localStorage.removeItem("user");
                       }}
                     >

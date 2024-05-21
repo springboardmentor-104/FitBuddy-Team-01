@@ -1,32 +1,56 @@
 import { Table } from "antd";
 import React from "react";
 import CreateGoalsExerciseActions from "./CreateGoalsExerciseActions";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../context/auth'; 
+import axios from 'axios'
 const CreateGoalsExerciseTable = () => {
+  const [auth, setAuth] = useAuth();
+  const token = auth?.token;
   const [exerciseHistory, setExerciseHistory] = React.useState([]);
   // const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
 
   React.useEffect(() => {
     fetchExerciseData();
+    // eslint-disable-line no-console
   }, []);
 
   const fetchExerciseData = async () => {
     try {
-      const exerciseResponse = await fetch(
-        "https://api.github.com/users/mralexgray/repos"
-      );
-      if (exerciseResponse.status !== 200) {
-        throw new Error("Failed to fetch exercise data");
+      const response = await axios.get("http://localhost:8080/api/v1/goal/exercises", {
+        headers: {
+          Authorization: `${token}`
+        }
+      });
+
+      if (response.status !== 200) {
+        toast.danger("Failed to fetch exercise data");
       }
-      const exerciseData = await exerciseResponse.json();
+
+      // const exerciseData = response.data;
+      // setExerciseHistory(exerciseData);
+
+      const data = response.data;
+      const exerciseData = [];
+
+      for (let i = 0; i < data.length; i++) {
+        const item = {
+          ...data[i],
+          index: i + 1 // Add an index for serial number
+        };
+        exerciseData.push(item);
+      }
       setExerciseHistory(exerciseData);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      toast.error("Error fetching data:", error);
     }
   };
 
+
+
   const columns = [
-    { dataIndex: "id", title: "S.No.", width: 20 },
+    { dataIndex: "index", title: "S.No.", width: 20 },
     { dataIndex: "name", title: "Exercise Name", width: 20 },
     { dataIndex: "category", title: "Exercise Category", width: 20 },
     {
@@ -35,7 +59,7 @@ const CreateGoalsExerciseTable = () => {
       width: 20,
     },
     {
-      dataIndex: "estimatedTime",
+      dataIndex: "time",
       title: "Estimated Time(Mins)",
       width: 20,
     },
@@ -64,6 +88,7 @@ const CreateGoalsExerciseTable = () => {
 
   return (
     <>
+      <ToastContainer />
       <div
         className="d-flex justify-content-between"
         style={{ marginTop: "40px" }}
@@ -80,7 +105,7 @@ const CreateGoalsExerciseTable = () => {
         </div> */}
       </div>
       <Table
-        rowKey={(record) => record.id}
+        rowKey={(record) => record._id}
         dataSource={exerciseHistory}
         columns={columns}
         // rowSelection={rowSelection}
