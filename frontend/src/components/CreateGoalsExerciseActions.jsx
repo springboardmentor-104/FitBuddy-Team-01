@@ -1,26 +1,45 @@
+// import React from "react";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+
+// function CreateGoalsExerciseActions({ onEdit, onDelete }) {
+//   const handleDeleteClick = () => {
+//     // Show confirmation dialog
+//     const confirmDelete = window.confirm(
+//       "Are you sure you want to delete this item?"
+//     );
+//     if (confirmDelete) {
+//       alert()
+//     }
+//   };
+//   return (
+//     <div style={{ gap: 8, display: "flex" }}>
+//       <button
+//         onClick={handleDeleteClick}
+//         className="btn btn-sm btn-outline-danger"
+//       >
+//         <FontAwesomeIcon icon={faTrash} />
+//       </button>
+//     </div>
+//   );
+// }
+
+// export default CreateGoalsExerciseActions;
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-function CreateGoalsExerciseActions({ onEdit, onDelete }) {
+function CreateGoalsExerciseActions({ onDelete }) {
   const handleDeleteClick = () => {
-    // Show confirmation dialog
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this item?"
-    );
+    const confirmDelete = window.confirm("Are you sure you want to delete this item?");
     if (confirmDelete) {
-      alert()
+      onDelete();
     }
   };
+
   return (
     <div style={{ gap: 8, display: "flex" }}>
-      <button onClick={onEdit} className="btn btn-sm btn-outline-primary">
-        <FontAwesomeIcon icon={faEdit} />
-      </button>
-      <button
-        onClick={handleDeleteClick}
-        className="btn btn-sm btn-outline-danger"
-      >
+      <button onClick={handleDeleteClick} className="btn btn-sm btn-outline-danger">
         <FontAwesomeIcon icon={faTrash} />
       </button>
     </div>
