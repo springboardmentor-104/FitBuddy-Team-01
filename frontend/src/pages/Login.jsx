@@ -59,8 +59,8 @@ const Login = (props) => {
     if (email && password) {
       // All fields are filled, mark registration as completed
       let data = {
-        emailOrUsername: email,
-        password: password,
+        emailOrUsername: email.trim(),
+        password: password.trim(),
       };
       await axios.post("http://localhost:8080/api/v1/auth/login", data).then(
         (response) => {
@@ -73,19 +73,20 @@ const Login = (props) => {
             localStorage.setItem("user", JSON.stringify(localData));
             localStorage.setItem("userId", JSON.stringify(localData?.userId));
             localStorage.setItem("token", JSON.stringify(localData?.token));
-            localStorage.setItem('isFirstLogin', 'true');
-            toast.success(response.data.message+"test", {
-            position: "top-center",
-            autoClose: 20000
-          });
-          let successMessage=response.data.message
-            navigate("/Userdashboard");
-            navigate("/Userdashboard", { state: { successMessage } });
+            toast.success("Login Successful", {
+              position: "top-center",
+              autoClose: 1000
+            });
+            let successMessage = response.data.message
+            // Delay navigation to Userdashboard for 200 milliseconds
+            setTimeout(() => {
+              navigate("/Userdashboard", { state: { successMessage } });
+            }, 1000);
           } else {
             setLoginUserId("");
           }
           //
-          
+
           // alert(response.data.message);
           setIsLogin(true);
         },
