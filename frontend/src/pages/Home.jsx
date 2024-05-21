@@ -1,6 +1,9 @@
 import "./Home.css";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from '../context/auth';
+import {ToastContainer,  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -10,9 +13,16 @@ function Home() {
 
   const handleClick = () => setClick(!click);
   const Close = () => setClick(false);
-  
+  const [auth, setAuth] = useAuth();
+  const handleLogout = () => {
+    setAuth({ token: "" });
+    localStorage.removeItem("user");
+    toast.success("Logout Successfully");
+  }
+
   return (
     <div>
+      <ToastContainer/>
      <div className={click ? "main-container" : ""}  onClick={()=>Close()} />
       <nav className="navbar" onClick={e => e.stopPropagation()}>
         <div className="nav-container">
@@ -53,6 +63,7 @@ function Home() {
                 ContactUs
               </Link>
             </li>
+            {!auth.token?(<>
             <li className="nav-item">
               <Link
                 exact
@@ -74,7 +85,19 @@ function Home() {
               >
                 SignUp
               </Link>
+            </li></>):(
+              <>
+              <li className="nav-item">
+              <button
+                activeClassName="active"
+                className="nav-links btn btn-danger"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
             </li>
+              </>
+            )}
           </ul>
           <div className="nav-icon" onClick={handleClick}>
             <i className={click ? "fa fa-times" : "fa fa-bars"}></i>

@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const { requireSignIn } = require("../middleware/authMiddleware");
 const { 
-    createExercise, updateExerciseStatus, deleteExercise, getAllExercises, getExerciseById,
+    createExercise, updateGoalStatus, deleteExercise, getAllExercises, getExerciseById,
     createDiet, updateDietStatus, deleteDiet, getAllDiets, getDietById
  } = require('../controllers/historyController')
 
  
     // Goal exercise 
 router.post('/exercise',requireSignIn, createExercise);
-router.put('/exercise/:id/status',requireSignIn, updateExerciseStatus);
+router.put('/update/:id/status',requireSignIn, updateGoalStatus);
 router.delete('/exercise/:id',requireSignIn, deleteExercise);
 router.get('/exercises', requireSignIn,getAllExercises);
 router.get('/exercise/:id',requireSignIn, getExerciseById);
