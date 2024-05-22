@@ -104,7 +104,7 @@
 
 // export default CreateGoalsExerciseTable;
 import { Table } from "antd";
-import React from "react";
+import React,{useEffect} from "react";
 import CreateGoalsExerciseActions from "./CreateGoalsExerciseActions";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -112,33 +112,41 @@ import { useAuth } from '../context/auth';
 import axios from 'axios';
 
 const CreateGoalsExerciseTable = () => {
-  const [auth, setAuth] = useAuth();
-  const token = auth?.token;
+ 
+
   const [exerciseHistory, setExerciseHistory] = React.useState([]);
-
-  React.useEffect(() => {
+  // console.log(token)
+  const [auth, setAuth] = useAuth();
+   useEffect(() => {
+ 
     fetchExerciseData();
-  }, []);
-
+  }, [auth]);
+  const token = auth?.token
   const fetchExerciseData = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api/v1/goal/exercises", {
         headers: {
-          Authorization: `${token}`
+          Authorization: `${auth?.token}`
         }
       });
 
       if (response.status !== 200) {
         toast.error("Failed to fetch exercise data");
       } else {
+  
         const data = response.data;
+        console.log("which data",data)
+        if(data.length > 0){
         const exerciseData = data.map((item, index) => ({
           ...item,
           index: index + 1
         }));
         setExerciseHistory(exerciseData);
       }
+ 
+      }
     } catch (error) {
+      console.log(error)
       toast.error("Error fetching data:", error);
     }
   };
@@ -168,7 +176,7 @@ const CreateGoalsExerciseTable = () => {
     { dataIndex: "category", title: "Exercise Category", width: 20 },
     { dataIndex: "sets", title: "Exercise Sets", width: 20 },
     { dataIndex: "time", title: "Estimated Time(Mins)", width: 20 },
-    { dataIndex: "date", title: "Date", width: 20 },
+    // { dataIndex: "date", title: "Date", width: 20 },
     {
       dataIndex: "status",
       title: "Delete",

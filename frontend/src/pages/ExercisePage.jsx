@@ -126,6 +126,7 @@ import ExerciseCard from "./ExerciseCard";
 import ExerciseForm from "./ExerciseForm";
 import "./ExercisePage.css";
 import Userdashboard from "./Userdashboard";
+import {useAuth} from "../context/auth"
 
 const ExercisePage = () => {
   const [selectedType, setSelectedType] = useState("");
@@ -135,7 +136,6 @@ const ExercisePage = () => {
   const [showExerciseForm, setShowExerciseForm] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [userId, setUserId] = useState(""); // State to hold user ID
-
   useEffect(() => {
     const storedUserId = localStorage.getItem("user");
     if (storedUserId) {
@@ -218,7 +218,7 @@ const ExercisePage = () => {
               No exercises found for the selected category.
             </div>
           ) : (
-            exercises.map((exercise) => (
+            exercises.map((exercise) => ( 
               <ExerciseCard
                 key={exercise._id}
                 exercise={exercise}

@@ -18,13 +18,10 @@ const TableComponentAll = () => {
 
   React.useEffect(() => {
     fetchDataAllExercises();
-    // eslint-disable-line no-console
-  }, []);
-
-  React.useEffect(() => {
     fetchDataAllDiets();
     // eslint-disable-line no-console
-  }, []);
+  }, [auth]);
+
 
   const fetchDataAllExercises = async () => {
     try {
@@ -146,6 +143,7 @@ const TableComponentAll = () => {
     {
       dataIndex: "time",
       title: "Estimated Time",
+      width: 100,
       className: "my-font",
     },
     {

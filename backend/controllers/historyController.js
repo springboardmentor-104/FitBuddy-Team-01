@@ -10,7 +10,7 @@ const todayHistoryController = async (req, res) => {
     try {
         // Get the current date in 'YYYY-MM-DD' format
         const currentDate = new Date().toISOString().split('T')[0];
-        
+
         // Find the history documents for the user for the current date
         const userHistory = await History.find({ userId: req.params.id, createdAt: currentDate })
             .populate({
@@ -33,8 +33,6 @@ const todayHistoryController = async (req, res) => {
         if (!userHistory || userHistory.length === 0) {
             return res.status(404).json({ message: 'No data found for the current date' });
         }
-
-        
         res.json(userHistory);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -58,14 +56,14 @@ const todayAllTask = async (req, res) => {
 
         // Define the model based on the type
         const goalModel = type === 'exercise' ? 'goalExercise' : 'goalDiet';
-
+       console.log("goalModel",goalModel)
         // Find the history documents for the user for the current date and the specified type and status
         const historyData = await History.find({ userId: userID, createdAt: currentDate, type: type })
             .populate({
                 path: 'goalId',
                 model: goalModel
             });
-
+console.log("historyData",historyData)
         if (!historyData || historyData.length === 0) {
             return res.status(404).json({ message: `No ${type} data found for the current date with status ${status}` });
         }
@@ -101,7 +99,7 @@ const todayDataCategoryWise = async (req, res) => {
 
         // Define the model based on the type
         const goalModel = type === 'exercise' ? 'goalExercise' : 'goalDiet';
-
+        console.log("taday userHistory", currentDate)
         // Find the history documents for the user for the current date and the specified type and status
         const historyData = await History.find({ userId: userID, createdAt: currentDate, type: type, status: status })
             .populate({
@@ -112,7 +110,7 @@ const todayDataCategoryWise = async (req, res) => {
         if (!historyData || historyData.length === 0) {
             return res.status(404).json({ message: `No ${type} data found for the current date with status ${status}` });
         }
-
+        console.log("taday userHistory", historyData)
         // Return the filtered data
         res.json(historyData);
     } catch (error) {
@@ -133,11 +131,11 @@ const showAllHistoryController = async (req, res) => {
         }
         const goalModel = type === 'exercise' ? 'goalExercise' : 'goalDiet';
 
-        const allHistory = await History.find({ userId: userId, type:type })
-        .populate({
-            path: 'goalId',
-            model: goalModel
-        }).sort({ createdAt: -1 }); // Sort in descending order of creation date
+        const allHistory = await History.find({ userId: userId, type: type })
+            .populate({
+                path: 'goalId',
+                model: goalModel
+            }).sort({ createdAt: -1 }); // Sort in descending order of creation date
 
         res.json(allHistory);
     } catch (error) {
@@ -229,7 +227,7 @@ const updateGoalStatus = async (req, res) => {
         const currentDate = new Date().toISOString().split('T')[0];
 
         // Find the history entry for the current date and exercise
-        const historyEntry = await History.findOne({ userId:userId, _id:id, createdAt: currentDate });
+        const historyEntry = await History.findOne({ userId: userId, _id: id, createdAt: currentDate });
         if (!historyEntry) {
             return res.status(403).json({ message: 'Cannot update exercise status as it is not logged for the current date' });
         }
@@ -246,7 +244,7 @@ const updateGoalStatus = async (req, res) => {
 };
 
 // Delete an exercise by ID
-const deleteExercise = async (req, res) =>   {
+const deleteExercise = async (req, res) => {
     try {
         const exercise = await GoalExercise.findById(req.params.id);
         if (!exercise) {
@@ -259,9 +257,9 @@ const deleteExercise = async (req, res) =>   {
         // Delete the exercise from GoalExercise collection
         await exercise.deleteOne();
 
-        res.json({success:true, message: 'Exercise deleted from both GoalExercise and History collections' });
+        res.json({ success: true, message: 'Exercise deleted from both GoalExercise and History collections' });
     } catch (error) {
-        res.status(500).json({success:false, message: 'something went wrong' });
+        res.status(500).json({ success: false, message: 'something went wrong' });
     }
 };
 
@@ -273,7 +271,7 @@ const getAllExercises = async (req, res) => {
         const exercises = await GoalExercise.find({ userId }).sort({ date: -1 });
         res.json(exercises);
     } catch (error) {
-        res.status(500).json({ message: "add exercise first"});
+        res.status(500).json({ message: "add exercise first" });
     }
 };
 
@@ -325,7 +323,7 @@ const createDiet = async (req, res) => {
             let diet = await GoalDiet.findOne({ userId, name, date: currentDate });
 
             if (!diet) {
-                diet = new GoalDiet({ userId, name, category:timeToEat, quantity, calories, date: currentDate });
+                diet = new GoalDiet({ userId, name, category: timeToEat, quantity, calories, date: currentDate });
                 await diet.save();
                 createdDiets.push(diet);
             } else {
@@ -408,9 +406,9 @@ const deleteDiet = async (req, res) => {
         // Delete the diet from GoalDiet collection
         await diet.deleteOne();
 
-        res.json({success:true, message: 'Diet deleted from both GoalDiet and History collections' });
+        res.json({ success: true, message: 'Diet deleted from both GoalDiet and History collections' });
     } catch (error) {
-        res.status(500).json({success:false, message: 'something went wrong' });
+        res.status(500).json({ success: false, message: 'something went wrong' });
     }
 };
 
@@ -421,7 +419,7 @@ const getAllDiets = async (req, res) => {
         const diets = await GoalDiet.find({ userId }).sort({ date: -1 });
         res.json(diets);
     } catch (error) {
-        res.status(500).json({ message : "add diet first"});
+        res.status(500).json({ message: "add diet first" });
     }
 };
 
@@ -439,11 +437,64 @@ const getDietById = async (req, res) => {
     }
 };
 
+const createEveryDayHistoryData = async (req, res) => {
+    try {
+        const { userId } = req.body;
+        // Check if exercises already created for today
+        const existingHistory = await History.findOne({
+            userId: userId,
+            createdAt: new Date().toISOString().split('T')[0]
+        });
+        console.log("new Date().toISOString().split('T')[0]",userId , new Date().toISOString().split('T')[0])
+        console.log("existingHistory", existingHistory)
+        if (existingHistory) {
+            return res.status(400).json({
+                success: false,
+                message: "Exercises already created for today"
+            });
+        }
+        const goaldiets = await GoalDiet.find({ userId: userId }); // personal diets
+        const goalexercises = await GoalExercise.find({ userId: userId }); // personal exercises
+        const data = [...goaldiets, ...goalexercises];
+        const historyData = [];
+        console.log(data)
+        for (const item of data) {
+            let type = "";
+            if ("sets" in item ) {
+                type = "exercise"; // If the data has sets and timeToPerformExercise fields, it's from exercises
+            } else {
+                type = "diet"; // Otherwise, it's from diet goals
+            }
+
+            const historyRecord = {
+                userId: userId,
+                goalId: item._id,
+                type: type,
+                status: "pending",
+                createdAt: new Date().toISOString().split('T')[0],
+            };
+
+            historyData.push(historyRecord);
+        }
+        console.log(historyData)
+        await History.insertMany(historyData);
+        res.status(201).json({
+            success: true,
+            message: "history created successfully",
+        });
+    } catch (error) {
+        // Handle errors
+        console.error("Error creating diet:", error);
+        return res
+            .status(500)
+            .json({ success: false, message: "Internal server error" });
+    }
+};
 
 module.exports = {
     createExercise, updateGoalStatus, deleteExercise, getAllExercises, getExerciseById,
     createDiet, updateDietStatus, deleteDiet, getAllDiets, getDietById,
-    todayHistoryController, showAllHistoryController, todayAllTask ,todayDataCategoryWise
+    todayHistoryController, showAllHistoryController, todayAllTask, todayDataCategoryWise, createEveryDayHistoryData
 };
 
 

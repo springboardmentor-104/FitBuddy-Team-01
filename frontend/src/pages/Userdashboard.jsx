@@ -181,7 +181,7 @@ const Userdashboard = (props) => {
       >
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
-            <Link className="nav-link " to="">
+            <Link className="nav-link " to="/Managegoals">
               <BiGrid />
               &nbsp;
               <span>Dashboard</span>
