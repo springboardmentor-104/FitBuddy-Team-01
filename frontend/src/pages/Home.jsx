@@ -52,7 +52,7 @@ function Home() {
             <li className="nav-item">
               <Link
                 exact
-                to="/about"
+                to="/ContactUs"
                 activeclassname="active"
                 className="nav-links"
                 onClick={click ? handleClick : null}

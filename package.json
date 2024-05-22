@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "antd": "^5.17.3",
+    "boxicons": "^2.1.4",
     "react-toastify": "^10.0.5"
   }
 }
