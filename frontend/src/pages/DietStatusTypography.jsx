@@ -2,24 +2,27 @@ import React from "react";
 import { Typography } from "@mui/material";
 
 const colors = {
-  complete: "#218838",
+  completed: "#218838",
   done: "green",
-  pending: "yellow",
+  pending: "#ffc107",
   na: "#00000073",
 };
 
-const DietStatusTypography = ({ done }) => {
+const DietStatusTypography = ({ done, onClick }) => {
   return (
-    <Typography
-      variant="small"
-      style={{
-        color: "#fff",
-        backgroundColor: colors[done?.replace("/", "")?.toLowerCase()],
-      }}
-      className="font-normal px-3 py-2 rounded text-center"
-    >
-      {done}
-    </Typography>
+    <button onClick={onClick} style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}>
+
+      <Typography
+        variant="small"
+        style={{
+          color: "#fff",
+          backgroundColor: colors[done?.replace("/", "")?.toLowerCase()],
+        }}
+        className="font-normal px-3 py-2 rounded text-center"
+      >
+        {done}
+      </Typography>
+    </button>
   );
 };
 

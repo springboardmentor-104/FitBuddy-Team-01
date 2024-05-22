@@ -261,20 +261,7 @@ const Registration = (props) => {
     setShowPassword(!showPassword);
   };
 
-  // Function to handle OTP resend
-  // const handleResendOTP = () => {
-  //   // You can implement OTP resend logic here
-  // };
 
-  // const handleUserNameChange = (event) => {
-  //   setUserName(event.target.value);
-  // };
-
-  // const handlePasswordChange = (event) => {
-  //   setPassword(event.target.value);
-  //   // Check password validity
-  //   setPasswordValid(event.target.value.length >= 8); // Password should be at least 8 characters long
-  // };
 
   return (
     <section

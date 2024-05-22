@@ -3,9 +3,11 @@ const router = express.Router();
 const { requireSignIn } = require("../middleware/authMiddleware");
 
 
-const {  todayHistoryController, showAllHistoryController } = require('../controllers/historyController')
+const {showAllHistoryController ,todayAllTask, todayDataCategoryWise} = require('../controllers/historyController')
 
-router.get('/today/:id',requireSignIn,todayHistoryController );
-router.get('/all',requireSignIn,showAllHistoryController );
+router.get('/all/:type',requireSignIn,showAllHistoryController );
+
+router.get('/today/:type',requireSignIn,todayAllTask );
+router.get('/today/:type/:status',requireSignIn,todayDataCategoryWise );
 
 module.exports = router

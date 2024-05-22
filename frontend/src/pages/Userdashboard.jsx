@@ -2,6 +2,7 @@ import "./Userdashboard.css";
 import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
+import { useAuth } from "../context/auth";
 
 import {
   // BiCog,
@@ -28,6 +29,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Userdashboard = (props) => {
+  const [auth, setAuth] = useAuth();
+
   const ref = useRef(null);
   // My user - For opening dashboard of a user
 
@@ -109,20 +112,6 @@ const Userdashboard = (props) => {
           </Link>
         </div>
 
-        {/* <div className="search-bar">
-          <form className="search-form d-flex align-items-center">
-            <input
-              type="text"
-              name="query"
-              placeholder="Search"
-              title="Enter search keyword"
-            />
-            <button type="submit" title="Search">
-              <BiSearch />
-            </button>
-          </form>
-        </div> */}
-
         <nav className="header-nav ms-auto">
           <ul className="d-flex align-items-center">
             {/* Search Bar */}
@@ -188,8 +177,8 @@ const Userdashboard = (props) => {
                       className="dropdown-item d-flex align-items-center"
                       to="/"
                       onClick={() => {
+                        setAuth({ token: "" });
                         localStorage.removeItem("user");
-                        localStorage.removeItem("isFirstLogin");
                       }}
                     >
                       <BiLogOut />
@@ -229,14 +218,6 @@ const Userdashboard = (props) => {
               <span>Manage Goals</span>
             </Link>
           </li>
-
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <BsFillPlusCircleFill />
-              &nbsp;
-              <span>Create Goals</span>
-            </Link>
-          </li> */}
 
           <li className="nav-item">
             <Link
@@ -307,20 +288,6 @@ const Userdashboard = (props) => {
               <span>History</span>
             </Link>
           </li>
-
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <i className="bi bi-dash-circle"></i>
-              <span>Section 6</span>
-            </Link>
-          </li> */}
-
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <i className="bi bi-file-earmark"></i>
-              <span>Section 7</span>
-            </Link>
-          </li> */}
         </ul>
       </aside>
 
@@ -330,17 +297,6 @@ const Userdashboard = (props) => {
         className="main"
         style={showLeftSidebar ? {} : { marginLeft: 0 }}
       >
-        {/* <div className="pagetitle">
-          <h1>Dashboard</h1>
-          <nav>
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <Link to="">Home</Link>
-              </li>
-              <li className="breadcrumb-item active">Dashboard</li>
-            </ol>
-          </nav>
-        </div> */}
         <section className="section dashboard">{props?.content}</section>
       </main>
 
