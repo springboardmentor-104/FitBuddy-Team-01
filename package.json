@@ -8,6 +8,7 @@
     "concurrently": "^8.2.2"
   },
   "dependencies": {
-  
+    "antd": "^5.17.3",
+    "react-toastify": "^10.0.5"
   }
 }

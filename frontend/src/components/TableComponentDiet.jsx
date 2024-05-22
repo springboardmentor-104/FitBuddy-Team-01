@@ -49,6 +49,9 @@ const TableComponentDiet = () => {
   //   onChange: onSelectChange,
   // };
 
+  // Calculate the total width
+  const totalWidth = columns.reduce((sum, column) => sum + column.width, 0);
+
   return (
     <>
       <div className="d-flex justify-content-between">
@@ -65,8 +68,8 @@ const TableComponentDiet = () => {
       </div>
       <Table
         rowKey={(record) => record.id}
-        dataSource={dietHistory}
-        columns={columns}
+        dataSource={dietHistory || []}
+        columns={columns || null}
         // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,
@@ -74,6 +77,7 @@ const TableComponentDiet = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        scroll={{ x: totalWidth }}
       />
     </>
   );

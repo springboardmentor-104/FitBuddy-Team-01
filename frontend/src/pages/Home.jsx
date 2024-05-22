@@ -2,29 +2,26 @@ import "./Home.css";
 import React from "react";
 import { Link } from "react-router-dom";
 
-
-
-
 function Home() {
   const [click, setClick] = React.useState(false);
 
   const handleClick = () => setClick(!click);
   const Close = () => setClick(false);
-  
+
   return (
     <div>
-     <div className={click ? "main-container" : ""}  onClick={()=>Close()} />
-      <nav className="navbar" onClick={e => e.stopPropagation()}>
+      <div className={click ? "main-container" : ""} onClick={() => Close()} />
+      <nav className="navbar" onClick={(e) => e.stopPropagation()}>
         <div className="nav-container">
           <Link exact to="/" className="nav-logo">
-          FIT BUDDY
+            FIT BUDDY
           </Link>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
               <Link
                 exact
                 to="/"
-                activeClassName="active"
+                activeclassname="active"
                 className="nav-links"
                 onClick={click ? handleClick : null}
               >
@@ -35,7 +32,7 @@ function Home() {
               <Link
                 exact
                 to="/about"
-                activeClassName="active"
+                activeclassname="active"
                 className="nav-links"
                 onClick={click ? handleClick : null}
               >
@@ -46,7 +43,7 @@ function Home() {
               <Link
                 exact
                 to="/about"
-                activeClassName="active"
+                activeclassname="active"
                 className="nav-links"
                 onClick={click ? handleClick : null}
               >
@@ -57,20 +54,20 @@ function Home() {
               <Link
                 exact
                 to="/login"
-                activeClassName="active"
+                activeclassname="active"
                 className="nav-links btn btn-success"
                 onClick={click ? handleClick : null}
               >
-               Login
+                Login
               </Link>
             </li>
             <li className="nav-item">
               <Link
                 exact
                 to="/registration"
-                activeClassName="active"
+                activeclassname="active"
                 className="nav-links btn btn-danger"
-               onClick={click ? handleClick : null}
+                onClick={click ? handleClick : null}
               >
                 SignUp
               </Link>
@@ -110,7 +107,7 @@ function Home() {
           </div>
         </div>
       </div>
-    </ div>
+    </div>
   );
 }
 

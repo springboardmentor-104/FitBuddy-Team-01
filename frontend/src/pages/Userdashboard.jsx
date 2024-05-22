@@ -24,9 +24,9 @@ import {
 
 import { FaDumbbell, FaChevronDown } from "react-icons/fa";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
- 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Userdashboard = (props) => {
   const ref = useRef(null);
   // My user - For opening dashboard of a user
@@ -47,23 +47,27 @@ const Userdashboard = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-
   // to show success login messsage in userdashboard
-// Retrieve the current value of isFirstLogin from local storage
-console.log("localStorage.getItem('isFirstLogin')",localStorage.getItem('isFirstLogin'))
-const isFirstLogin = localStorage.getItem('isFirstLogin') === 'true';
-console.log("isFirstLogin",isFirstLogin)
-// If isFirstLogin is true, show the login successful message and set isFirstLogin to false
-if (isFirstLogin) {
-  toast.success("Login Successful", {
-    position: "top-center",
-    autoClose: 20000
-  });
-  // Set isFirstLogin to false in local storage to indicate subsequent logins
-  localStorage.setItem('isFirstLogin', 'false');
-  console.log("localStorage.getItem('isFirstLogin')",localStorage.getItem('isFirstLogin'))
-
-}
+  // Retrieve the current value of isFirstLogin from local storage
+  console.log(
+    "localStorage.getItem('isFirstLogin')",
+    localStorage.getItem("isFirstLogin")
+  );
+  const isFirstLogin = localStorage.getItem("isFirstLogin") === "true";
+  console.log("isFirstLogin", isFirstLogin);
+  // If isFirstLogin is true, show the login successful message and set isFirstLogin to false
+  if (isFirstLogin) {
+    toast.success("Login Successful", {
+      position: "top-center",
+      autoClose: 20000,
+    });
+    // Set isFirstLogin to false in local storage to indicate subsequent logins
+    localStorage.setItem("isFirstLogin", "false");
+    console.log(
+      "localStorage.getItem('isFirstLogin')",
+      localStorage.getItem("isFirstLogin")
+    );
+  }
 
   // Function to toggle the profile dropdown
   const toggleProfileDropdown = () => {
@@ -80,14 +84,14 @@ if (isFirstLogin) {
 
   return (
     <div>
-      <ToastContainer/>
+      <ToastContainer />
       {/* Header Section */}
       <header
         id="header"
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
-        <BsList
+          <BsList
             className="toggle-sidebar-btn"
             onClick={() => {
               setShowLeftSidebar((show) => {
@@ -97,13 +101,12 @@ if (isFirstLogin) {
           />
           <Link
             to=""
-            class="logo d-flex align-items-center"
+            className="logo d-flex align-items-center"
             style={{ textDecoration: "none" }}
           >
             {/* <img src={mylogo_icn} alt="" /> */}
-            <span class="d-none d-lg-block">Fit Buddy</span>
+            <span className="d-none d-lg-block">Fit Buddy</span>
           </Link>
-          
         </div>
 
         {/* <div className="search-bar">
@@ -131,7 +134,7 @@ if (isFirstLogin) {
 
             {/* User Profie */}
             <li
-              class="nav-item dropdown pe-3"
+              className="nav-item dropdown pe-3"
               ref={ref}
               onClick={handleClickOutside}
             >
@@ -139,14 +142,14 @@ if (isFirstLogin) {
                 to=""
                 data-bs-toggle="dropdown"
                 onClick={toggleProfileDropdown}
-                class="nav-link nav-profile d-flex align-items-center pe-0"
+                className="nav-link nav-profile d-flex align-items-center pe-0"
               >
                 <img
                   alt="Profile"
                   src={person_icn}
                   className="rounded-circle"
                 />
-                <span class="d-none d-md-block dropdown-toggle ps-2">
+                <span className="d-none d-md-block dropdown-toggle ps-2">
                   {user?.name || "User"}
                 </span>
               </Link>
@@ -165,7 +168,7 @@ if (isFirstLogin) {
                     <span>Designation</span>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -178,7 +181,7 @@ if (isFirstLogin) {
                     </Link>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -253,7 +256,7 @@ if (isFirstLogin) {
             </Link>
             <ul
               id="forms-nav"
-              class={`nav-content  ${
+              className={`nav-content  ${
                 "sidebar-nav-create-goals" === openToggleMenu
                   ? "show"
                   : "collapse"
@@ -276,20 +279,19 @@ if (isFirstLogin) {
               </li>
               {/* <li>
                 <a href="forms-editors.html">
-                  <i class="bi bi-circle"></i>
+                  <i className="bi bi-circle"></i>
                   <span>Form Editors</span>
                 </a>
               </li>
               <li>
                 <a href="forms-validation.html">
-                  <i class="bi bi-circle"></i>
+                  <i className="bi bi-circle"></i>
                   <span>Form Validation</span>
                 </a>
               </li> */}
             </ul>
           </li>
 
-        
           <li className="nav-item">
             <Link className="nav-link collapsed" to="/MyProfile">
               <BsPersonFill />
@@ -299,7 +301,7 @@ if (isFirstLogin) {
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="/Histo">
+            <Link className="nav-link collapsed" to="/History">
               <BiTime />
               &nbsp;
               <span>History</span>

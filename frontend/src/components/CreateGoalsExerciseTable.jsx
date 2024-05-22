@@ -81,8 +81,8 @@ const CreateGoalsExerciseTable = () => {
       </div>
       <Table
         rowKey={(record) => record.id}
-        dataSource={exerciseHistory}
-        columns={columns}
+        dataSource={exerciseHistory || []}
+        columns={columns || null}
         // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,

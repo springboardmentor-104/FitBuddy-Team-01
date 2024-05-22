@@ -8,7 +8,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import bgImg from "./../Assets/LoginPage.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
+import { message } from "antd";
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -73,19 +74,18 @@ const Login = (props) => {
             localStorage.setItem("user", JSON.stringify(localData));
             localStorage.setItem("userId", JSON.stringify(localData?.userId));
             localStorage.setItem("token", JSON.stringify(localData?.token));
-            localStorage.setItem('isFirstLogin', 'true');
-            toast.success(response.data.message+"test", {
-            position: "top-center",
-            autoClose: 20000
-          });
-          let successMessage=response.data.message
-            navigate("/Userdashboard");
-            navigate("/Userdashboard", { state: { successMessage } });
+            localStorage.setItem("isFirstLogin", "true");
+            message.success("Login Successfully");
+            let successMessage = response.data.message;
+            setTimeout(() => {
+              navigate("/Userdashboard");
+              navigate("/Userdashboard", { state: { successMessage } });
+            }, 1000);
           } else {
             setLoginUserId("");
           }
           //
-          
+
           // alert(response.data.message);
           setIsLogin(true);
         },

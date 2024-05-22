@@ -81,8 +81,8 @@ const CreateGoalsDietTable = () => {
       </div>
       <Table
         rowKey={(record) => record.id}
-        dataSource={DietHistory}
-        columns={columns}
+        dataSource={DietHistory || []}
+        columns={columns || null}
         // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,
