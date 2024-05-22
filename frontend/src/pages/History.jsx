@@ -68,9 +68,9 @@ const History = () => {
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
-          <Link to="" class="logo d-flex align-items-center">
+          <Link to="" className="logo d-flex align-items-center">
             {/* <img src={person_icn} alt="" /> */}
-            <span class="d-none d-lg-block">Fit Buddy</span>
+            <span className="d-none d-lg-block">Fit Buddy</span>
           </Link>
           <BsList className="toggle-sidebar-btn" />
         </div>
@@ -97,9 +97,9 @@ const History = () => {
             </li>
 
             {/* User Profie */}
-            <li class="nav-item dropdown pe-3">
+            <li className="nav-item dropdown pe-3">
               <Link
-                class="nav-link nav-profile d-flex align-items-center pe-0"
+                className="nav-link nav-profile d-flex align-items-center pe-0"
                 to=""
                 data-bs-toggle="dropdown"
                 onClick={toggleProfileDropdown}
@@ -109,7 +109,7 @@ const History = () => {
                   alt="Profile"
                   className="rounded-circle"
                 />
-                <span class="d-none d-md-block dropdown-toggle ps-2">
+                <span className="d-none d-md-block dropdown-toggle ps-2">
                   {user?.name || "User"}
                 </span>
               </Link>
@@ -128,7 +128,7 @@ const History = () => {
                     <span>Designation</span>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -141,7 +141,7 @@ const History = () => {
                     </Link>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -154,7 +154,7 @@ const History = () => {
                     </Link>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link

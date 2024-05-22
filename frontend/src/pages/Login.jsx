@@ -4,25 +4,21 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import bgImg from "./../Assets/LoginPage.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from '../context/auth';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../context/auth";
 
 const Login = (props) => {
   const navigate = useNavigate();
 
-
-
-  const [auth,setAuth] = useAuth();
+  const [auth, setAuth] = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
 
-  // not verified 
+  // not verified
   const [isVerified, setisVerified] = useState(false);
-
 
   const [setError] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
@@ -41,8 +37,6 @@ const Login = (props) => {
     setPasswordValid(newPassword.length === 0 || newPassword.length >= 8);
   };
 
-
-
   console.log("LoginUserId", LoginUserId);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -57,12 +51,12 @@ const Login = (props) => {
           console.log(response?.data);
           if (response.data.success) {
             setLoginUserId(response?.data?.user?._id);
-              let localData = {
-                token: response?.data?.token,
-                ...response?.data?.user,
-              };
+            let localData = {
+              token: response?.data?.token,
+              ...response?.data?.user,
+            };
             localStorage.setItem("user", JSON.stringify(localData));
-              navigate("/Userdashboard");
+            navigate("/Userdashboard");
           } else {
             setLoginUserId("");
           }
@@ -86,40 +80,46 @@ const Login = (props) => {
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     try {
-        const response = await axios.post('http://localhost:8080/api/v1/auth/login', { emailOrUsername:email, password });
-        if (response.data.success) {
-            if (response.data.verify) {
-                toast.success(response.data.message);
-                setAuth({
-                  ...auth,
-                  token:response.data.token
-              });
-              console.log("auth")
-              console.log(auth)
-              let localData = {
-                token: response?.data?.token,
-                ...response?.data?.user,
-              };
-                localStorage.setItem("user", JSON.stringify(localData));
-                setTimeout(() => {
-                  navigate("/Userdashboard");
-                }, 500);
-            } else {
-
-                toast.error(response.data.message);
-                const userId = response.data.user.userId;
-                setRegisteredUserId(userId)
-                setisVerified(true)
-            }
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/login",
+        { emailOrUsername: email, password }
+      );
+      if (response.data.success) {
+        if (response.data.verify) {
+          toast.success(response.data.message);
+          setAuth({
+            ...auth,
+            token: response.data.token,
+          });
+          console.log("auth");
+          console.log(auth);
+          let localData = {
+            token: response?.data?.token,
+            ...response?.data?.user,
+          };
+          localStorage.setItem("user", JSON.stringify(localData));
+          setTimeout(() => {
+            navigate("/Userdashboard");
+          }, 500);
         } else {
-            toast.error(response.data.message);
+          toast.error(response.data.message);
+          const userId = response.data.user.userId;
+          setRegisteredUserId(userId);
+          setisVerified(true);
         }
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
-        if (error.response && error.response.status >= 400 && error.response.status <= 500) {
-            toast.error(error.response.data.message);
-        }
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        toast.error(error.response.data.message);
+      }
     }
-};
+  };
 
   // Email validation function
   const validateEmail = (email) => {
@@ -171,7 +171,7 @@ const Login = (props) => {
     setOtp(event.target.value);
   };
 
-  // otp verification 
+  // otp verification
   const [otp, setOtp] = useState("");
   const [registeredUserId, setRegisteredUserId] = useState("");
   const [otpVerified, setOtpVerified] = useState(false);
@@ -184,24 +184,31 @@ const Login = (props) => {
         userId: registeredUserId,
         otp: otp,
       };
-      
-      const response = await axios.post("http://localhost:8080/api/v1/auth/verify", data);
+
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/verify",
+        data
+      );
       const responseData = response.data;
-  
+
       if (responseData.success) {
         toast.success(responseData.message); // Display success message using toast
         setTimeout(() => {
-          navigate('/');
+          navigate("/");
         }, 1000);
         setOtpVerified(true); // Update state to indicate OTP verification success
       } else {
         toast.error(responseData.message); // Display error message using toast
       }
     } catch (error) {
-      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
         toast.error("Something went wrong");
-      } 
-     // Display generic error message using toast
+      }
+      // Display generic error message using toast
     }
   };
 
@@ -223,19 +230,23 @@ const Login = (props) => {
                 Fit Buddy
               </h1>
               <span>
-                {!isVerified ?(
-                <h3 className="h4" id="lg-h4">
-                  Login to your account!
-                </h3>
-                ):(
-                <h3 className="h4" id="lg-h4">
-                  OTP verification
-                </h3>
-              )}
+                {!isVerified ? (
+                  <h3 className="h4" id="lg-h4">
+                    Login to your account!
+                  </h3>
+                ) : (
+                  <h3 className="h4" id="lg-h4">
+                    OTP verification
+                  </h3>
+                )}
               </span>
               {!isVerified ? (
-                <form id="form" className="flex flex-col" onSubmit={handleLoginSubmit}>
-                  <div class="input-group mb-3">
+                <form
+                  id="form"
+                  className="flex flex-col"
+                  onSubmit={handleLoginSubmit}
+                >
+                  <div className="input-group mb-3">
                     <input
                       // {...register("Email Address")}
                       required
@@ -266,7 +277,7 @@ const Login = (props) => {
                       type={showPassword ? "password" : "text"}
                     />
                     <span
-                      class="input-group-text"
+                      className="input-group-text"
                       onClick={togglePasswordVisibility}
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}

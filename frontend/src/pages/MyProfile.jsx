@@ -2026,7 +2026,7 @@ const MyProfile = () => {
                                       // required
                                       id="gender"
                                       name="gender"
-                                      class="form-control"
+                                      className="form-control"
                                       value={gender}
                                       onChange={handlegenderChange}
                                     >

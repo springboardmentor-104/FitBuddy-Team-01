@@ -2,8 +2,8 @@ import "./Userdashboard.css";
 import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
-import { useAuth } from '../context/auth';
-
+import { useAuth } from "../context/auth";
+import ExerciseChart from "./ExerciseChart";
 
 import {
   // BiCog,
@@ -60,6 +60,30 @@ const Userdashboard = (props) => {
     }
   };
 
+  const exerciseData = [
+    {
+      name: "Push-ups",
+      date: ["9 am"],
+      percentages: [20, 40, 60, 100],
+    },
+    {
+      name: "Sit-ups",
+      date: ["3 pm"],
+      percentages: [30, 50, 70, 90],
+    },
+    {
+      name: "Running",
+      date: ["7 pm"],
+      percentages: [10, 40, 50, 80],
+    },
+    {
+      name: "Skipping",
+      date: ["10 pm"],
+      percentages: [10, 40, 50, 90],
+    },
+    // Add more exercises as needed
+  ];
+
   return (
     <div>
       {/* Header Section */}
@@ -70,11 +94,11 @@ const Userdashboard = (props) => {
         <div className="d-flex align-items-center justify-content-between">
           <Link
             to=""
-            class="logo d-flex align-items-center"
+            className="logo d-flex align-items-center"
             style={{ textDecoration: "none" }}
           >
             {/* <img src={mylogo_icn} alt="" /> */}
-            <span class="d-none d-lg-block">Fit Buddy</span>
+            <span className="d-none d-lg-block">Fit Buddy</span>
           </Link>
           <BsList
             className="toggle-sidebar-btn"
@@ -111,7 +135,7 @@ const Userdashboard = (props) => {
 
             {/* User Profie */}
             <li
-              class="nav-item dropdown pe-3"
+              className="nav-item dropdown pe-3"
               ref={ref}
               onClick={handleClickOutside}
             >
@@ -119,14 +143,14 @@ const Userdashboard = (props) => {
                 to=""
                 data-bs-toggle="dropdown"
                 onClick={toggleProfileDropdown}
-                class="nav-link nav-profile d-flex align-items-center pe-0"
+                className="nav-link nav-profile d-flex align-items-center pe-0"
               >
                 <img
                   alt="Profile"
                   src={person_icn}
                   className="rounded-circle"
                 />
-                <span class="d-none d-md-block dropdown-toggle ps-2">
+                <span className="d-none d-md-block dropdown-toggle ps-2">
                   {user?.name || "User"}
                 </span>
               </Link>
@@ -145,7 +169,7 @@ const Userdashboard = (props) => {
                     <span>Designation</span>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -158,7 +182,7 @@ const Userdashboard = (props) => {
                     </Link>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -233,7 +257,7 @@ const Userdashboard = (props) => {
             </Link>
             <ul
               id="forms-nav"
-              class={`nav-content  ${
+              className={`nav-content  ${
                 "sidebar-nav-create-goals" === openToggleMenu
                   ? "show"
                   : "collapse"
@@ -256,13 +280,13 @@ const Userdashboard = (props) => {
               </li>
               {/* <li>
                 <a href="forms-editors.html">
-                  <i class="bi bi-circle"></i>
+                  <i className="bi bi-circle"></i>
                   <span>Form Editors</span>
                 </a>
               </li>
               <li>
                 <a href="forms-validation.html">
-                  <i class="bi bi-circle"></i>
+                  <i className="bi bi-circle"></i>
                   <span>Form Validation</span>
                 </a>
               </li> */}
@@ -326,7 +350,13 @@ const Userdashboard = (props) => {
             </ol>
           </nav>
         </div> */}
-        <section className="section dashboard">{props?.content}</section>
+        <section className="section dashboard">
+          {props?.content}
+          <div>
+            <h1>Exercise Completion Chart</h1>
+            <ExerciseChart data={exerciseData} />
+          </div>
+        </section>
       </main>
 
       {/* Back to Top */}
