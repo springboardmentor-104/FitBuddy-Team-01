@@ -1,288 +1,127 @@
+import { Card } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import person_icn from "../Assets/person.png";
-import { BiSearch } from "react-icons/bi";
-import { BiGrid } from "react-icons/bi";
-import { BiTime } from "react-icons/bi";
-import { BiTask } from "react-icons/bi";
-import { BiUser } from "react-icons/bi";
-import { BiCog } from "react-icons/bi";
-import { BiLogOut } from "react-icons/bi";
-import { BiHelpCircle } from "react-icons/bi";
-import { BsList } from "react-icons/bs";
-import { BsPersonFill, BsArrowUp } from "react-icons/bs";
-import { BsCartPlusFill } from "react-icons/bs";
-// import { BsArrowUpShort } from "react-icons/bs";
-import { BsFillPlusCircleFill } from "react-icons/bs";
+import Userdashboard from "./Userdashboard";
+import "./History.css";
+import TableComponentExercise from "./../components/TableComponentExercise";
+import TableComponentDiet from "../components/TableComponentDiet";
 
-const History = () => {
-  // My User
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    let user = localStorage.getItem("user");
-    if (user) {
-      user = JSON.parse(user);
-      setUser(user);
-    }
-  }, []);
+const History = (props) => {
+  const [activeTab, setActiveTab] = useState("exercise");
+  const [loading] = useState(false);
 
-  // Side Bar Toggale
-  useEffect(() => {
-    const toggleSidebar = () => {
-      document.body.classList.toggle("toggle-sidebar");
-    };
-    const sidebarBtn = document.querySelector(".toggle-sidebar-btn");
-    sidebarBtn.addEventListener("click", toggleSidebar);
-    return () => {
-      sidebarBtn.removeEventListener("click", toggleSidebar);
-    };
-  }, []);
-
-  // For User
-  // State to control the visibility of the profile dropdown
-  const [isOpen, setIsOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-  // Function to toggle the profile dropdown
-  const toggleProfileDropdown = () => {
-    setIsProfileOpen(!isProfileOpen);
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
   };
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isProfileOpen && !event.target.closest(".dropdown")) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isProfileOpen]);
-
   return (
-    <div>
-      <header
-        id="header"
-        className="header fixed-top d-flex align-items-center"
-      >
-        <div className="d-flex align-items-center justify-content-between">
-          <Link to="" class="logo d-flex align-items-center">
-            {/* <img src={person_icn} alt="" /> */}
-            <span class="d-none d-lg-block">Fit Buddy</span>
-          </Link>
-          <BsList className="toggle-sidebar-btn" />
-        </div>
-        <div className="search-bar">
-          <form className="search-form d-flex align-items-center">
-            <input
-              type="text"
-              name="query"
-              placeholder="Search"
-              title="Enter search keyword"
-            />
-            <button type="submit" title="Search">
-              <BiSearch />
-            </button>
-          </form>
-        </div>
-        <nav className="header-nav ms-auto">
-          <ul className="d-flex align-items-center">
-            {/* Search Bar */}
-            <li className="nav-item d-block d-lg-none">
-              <Link className="nav-link nav-icon search-bar-toggle " to="">
-                <BiSearch />
-              </Link>
-            </li>
+    <>
+      <Userdashboard
+        content={
+          <>
+            <Card className="h-full w-full">
+              <div className="flex flex-col h-screen">
+                {/* Navbar */}
+                {/* <nav className="bg-white-800 border-black-50px text-blue p-2 flex justify-between">
+                  <div className="text-lg font-bold">Fit Buddy</div>
+                  <button className="px-4 py-2 bg-red-500 hover:bg-red-600 rounded">
+                    Logout
+                  </button>
+                </nav> */}
 
-            {/* User Profie */}
-            <li class="nav-item dropdown pe-3">
-              <Link
-                class="nav-link nav-profile d-flex align-items-center pe-0"
-                to=""
-                data-bs-toggle="dropdown"
-                onClick={toggleProfileDropdown}
-              >
-                <img
-                  src={person_icn}
-                  alt="Profile"
-                  className="rounded-circle"
-                />
-                <span class="d-none d-md-block dropdown-toggle ps-2">
-                  {user?.name || "User"}
-                </span>
-              </Link>
-              {isProfileOpen === true && (
-                <ul
-                  className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile active"
-                  style={{
-                    position: "absolute",
-                    inset: "0px 0px auto auto",
-                    margin: "0px",
-                    transform: "translate(-25px, 35px)",
-                  }}
-                >
-                  <li className="dropdown-header">
-                    <h6>{user?.name || "User"}</h6>
-                    <span>Designation</span>
-                  </li>
-                  <li>
-                    <hr class="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item d-flex align-items-center"
-                      to=""
+                {/* Sidebar */}
+                {/* <aside className="bg-green-200 p-2">
+                  <ul>
+                    <li className="cursor-pointer">Home</li>
+                    <li className="cursor-pointer">My Profile</li>
+                    <li
+                      className="cursor-pointer"
+                      onClick={() => handleTabChange("history")}
                     >
-                      <BiUser />
-                      &nbsp;
-                      <span>My Profile</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <hr class="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item d-flex align-items-center"
-                      to=""
-                    >
-                      <BiCog />
-                      &nbsp;
-                      <span>Account Settings</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <hr class="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item d-flex align-items-center"
-                      to=""
-                    >
-                      <BiHelpCircle />
-                      &nbsp;
-                      <span>Need Help?</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item d-flex align-items-center"
-                      to="/"
-                      onClick={() => {
-                        localStorage.removeItem("user");
-                        localStorage.removeItem("isFirstLogin");
+                      History
+                    </li>
+                  </ul>
+                </aside> */}
+
+                {/* Main Content */}
+                <main className="flex-1 p-4">
+                  {/* Buttons for Exercise and Diet History */}
+                  <div
+                    className="flex justify-end space-x-4 mb-4"
+                    style={{ justifyContent: "flex-end" }}
+                  >
+                    <button
+                      className={`btn ${
+                        activeTab === "exercise"
+                          ? "bg-blue-500 hover:bg-blue-600"
+                          : "bg-gray-300"
+                      }`}
+                      onClick={() => handleTabChange("exercise")}
+                      style={{
+                        borderRadius: "3px",
+                        ...(activeTab === "exercise"
+                          ? {
+                              color: `#fff`,
+                              backgroundColor: `#0d6efd`,
+                              borderColor: `#0d6efd`,
+                            }
+                          : {}),
                       }}
                     >
-                      <BiLogOut />
-                      &nbsp;
-                      <span>Sign Out</span>
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-          </ul>
-        </nav>
-      </header>
+                      Exercise History
+                    </button>
+                    <button
+                      className={`btn ${
+                        activeTab === "diet"
+                          ? "bg-blue-500 hover:bg-blue-600"
+                          : "bg-gray-300"
+                      }`}
+                      onClick={() => handleTabChange("diet")}
+                      style={{
+                        borderRadius: "3px",
+                        ...(activeTab === "diet"
+                          ? {
+                              color: `#fff`,
+                              backgroundColor: `#198754`,
+                              borderColor: `#198754`,
+                            }
+                          : {}),
+                      }}
+                    >
+                      Diet History
+                    </button>
+                  </div>
 
-      <aside id="sidebar" className="sidebar">
-        <ul className="sidebar-nav" id="sidebar-nav">
-          <li className="nav-item">
-            <Link className="nav-link " to="/Userdashboard">
-              <BiGrid />
-              &nbsp;
-              <span>Dashboard</span>
-            </Link>
-          </li>
-          <li className="nav-heading">Pages</li>
-          <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <BiTask />
-              &nbsp;
-              <span>Manage Goals</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <BsFillPlusCircleFill />
-              &nbsp;
-              <span>Create Goals</span>
-            </Link>
-          </li>
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <BsCartPlusFill />
-              &nbsp;
-              <span>Buy Subscription</span>
-            </Link>
-          </li> */}
-          <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <BsPersonFill />
-              &nbsp;
-              <span>My Profile</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link collapsed" to="/History">
-              <BiTime />
-              &nbsp;
-              <span>History</span>
-            </Link>
-          </li>
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <i className="bi bi-dash-circle"></i>
-              <span>Section 6</span>
-            </Link>
-          </li> */}
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <i className="bi bi-file-earmark"></i>
-              <span>Section 7</span>
-            </Link>
-          </li> */}
-        </ul>
-      </aside>
+                  {/* Display Exercise or Diet History */}
+                  {activeTab === "exercise" && (
+                    <div>
+                      {loading ? (
+                        <p>Loading...</p>
+                      ) : (
+                        <>
+                          <TableComponentExercise />
+                        </>
+                      )}
+                    </div>
+                  )}
 
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <h1>History</h1>
-          <nav>
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <Link to="" style={{ textDecoration: "none" }}>
-                  Home
-                </Link>
-              </li>
-              <li className="breadcrumb-item active">History</li>
-            </ol>
-          </nav>
-        </div>
-        <section className="section dashboard">
-          <p></p>
-        </section>
-      </main>
-
-      {/* Back to Top */}
-      <Link
-        to=""
-        onClick={() => {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
-        }}
-        className="back-to-top d-flex align-items-center justify-content-center"
-      >
-        <BsArrowUp style={{ color: "#fff" }} />
-      </Link>
-    </div>
+                  {activeTab === "diet" && (
+                    <div>
+                      {loading ? (
+                        <p>Loading...</p>
+                      ) : (
+                        <>
+                          <TableComponentDiet />
+                        </>
+                      )}
+                    </div>
+                  )}
+                </main>
+              </div>
+            </Card>
+          </>
+        }
+      />
+    </>
   );
 };
 

@@ -88,6 +88,9 @@ const TableComponentExercise = () => {
   //   onChange: onSelectChange,
   // };
 
+  // Calculate the total width
+  const totalWidth = columns.reduce((sum, column) => sum + column.width, 0);
+
   return (
     <>
         <ToastContainer/>
@@ -105,8 +108,8 @@ const TableComponentExercise = () => {
       </div>
       <Table
         rowKey={(record) => record.id}
-        dataSource={exerciseHistory}
-        columns={columns}
+        dataSource={exerciseHistory || []}
+        columns={columns || null}
         // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,
@@ -114,6 +117,7 @@ const TableComponentExercise = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        scroll={{ x: totalWidth }}
       />
     </>
   );

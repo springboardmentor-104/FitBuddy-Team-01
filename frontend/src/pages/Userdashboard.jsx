@@ -82,7 +82,7 @@ const Userdashboard = (props) => {
           />
           <Link
             to=""
-            class="logo d-flex align-items-center"
+            className="logo d-flex align-items-center"
             style={{ textDecoration: "none" }}
           >
             {/* <img src={mylogo_icn} alt="" /> */}
@@ -93,7 +93,6 @@ const Userdashboard = (props) => {
 </span>
 
           </Link>
-
         </div>
 
         <nav className="header-nav ms-auto">
@@ -107,7 +106,7 @@ const Userdashboard = (props) => {
 
             {/* User Profie */}
             <li
-              class="nav-item dropdown pe-3"
+              className="nav-item dropdown pe-3"
               ref={ref}
               onClick={handleClickOutside}
             >
@@ -115,14 +114,14 @@ const Userdashboard = (props) => {
                 to=""
                 data-bs-toggle="dropdown"
                 onClick={toggleProfileDropdown}
-                class="nav-link nav-profile d-flex align-items-center pe-0"
+                className="nav-link nav-profile d-flex align-items-center pe-0"
               >
                 <img
                   alt="Profile"
                   src={person_icn}
                   className="rounded-circle"
                 />
-                <span class="d-none d-md-block dropdown-toggle ps-2">
+                <span className="d-none d-md-block dropdown-toggle ps-2">
                   {user?.name || "User"}
                 </span>
               </Link>
@@ -141,7 +140,7 @@ const Userdashboard = (props) => {
                     <span>Designation</span>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -154,7 +153,7 @@ const Userdashboard = (props) => {
                     </Link>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -221,10 +220,11 @@ const Userdashboard = (props) => {
             </Link>
             <ul
               id="forms-nav"
-              class={`nav-content  ${"sidebar-nav-create-goals" === openToggleMenu
-                ? "show"
-                : "collapse"
-                }`}
+              className={`nav-content  ${
+                "sidebar-nav-create-goals" === openToggleMenu
+                  ? "show"
+                  : "collapse"
+              }`}
               data-bs-parent="#sidebar-nav-create-goals"
             >
               <li>
@@ -241,9 +241,20 @@ const Userdashboard = (props) => {
                   <span>Create Goals</span>
                 </Link>
               </li>
+              {/* <li>
+                <a href="forms-editors.html">
+                  <i className="bi bi-circle"></i>
+                  <span>Form Editors</span>
+                </a>
+              </li>
+              <li>
+                <a href="forms-validation.html">
+                  <i className="bi bi-circle"></i>
+                  <span>Form Validation</span>
+                </a>
+              </li> */}
             </ul>
           </li>
-
 
           <li className="nav-item">
             <Link className="nav-link collapsed" to="/MyProfile">
@@ -254,14 +265,12 @@ const Userdashboard = (props) => {
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="/Histo">
+            <Link className="nav-link collapsed" to="/History">
               <BiTime />
               &nbsp;
               <span>History</span>
             </Link>
           </li>
-
-
         </ul>
       </aside>
 

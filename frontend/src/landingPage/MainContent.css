@@ -2,6 +2,8 @@
 .main-content{
   display: flex;
   flex-direction: row;
+  align-items: center;
+  height: 80vh;
 }
 .hero {
   display: flex;

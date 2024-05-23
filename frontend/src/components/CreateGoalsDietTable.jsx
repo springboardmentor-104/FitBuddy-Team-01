@@ -1,10 +1,10 @@
 import { Table } from "antd";
 import React from "react";
 import CreateGoalsDietActions from "./CreateGoalsDietActions";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from '../context/auth';
-import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../context/auth";
+import axios from "axios";
 
 const CreateGoalsDietTable = () => {
   const [auth, setAuth] = useAuth();
@@ -18,11 +18,14 @@ const CreateGoalsDietTable = () => {
 
   const fetchDietData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/v1/goal/diets", {
-        headers: {
-          Authorization: `${token}`
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/goal/diets",
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
         }
-      });
+      );
 
       if (response.status !== 200) {
         toast.error("Failed to fetch diet data");
@@ -32,7 +35,7 @@ const CreateGoalsDietTable = () => {
       const data = response.data;
       const dietData = data.map((item, index) => ({
         ...item,
-        index: index + 1 // Add an index for serial number
+        index: index + 1, // Add an index for serial number
       }));
 
       setDietHistory(dietData);
@@ -43,15 +46,18 @@ const CreateGoalsDietTable = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:8080/api/v1/goal/diet/${id}`, {
-        headers: {
-          Authorization: `${token}`
+      const response = await axios.delete(
+        `http://localhost:8080/api/v1/goal/diet/${id}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
         }
-      });
+      );
 
       if (response.status === 200) {
         toast.success("Diet deleted successfully");
-        setDietHistory(DietHistory.filter(item => item._id !== id));
+        setDietHistory(DietHistory.filter((item) => item._id !== id));
       } else {
         toast.error("Failed to delete diet");
       }
@@ -70,7 +76,9 @@ const CreateGoalsDietTable = () => {
     {
       dataIndex: "status",
       title: "Delete",
-      render: (value, row) => <CreateGoalsDietActions onDelete={() => handleDelete(row._id)} />,
+      render: (value, row) => (
+        <CreateGoalsDietActions onDelete={() => handleDelete(row._id)} />
+      ),
       width: 20,
     },
   ];
@@ -78,7 +86,10 @@ const CreateGoalsDietTable = () => {
   return (
     <>
       <ToastContainer />
-      <div className="d-flex justify-content-between" style={{ marginTop: "40px" }}>
+      <div
+        className="d-flex justify-content-between"
+        style={{ marginTop: "40px" }}
+      >
         <div>
           <h4 className="text-lg font-bold mb-2" style={{ color: "#4154f1" }}>
             {/* <strong>Diet Table</strong> */}
@@ -86,9 +97,10 @@ const CreateGoalsDietTable = () => {
         </div>
       </div>
       <Table
-        rowKey={(record) => record._id}
-        dataSource={DietHistory}
-        columns={columns}
+        rowKey={(record) => record.id}
+        dataSource={DietHistory || []}
+        columns={columns || null}
+        // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,
           total: DietHistory.length,

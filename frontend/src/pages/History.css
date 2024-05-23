@@ -1,0 +1,8 @@
+table {
+  border: 1px solid gray;
+}
+
+.text-lg,
+.font-normal {
+  font-family: "Nunito", sans-serif;
+}

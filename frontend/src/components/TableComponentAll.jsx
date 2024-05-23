@@ -221,9 +221,9 @@ const TableComponentAll = () => {
         </div> */}
       </div>
       <Table
-        rowKey={(record) => record.id}
-        dataSource={AllExercises}
-        columns={AllExercisesColumns}
+        rowKey={(record) => record?.id}
+        dataSource={AllExercises || []}
+        columns={AllExercisesColumns || null}
         // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,

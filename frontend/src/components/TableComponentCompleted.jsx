@@ -237,8 +237,8 @@ const fetchDataAllExercises = async () => {
       </div>
       <Table
         rowKey={(record) => record.id}
-        dataSource={CompletedExercises}
-        columns={AllExercisesColumns}
+        dataSource={CompletedExercises || []}
+        columns={AllExercisesColumns || null}
         // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,

@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import bgImg from "./../Assets/img1.jpg";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Registration = (props) => {
   const navigate = useNavigate();
@@ -21,7 +21,6 @@ const Registration = (props) => {
   //     alert("Invalid OTP, please try again.");
   //   }
   // };
-
 
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
@@ -99,10 +98,13 @@ const Registration = (props) => {
         userId: registeredUserId,
         otp: otp,
       };
-      
-      const response = await axios.post("http://localhost:8080/api/v1/auth/verify", data);
+
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/verify",
+        data
+      );
       const responseData = response.data;
-  
+
       if (responseData.success) {
         toast.success(responseData.message); // Display success message using toast
         setTimeout(() => {
@@ -113,13 +115,16 @@ const Registration = (props) => {
         toast.error(responseData.message); // Display error message using toast
       }
     } catch (error) {
-      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
         toast.error("Something went wrong");
-      } 
-     // Display generic error message using toast
+      }
+      // Display generic error message using toast
     }
   };
-
 
   const handleFullNameChange = (event) => {
     setFullName(event.target.value);
@@ -155,6 +160,11 @@ const Registration = (props) => {
       };
       await axios.post("http://localhost:8080/api/v1/auth/register", data).then(
         (response) => {
+          toast.success(response.data.message, {
+            position: "top-center",
+            autoClose: 20000,
+          });
+
           setRegisteredUserId(response?.data?.data?.userId);
           setIsRegistered(true);
         },
@@ -211,13 +221,16 @@ const Registration = (props) => {
   const handleRegistrationSubmit1 = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post("http://localhost:8080/api/v1/auth/register",  {
-      name: fullName,
-      email: email,
-      username: userName,
-      password: password,
-      cpassword: confirmedPassword,
-    });
+    const response = await axios.post(
+      "http://localhost:8080/api/v1/auth/register",
+      {
+        name: fullName,
+        email: email,
+        username: userName,
+        password: password,
+        cpassword: confirmedPassword,
+      }
+    );
 
     try {
       // Check if all fields are filled
@@ -230,7 +243,11 @@ const Registration = (props) => {
         toast.error(response.data.message);
       }
     } catch (error) {
-      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
         toast.error(response.data.message);
       }
       setRegisteredUserId("");
@@ -252,7 +269,7 @@ const Registration = (props) => {
       style={{ height: window.innerHeight }}
       id="reg-sec"
     >
-      <ToastContainer/>
+      <ToastContainer />
       <div className="container px-lg-5">
         <div className="row" id="rg-rw" style={{ margin: "125px" }}>
           <div className="col-sm-12 col-md-6 bg-white">

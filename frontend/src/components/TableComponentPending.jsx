@@ -268,8 +268,8 @@ const TableComponentPending = () => {
       </div>
       <Table
         rowKey={(record) => record.id}
-        dataSource={PendingExercises}
-        columns={AllExercisesColumns}
+        dataSource={PendingExercises || []}
+        columns={AllExercisesColumns || null}
         // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,

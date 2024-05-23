@@ -1,12 +1,9 @@
 import "./Home.css";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from '../context/auth';
-import {ToastContainer,  toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
-
+import { useAuth } from "../context/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Home() {
   const [click, setClick] = React.useState(false);
@@ -18,23 +15,23 @@ function Home() {
     setAuth({ token: "" });
     localStorage.removeItem("user");
     toast.success("Logout Successfully");
-  }
+  };
 
   return (
     <div>
-      <ToastContainer/>
-     <div className={click ? "main-container" : ""}  onClick={()=>Close()} />
-      <nav className="navbar" onClick={e => e.stopPropagation()}>
+      <ToastContainer />
+      <div className={click ? "main-container" : ""} onClick={() => Close()} />
+      <nav className="navbar" onClick={(e) => e.stopPropagation()}>
         <div className="nav-container">
           <Link exact to="/" className="nav-logo">
-          FIT BUDDY
+            FIT BUDDY
           </Link>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
               <Link
                 exact
                 to="/"
-                activeClassName="active"
+                activeclassname="active"
                 className="nav-links"
                 onClick={click ? handleClick : null}
               >
@@ -45,7 +42,7 @@ function Home() {
               <Link
                 exact
                 to="/about"
-                activeClassName="active"
+                activeclassname="active"
                 className="nav-links"
                 onClick={click ? handleClick : null}
               >
@@ -55,47 +52,50 @@ function Home() {
             <li className="nav-item">
               <Link
                 exact
-                to="/about"
-                activeClassName="active"
+                to="/ContactUs"
+                activeclassname="active"
                 className="nav-links"
                 onClick={click ? handleClick : null}
               >
                 ContactUs
               </Link>
             </li>
-            {!auth.token?(<>
-            <li className="nav-item">
-              <Link
-                exact
-                to="/login"
-                activeClassName="active"
-                className="nav-links btn btn-success"
-                onClick={click ? handleClick : null}
-              >
-               Login
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                exact
-                to="/registration"
-                activeClassName="active"
-                className="nav-links btn btn-danger"
-               onClick={click ? handleClick : null}
-              >
-                SignUp
-              </Link>
-            </li></>):(
+            {!auth.token ? (
               <>
-              <li className="nav-item">
-              <button
-                activeClassName="active"
-                className="nav-links btn btn-danger"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </li>
+                <li className="nav-item">
+                  <Link
+                    exact
+                    to="/login"
+                    activeclassname="active"
+                    className="nav-links btn btn-success"
+                    onClick={click ? handleClick : null}
+                  >
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    exact
+                    to="/registration"
+                    activeclassname="active"
+                    className="nav-links btn btn-danger"
+                    onClick={click ? handleClick : null}
+                  >
+                    SignUp
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <button
+                    activeClassName="active"
+                    className="nav-links btn btn-danger"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </li>
               </>
             )}
           </ul>
@@ -133,7 +133,7 @@ function Home() {
           </div>
         </div>
       </div>
-    </ div>
+    </div>
   );
 }
 

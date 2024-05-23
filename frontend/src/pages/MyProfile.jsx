@@ -14,6 +14,9 @@ import person_icn from "../Assets/person.png";
 import profile_icn from "../Assets/profile.png";
 import Userdashboard from "../pages/Userdashboard";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   FaLink,
   FaEye,
@@ -363,6 +366,7 @@ const MyProfile = () => {
         .then(
           (response) => {
             console.log(response?.data);
+            toast.success("Password Update successfully!"); // Display success message using toast
             if (response.data.success) {
               setPasswordUpdateUserId(response?.data?.user?._id);
               setcurrentpassword("");
@@ -790,7 +794,8 @@ const MyProfile = () => {
       })
       .then(
         (response) => {
-          alert("Update profile successfully!");
+          // alert("Update profile successfully!");
+          toast.success("Update profile successfully!"); // Display success message using toast
           setEditFormSubmitted(true); // Update state to indicate form submission
         },
         (error) => {
@@ -2026,7 +2031,7 @@ const MyProfile = () => {
                                       // required
                                       id="gender"
                                       name="gender"
-                                      class="form-control"
+                                      className="form-control"
                                       value={gender}
                                       onChange={handlegenderChange}
                                     >

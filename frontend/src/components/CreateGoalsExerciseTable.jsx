@@ -3,7 +3,7 @@
 // import CreateGoalsExerciseActions from "./CreateGoalsExerciseActions";
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
-// import { useAuth } from '../context/auth'; 
+// import { useAuth } from '../context/auth';
 // import axios from 'axios'
 // const CreateGoalsExerciseTable = () => {
 //   const [auth, setAuth] = useAuth();
@@ -106,10 +106,10 @@
 import { Table } from "antd";
 import React,{useEffect} from "react";
 import CreateGoalsExerciseActions from "./CreateGoalsExerciseActions";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from '../context/auth'; 
-import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../context/auth";
+import axios from "axios";
 
 const CreateGoalsExerciseTable = () => {
  
@@ -128,7 +128,8 @@ const CreateGoalsExerciseTable = () => {
         headers: {
           Authorization: `${auth?.token}`
         }
-      });
+      }
+      );
 
       if (response.status !== 200) {
         toast.error("Failed to fetch exercise data");
@@ -139,7 +140,7 @@ const CreateGoalsExerciseTable = () => {
         if(data.length > 0){
         const exerciseData = data.map((item, index) => ({
           ...item,
-          index: index + 1
+          index: index + 1,
         }));
         setExerciseHistory(exerciseData);
       }
@@ -153,15 +154,18 @@ const CreateGoalsExerciseTable = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:8080/api/v1/goal/exercise/${id}`, {
-        headers: {
-          Authorization: `${token}`
+      const response = await axios.delete(
+        `http://localhost:8080/api/v1/goal/exercise/${id}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
         }
-      });
+      );
 
       if (response.status === 200) {
         toast.success("Exercise deleted successfully");
-        setExerciseHistory(exerciseHistory.filter(item => item._id !== id));
+        setExerciseHistory(exerciseHistory.filter((item) => item._id !== id));
       } else {
         toast.error("Failed to delete exercise");
       }
@@ -180,7 +184,9 @@ const CreateGoalsExerciseTable = () => {
     {
       dataIndex: "status",
       title: "Delete",
-      render: (value, row) => <CreateGoalsExerciseActions onDelete={() => handleDelete(row._id)} />,
+      render: (value, row) => (
+        <CreateGoalsExerciseActions onDelete={() => handleDelete(row._id)} />
+      ),
       width: 20,
     },
   ];
@@ -188,7 +194,10 @@ const CreateGoalsExerciseTable = () => {
   return (
     <>
       <ToastContainer />
-      <div className="d-flex justify-content-between" style={{ marginTop: "40px" }}>
+      <div
+        className="d-flex justify-content-between"
+        style={{ marginTop: "40px" }}
+      >
         <div>
           <h4 className="text-lg font-bold mb-2" style={{ color: "#4154f1" }}>
             {/* <strong>Exercise Table</strong> */}
@@ -196,9 +205,10 @@ const CreateGoalsExerciseTable = () => {
         </div>
       </div>
       <Table
-        rowKey={(record) => record._id}
-        dataSource={exerciseHistory}
-        columns={columns}
+        rowKey={(record) => record.id}
+        dataSource={exerciseHistory || []}
+        columns={columns || null}
+        // rowSelection={rowSelection}
         pagination={{
           defaultPageSize: 5,
           total: exerciseHistory.length,

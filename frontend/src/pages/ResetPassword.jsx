@@ -7,6 +7,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import OtpVrfo_icon from "./../Assets/otpvrfo.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ResetPassword = (props) => {
   const location = useLocation();
@@ -142,6 +144,10 @@ const ResetPassword = (props) => {
         .request(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
+          toast.success(response.data.message, {
+            position: "top-center",
+            autoClose: 20000,
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -168,20 +174,20 @@ const ResetPassword = (props) => {
                     </p>
                     <div className="input-container">
                       <label>Create Password</label>
-                      <div class="input-group mb-3">
+                      <div className="input-group mb-3">
                         <input
                           required
                           minLength={8}
                           maxLength={15}
                           value={password}
-                          class="form-control"
+                          className="form-control"
                           pattern="[A-Z,a-z,0-9,@,#]*"
                           onChange={handlePasswordChange}
                           type={showPassword ? "password" : "text"}
                           aria-label="Amount (to the nearest dollar)"
                         />
                         <span
-                          class="input-group-text"
+                          className="input-group-text"
                           onClick={togglePasswordVisibility}
                         >
                           {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -190,12 +196,12 @@ const ResetPassword = (props) => {
                     </div>
                     <div className="input-container">
                       <label>Re-enter Password</label>
-                      <div class="input-group mb-3">
+                      <div className="input-group mb-3">
                         <input
                           required
                           minLength={8}
                           maxLength={15}
-                          class="form-control"
+                          className="form-control"
                           value={confirmPassword}
                           pattern="[A-Z,a-z,0-9,@,#]*"
                           onChange={handleConfirmPasswordChange}
@@ -203,7 +209,7 @@ const ResetPassword = (props) => {
                           aria-label="Amount (to the nearest dollar)"
                         />
                         <span
-                          class="input-group-text"
+                          className="input-group-text"
                           onClick={toggleConfirmPasswordVisibility}
                         >
                           {showPassword ? <FaEyeSlash /> : <FaEye />}

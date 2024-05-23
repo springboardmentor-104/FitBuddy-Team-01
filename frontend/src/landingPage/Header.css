@@ -5,7 +5,7 @@
     background-color: #fff;
   }
   
-  .logo {
+  .LandingLogo {
     width: 55px;
     height: 55px;
     margin-left: 3vw;
@@ -15,6 +15,7 @@
   }
   .nav a {
     margin:0 20px;
+    align-content: center;
     padding: 7px 20px;
     text-decoration: none;
     color: #000;
@@ -22,7 +23,7 @@
   
   .nav a:hover {
     background-color: orange;
-    /* padding: 1vh; */
+    color: #ffffff;
     border-radius: 30px;
     /* text-decoration: underline; */
   }
