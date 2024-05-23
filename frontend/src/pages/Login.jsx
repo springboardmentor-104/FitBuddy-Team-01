@@ -221,7 +221,8 @@ const Login = (props) => {
       <ToastContainer />
       <div
         className="container px-lg-4 card card-body"
-        style={{ height: window.innerHeight - 100, maxWidth: 800 }}
+        // style={{ height: window.innerHeight - 100, maxWidth: 800 }}
+        style={{ maxWidth: 800, margin: 15 }}
       >
         <div className="row h-100">
           <div className="col-sm-12 col-md-6">
@@ -293,7 +294,7 @@ const Login = (props) => {
                   <Link to="/forgot-password" id="fg-ps">
                     Forgot your password?
                   </Link>
-                  <button className="btn btn-warning" id="btn-lg" type="submit">
+                  <button className="btn btn-primary" id="btn-lg" type="submit">
                     Login to continue
                   </button>
                   <div className="text-left">

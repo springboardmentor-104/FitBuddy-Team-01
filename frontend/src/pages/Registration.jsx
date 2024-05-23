@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import bgImg from "./../Assets/img1.jpg";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Registration = (props) => {
   const navigate = useNavigate();
@@ -21,7 +21,6 @@ const Registration = (props) => {
       alert("Invalid OTP, please try again.");
     }
   };
-
 
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
@@ -99,27 +98,33 @@ const Registration = (props) => {
         userId: registeredUserId,
         otp: otp,
       };
-      
-      const response = await axios.post("http://localhost:8080/api/v1/auth/verify", data);
+
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/verify",
+        data
+      );
       const responseData = response.data;
-  
+
       if (responseData.success) {
         toast.success(responseData.message); // Display success message using toast
         setTimeout(() => {
-          navigate('/');
+          navigate("/");
         }, 1000);
         setOtpVerified(true); // Update state to indicate OTP verification success
       } else {
         toast.error(responseData.message); // Display error message using toast
       }
     } catch (error) {
-      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
         toast.error("Something went wrong");
-      } 
-     // Display generic error message using toast
+      }
+      // Display generic error message using toast
     }
   };
-
 
   const handleFullNameChange = (event) => {
     setFullName(event.target.value);
@@ -211,13 +216,16 @@ const Registration = (props) => {
   const handleRegistrationSubmit1 = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post("http://localhost:8080/api/v1/auth/register",  {
-      name: fullName,
-      email: email,
-      username: userName,
-      password: password,
-      cpassword: confirmedPassword,
-    });
+    const response = await axios.post(
+      "http://localhost:8080/api/v1/auth/register",
+      {
+        name: fullName,
+        email: email,
+        username: userName,
+        password: password,
+        cpassword: confirmedPassword,
+      }
+    );
 
     try {
       // Check if all fields are filled
@@ -230,7 +238,11 @@ const Registration = (props) => {
         toast.error(response.data.message);
       }
     } catch (error) {
-      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
         toast.error(response.data.message);
       }
       setRegisteredUserId("");
@@ -244,17 +256,28 @@ const Registration = (props) => {
     setShowPassword(!showPassword);
   };
 
-
-
   return (
     <section
       className="register d-flex align-items-center justify-content-center"
-      style={{ height: window.innerHeight }}
+      // style={{ height: window.innerHeight }}
+      style={{
+        height: window.innerHeight,
+        // height: "742px",
+        width: "80vw",
+        margin: "auto",
+      }}
       id="reg-sec"
     >
-      <ToastContainer/>
+      <ToastContainer />
       <div className="container px-lg-5">
-        <div className="row" id="rg-rw" style={{ margin: "125px" }}>
+        <div
+          className="row"
+          id="rg-rw"
+          style={{
+            // margin: "125px"
+            margin: "10px",
+          }}
+        >
           <div className="col-sm-12 col-md-6 bg-white">
             <div className="text-center p-3">
               {/* <div className="bc-bx">
@@ -389,7 +412,7 @@ const Registration = (props) => {
                     </span>
                   </div>
                   <button
-                    className="btn btn-success"
+                    className="btn btn-primary"
                     id="sgn-btn"
                     type="submit"
                   >
