@@ -25,6 +25,7 @@ import CreateGoals from "./pages/CreateGoals";
 import ManageGoals from "./pages/ManageGoals";
 
 import MainContent from "./landingPage/MainContent"
+import ExerciseChart from "./pages/ExerciseChart";
 
 function ProtectedRoute({ Component }) {
   const token = localStorage.getItem("user");
@@ -56,7 +57,7 @@ const App = () => {
         <Route
           exact
           path="/Userdashboard"
-          element={<ProtectedRoute Component={Userdashboard} />}
+          element={<ProtectedRoute Component={ExerciseChart} />}
         />
         <Route
           exact
