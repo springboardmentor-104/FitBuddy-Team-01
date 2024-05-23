@@ -106,7 +106,7 @@ const Registration = (props) => {
       if (responseData.success) {
         toast.success(responseData.message); // Display success message using toast
         setTimeout(() => {
-          navigate('/');
+          navigate('/Login');
         }, 1000);
         setOtpVerified(true); // Update state to indicate OTP verification success
       } else {

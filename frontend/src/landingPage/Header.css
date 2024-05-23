@@ -1,0 +1,87 @@
+.landingPageHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .logo {
+    width: 55px;
+    height: 55px;
+    margin-left: 3vw;
+  }
+  .nav{
+    margin-right: 10vw;
+  }
+  .nav a {
+    margin:0 20px;
+    padding: 7px 20px;
+    text-decoration: none;
+    color: #000;
+  }
+  
+  .nav a:hover {
+    background-color: orange;
+    /* padding: 1vh; */
+    border-radius: 30px;
+    /* text-decoration: underline; */
+  }
+
+  .hamburger {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px){
+    .nav {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      gap: 10px;
+    }
+  
+    .nav.open {
+      display: flex;
+    }
+  
+    .hamburger {
+      display: block;
+      margin-right: 3vw;
+    }
+  }
+
+  @media (max-width: 412px) {
+    .nav {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      gap: 10px;
+    }
+  
+    .nav.open {
+      display: flex;
+    }
+  
+    .hamburger {
+      display: block;
+      margin-right: 3vw;
+    }
+  }
+
+  .logo {
+    width: 55px;
+    height: 55px;
+    margin-left: 3vw;
+  }
+  

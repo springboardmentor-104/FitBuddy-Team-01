@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from '../context/auth';
-
+import logo from "../landingPage/logo.png"
 
 import {
   // BiCog,
@@ -26,8 +26,8 @@ import {
 
 import { FaDumbbell, FaChevronDown } from "react-icons/fa";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 const Userdashboard = (props) => {
   const [auth, setAuth] = useAuth();
@@ -66,7 +66,6 @@ const Userdashboard = (props) => {
 
   return (
     <div>
-      <ToastContainer />
       {/* Header Section */}
       <header
         id="header"
@@ -87,7 +86,12 @@ const Userdashboard = (props) => {
             style={{ textDecoration: "none" }}
           >
             {/* <img src={mylogo_icn} alt="" /> */}
-            <span class="d-none d-lg-block">Fit Buddy</span>
+            {/* <span class="d-none d-lg-block">Fit Buddy</span> */}
+            <span class="d-none d-lg-block">
+    <img src={logo} alt="Fit Buddy Image" height="55px"/>
+    {/* Fit Buddy */}
+</span>
+
           </Link>
 
         </div>
@@ -181,7 +185,7 @@ const Userdashboard = (props) => {
       >
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
-            <Link className="nav-link " to="/Managegoals">
+            <Link className="nav-link " to="/Userdashboard">
               <BiGrid />
               &nbsp;
               <span>Dashboard</span>

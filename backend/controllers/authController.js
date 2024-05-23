@@ -20,6 +20,7 @@ const sendOtpVerificationEmail = async ({ _id, name, email }, res) => {
 
     // hash the otp
     const hashedOtp = await hashPassword(otp);
+    // console.log("otp to register",otp)
     const newOtpVerification = new userOtpVerification({
       userId: _id,
       otp: hashedOtp,

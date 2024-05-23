@@ -33,6 +33,8 @@ const todayHistoryController = async (req, res) => {
         if (!userHistory || userHistory.length === 0) {
             return res.status(404).json({ message: 'No data found for the current date' });
         }
+
+        
         res.json(userHistory);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -56,15 +58,15 @@ const todayAllTask = async (req, res) => {
 
         // Define the model based on the type
         const goalModel = type === 'exercise' ? 'goalExercise' : 'goalDiet';
-       console.log("goalModel",goalModel)
+
         // Find the history documents for the user for the current date and the specified type and status
         const historyData = await History.find({ userId: userID, createdAt: currentDate, type: type })
             .populate({
                 path: 'goalId',
                 model: goalModel
             });
-console.log("historyData",historyData)
-        if (!historyData || historyData.length === 0) {
+
+            if (!historyData || historyData.length === 0) {
             return res.status(404).json({ message: `No ${type} data found for the current date with status ${status}` });
         }
 
@@ -99,7 +101,7 @@ const todayDataCategoryWise = async (req, res) => {
 
         // Define the model based on the type
         const goalModel = type === 'exercise' ? 'goalExercise' : 'goalDiet';
-        console.log("taday userHistory", currentDate)
+
         // Find the history documents for the user for the current date and the specified type and status
         const historyData = await History.find({ userId: userID, createdAt: currentDate, type: type, status: status })
             .populate({
@@ -110,7 +112,7 @@ const todayDataCategoryWise = async (req, res) => {
         if (!historyData || historyData.length === 0) {
             return res.status(404).json({ message: `No ${type} data found for the current date with status ${status}` });
         }
-        console.log("taday userHistory", historyData)
+
         // Return the filtered data
         res.json(historyData);
     } catch (error) {

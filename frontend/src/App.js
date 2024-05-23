@@ -2,14 +2,12 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
 import About from "./pages/About";
 import ContactUs from "./pages/ContactUs";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-//
 import Userdashboard from "./pages/Userdashboard";
 import MyProfile from "./pages/MyProfile";
 import Histo from "./pages/Histo";
@@ -20,10 +18,8 @@ import ExercisePage from "./pages/ExercisePage";
 import SingleExercisePage from "./pages/SingleExercisePage";
 import CreateGoals from "./pages/CreateGoals";
 import ManageGoals from "./pages/ManageGoals";
-//
-// import History from "./pages/History";
-// import ExerciseCard from "./pages/ExerciseCard";
-// import CreateGoals from "./pages/CreateGoals";
+
+import MainContent from "./landingPage/MainContent"
 
 function ProtectedRoute({ Component }) {
   const token = localStorage.getItem("user");
@@ -44,7 +40,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="*" element={<NotFound />} />
-        <Route exact path="/" element={<Home />} />
+        <Route exact path="/" element={<MainContent />} />
         <Route exact path="/About" element={<About />} />
         <Route exact path="/ContactUs" element={<ContactUs />} />
         <Route exact path="/login" element={<Login />} />

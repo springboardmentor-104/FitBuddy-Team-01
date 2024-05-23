@@ -3,6 +3,7 @@ const colors = require("colors");
 const dotenv = require("dotenv");
 
 dotenv.config();
+console.log("hi node",process.env.USERNAME,process.env.PASS,process.env.port)
 module.exports = async (email, subject, text) => {
   try {
     const trasnporter = nodemailer.createTransport({
@@ -12,8 +13,8 @@ module.exports = async (email, subject, text) => {
             requireTLS: true,
             service: process.env.SERVICE,
             auth: {
-                user: process.env.USER,
-                pass: process.env.PASS
+                user: process.env.USERNAME,
+                pass: process.env.EmailPASS
             }
       // host: "smtp.gmail.com",
       // port: 587,
