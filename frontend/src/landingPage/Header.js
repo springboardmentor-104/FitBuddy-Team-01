@@ -16,8 +16,8 @@ function Header() {
         &#9776;
       </div>
       <nav className={`nav ${menuOpen ? "open" : ""}`}>
-        <a href="#signup">Sign Up</a>
-        <a href="#login">Login</a>
+        <a href="/registration">Sign Up</a>
+        <a href="/login">Login</a>
         <a href="#contact">Contact Us</a>
       </nav>
     </header>
