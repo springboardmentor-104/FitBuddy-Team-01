@@ -24,8 +24,14 @@ import SingleExercisePage from "./pages/SingleExercisePage";
 import CreateGoals from "./pages/CreateGoals";
 import ManageGoals from "./pages/ManageGoals";
 
-import MainContent from "./landingPage/MainContent"
+import MainContent from "./landingPage/MainContent";
 import ExerciseChart from "./pages/ExerciseChart";
+
+//Diet Pages
+import DietCard from "./pages/DietCard";
+import DietPage from "./pages/DietPage";
+import SingleDietPage from "./pages/SingleDietPage";
+import DietForm from "./pages/DietForm";
 
 function ProtectedRoute({ Component }) {
   const token = localStorage.getItem("user");
@@ -104,6 +110,27 @@ const App = () => {
           exact
           path="/History"
           element={<ProtectedRoute Component={History} />}
+        />
+
+        <Route
+          exact
+          path="/DietPage"
+          element={<ProtectedRoute Component={DietPage} />}
+        />
+        <Route
+          exact
+          path="/SingleDietPage"
+          element={<ProtectedRoute Component={SingleDietPage} />}
+        />
+        <Route
+          exact
+          path="/DietCard"
+          element={<ProtectedRoute Component={DietCard} />}
+        />
+        <Route
+          exact
+          path="/DietForm"
+          element={<ProtectedRoute Component={DietForm} />}
         />
       </Routes>
     </Router>

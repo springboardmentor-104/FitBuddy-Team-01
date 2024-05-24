@@ -2,10 +2,12 @@ import "./Userdashboard.css";
 import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
-import { useAuth } from '../context/auth';
+import { useAuth } from "../context/auth";
 import ExerciseChart from "./ExerciseChart";
-import logo from "../landingPage/logo.png"
+import logo from "../landingPage/logo.png";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUtensils } from "@fortawesome/free-solid-svg-icons";
 
 import {
   // BiCog,
@@ -121,10 +123,9 @@ const Userdashboard = (props) => {
             {/* <img src={mylogo_icn} alt="" /> */}
             {/* <span class="d-none d-lg-block">Fit Buddy</span> */}
             <span class="d-none d-lg-block">
-    <img src={logo} alt="Fit Buddy Image" height="55px"/>
-    {/* Fit Buddy */}
-</span>
-
+              <img src={logo} alt="Fit Buddy Image" height="55px" />
+              {/* Fit Buddy */}
+            </span>
           </Link>
         </div>
 
@@ -265,6 +266,13 @@ const Userdashboard = (props) => {
                   <FaDumbbell />
                   &nbsp;
                   <span>Exercises</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/DietPage" style={{ textDecoration: "none" }}>
+                  <FontAwesomeIcon icon={faUtensils} />
+                  &nbsp;
+                  <span>Meals</span>
                 </Link>
               </li>
               <li>
