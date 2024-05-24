@@ -10,10 +10,10 @@
     height: 55px;
     margin-left: 3vw;
   }
-  .nav{
+  .nav-tab{
     margin-right: 10vw;
   }
-  .nav a {
+  .nav-tab a {
     margin:0 20px;
     align-content: center;
     padding: 7px 20px;
@@ -21,8 +21,8 @@
     color: #000;
   }
   
-  .nav a:hover {
-    background-color: orange;
+  .nav-tab a:hover {
+    background-color: #3076bb;
     color: #ffffff;
     border-radius: 30px;
     /* text-decoration: underline; */
@@ -35,7 +35,7 @@
   }
 
   @media (max-width: 768px){
-    .nav {
+    .nav-tab {
       display: none;
       flex-direction: column;
       position: absolute;
@@ -47,7 +47,7 @@
       gap: 10px;
     }
   
-    .nav.open {
+    .nav-tab.open {
       display: flex;
     }
   
@@ -58,7 +58,7 @@
   }
 
   @media (max-width: 412px) {
-    .nav {
+    .nav-tab {
       display: none;
       flex-direction: column;
       position: absolute;
@@ -70,7 +70,7 @@
       gap: 10px;
     }
   
-    .nav.open {
+    .nav-tab.open {
       display: flex;
     }
   

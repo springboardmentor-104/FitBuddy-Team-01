@@ -19,11 +19,13 @@ function Header() {
     <div className="hamburger" onClick={toggleMenu}>
       &#9776;
     </div>
-    <nav className={`nav ${menuOpen ? "open" : ""}`}>
+    <nav className={`nav-tab ${menuOpen ? "open" : ""}`}>
     <Link to="/">Home</Link>
-      <Link to="/registration">Sign Up</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/contactus">Contact Us</Link>
+    <Link to="/contactus">Contact Us</Link>
+    <Link to="/login">Login</Link>
+    <Link to="/registration">Sign Up</Link>
+      
+      
     </nav>
   </header>
   );

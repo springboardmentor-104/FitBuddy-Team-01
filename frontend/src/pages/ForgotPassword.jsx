@@ -199,10 +199,10 @@ const ForgotPassword = (props) => {
       <div className="container-fluid">
         <div
           className="d-flex align-items-center justify-content-center"
-          style={{ height: window.innerHeight }}
+          style={{ height: window.innerHeight,width:"70vw",margin:"auto" }}
         >
-          <div className="card border-0" style={{ margin: "100px" }}>
-            <div className="card-body p-0 bg-light shadow">
+          <div className="card border-0" style={{ margin: "2px" }}>
+            <div className="card-body p-0 ">
               <div className="row">
                 <div className="col-md-6 col-sm-12">
                   <div ref={ref} className={`p-5`}>
@@ -296,7 +296,7 @@ const ForgotPassword = (props) => {
                             </p>
                             <button
                               type="submit"
-                              className="btn btn-success"
+                              className="btn btn-primary"
                               id="otp-btn"
                             >
                               Confirm
