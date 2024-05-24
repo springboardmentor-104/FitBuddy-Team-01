@@ -95,7 +95,7 @@ const ExercisePage = () => {
               No exercises found for the selected category.
             </div>
           ) : (
-            exercises.map((exercise) => ( 
+            exercises.map((exercise) => (
               <ExerciseCard
                 key={exercise._id}
                 exercise={exercise}
