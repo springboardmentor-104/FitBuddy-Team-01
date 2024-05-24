@@ -605,11 +605,11 @@ h6 {
   background-color: #fff;
 }
 
-@media (max-width: 1199px) {
+/* @media (max-width: 1199px) {
   .sidebar {
     left: -300px;
   }
-}
+} */
 
 .sidebar::-webkit-scrollbar {
   width: 5px;
@@ -676,7 +676,7 @@ h6 {
   font-weight: 600;
   color: #4154f1;
   transition: 0.3;
-  background: #f6f9ff;
+  /* background: #f6f9ff; */
   padding: 10px 15px;
   border-radius: 4px;
 }
