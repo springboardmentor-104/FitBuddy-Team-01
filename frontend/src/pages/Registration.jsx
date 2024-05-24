@@ -266,12 +266,12 @@ const Registration = (props) => {
   return (
     <section
       className="register d-flex align-items-center justify-content-center"
-      style={{ height: window.innerHeight }}
+      style={{ height: window.innerHeight,width:"70vw",margin:"auto" }}
       id="reg-sec"
     >
       <ToastContainer />
       <div className="container px-lg-5">
-        <div className="row" id="rg-rw" style={{ margin: "125px" }}>
+        <div className="row" id="rg-rw" style={{ margin: "2px" }}>
           <div className="col-sm-12 col-md-6 bg-white">
             <div className="text-center p-3">
               {/* <div className="bc-bx">
@@ -406,7 +406,7 @@ const Registration = (props) => {
                     </span>
                   </div>
                   <button
-                    className="btn btn-success"
+                    className="btn btn-primary"
                     id="sgn-btn"
                     type="submit"
                   >

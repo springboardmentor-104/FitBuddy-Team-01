@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from '../context/auth';
+import ExerciseChart from "./ExerciseChart";
 import logo from "../landingPage/logo.png"
+
 
 import {
   // BiCog,
@@ -25,7 +27,6 @@ import {
 } from "react-icons/bs";
 
 import { FaDumbbell, FaChevronDown } from "react-icons/fa";
-
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
@@ -64,6 +65,30 @@ const Userdashboard = (props) => {
     }
   };
 
+  const exerciseData = [
+    {
+      name: "Push-ups",
+      date: ["9 am"],
+      percentages: [20, 40, 60, 100],
+    },
+    {
+      name: "Sit-ups",
+      date: ["3 pm"],
+      percentages: [30, 50, 70, 90],
+    },
+    {
+      name: "Running",
+      date: ["7 pm"],
+      percentages: [10, 40, 50, 80],
+    },
+    {
+      name: "Skipping",
+      date: ["10 pm"],
+      percentages: [10, 40, 50, 90],
+    },
+    // Add more exercises as needed
+  ];
+
   return (
     <div>
       {/* Header Section */}
@@ -72,6 +97,14 @@ const Userdashboard = (props) => {
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
+          {/* <Link
+            to=""
+            class="logo d-flex align-items-center"
+            style={{ textDecoration: "none" }}
+          >
+            {/* <img src={mylogo_icn} alt="" />
+            <span class="d-none d-lg-block">Fit Buddy</span>
+          </Link> */}
           <BsList
             className="toggle-sidebar-btn"
             onClick={() => {
@@ -280,7 +313,23 @@ const Userdashboard = (props) => {
         className="main"
         style={showLeftSidebar ? {} : { marginLeft: 0 }}
       >
+        {/* <div className="pagetitle">
+          <h1>Dashboard</h1>
+          <nav>
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">
+                <Link to="">Home</Link>
+              </li>
+              <li className="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </nav>
+        </div> */}
         <section className="section dashboard">{props?.content}</section>
+        {/* {props?.content}
+          <div>
+            <h1>Exercise Completion Chart</h1>
+            <ExerciseChart data={exerciseData} />
+          </div> */}
       </main>
 
       {/* Back to Top */}

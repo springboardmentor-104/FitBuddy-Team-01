@@ -45,7 +45,7 @@
 
 .hero-text h1 {
   font-size: 3.5vw;
-  color: #f96302;
+  color: #284c94;
 }
 
 .hero-text p {
@@ -55,12 +55,12 @@
 
 .hero-text h2 {
   font-size: 2.5vw;
-  color: #f96302;
+  color: #284c94;
   margin: 20px 0;
 }
 
 .cta-button {
-  background-color: #f96302;
+  background-color: #3076bb;
   border-radius: 20px;
   color: #fff;
   padding: 10px 20px;
@@ -70,7 +70,7 @@
 }
 
 .cta-button:hover {
-  background-color: #e54d00;
+  background-color: #ebb01b;
 }
 
 /* Responsive design adjustments */
