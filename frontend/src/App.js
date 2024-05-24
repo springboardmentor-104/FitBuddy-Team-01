@@ -24,7 +24,7 @@ import SingleExercisePage from "./pages/SingleExercisePage";
 import CreateGoals from "./pages/CreateGoals";
 import ManageGoals from "./pages/ManageGoals";
 
-import MainContent from "./landingPage/MainContent"
+import MainContent from "./landingPage/MainContent";
 import ExerciseChart from "./pages/ExerciseChart";
 
 function ProtectedRoute({ Component }) {

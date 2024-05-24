@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from '../context/auth';
-import ExerciseChart from "./ExerciseChart";
-import logo from "../landingPage/logo.png"
 
 
 import {
@@ -13,7 +11,7 @@ import {
   BiTime,
   BiTask,
   BiUser,
-  // BiSearch,
+  BiSearch,
   BiLogOut,
   // BiHelpCircle,
 } from "react-icons/bi";
@@ -22,20 +20,17 @@ import {
   BsList,
   BsArrowUp,
   BsPersonFill,
-  // BsCartPlusFill,
+  BsCartPlusFill,
   BsFillPlusCircleFill,
 } from "react-icons/bs";
 
 import { FaDumbbell, FaChevronDown } from "react-icons/fa";
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 
 const Userdashboard = (props) => {
   const [auth, setAuth] = useAuth();
 
   const ref = useRef(null);
   // My user - For opening dashboard of a user
-
   const [user, setUser] = useState({});
   const [openToggleMenu, setOpenToggleMenu] = useState("");
   const [showLeftSidebar, setShowLeftSidebar] = useState(true);
@@ -65,30 +60,6 @@ const Userdashboard = (props) => {
     }
   };
 
-  const exerciseData = [
-    {
-      name: "Push-ups",
-      date: ["9 am"],
-      percentages: [20, 40, 60, 100],
-    },
-    {
-      name: "Sit-ups",
-      date: ["3 pm"],
-      percentages: [30, 50, 70, 90],
-    },
-    {
-      name: "Running",
-      date: ["7 pm"],
-      percentages: [10, 40, 50, 80],
-    },
-    {
-      name: "Skipping",
-      date: ["10 pm"],
-      percentages: [10, 40, 50, 90],
-    },
-    // Add more exercises as needed
-  ];
-
   return (
     <div>
       {/* Header Section */}
@@ -97,14 +68,14 @@ const Userdashboard = (props) => {
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
-          {/* <Link
+          <Link
             to=""
             class="logo d-flex align-items-center"
             style={{ textDecoration: "none" }}
           >
-            {/* <img src={mylogo_icn} alt="" />
+            {/* <img src={mylogo_icn} alt="" /> */}
             <span class="d-none d-lg-block">Fit Buddy</span>
-          </Link> */}
+          </Link>
           <BsList
             className="toggle-sidebar-btn"
             onClick={() => {
@@ -113,33 +84,34 @@ const Userdashboard = (props) => {
               });
             }}
           />
-          <Link
-            to=""
-            className="logo d-flex align-items-center"
-            style={{ textDecoration: "none" }}
-          >
-            {/* <img src={mylogo_icn} alt="" /> */}
-            {/* <span class="d-none d-lg-block">Fit Buddy</span> */}
-            <span class="d-none d-lg-block">
-    <img src={logo} alt="Fit Buddy Image" height="55px"/>
-    {/* Fit Buddy */}
-</span>
-
-          </Link>
         </div>
+
+        {/* <div className="search-bar">
+          <form className="search-form d-flex align-items-center">
+            <input
+              type="text"
+              name="query"
+              placeholder="Search"
+              title="Enter search keyword"
+            />
+            <button type="submit" title="Search">
+              <BiSearch />
+            </button>
+          </form>
+        </div> */}
 
         <nav className="header-nav ms-auto">
           <ul className="d-flex align-items-center">
             {/* Search Bar */}
             <li className="nav-item d-block d-lg-none">
               <Link className="nav-link nav-icon search-bar-toggle " to="">
-                {/* <BiSearch /> */}
+                <BiSearch />
               </Link>
             </li>
 
             {/* User Profie */}
             <li
-              className="nav-item dropdown pe-3"
+              class="nav-item dropdown pe-3"
               ref={ref}
               onClick={handleClickOutside}
             >
@@ -147,14 +119,14 @@ const Userdashboard = (props) => {
                 to=""
                 data-bs-toggle="dropdown"
                 onClick={toggleProfileDropdown}
-                className="nav-link nav-profile d-flex align-items-center pe-0"
+                class="nav-link nav-profile d-flex align-items-center pe-0"
               >
                 <img
                   alt="Profile"
                   src={person_icn}
                   className="rounded-circle"
                 />
-                <span className="d-none d-md-block dropdown-toggle ps-2">
+                <span class="d-none d-md-block dropdown-toggle ps-2">
                   {user?.name || "User"}
                 </span>
               </Link>
@@ -173,7 +145,7 @@ const Userdashboard = (props) => {
                     <span>Designation</span>
                   </li>
                   <li>
-                    <hr className="dropdown-divider" />
+                    <hr class="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -186,7 +158,7 @@ const Userdashboard = (props) => {
                     </Link>
                   </li>
                   <li>
-                    <hr className="dropdown-divider" />
+                    <hr class="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -217,14 +189,14 @@ const Userdashboard = (props) => {
       >
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
-            <Link className="nav-link " to="/Userdashboard">
+            <Link className="nav-link " to="">
               <BiGrid />
               &nbsp;
               <span>Dashboard</span>
             </Link>
           </li>
 
-          {/* <li className="nav-heading">Pages</li> */}
+          <li className="nav-heading">Pages</li>
 
           <li className="nav-item">
             {/* /ManageGoals */}
@@ -234,6 +206,14 @@ const Userdashboard = (props) => {
               <span>Manage Goals</span>
             </Link>
           </li>
+
+          {/* <li className="nav-item">
+            <Link className="nav-link collapsed" to="">
+              <BsFillPlusCircleFill />
+              &nbsp;
+              <span>Create Goals</span>
+            </Link>
+          </li> */}
 
           <li className="nav-item">
             <Link
@@ -253,7 +233,7 @@ const Userdashboard = (props) => {
             </Link>
             <ul
               id="forms-nav"
-              className={`nav-content  ${
+              class={`nav-content  ${
                 "sidebar-nav-create-goals" === openToggleMenu
                   ? "show"
                   : "collapse"
@@ -276,17 +256,25 @@ const Userdashboard = (props) => {
               </li>
               {/* <li>
                 <a href="forms-editors.html">
-                  <i className="bi bi-circle"></i>
+                  <i class="bi bi-circle"></i>
                   <span>Form Editors</span>
                 </a>
               </li>
               <li>
                 <a href="forms-validation.html">
-                  <i className="bi bi-circle"></i>
+                  <i class="bi bi-circle"></i>
                   <span>Form Validation</span>
                 </a>
               </li> */}
             </ul>
+          </li>
+
+          <li className="nav-item">
+            <Link className="nav-link collapsed" to="">
+              <BsCartPlusFill />
+              &nbsp;
+              <span>Buy Subscription</span>
+            </Link>
           </li>
 
           <li className="nav-item">
@@ -298,12 +286,26 @@ const Userdashboard = (props) => {
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="/History">
+            <Link className="nav-link collapsed" to="/Histo">
               <BiTime />
               &nbsp;
               <span>History</span>
             </Link>
           </li>
+
+          {/* <li className="nav-item">
+            <Link className="nav-link collapsed" to="">
+              <i className="bi bi-dash-circle"></i>
+              <span>Section 6</span>
+            </Link>
+          </li> */}
+
+          {/* <li className="nav-item">
+            <Link className="nav-link collapsed" to="">
+              <i className="bi bi-file-earmark"></i>
+              <span>Section 7</span>
+            </Link>
+          </li> */}
         </ul>
       </aside>
 
@@ -325,11 +327,6 @@ const Userdashboard = (props) => {
           </nav>
         </div> */}
         <section className="section dashboard">{props?.content}</section>
-        {/* {props?.content}
-          <div>
-            <h1>Exercise Completion Chart</h1>
-            <ExerciseChart data={exerciseData} />
-          </div> */}
       </main>
 
       {/* Back to Top */}
