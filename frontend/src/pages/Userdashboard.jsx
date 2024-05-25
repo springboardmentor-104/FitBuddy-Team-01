@@ -27,6 +27,8 @@ import {
 } from "react-icons/bs";
 
 import { FaDumbbell, FaChevronDown } from "react-icons/fa";
+import { IoFastFoodOutline } from "react-icons/io5";
+
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
@@ -265,6 +267,13 @@ const Userdashboard = (props) => {
                   <FaDumbbell />
                   &nbsp;
                   <span>Exercises</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/DietPage" style={{ textDecoration: "none" }}>
+                  <IoFastFoodOutline  />
+                  &nbsp;
+                  <span>Diets</span>
                 </Link>
               </li>
               <li>

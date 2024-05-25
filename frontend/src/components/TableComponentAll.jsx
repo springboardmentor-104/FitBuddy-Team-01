@@ -27,7 +27,7 @@ const TableComponentAll = () => {
     try {
       const allExercisesResponse = await axios.get("http://localhost:8080/api/v1/history/today/exercise", {
         headers: {
-          Authorization: `${token}`
+          "Authorization": `${token}`
         }
       });
   
@@ -58,7 +58,7 @@ const TableComponentAll = () => {
     try {
       const alldietsResponse = await axios.get("http://localhost:8080/api/v1/history/today/diet", {
         headers: {
-          Authorization: `${token}`
+          "Authorization": `${token}`
         }
       });
   
@@ -92,7 +92,7 @@ const TableComponentAll = () => {
         status: newStatus,
       }, {
         headers: {
-          Authorization: `${token}`, // replace with actual token
+          "Authorization": `${token}`, // replace with actual token
         },
       });
 

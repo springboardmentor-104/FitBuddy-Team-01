@@ -21,11 +21,17 @@ import ExerciseCard from "./pages/ExerciseCard";
 import ExerciseForm from "./pages/ExerciseForm";
 import ExercisePage from "./pages/ExercisePage";
 import SingleExercisePage from "./pages/SingleExercisePage";
+import SingleDietPage from "./pages/SingleDietPage";
 import CreateGoals from "./pages/CreateGoals";
 import ManageGoals from "./pages/ManageGoals";
 
 import MainContent from "./landingPage/MainContent"
 import ExerciseChart from "./pages/ExerciseChart";
+
+// index.js or App.js
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import DietPage from "./pages/DietPage";
 
 function ProtectedRoute({ Component }) {
   const token = localStorage.getItem("user");
@@ -89,11 +95,21 @@ const App = () => {
           path="/ExercisePage"
           element={<ProtectedRoute Component={ExercisePage} />}
         />
+        <Route
+          exact
+          path="/DietPage"
+          element={<ProtectedRoute Component={DietPage} />}
+        />
 
         <Route
           exact
           path="/SingleExercisePage/:id"
           element={<ProtectedRoute Component={SingleExercisePage} />}
+        />
+        <Route
+          exact
+          path="/SingleDietPage/:id"
+          element={<ProtectedRoute Component={SingleDietPage} />}
         />
         <Route
           exact

@@ -3,7 +3,7 @@ const router = express.Router();
 const { requireSignIn } = require("../middleware/authMiddleware");
 const { 
     createExercise, updateGoalStatus, deleteExercise, getAllExercises, getExerciseById,
-    createDiet, updateDietStatus, deleteDiet, getAllDiets, getDietById
+    createDiet, updateDietStatus, deleteDiet, getAllDiets, getDietById, getExerciseByName
  } = require('../controllers/historyController')
 
  
@@ -11,6 +11,7 @@ const {
 router.post('/exercise',requireSignIn, createExercise);
 router.put('/update/:id/status',requireSignIn, updateGoalStatus);
 router.delete('/exercise/:id',requireSignIn, deleteExercise);
+router.get('/exercise/name',requireSignIn, getExerciseByName);
 router.get('/exercises', requireSignIn,getAllExercises);
 router.get('/exercise/:id',requireSignIn, getExerciseById);
 

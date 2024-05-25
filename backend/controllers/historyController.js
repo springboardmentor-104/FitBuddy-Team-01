@@ -146,15 +146,85 @@ const showAllHistoryController = async (req, res) => {
 };
 // ******************* to make personal exercise api are here ***********************//
 
-// BUT IT IS NOT NECESSARY
+// const createExercise = async (req, res) => {
+//     try {
+//         const userId = req.user._id; // Ensure userId is part of the request body
+//         const exercises = req.body.exerciseArr; // Get the array of exercises from the request body
+//         const currentDate = new Date().toISOString().split('T')[0];
+
+//         if (!Array.isArray(exercises) || exercises.length === 0) {
+//             return res.json({
+//                 success: false,
+//                 message: "Invalid or empty exercises array",
+//             });
+//         }
+
+//         const createdExercises = [];
+//         const historyEntries = [];
+//         const errors = []; // Accumulate errors here
+
+//         for (let exerciseData of exercises) {
+//             const { name, category, sets, time } = exerciseData;
+
+//             // Validate each field to ensure no empty strings
+//             if (!name || !category || !sets || !time) {
+//                 errors.push(`Skipping invalid exercise data`);
+//                 continue; // Skip invalid exercise entries
+//             }
+
+//             let exercise = await GoalExercise.findOne({ userId, name, date: currentDate });
+
+//             if (!exercise) {
+//                 exercise = new GoalExercise({ userId, name, category, sets, time, date: currentDate });
+//                 await exercise.save();
+//                 createdExercises.push(exercise);
+//             } else {
+//                 errors.push("Exercise already exists for today");
+//             }
+
+//             const historyEntry = new History({
+//                 userId,
+//                 goalId: exercise._id, // Link to the created exercise
+//                 type: 'exercise', // Specify the type as 'exercise'
+//                 status: 'pending', // Default status
+//                 createdAt: currentDate
+//             });
+
+//             await historyEntry.save();
+//             historyEntries.push(historyEntry);
+//         }
+
+//         if (createdExercises.length === 0) {
+//             return res.json({
+//                 success: false,
+//                 message: "Exercise already exist",
+//                 errors: errors // Return accumulated errors
+//             });
+//         }
+
+//         return res.status(201).json({
+//             success: true,
+//             message: "Exercises added to your task list",
+//             createdExercises,
+//             historyEntries,
+//         });
+//     } catch (error) {
+//         return res.status(500).json({
+//             success: false,
+//             message: "Something went wrong",
+//         });
+//     }
+// };
+
+
 const createExercise = async (req, res) => {
     try {
-        const userId = req.user._id; // Ensure userId is part of the request body
-        const exercises = req.body.exerciseArr; // Get the array of exercises from the request body
+        const userId = req.user._id;
+        const exercises = req.body.exerciseArr;
         const currentDate = new Date().toISOString().split('T')[0];
 
         if (!Array.isArray(exercises) || exercises.length === 0) {
-            return res.status(400).json({
+            return res.json({
                 success: false,
                 message: "Invalid or empty exercises array",
             });
@@ -162,32 +232,33 @@ const createExercise = async (req, res) => {
 
         const createdExercises = [];
         const historyEntries = [];
+        const errors = [];
 
         for (let exerciseData of exercises) {
-            const { name, category, sets, time } = exerciseData;
+            const { name, category, sets, time, key } = exerciseData; // Destructure key if present
 
             // Validate each field to ensure no empty strings
             if (!name || !category || !sets || !time) {
-                console.log("Skipping invalid exercise data:", exerciseData);
-                continue; // Skip invalid exercise entries
+                errors.push(`Skipping invalid exercise data`);
+                continue;
             }
 
             let exercise = await GoalExercise.findOne({ userId, name, date: currentDate });
 
             if (!exercise) {
-                exercise = new GoalExercise({ userId, name, category, sets, time, date: currentDate });
+                exercise = new GoalExercise({ userId, name, category, sets, time, date: currentDate, key });
                 await exercise.save();
                 createdExercises.push(exercise);
             } else {
-                console.log("Exercise already exists for today:", exercise);
+                errors.push("Exercise already exists for today");
             }
 
             const historyEntry = new History({
                 userId,
-                goalId: exercise._id, // Link to the created exercise
-                type: 'exercise', // Specify the type as 'exercise'
-                status: 'pending', // Default status
-                createdAt: currentDate
+                goalId: exercise._id,
+                type: 'exercise',
+                status: 'pending',
+                createdAt: currentDate,
             });
 
             await historyEntry.save();
@@ -195,9 +266,10 @@ const createExercise = async (req, res) => {
         }
 
         if (createdExercises.length === 0) {
-            return res.status(400).json({
+            return res.json({
                 success: false,
-                message: "No valid exercises to add",
+                message: "Exercise already exists",
+                errors: errors
             });
         }
 
@@ -205,16 +277,17 @@ const createExercise = async (req, res) => {
             success: true,
             message: "Exercises added to your task list",
             createdExercises,
-            historyEntries
+            historyEntries,
         });
     } catch (error) {
-        console.error("Error creating exercises:", error);
         return res.status(500).json({
             success: false,
             message: "Something went wrong",
         });
     }
 };
+
+
 
 // Update status of an exercise by ID
 const updateGoalStatus = async (req, res) => {
@@ -265,6 +338,8 @@ const deleteExercise = async (req, res) => {
     }
 };
 
+
+
 // Get all exercises
 const getAllExercises = async (req, res) => {
     try {
@@ -290,6 +365,20 @@ const getExerciseById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+const getExerciseByName = async (req, res) => {
+    try {
+        const userId = req.user._id
+        const currentDate = new Date().toISOString().split('T')[0];
+        const exercise = await GoalExercise.find({userId:userId,name:req.body.name, date:currentDate});
+        if (exercise) {
+            res.json(exercise);
+        } else {
+            res.status(404).json({ message: 'Exercise not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 
 // ******************* to make personal diet api are here ***********************//
@@ -297,14 +386,82 @@ const getExerciseById = async (req, res) => {
 
 // Create a new diet
 
+// const createDiet = async (req, res) => {
+//     try {
+//         const userId = req.user._id; // Ensure userId is part of the request body
+//         const diets = req.body.dietArr; // Get the array of exercises from the request body
+//         const currentDate = new Date().toISOString().split('T')[0];
+
+//         if (!Array.isArray(diets) || diets.length === 0) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Invalid or empty diets array",
+//             });
+//         }
+
+//         const createdDiets = [];
+//         const historyEntries = [];
+
+//         for (let dietData of diets) {
+//             const { name, timeToEat, quantity, calories } = dietData;
+
+//             // Validate each field to ensure no empty strings
+//             if (!name || !timeToEat || !quantity || !calories) {
+//                 console.log("Skipping invalid diet data:", dietData);
+//                 continue; // Skip invalid diet entries
+//             }
+
+//             let diet = await GoalDiet.findOne({ userId, name, date: currentDate });
+
+//             if (!diet) {
+//                 diet = new GoalDiet({ userId, name, category: timeToEat, quantity, calories, date: currentDate, key});
+//                 await diet.save();
+//                 createdDiets.push(diet);
+//             } else {
+//                 console.log("Diet already exists for today:", diet);
+//             }
+
+//             const historyEntry = new History({
+//                 userId,
+//                 goalId: diet._id, // Link to the created diet
+//                 type: 'diet', // Specify the type as 'diet'
+//                 status: 'pending', // Default status
+//                 createdAt: currentDate
+//             });
+
+//             await historyEntry.save();
+//             historyEntries.push(historyEntry);
+//         }
+
+//         if (createdDiets.length === 0) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Diet already exists",
+//             });
+//         }
+
+//         return res.status(201).json({
+//             success: true,
+//             message: "Diets added to your task list",
+//             createdDiets,
+//             historyEntries
+//         });
+//     } catch (error) {
+//         console.error("Error creating diets:", error);
+//         return res.status(500).json({
+//             success: false,
+//             message: "Something went wrong",
+//         });
+//     }
+// };
 const createDiet = async (req, res) => {
     try {
-        const userId = req.user._id; // Ensure userId is part of the request body
-        const diets = req.body.dietArr; // Get the array of exercises from the request body
+        const userId = req.user._id;
+        const diets = req.body.dietArr;
         const currentDate = new Date().toISOString().split('T')[0];
 
         if (!Array.isArray(diets) || diets.length === 0) {
-            return res.status(400).json({
+            return res.json({
                 success: false,
                 message: "Invalid or empty diets array",
             });
@@ -312,32 +469,33 @@ const createDiet = async (req, res) => {
 
         const createdDiets = [];
         const historyEntries = [];
+        const errors = [];
 
         for (let dietData of diets) {
-            const { name, timeToEat, quantity, calories } = dietData;
+            const { name, timeToEat, quantity, calories, key } = dietData; // Destructure key if present
 
             // Validate each field to ensure no empty strings
             if (!name || !timeToEat || !quantity || !calories) {
-                console.log("Skipping invalid diet data:", dietData);
-                continue; // Skip invalid diet entries
+                errors.push(`Skipping invalid diet data`);
+                continue;
             }
 
             let diet = await GoalDiet.findOne({ userId, name, date: currentDate });
-
+            console.log(diet)
             if (!diet) {
-                diet = new GoalDiet({ userId, name, category: timeToEat, quantity, calories, date: currentDate });
+                diet = new GoalDiet({ userId, name, category: timeToEat, quantity, calories, date: currentDate, key });
                 await diet.save();
                 createdDiets.push(diet);
             } else {
-                console.log("Diet already exists for today:", diet);
+                errors.push("Diet already exists for today");
             }
 
             const historyEntry = new History({
                 userId,
-                goalId: diet._id, // Link to the created diet
-                type: 'diet', // Specify the type as 'diet'
-                status: 'pending', // Default status
-                createdAt: currentDate
+                goalId: diet._id,
+                type: 'diet',
+                status: 'pending',
+                createdAt: currentDate,
             });
 
             await historyEntry.save();
@@ -345,9 +503,9 @@ const createDiet = async (req, res) => {
         }
 
         if (createdDiets.length === 0) {
-            return res.status(400).json({
+            return res.json({
                 success: false,
-                message: "No valid diets to add",
+                message: "Diet already exists",
             });
         }
 
@@ -355,10 +513,9 @@ const createDiet = async (req, res) => {
             success: true,
             message: "Diets added to your task list",
             createdDiets,
-            historyEntries
+            historyEntries,
         });
     } catch (error) {
-        console.error("Error creating diets:", error);
         return res.status(500).json({
             success: false,
             message: "Something went wrong",
@@ -439,24 +596,80 @@ const getDietById = async (req, res) => {
     }
 };
 
+// const createEveryDayHistoryData = async (req, res) => {
+//     try {
+//         const userId = req.user._id;
+//         const type = req.params.type;
+
+//         // Check if exercises already created for today
+//         const existingHistory = await History.findOne({
+//             userId: userId,
+//             createdAt: new Date().toISOString().split('T')[0]
+//         });
+//         console.log("new Date().toISOString().split('T')[0]",userId , new Date().toISOString().split('T')[0])
+//         console.log("existingHistory", existingHistory)
+//         if (existingHistory) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Exercises already created for today"
+//             });
+//         }
+//         const goaldiets = await GoalDiet.find({ userId: userId }); // personal diets
+//         const goalexercises = await GoalExercise.find({ userId: userId }); // personal exercises
+//         const data = [...goaldiets, ...goalexercises];
+//         const historyData = [];
+//         console.log(data)
+//         for (const item of data) {
+//             let type = "";
+//             if ("sets" in item ) {
+//                 type = "exercise"; // If the data has sets and timeToPerformExercise fields, it's from exercises
+//             } else {
+//                 type = "diet"; // Otherwise, it's from diet goals
+//             }
+
+//             const historyRecord = {
+//                 userId: userId,
+//                 goalId: item._id,
+//                 type: type,
+//                 status: "pending",
+//                 createdAt: new Date().toISOString().split('T')[0],
+//             };
+
+//             historyData.push(historyRecord);
+//         }
+//         console.log(historyData)
+//         await History.insertMany(historyData);
+//         res.status(201).json({
+//             success: true,
+//             message: "history created successfully",
+//         });
+//     } catch (error) {
+//         // Handle errors
+//         console.error("Error creating diet:", error);
+//         return res
+//             .status(500)
+//             .json({ success: false, message: "Internal server error" });
+//     }
+// };
 const createEveryDayHistoryData = async (req, res) => {
     try {
-        const { userId } = req.body;
+        const { userId } = req.user._id;
+        const currentDate = new Date().toISOString().split('T')[0];
+        const previousDate = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
+
         // Check if exercises already created for today
         const existingHistory = await History.findOne({
             userId: userId,
-            createdAt: new Date().toISOString().split('T')[0]
+            createdAt: currentDate
         });
-        console.log("new Date().toISOString().split('T')[0]",userId , new Date().toISOString().split('T')[0])
-        console.log("existingHistory", existingHistory)
         if (existingHistory) {
-            return res.status(400).json({
+            return res.json({
                 success: false,
                 message: "Exercises already created for today"
             });
         }
-        const goaldiets = await GoalDiet.find({ userId: userId }); // personal diets
-        const goalexercises = await GoalExercise.find({ userId: userId }); // personal exercises
+        const goaldiets = await GoalDiet.find({ userId: userId, date:previousDate }); // personal diets
+        const goalexercises = await GoalExercise.find({ userId: userId ,date:previousDate}); // personal exercises
         const data = [...goaldiets, ...goalexercises];
         const historyData = [];
         console.log(data)
@@ -473,7 +686,7 @@ const createEveryDayHistoryData = async (req, res) => {
                 goalId: item._id,
                 type: type,
                 status: "pending",
-                createdAt: new Date().toISOString().split('T')[0],
+                createdAt: currentDate
             };
 
             historyData.push(historyRecord);
@@ -493,10 +706,11 @@ const createEveryDayHistoryData = async (req, res) => {
     }
 };
 
+
 module.exports = {
     createExercise, updateGoalStatus, deleteExercise, getAllExercises, getExerciseById,
     createDiet, updateDietStatus, deleteDiet, getAllDiets, getDietById,
-    todayHistoryController, showAllHistoryController, todayAllTask, todayDataCategoryWise, createEveryDayHistoryData
+    todayHistoryController, showAllHistoryController, todayAllTask, todayDataCategoryWise, createEveryDayHistoryData, getExerciseByName
 };
 
 

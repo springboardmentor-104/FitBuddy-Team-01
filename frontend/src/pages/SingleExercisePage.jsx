@@ -27,7 +27,7 @@ function SingleExercisePage() {
     const fetchExerciseData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/exercises/${id}`
+          `http://localhost:8080/api/v1/exercise/exercises/${id}`
         );
         if (response.status === 200) {
           setExerciseData(response.data.exercise);
