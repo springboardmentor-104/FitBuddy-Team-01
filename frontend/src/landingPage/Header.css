@@ -1,88 +1,89 @@
 .landingPageHeader {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.LandingLogo {
+  width: 55px;
+  height: 55px;
+  margin-left: 3vw;
+}
+
+.gau-nav {
+  margin-right: 10vw;
+}
+
+.gau-nav a {
+  margin: 0 20px;
+  align-content: center;
+  padding: 7px 20px;
+  text-decoration: none;
+  color: #000;
+}
+
+.gau-nav a:hover {
+  background-color: orange;
+  color: #ffffff;
+  border-radius: 30px;
+  /* text-decoration: underline; */
+}
+
+.hamburger {
+  display: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .gau-nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
     background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    gap: 10px;
   }
-  
-  .LandingLogo {
-    width: 55px;
-    height: 55px;
-    margin-left: 3vw;
-  }
-  .nav{
-    margin-right: 10vw;
-  }
-  .nav a {
-    margin:0 20px;
-    align-content: center;
-    padding: 7px 20px;
-    text-decoration: none;
-    color: #000;
-  }
-  
-  .nav a:hover {
-    background-color: orange;
-    color: #ffffff;
-    border-radius: 30px;
-    /* text-decoration: underline; */
+
+  .gau-nav.open {
+    display: flex;
   }
 
   .hamburger {
+    display: block;
+    margin-right: 3vw;
+  }
+}
+
+@media (max-width: 412px) {
+  .gau-nav {
     display: none;
-    font-size: 30px;
-    cursor: pointer;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    gap: 10px;
   }
 
-  @media (max-width: 768px){
-    .nav {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      padding: 10px;
-      gap: 10px;
-    }
-  
-    .nav.open {
-      display: flex;
-    }
-  
-    .hamburger {
-      display: block;
-      margin-right: 3vw;
-    }
+  .gau-nav.open {
+    display: flex;
   }
 
-  @media (max-width: 412px) {
-    .nav {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      padding: 10px;
-      gap: 10px;
-    }
-  
-    .nav.open {
-      display: flex;
-    }
-  
-    .hamburger {
-      display: block;
-      margin-right: 3vw;
-    }
+  .hamburger {
+    display: block;
+    margin-right: 3vw;
   }
+}
 
-  .logo {
-    width: 55px;
-    height: 55px;
-    margin-left: 3vw;
-  }
-  
+.logo {
+  width: 55px;
+  height: 55px;
+  margin-left: 3vw;
+}

@@ -7,15 +7,16 @@
 }
 
 .select-wrapper {
-  text-align: center; /* Center the dropdown box */
-  position: fixed; /* Fix the position */
+  /* text-align: center; */ /* Center the dropdown box */
+  /* position: fixed; */ /* Fix the position */
   top: 0; /* Align to the top */
   left: 50%; /* Move to the center horizontally */
-  transform: translateX(-50%); /* Adjust for centering */
-  width: 200px; /* Set a fixed width for the dropdown */
+  /* transform: translateX(-50%); */ /* Adjust for centering */
+  /*width: 200px; */ /* Set a fixed width for the dropdown */
   /* margin-top: 20px; Add margin from the top */
-
-  margin-top: 100px; /* new change */
+  /* margin-top: 100px; */ /* new change */
+  display: flex;
+  justify-content: center;
 }
 
 .select-wrapper select {

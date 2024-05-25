@@ -62,33 +62,36 @@ function SingleExercisePage() {
               <div className="App">
                 {exerciseData ? (
                   <div className="container">
-                    {/* Exercise details */}
-                    <div className="image-container">
-                      <img src={exerciseData.photo} alt={exerciseData.name} />
+                    <div className="label">
+                      {/* <center> */}
+                      {exerciseData.name}
+                      {/* </center> */}
                     </div>
-                    <div className="text-container">
-                      {/* Exercise name */}
-                      <div className="label">
-                        <center id="exerciseSidebarAdjustment">
-                          {exerciseData.name}
-                        </center>
+                    <div className="d-flex justify-content-center">
+                      {/* Exercise details */}
+                      <div className="image-container">
+                        <img src={exerciseData.photo} alt={exerciseData.name} />
                       </div>
-                      {/* Exercise instructions */}
-                      <h2>Instructions</h2>
-                      <p className="instruction-para">
-                        {exerciseData.description}
-                      </p>
-                      {/* Buttons */}
-                      <div className="button-container">
-                        <button
-                          className="add-button"
-                          onClick={() => setShowExerciseForm(true)}
-                        >
-                          Add
-                        </button>
-                        <button className="remove-button" onClick={() => {}}>
-                          Remove
-                        </button>
+                      <div className="text-container">
+                        {/* Exercise name */}
+
+                        {/* Exercise instructions */}
+                        <h2>Instructions</h2>
+                        <p className="instruction-para">
+                          {exerciseData.description}
+                        </p>
+                        {/* Buttons */}
+                        <div className="button-container">
+                          <button
+                            className="add-button"
+                            onClick={() => setShowExerciseForm(true)}
+                          >
+                            Add
+                          </button>
+                          <button className="remove-button" onClick={() => {}}>
+                            Remove
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
