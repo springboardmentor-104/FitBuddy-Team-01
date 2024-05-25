@@ -235,6 +235,13 @@ const Login = (props) => {
         <div className="row h-100">
           <div className="col-sm-12 col-md-6">
             <div className="text-center p-3" id="reg-bx">
+              <div className="text-left" style={{ marginBottom: "5px" }}>
+                <Link to="/">
+                  <i className="fa fa-angle-left" id="lft-arw-icn">
+                    &nbsp;Back
+                  </i>
+                </Link>
+              </div>
               <h1 className="h3" id="lg-lg">
                 Fit Buddy
               </h1>

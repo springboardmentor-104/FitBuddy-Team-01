@@ -5,7 +5,7 @@ import ExerciseForm from "./ExerciseForm";
 import "./ExercisePage.css";
 import Userdashboard from "./Userdashboard";
 
-// import { MenuItem, TextField } from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 
 const ExercisePage = () => {
   const [selectedType, setSelectedType] = useState("");
@@ -76,7 +76,7 @@ const ExercisePage = () => {
                 dropdownVisible ? "visible" : "hidden"
               }`}
             >
-              <div className="select-wrapper">
+              {/* <div className="select-wrapper">
                 <select value={selectedType} onChange={handleTypeChange}>
                   <option value="">All Exercises</option>
                   <option value="strength">Strength</option>
@@ -85,23 +85,32 @@ const ExercisePage = () => {
                   <option value="powerlifting">Powerlifting</option>
                   <option value="other">Other</option>
                 </select>
-              </div>
-
-              {/* <div className="col-lg-3 col-md-6">
-                <TextField
-                  className="me-3"
-                  name="mySelect"
-                  label="Choose an option"
-                  select
-                  value={selectedType}
-                  onChange={handleTypeChange}
-                  fullWidth
-                >
-                  <MenuItem value="option1">Option 1</MenuItem>
-                  <MenuItem value="option2">Option 2</MenuItem>
-                  <MenuItem value="option3">Option 3</MenuItem>
-                </TextField>
               </div> */}
+
+              {/* New Code for Select Option by Shivankush */}
+              <div className="d-flex justify-content-center">
+                <div
+                  // className="col-lg-3 col-md-6"
+                  style={{ width: 225, marginTop: "20px" }}
+                >
+                  <TextField
+                    className="me-3"
+                    name="SelectExercises"
+                    label="Select Exercises"
+                    select
+                    value={selectedType}
+                    onChange={handleTypeChange}
+                    fullWidth
+                  >
+                    <MenuItem value="">All Exercises</MenuItem>
+                    <MenuItem value="strength">Strength</MenuItem>
+                    <MenuItem value="yoga">Yoga</MenuItem>
+                    <MenuItem value="cardio">Cardio</MenuItem>
+                    <MenuItem value="powerlifting">Powerlifting</MenuItem>
+                    <MenuItem value="other">Other</MenuItem>
+                  </TextField>
+                </div>
+              </div>
             </div>
 
             <div
