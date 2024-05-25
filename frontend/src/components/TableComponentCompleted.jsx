@@ -3,13 +3,13 @@ import React from "react";
 import ExerciseStatusTypography from "../pages/ExerciseStatusTypography";
 import DietStatusTypography from "../pages/DietStatusTypography";
 import "./Table.css";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from '../context/auth'; 
-import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../context/auth";
+import axios from "axios";
 
 const TableComponentCompleted = () => {
-  const[auth, setAuth] = useAuth();
+  const [auth, setAuth] = useAuth();
   const token = auth?.token;
 
   const [CompletedExercises, setCompletedExercises] = React.useState([]);
@@ -26,28 +26,32 @@ const TableComponentCompleted = () => {
     // eslint-disable-line no-console
   }, []);
 
-  const handleStatusClick = async (id, type,currentStatus) => {
-    const newStatus = currentStatus === 'pending' ? 'completed' : 'pending';
+  const handleStatusClick = async (id, type, currentStatus) => {
+    const newStatus = currentStatus === "pending" ? "completed" : "pending";
 
     try {
-      const response = await axios.put(`http://localhost:8080/api/v1/goal/update/${id}/status`, {
-        status: newStatus,
-      }, {
-        headers: {
-          Authorization: `${token}`, // replace with actual token
+      const response = await axios.put(
+        `http://localhost:8080/api/v1/goal/update/${id}/status`,
+        {
+          status: newStatus,
         },
-      });
+        {
+          headers: {
+            Authorization: `${token}`, // replace with actual token
+          },
+        }
+      );
 
       if (response.status === 200) {
         toast.success("Status updated successfully!");
         // Conditionally update state based on the type
-        if (type === 'exercise') {
+        if (type === "exercise") {
           setCompletedExercises((prevExercises) =>
             prevExercises.map((exercise) =>
               exercise.id === id ? { ...exercise, status: newStatus } : exercise
             )
           );
-        } else if (type === 'diet') {
+        } else if (type === "diet") {
           setCompletedDiets((prevDiets) =>
             prevDiets.map((diet) =>
               diet.id === id ? { ...diet, status: newStatus } : diet
@@ -61,20 +65,23 @@ const TableComponentCompleted = () => {
       toast.error("Error updating status: " + error.message);
     }
   };
-const fetchDataAllExercises = async () => {
+  const fetchDataAllExercises = async () => {
     try {
-      const allExercisesResponse = await axios.get("http://localhost:8080/api/v1/history/today/exercise/completed", {
-        headers: {
-          Authorization: `${token}`
+      const allExercisesResponse = await axios.get(
+        "http://localhost:8080/api/v1/history/today/exercise/completed",
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
         }
-      });
-  
+      );
+
       if (allExercisesResponse.status !== 200) {
         toast.error(allExercisesResponse.message);
       }
-  
+
       const allExercisesData = allExercisesResponse.data;
-  
+
       // Transforming data
       const transformedData = allExercisesData.map((item, index) => ({
         index: index + 1,
@@ -84,28 +91,30 @@ const fetchDataAllExercises = async () => {
         sets: item.goalId.sets,
         time: item.goalId.time,
         status: item.status,
-        date: item.createdAt
+        date: item.createdAt,
       }));
-  
+
       setCompletedExercises(transformedData); // Assuming you have a state variable named allExercises to store the transformed data
-    } catch (error) {
-    }
+    } catch (error) {}
   };
-  
+
   const fetchDataAllDiets = async () => {
     try {
-      const alldietsResponse = await axios.get("http://localhost:8080/api/v1/history/today/diet/completed", {
-        headers: {
-          Authorization: `${token}`
+      const alldietsResponse = await axios.get(
+        "http://localhost:8080/api/v1/history/today/diet/completed",
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
         }
-      });
-  
+      );
+
       if (alldietsResponse.status !== 200) {
         toast.error(alldietsResponse.message);
       }
-  
+
       const alldietsData = alldietsResponse.data;
-  
+
       // Transforming data
       const transformedData = alldietsData.map((item, index) => ({
         index: index + 1,
@@ -114,13 +123,12 @@ const fetchDataAllExercises = async () => {
         category: item.goalId.category,
         quantity: item.goalId.quantity,
         calories: item.goalId.calories,
-        status:item.status,
-        date:item.createdAt
+        status: item.status,
+        date: item.createdAt,
       }));
-  
+
       setCompletedDiets(transformedData);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   //   S.No.	Exercise Name	Category	Sets	Estimated Time	Status	Date
@@ -147,22 +155,25 @@ const fetchDataAllExercises = async () => {
     {
       dataIndex: "time",
       title: "Estimated Time",
+      width: 150,
       className: "my-font",
     },
     {
       dataIndex: "status",
       title: "Status",
+      width: 100,
       className: "my-font",
       render: (value, row) => (
         <ExerciseStatusTypography
           done={value}
-          onClick={() => handleStatusClick(row.id, 'exercise', value)}
+          onClick={() => handleStatusClick(row.id, "exercise", value)}
         />
       ),
     },
     {
       dataIndex: "date",
       title: "Date",
+      width: 100,
       className: "my-font",
     },
   ];
@@ -186,22 +197,25 @@ const fetchDataAllExercises = async () => {
     {
       dataIndex: "category",
       title: "Time to Eat",
+      width: 150,
       className: "my-font",
     },
     {
       dataIndex: "status",
       title: "Status",
+      width: 100,
       className: "my-font",
       render: (value, row) => (
         <DietStatusTypography
           done={value}
-          onClick={() => handleStatusClick(row.id, 'diet',value)}
+          onClick={() => handleStatusClick(row.id, "diet", value)}
         />
-      ),   
+      ),
     },
     {
       dataIndex: "date",
       title: "Date",
+      width: 100,
       className: "my-font",
     },
   ];
@@ -216,9 +230,20 @@ const fetchDataAllExercises = async () => {
   //   onChange: onSelectChange,
   // };
 
+  // Calculate the total width
+  const AllDietsTableTotalWidth = AllDietsColumns.reduce(
+    (sum, column) => sum + column.width,
+    0
+  );
+
+  const AllExercisesTableTotalWidth = AllExercisesColumns.reduce(
+    (sum, column) => sum + column.width,
+    0
+  );
+
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       {/* All Exercises */}
       <div className="d-flex justify-content-between">
         <div>
@@ -246,7 +271,11 @@ const fetchDataAllExercises = async () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        // scroll={{ x: true }}
+        scroll={{ x: AllExercisesTableTotalWidth }}
       />
+
+      <br />
 
       {/* All Diets */}
       <div className="d-flex justify-content-between">
@@ -275,6 +304,8 @@ const fetchDataAllExercises = async () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        // scroll={{ x: true }}
+        scroll={{ x: AllDietsTableTotalWidth }}
       />
     </>
   );

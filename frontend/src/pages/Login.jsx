@@ -203,7 +203,7 @@ const Login = (props) => {
       if (responseData.success) {
         toast.success(responseData.message); // Display success message using toast
         setTimeout(() => {
-          navigate('/Userdashboard');
+          navigate("/Userdashboard");
         }, 1000);
         setOtpVerified(true); // Update state to indicate OTP verification success
       } else {
@@ -302,7 +302,7 @@ const Login = (props) => {
                   <Link to="/forgot-password" id="fg-ps">
                     Forgot your password?
                   </Link>
-                  <button className="btn btn-warning" id="btn-lg" type="submit">
+                  <button className="btn btn-primary" id="btn-lg" type="submit">
                     Login to continue
                   </button>
                   <div className="text-left">
