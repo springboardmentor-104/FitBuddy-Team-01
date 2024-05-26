@@ -128,7 +128,7 @@ const Login = (props) => {
                 </h3>
               </span>
               <form id="form" className="flex flex-col" onSubmit={handleSubmit}>
-                <div class="input-group mb-3">
+                <div className="input-group mb-3">
                   <input
                     // {...register("Email Address")}
                     required
@@ -159,7 +159,7 @@ const Login = (props) => {
                     type={showPassword ? "password" : "text"}
                   />
                   <span
-                    class="input-group-text"
+                    className="input-group-text"
                     onClick={togglePasswordVisibility}
                   >
                     {showPassword ? <FaEyeSlash /> : <FaEye />}

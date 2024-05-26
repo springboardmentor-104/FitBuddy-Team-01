@@ -66,11 +66,11 @@ const Userdashboard = (props) => {
         <div className="d-flex align-items-center justify-content-between">
           <Link
             to=""
-            class="logo d-flex align-items-center"
+            className="logo d-flex align-items-center"
             style={{ textDecoration: "none" }}
           >
             {/* <img src={mylogo_icn} alt="" /> */}
-            <span class="d-none d-lg-block">Fit Buddy</span>
+            <span className="d-none d-lg-block">Fit Buddy</span>
           </Link>
           <BsList
             className="toggle-sidebar-btn"
@@ -107,7 +107,7 @@ const Userdashboard = (props) => {
 
             {/* User Profie */}
             <li
-              class="nav-item dropdown pe-3"
+              className="nav-item dropdown pe-3"
               ref={ref}
               onClick={handleClickOutside}
             >
@@ -115,14 +115,14 @@ const Userdashboard = (props) => {
                 to=""
                 data-bs-toggle="dropdown"
                 onClick={toggleProfileDropdown}
-                class="nav-link nav-profile d-flex align-items-center pe-0"
+                className="nav-link nav-profile d-flex align-items-center pe-0"
               >
                 <img
                   alt="Profile"
                   src={person_icn}
                   className="rounded-circle"
                 />
-                <span class="d-none d-md-block dropdown-toggle ps-2">
+                <span className="d-none d-md-block dropdown-toggle ps-2">
                   {user?.name || "User"}
                 </span>
               </Link>
@@ -141,7 +141,7 @@ const Userdashboard = (props) => {
                     <span>Designation</span>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -154,7 +154,7 @@ const Userdashboard = (props) => {
                     </Link>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link
@@ -227,7 +227,7 @@ const Userdashboard = (props) => {
             </Link>
             <ul
               id="forms-nav"
-              class={`nav-content  ${
+              className={`nav-content  ${
                 "sidebar-nav-create-goals" === openToggleMenu
                   ? "show"
                   : "collapse"
@@ -250,13 +250,13 @@ const Userdashboard = (props) => {
               </li>
               {/* <li>
                 <a href="forms-editors.html">
-                  <i class="bi bi-circle"></i>
+                  <i className="bi bi-circle"></i>
                   <span>Form Editors</span>
                 </a>
               </li>
               <li>
                 <a href="forms-validation.html">
-                  <i class="bi bi-circle"></i>
+                  <i className="bi bi-circle"></i>
                   <span>Form Validation</span>
                 </a>
               </li> */}
@@ -271,8 +271,18 @@ const Userdashboard = (props) => {
             </Link>
           </li>
 
-          <li className="nav-item">
+          {/* Old Profile Page */}
+          {/* <li className="nav-item">
             <Link className="nav-link collapsed" to="/MyProfile">
+              <BsPersonFill />
+              &nbsp;
+              <span>My Profile</span>
+            </Link>
+          </li> */}
+
+          {/* New Profile Page */}
+          <li className="nav-item">
+            <Link className="nav-link collapsed" to="/profile-page">
               <BsPersonFill />
               &nbsp;
               <span>My Profile</span>
@@ -286,13 +296,6 @@ const Userdashboard = (props) => {
               <span>History</span>
             </Link>
           </li>
-
-          {/* <li className="nav-item">
-            <Link className="nav-link collapsed" to="">
-              <i className="bi bi-dash-circle"></i>
-              <span>Section 6</span>
-            </Link>
-          </li> */}
 
           {/* <li className="nav-item">
             <Link className="nav-link collapsed" to="">
@@ -332,7 +335,7 @@ const Userdashboard = (props) => {
             behavior: "smooth",
           });
         }}
-        className="back-to-top d-flex align-items-center justify-content-center"
+        className="back-to-top d-flex align-items-center justify-content-center btn btn-primary"
       >
         <BsArrowUp style={{ color: "#fff" }} />
       </Link>

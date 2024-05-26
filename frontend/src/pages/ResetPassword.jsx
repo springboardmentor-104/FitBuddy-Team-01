@@ -141,20 +141,20 @@ const ResetPassword = (props) => {
                     </p>
                     <div className="input-container">
                       <label>Create Password</label>
-                      <div class="input-group mb-3">
+                      <div className="input-group mb-3">
                         <input
                           required
                           minLength={8}
                           maxLength={15}
                           value={password}
-                          class="form-control"
+                          className="form-control"
                           pattern="[A-Z,a-z,0-9,@,#]*"
                           onChange={handlePasswordChange}
                           type={showPassword ? "password" : "text"}
                           aria-label="Amount (to the nearest dollar)"
                         />
                         <span
-                          class="input-group-text"
+                          className="input-group-text"
                           onClick={togglePasswordVisibility}
                         >
                           {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -163,12 +163,12 @@ const ResetPassword = (props) => {
                     </div>
                     <div className="input-container">
                       <label>Re-enter Password</label>
-                      <div class="input-group mb-3">
+                      <div className="input-group mb-3">
                         <input
                           required
                           minLength={8}
                           maxLength={15}
-                          class="form-control"
+                          className="form-control"
                           value={confirmPassword}
                           pattern="[A-Z,a-z,0-9,@,#]*"
                           onChange={handleConfirmPasswordChange}
@@ -176,7 +176,7 @@ const ResetPassword = (props) => {
                           aria-label="Amount (to the nearest dollar)"
                         />
                         <span
-                          class="input-group-text"
+                          className="input-group-text"
                           onClick={toggleConfirmPasswordVisibility}
                         >
                           {showPassword ? <FaEyeSlash /> : <FaEye />}

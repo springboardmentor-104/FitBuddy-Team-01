@@ -10,7 +10,8 @@ import Registration from "./pages/Registration";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Userdashboard from "./pages/Userdashboard";
-import MyProfile from "./pages/MyProfile";
+// import MyProfile from "./pages/MyProfile";  // Old Profile Page
+import ProfilePage from "./pages/ProfilePage"; // New Profile Page 
 //
 // import History from "./pages/History";
 import Histo from "./pages/Histo";
@@ -26,6 +27,7 @@ import CreateGoals from "./pages/CreateGoals";
 //
 // import ExerciseCard from "./pages/ExerciseCard";
 // import CreateGoals from "./pages/CreateGoals";
+//
 
 const App = () => {
   return (
@@ -41,7 +43,9 @@ const App = () => {
         <Route exact path="/forgot-password" element={<ForgotPassword />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
         <Route exact path="/Userdashboard" element={<Userdashboard />} />
-        <Route exact path="/MyProfile" element={<MyProfile />} />
+
+        {/* <Route exact path="/MyProfile" element={<MyProfile />} /> */}
+        <Route exact path="/profile-page" element={<ProfilePage />} />
 
         {/* <Route exact path="/History" element={<History />} /> */}
         <Route exact path="/Histo" element={<Histo />} />
