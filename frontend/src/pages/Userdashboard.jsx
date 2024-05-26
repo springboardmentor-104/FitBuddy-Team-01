@@ -139,10 +139,10 @@ const Userdashboard = (props) => {
             style={{ textDecoration: "none" }}
           >
             <span class="d-none d-lg-block">
-    <img src={logo} alt="Fit Buddy Image" height="55px"/>
-    {/* Fit Buddy */}
-</span>
-
+              {/* <img src={logo} alt="Fit Buddy Image" height="55px"/> */}
+              <img src={logo} alt="Fit Buddy Image" height="47px" width="47px"/>
+              {/* Fit Buddy */}
+            </span>
           </Link>
         </div>
 
@@ -210,7 +210,7 @@ const Userdashboard = (props) => {
                   <li style={{ lineHeight: "40px" }}>
                     <Link
                       className="dropdown-item d-flex align-items-center"
-                      to="/MyProfile"
+                      to="/profile-page"
                     >
                       <BiUser />
                       &nbsp;
