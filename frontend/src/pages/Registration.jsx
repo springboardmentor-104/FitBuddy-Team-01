@@ -278,6 +278,13 @@ const Registration = (props) => {
                   </i>
                 </Link>
               </div> */}
+              <div className="text-left" style={{ marginBottom: "0px" }}>
+                <Link to="/">
+                  <i className="fa fa-angle-left" id="lft-arw-icn">
+                    &nbsp;Back
+                  </i>
+                </Link>
+              </div>
               <h1 className="h3" id="ap-nm">
                 Fit Buddy
               </h1>
