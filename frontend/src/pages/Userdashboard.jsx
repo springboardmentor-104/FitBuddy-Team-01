@@ -62,7 +62,7 @@ const Userdashboard = (props) => {
         setOpenToggleMenu("sidebar-nav-create-goals");
         setTabLiNum(8);
         break;
-      case "/MyProfile":
+      case "/profile-page":
         setTabLiNum(5);
         break;
       case "/History":

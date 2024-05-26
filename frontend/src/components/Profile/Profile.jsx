@@ -12,10 +12,10 @@ const Profile = (props) => {
 
 	return (
 		<div className="profile-page">
-			<div className="pagetitle">
+			{/* <div className="pagetitle">
 				<h1>My Profile</h1>
 				<ProfileBreadcrumb />
-			</div>
+			</div> */}
 			<section className="section profile">
 				<div className="row">
 					<div className="col-xl-4">
