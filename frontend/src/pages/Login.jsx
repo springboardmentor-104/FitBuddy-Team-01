@@ -203,7 +203,7 @@ const Login = (props) => {
       if (responseData.success) {
         toast.success(responseData.message); // Display success message using toast
         setTimeout(() => {
-          navigate('/Userdashboard');
+          navigate("/Userdashboard");
         }, 1000);
         setOtpVerified(true); // Update state to indicate OTP verification success
       } else {
@@ -222,6 +222,7 @@ const Login = (props) => {
   };
 
   return (
+    <>  
     <section
       className="register d-flex align-items-center justify-content-center"
       style={{ height: window.innerHeight }}
@@ -387,7 +388,7 @@ const Login = (props) => {
           </div>
         </div>
       </div>
-    </section>
+    </section></>
   );
 };
 export default Login;

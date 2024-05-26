@@ -5,6 +5,8 @@ import ExerciseForm from "./ExerciseForm";
 import "./ExercisePage.css";
 import Userdashboard from "./Userdashboard";
 
+// import { MenuItem, TextField } from "@mui/material";
+
 const ExercisePage = () => {
   const [selectedType, setSelectedType] = useState("");
   const [exercises, setExercises] = useState([]);
@@ -65,55 +67,75 @@ const ExercisePage = () => {
 
   return (
     <>
-      <Userdashboard />
-      <div className="exercise-page" id="exerciseSidebarAdjustment">
-        <div
-          className={`dropdown-container ${
-            dropdownVisible ? "visible" : "hidden"
-          }`}
-        >
-          <div className="select-wrapper">
-            <select value={selectedType} onChange={handleTypeChange}>
-              <option value="">All Exercises</option>
-              <option value="strength">Strength</option>
-              <option value="yoga">Yoga</option>
-              <option value="cardio">Cardio</option>
-              <option value="powerlifting">Powerlifting</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-        </div>
+      <Userdashboard
+        content={
+          // <div className="exercise-page" id="exerciseSidebarAdjustment">
+          <div className="exercise-page">
+            <div
+              className={`dropdown-container ${
+                dropdownVisible ? "visible" : "hidden"
+              }`}
+            >
+              <div className="select-wrapper">
+                <select value={selectedType} onChange={handleTypeChange}>
+                  <option value="">All Exercises</option>
+                  <option value="strength">Strength</option>
+                  <option value="yoga">Yoga</option>
+                  <option value="cardio">Cardio</option>
+                  <option value="powerlifting">Powerlifting</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
 
-        <div
-          className="card-container"
-          style={{ marginTop: dropdownVisible ? "50px" : "0" }}
-        >
-          {loading ? (
-            <div className="loading">Loading...</div>
-          ) : exercises.length === 0 ? (
-            <div className="no-exercises">
-              No exercises found for the selected category.
+              {/* <div className="col-lg-3 col-md-6">
+                <TextField
+                  className="me-3"
+                  name="mySelect"
+                  label="Choose an option"
+                  select
+                  value={selectedType}
+                  onChange={handleTypeChange}
+                  fullWidth
+                >
+                  <MenuItem value="option1">Option 1</MenuItem>
+                  <MenuItem value="option2">Option 2</MenuItem>
+                  <MenuItem value="option3">Option 3</MenuItem>
+                </TextField>
+              </div> */}
             </div>
-          ) : (
-            exercises.map((exercise) => (
-              <ExerciseCard
-                key={exercise._id}
-                exercise={exercise}
-                onAdd={() => toggleExerciseForm(exercise)}
-                userId={userId}
-              />
-            ))
-          )}
-        </div>
 
-        {showExerciseForm && selectedExercise && (
-          <ExerciseForm
-            exercise={selectedExercise}
-            userId={userId}
-            onClose={() => setShowExerciseForm(false)}
-          />
-        )}
-      </div>
+            <div
+              className="card-container"
+              style={{ marginTop: dropdownVisible ? "50px" : "0" }}
+            >
+              {loading ? (
+                <div className="loading">Loading...</div>
+              ) : exercises.length === 0 ? (
+                <div className="no-exercises">
+                  No exercises found for the selected category.
+                </div>
+              ) : (
+                exercises.map((exercise) => (
+                  <ExerciseCard
+                    key={exercise._id}
+                    exercise={exercise}
+                    onAdd={() => toggleExerciseForm(exercise)}
+                    userId={userId}
+                  />
+                ))
+              )}
+            </div>
+
+            {showExerciseForm && selectedExercise && (
+              <ExerciseForm
+                exercise={selectedExercise}
+                userId={userId}
+                onClose={() => setShowExerciseForm(false)}
+              />
+            )}
+          </div>
+        }
+      />
     </>
   );
 };

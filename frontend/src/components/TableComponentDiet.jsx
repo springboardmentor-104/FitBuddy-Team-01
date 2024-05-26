@@ -1,13 +1,13 @@
 import { Table } from "antd";
 import React from "react";
 import DietStatusTypography from "../pages/DietStatusTypography";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from '../context/auth'; 
-import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../context/auth";
+import axios from "axios";
 
 const TableComponentDiet = () => {
-  const[auth, setAuth] = useAuth();
+  const [auth, setAuth] = useAuth();
   const token = auth?.token;
   const [dietHistory, setDietHistory] = React.useState([]);
   // const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
@@ -19,18 +19,21 @@ const TableComponentDiet = () => {
 
   const fetchData = async () => {
     try {
-      const alldietsResponse = await axios.get("http://localhost:8080/api/v1/history/all/diet", {
-        headers: {
-          Authorization: `${token}`
+      const alldietsResponse = await axios.get(
+        "http://localhost:8080/api/v1/history/all/diet",
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
         }
-      });
-  
+      );
+
       if (alldietsResponse.status !== 200) {
         toast.error(alldietsResponse.message);
       }
-  
+
       const alldietsData = alldietsResponse.data;
-  
+
       // Transforming data
       const transformedData = alldietsData.map((item, index) => ({
         index: index + 1,
@@ -39,13 +42,12 @@ const TableComponentDiet = () => {
         category: item.goalId.category,
         quantity: item.goalId.quantity,
         calories: item.goalId.calories,
-        status:item.status,
-        date:item.createdAt
+        status: item.status,
+        date: item.createdAt,
       }));
-  
+
       setDietHistory(transformedData);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const columns = [
@@ -53,18 +55,15 @@ const TableComponentDiet = () => {
     { dataIndex: "name", title: "Diet Name", width: 130 },
     { dataIndex: "quantity", title: "Quantity", width: 130 },
     { dataIndex: "calories", title: "Calories", width: 90 },
-    { dataIndex: "category", title: "Time to Eat" },
+    { dataIndex: "category", title: "Time to Eat", width: 150 },
     {
       dataIndex: "status",
       title: "Status",
+      width: 100,
       className: "my-font",
-      render: (value, row) => (
-        <DietStatusTypography
-          done={value}
-        />
-      ),   
+      render: (value, row) => <DietStatusTypography done={value} />,
     },
-    { dataIndex: "date", title: "Date" },
+    { dataIndex: "date", title: "Date", width: 100 },
   ];
 
   // const onSelectChange = (newSelectedRowKeys) => {
@@ -82,7 +81,7 @@ const TableComponentDiet = () => {
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <div className="d-flex justify-content-between">
         <div>
           <h4 className="text-lg font-bold mb-2" style={{ color: "#4caf50" }}>

@@ -6,10 +6,10 @@ import Header from "./Header"
 import { Link } from "react-router-dom";
 
 function MainContent() {
-  const [user,setUser]=useState()
-  useEffect(()=>{
-    setUser (JSON.parse(localStorage.getItem("user")))
-  },[])
+  const [user, setUser] = useState()
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")))
+  }, [user])
   return (
     <>      <Header />
 
@@ -34,11 +34,11 @@ function MainContent() {
                 <div className="text2">
                   <h2>Get Up and Work out!</h2>
                   <button className="cta-button">
-  {user ? (
-    <Link to="/Userdashboard" style={{ color: "white", textDecoration: "none" }}>Dashboard</Link>
-  ) : (
-    <Link to="/login" style={{ color: "white", textDecoration: "none" }}>Let's Get Started!</Link>
-  )}</button>
+                    {user ? (
+                      <Link to="/Userdashboard" style={{ color: "white", textDecoration: "none" }}>Dashboard</Link>
+                    ) : (
+                      <Link to="/login" style={{ color: "white", textDecoration: "none" }}>Let's Get Started!</Link>
+                    )}</button>
                 </div>
               </div>
             </div>

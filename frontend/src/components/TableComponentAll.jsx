@@ -150,12 +150,14 @@ const TableComponentAll = () => {
     {
       dataIndex: "time",
       title: "Estimated Time",
-      width: 100,
+      // width: 100,
+      width: 150,
       className: "my-font",
     },
     {
       dataIndex: "status",
       title: "Status",
+      width: 100,
       className: "my-font",
       render: (value, row) => (
         <ExerciseStatusTypography
@@ -167,6 +169,7 @@ const TableComponentAll = () => {
     {
       dataIndex: "date",
       title: "Date",
+      width: 100,
       className: "my-font",
     },
   ];
@@ -190,11 +193,13 @@ const TableComponentAll = () => {
     {
       dataIndex: `category`,
       title: "Time to Eat",
+      width: 150,
       className: "my-font",
     },
     {
       dataIndex: "status",
       title: "Status",
+      width: 100,
       className: "my-font",
       render: (value, row) => (
         <DietStatusTypography
@@ -206,9 +211,21 @@ const TableComponentAll = () => {
     {
       dataIndex: "date",
       title: "Date",
+      width: 100,
       className: "my-font",
     },
   ];
+
+  // Calculate the total width
+  const AllDietsTableTotalWidth = AllDietsColumns.reduce(
+    (sum, column) => sum + column.width,
+    0
+  );
+
+  const AllExercisesTableTotalWidth = AllExercisesColumns.reduce(
+    (sum, column) => sum + column.width,
+    0
+  );
 
   return (
     <>
@@ -238,7 +255,8 @@ const TableComponentAll = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
-        scroll={{ x: true }}
+        // scroll={{ x: true }}
+        scroll={{ x: AllExercisesTableTotalWidth }}
       />
 
       <br />
@@ -267,7 +285,8 @@ const TableComponentAll = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
-        scroll={{ x: true }}
+        // scroll={{ x: true }}
+        scroll={{ x: AllDietsTableTotalWidth }}
       />
     </>
   );

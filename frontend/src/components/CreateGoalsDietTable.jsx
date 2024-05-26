@@ -107,6 +107,7 @@ const CreateGoalsDietTable = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        scroll={{ x: true }}
       />
     </>
   );

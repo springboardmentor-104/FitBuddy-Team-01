@@ -1,8 +1,5 @@
 .App {
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   /* height: 100vh; */ /* removed by Shivankush */
   background-color: #ffffff;
 
@@ -40,11 +37,11 @@
 }
 
 .label {
-  position: absolute;
-  top: 16px;
-  left: 0;
+  /* position: absolute; */
+  /* top: 16px; */
+  /* left: 0; */
   width: 100%;
-  padding: 60px;
+  /* padding: 60px; */
   font-size: 30px;
   font-weight: bold;
   text-align: center;

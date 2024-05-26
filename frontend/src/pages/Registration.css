@@ -7,6 +7,12 @@
   color: #3076bb;
 }
 
+.RegistrationContainer{
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  height: 100vh; 
+}
 .register span {
   color: #414346;
 }
