@@ -404,11 +404,36 @@ const Userdashboard = (props) => {
             </Link>
           </li>
 
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link
               // className="nav-link collapsed"
               to="/MyProfile"
               className={`nav-link ${tabLiNum === 5 ? "active" : ""}`}
+              onClick={() => {
+                setTabLiNum(5);
+              }}
+              style={{
+                ...(tabLiNum === 5
+                  ? {
+                      color: `#4154f1`,
+                      backgroundColor: `#f6f9ff`,
+                      borderColor: `#f6f9ff`,
+                    }
+                  : {}),
+              }}
+            >
+              <BsPersonFill />
+              &nbsp;
+              <span>My Profile</span>
+            </Link>
+          </li> */}
+
+          {/* New Profile Page */}
+          <li className="nav-item">
+            <Link 
+            // className="nav-link collapsed" 
+            to="/profile-page"
+            className={`nav-link ${tabLiNum === 5 ? "active" : ""}`}
               onClick={() => {
                 setTabLiNum(5);
               }}
