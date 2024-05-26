@@ -108,7 +108,7 @@ const Registration = (props) => {
       if (responseData.success) {
         toast.success(responseData.message); // Display success message using toast
         setTimeout(() => {
-          navigate('/Login');
+          navigate("/Login");
         }, 1000);
         setOtpVerified(true); // Update state to indicate OTP verification success
       } else {
@@ -221,18 +221,17 @@ const Registration = (props) => {
   const handleRegistrationSubmit1 = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post(
-      "http://localhost:8080/api/v1/auth/register",
-      {
-        name: fullName,
-        email: email,
-        username: userName,
-        password: password,
-        cpassword: confirmedPassword,
-      }
-    );
-
     try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/register",
+        {
+          name: fullName,
+          email: email,
+          username: userName,
+          password: password,
+          cpassword: confirmedPassword,
+        }
+      );
       // Check if all fields are filled
       if (response.data.success) {
         setIsRegistered(true);
@@ -248,7 +247,7 @@ const Registration = (props) => {
         error.response.status >= 400 &&
         error.response.status <= 500
       ) {
-        toast.error(response.data.message);
+        toast.error(error.response.data.message);
       }
       setRegisteredUserId("");
       setIsRegistered(false);
@@ -261,12 +260,10 @@ const Registration = (props) => {
     setShowPassword(!showPassword);
   };
 
-
-
   return (
     <section
       className="register d-flex align-items-center justify-content-center"
-      style={{ height: window.innerHeight,width:"70vw",margin:"auto" }}
+      style={{ height: window.innerHeight, width: "70vw", margin: "auto" }}
       id="reg-sec"
     >
       <ToastContainer />
@@ -464,7 +461,7 @@ const Registration = (props) => {
                     <div className="d-grid gap-2 col-12 mx-auto">
                       <button
                         type="submit"
-                        className="btn btn-success"
+                        className="btn btn-primary"
                         id="otp-btn-fr-rg"
                       >
                         Verify OTP
