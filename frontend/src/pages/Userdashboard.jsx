@@ -515,10 +515,14 @@ const Userdashboard = (props) => {
             if (location.pathname === "/Userdashboard") {
               return (
                 <div>
-                  <h1>Exercise Completion Chart</h1>
-                  <ExerciseChart data={exerciseData} />
+                    <div className="card">
+                      <div class="card-header" style={{fontSize : "25px", fontWeight : "600"}}>
+                        Exercise Completion Chart
+                      </div>
+                      <ExerciseChart data={exerciseData} />
+                    </div>
                 </div>
-              );
+             );
             }
             return "";
           })()}
