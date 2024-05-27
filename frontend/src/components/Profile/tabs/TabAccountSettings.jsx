@@ -48,7 +48,19 @@ const TabAccountSettings = props => {
                         />
                     </Col>
                 </Row>
-                {(!showDelete || !formData?.policy_2 || !formData?.policy_1) && <Button type="submit" size={`md`} variant="outline-danger" className="w-100 my-2" onClick={()=>{setShowDelete(true)}}>Delete Account</Button>}
+                {(!showDelete || !formData?.policy_2 || !formData?.policy_1) && 
+                    <Button 
+                        type="submit" 
+                        size={`md`} 
+                        variant="outline-danger" 
+                        className="w-100 my-2" 
+                        onClick={()=>{ 
+                            setShowDelete(true)
+                            if(!formData?.policy_2 || !formData?.policy_1){
+                                alert("Please agree to all terms before deleting your account.");
+                            }
+                        }}
+                    >Delete Account</Button>}
                 {
                     formData?.policy_1 && formData?.policy_2 && showDelete && <div className='my-1'>
                         <div className={`text-danger mb-2`}>Are you sure you wants to delete your account?</div>

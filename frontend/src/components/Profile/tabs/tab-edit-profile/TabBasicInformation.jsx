@@ -148,6 +148,7 @@ const TabBasicInformation = ({setMainFormData,mainFormData,setMainFormValidate})
 					type={`text`}
 					setFormValue={setFormValue}
 					value={formData['occupation']}
+					required
 				/>
 				<DynamicFormFields 
 					fieldtype="textarea"
@@ -157,6 +158,7 @@ const TabBasicInformation = ({setMainFormData,mainFormData,setMainFormValidate})
 					setFormValue={setFormValue}
 					value={formData['about']}
 					rows={3}
+					required
 				/>
 				{/* <div className="text-center">
 					<Button type="submit" size={`sm`}>Submit</Button>

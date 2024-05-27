@@ -85,7 +85,7 @@ export const validatePassword = (name,value) => {
     obj.isValid = true;
     obj.message = "Success";
     const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
-    if(name==="password"){
+    if(name==="currentpassword"){
         if (!value.trim()) {
             obj.isValid = false;
             obj.message = "Field is required";

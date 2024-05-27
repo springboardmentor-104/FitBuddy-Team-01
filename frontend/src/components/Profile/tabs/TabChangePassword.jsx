@@ -123,7 +123,7 @@ const DynamicFormFields4 = (formfields) => {
 			<Col lg={9}>
 				<div className="input-group">
 					<input 
-						type={(showPassword?"text":"password")}  
+						type={(showPassword?"password":"text")}  
 						className="form-control" 
 						placeholder={formfields?.displayName || "Password"}
 						name={formfields?.name}
