@@ -244,7 +244,8 @@ const DietPage = () => {
   return (
     <>
       <ToastContainer/>
-      <Userdashboard />
+      <Userdashboard
+      content={ 
       <div className="diet-page" id="dietSidebarAdjustment">
         <div
           className={`dropdown-container ${dropdownVisible ? "visible" : "hidden"}`}
@@ -290,6 +291,8 @@ const DietPage = () => {
           />
         )}
       </div>
+      }
+      />
     </>
   );
 };

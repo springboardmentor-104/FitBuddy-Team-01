@@ -9,7 +9,6 @@ import {useAuth} from '../context/auth'
 
 const ManageGoals = () => {
   const[auth, setAuth] = useAuth();
-  const token = auth?.token;
 
   const [activeTab, setActiveTab] = useState("All");
   const [loading] = useState(false);
@@ -19,6 +18,7 @@ const ManageGoals = () => {
   };
   
   const addPreviousData = async () => {
+    const token = auth?.token;
     try {
         const res = await axios.get("http://localhost:8080/api/v1/history/create_everyday_historydata", {
             headers: {

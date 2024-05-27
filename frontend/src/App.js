@@ -26,8 +26,7 @@ import CreateGoals from "./pages/CreateGoals";
 import ManageGoals from "./pages/ManageGoals";
 
 import MainContent from "./landingPage/MainContent"
-import ExerciseChart from "./pages/ExerciseChart";
-
+import Charts from './pages/Charts'
 // index.js or App.js
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -63,7 +62,7 @@ const App = () => {
         <Route
           exact
           path="/Userdashboard"
-          element={<ProtectedRoute Component={ExerciseChart} />}
+          element={<ProtectedRoute Component={Charts} />}
         />
         <Route
           exact

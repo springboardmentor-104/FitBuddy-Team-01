@@ -3,7 +3,7 @@ const Exercise = require('../modles/exerciseModel'); // Singular 'Exercise' inst
 const GoalExercise = require('../modles/personalExercise');
 const GoalDiet = require('../modles/personalDiets');
 const History = require('../modles/historyModel');
-
+const mongoose = require('mongoose')
 
 // ***************** MAIN API FOR HISTORY ******************************//
 const todayHistoryController = async (req, res) => {
@@ -653,10 +653,11 @@ const getDietById = async (req, res) => {
 // };
 const createEveryDayHistoryData = async (req, res) => {
     try {
-        const { userId } = req.user._id;
+        const  userId  = req.user._id;
         const currentDate = new Date().toISOString().split('T')[0];
         const previousDate = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
-
+        console.log(currentDate)
+        console.log(previousDate)
         // Check if exercises already created for today
         const existingHistory = await History.findOne({
             userId: userId,
@@ -668,11 +669,13 @@ const createEveryDayHistoryData = async (req, res) => {
                 message: "Exercises already created for today"
             });
         }
+        console.log(userId)
         const goaldiets = await GoalDiet.find({ userId: userId, date:previousDate }); // personal diets
-        const goalexercises = await GoalExercise.find({ userId: userId ,date:previousDate}); // personal exercises
+        const goalexercises = await GoalExercise.find({ userId: userId , date:previousDate}); // personal exercises
         const data = [...goaldiets, ...goalexercises];
+        console.log(goaldiets)
+        console.log(goalexercises)
         const historyData = [];
-        console.log(data)
         for (const item of data) {
             let type = "";
             if ("sets" in item ) {
@@ -696,6 +699,7 @@ const createEveryDayHistoryData = async (req, res) => {
         res.status(201).json({
             success: true,
             message: "history created successfully",
+            historyData
         });
     } catch (error) {
         // Handle errors
@@ -706,11 +710,384 @@ const createEveryDayHistoryData = async (req, res) => {
     }
 };
 
+// get today date in string in yyy-mm-dd format then use for loop which can run 7 time and calculate 7 date string data type and store in array of dates[] now this dates have total 7 days. apply for loop for each date in array and now using userId and date find how many exercise in that day and how many it completed and find percentage of that and store in exerciseCompletionPercentage and similar for diet and store in dietCompletionPercentage and send res.json(both percentage array)
+// const getCompletionRates = async (req, res) => {
+//     try {
+//       const userId = req.user._id;
+  
+//       // Get today's date in yyyy-mm-dd format
+//       const today = new Date();
+//       const formatDateString = (date) => {
+//         return date.toISOString().split('T')[0];
+//       };
+//       const todayString = formatDateString(today);
+  
+//       // Generate an array of dates for the past 7 days
+//       const dates = [];
+//       for (let i = 0; i < 7; i++) {
+//         const date = new Date();
+//         date.setDate(today.getDate() - i);
+//         dates.push(formatDateString(date));
+//       }
+      
+//       console.log(dates)
+//       // Initialize arrays to store completion percentages
+//       const exerciseCompletionPercentage = [];
+//       const dietCompletionPercentage = [];
+  
+//       // Calculate completion percentages for each day
+//       for (let i = 0; i < dates.length; i++) {
+//         const date = dates[i];
+  
+//         // Query the database to find exercise and diet completion counts for the day
+//         const exerciseCount = await History.countDocuments({
+//           userId: userId,
+//           type: 'exercise',
+//           createdAt: date
+//         });
+//         console.log(exerciseCount)
+//         const exerciseCompletedCount = await History.countDocuments({
+//           userId: userId,
+//           type: 'exercise',
+//           status: 'completed',
+//           createdAt: date
+//         });
+//         console.log(exerciseCompletedCount)
 
+//         const dietCount = await History.countDocuments({
+//           userId: userId,
+//           type: 'diet',
+//           createdAt: date
+//         });
+  
+//         const dietCompletedCount = await History.countDocuments({
+//           userId: userId,
+//           type: 'diet',
+//           status: 'completed',
+//           createdAt: date
+//         });
+  
+//         // Calculate completion percentages
+//         const exercisePercentage = exerciseCount === 0 ? 0 : (exerciseCompletedCount / exerciseCount) * 100;
+//         const dietPercentage = dietCount === 0 ? 0 : (dietCompletedCount / dietCount) * 100;
+  
+//         // Store completion percentages
+//         exerciseCompletionPercentage.push({ date, completed_percentage: exercisePercentage });
+//       dietCompletionPercentage.push({ date, completed_percentage: dietPercentage });
+//       }
+  
+//       // Send the completion percentages in the response
+//       res.json({
+//         exerciseCompletionPercentage,
+//         dietCompletionPercentage
+//       });
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//     }
+//   };
+
+// const getCompletionRates = async (req, res) => {
+//     try {
+//       const userId = req.user._id;
+  
+//       // Get today's date in yyyy-mm-dd format
+//       const today = new Date();
+//       const formatDateString = (date) => {
+//         return date.toISOString().split('T')[0];
+//       };
+//       const todayString = formatDateString(today);
+  
+//       // Generate an array of dates until the oldest record
+//       const histories = await History.find({ userId: userId }).sort({ createdAt: 1 });
+  
+//       if (histories.length === 0) {
+//         return res.json({
+//           exerciseCompletionPercentage: [],
+//           dietCompletionPercentage: []
+//         });
+//       }
+  
+//       const oldestDate = new Date(histories[0].createdAt);
+//       const dates = [];
+//       for (let d = oldestDate; d <= today; d.setDate(d.getDate() + 1)) {
+//         dates.push(formatDateString(new Date(d)));
+//       }
+  
+//       // Initialize arrays to store completion percentages
+//       const exerciseCompletionPercentage = [];
+//       const dietCompletionPercentage = [];
+  
+//       // Calculate completion percentages for each day
+//       for (let i = 0; i < dates.length; i++) {
+//         const date = dates[i];
+  
+//         // Query the database to find exercise and diet completion counts for the day
+//         const exerciseCount = await History.countDocuments({
+//           userId: userId,
+//           type: 'exercise',
+//           createdAt: date
+//         });
+  
+//         const exerciseCompletedCount = await History.countDocuments({
+//             userId: userId,
+//             type: 'exercise',
+//           status: 'completed',
+//           createdAt: date
+//         });
+  
+//         const dietCount = await History.countDocuments({
+//             userId: userId,
+//             type: 'diet',
+//           createdAt: date
+//         });
+  
+//         const dietCompletedCount = await History.countDocuments({
+//             userId: userId,
+//             type: 'diet',
+//           status: 'completed',
+//           createdAt: date
+//         });
+  
+//         // Calculate completion percentages
+//         const exercisePercentage = exerciseCount === 0 ? 0 : (exerciseCompletedCount / exerciseCount) * 100;
+//         const dietPercentage = dietCount === 0 ? 0 : (dietCompletedCount / dietCount) * 100;
+  
+//         // Store completion percentages along with date
+//         exerciseCompletionPercentage.push({ date, completed_percentage: exercisePercentage });
+//       }
+  
+//       // Send the completion percentages in the response
+//       res.json({
+//         exerciseCompletionPercentage,
+//         dietCompletionPercentage
+//       });
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//     }
+//   };
+
+// const getCompletionRates = async (req, res) => {
+//     try {
+//       const userId = req.user._id;
+  
+//       // Get today's date in yyyy-mm-dd format
+//       const today = new Date();
+//       const formatDateString = (date) => {
+//         return date.toISOString().split('T')[0];
+//       };
+//       const todayString = formatDateString(today);
+  
+//       // Generate an array of dates until the oldest record
+//       const histories = await History.find({ userId: userId }).sort({ createdAt: 1 });
+  
+//       if (histories.length === 0) {
+//         return res.json({
+//           completionRates: []
+//         });
+//       }
+  
+//       const oldestDate = new Date(histories[0].createdAt);
+//       const dates = [];
+//       for (let d = oldestDate; d <= today; d.setDate(d.getDate() + 1)) {
+//         dates.push(formatDateString(new Date(d)));
+//       }
+  
+//       // Initialize array to store completion rates
+//       const completionRates = [];
+  
+//       // Calculate completion percentages for each day
+//       for (let i = 0; i < dates.length; i++) {
+//         const date = dates[i];
+  
+//         // Query the database to find exercise and diet completion counts for the day
+//         const exerciseCount = await History.countDocuments({
+//           userId: userId,
+//           type: 'exercise',
+//           createdAt: date
+//         });
+  
+//         const exerciseCompletedCount = await History.countDocuments({
+//           userId: userId,
+//           type: 'exercise',
+//           status: 'completed',
+//           createdAt: date
+//         });
+  
+//         const dietCount = await History.countDocuments({
+//           userId: userId,
+//           type: 'diet',
+//           createdAt: date
+//         });
+  
+//         const dietCompletedCount = await History.countDocuments({
+//           userId: userId,
+//           type: 'diet',
+//           status: 'completed',
+//           createdAt: date
+//         });
+  
+//         // Calculate completion percentages
+//         const exercisePercentage = exerciseCount === 0 ? 0 : (exerciseCompletedCount / exerciseCount) * 100;
+//         const dietPercentage = dietCount === 0 ? 0 : (dietCompletedCount / dietCount) * 100;
+  
+//         // Store completion percentages along with date
+//         completionRates.push({ date, exercise: exercisePercentage, diet: dietPercentage });
+//       }
+  
+//       // Send the completion rates in the response
+//       res.json({
+//         completionRates
+//       });
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//     }
+//   };
+  
+const getCompletionRates = async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const today = new Date();
+      const formatDateString = (date) => {
+        return date.toISOString().split('T')[0];
+      };
+      const todayString = formatDateString(today);
+  
+      // Generate an array of dates until the oldest record
+      const histories = await History.find({ userId: userId }).sort({ createdAt: 1 });
+  
+      if (histories.length === 0) {
+        return res.json({
+            success:false,
+          completionRates: []
+        });
+      }
+  
+      const oldestDate = new Date(histories[0].createdAt);
+      const dates = [];
+      for (let d = today; d >= oldestDate; d.setDate(d.getDate() - 1)) {
+        dates.push(formatDateString(new Date(d)));
+      }
+  
+      // Initialize array to store completion rates
+      const completionRates = [];
+  
+      // Calculate completion percentages for each day
+      for (let i = 0; i < dates.length; i++) {
+        const date = dates[i];
+  
+        // Query the database to find exercise and diet completion counts for the day
+        const exerciseCount = await History.countDocuments({
+          userId: userId,
+          type: 'exercise',
+          createdAt: date
+        });
+  
+        const exerciseCompletedCount = await History.countDocuments({
+          userId: userId,
+          type: 'exercise',
+          status: 'completed',
+          createdAt: date
+        });
+  
+        const dietCount = await History.countDocuments({
+          userId: userId,
+          type: 'diet',
+          createdAt: date
+        });
+  
+        const dietCompletedCount = await History.countDocuments({
+          userId: userId,
+          type: 'diet',
+          status: 'completed',
+          createdAt: date
+        });
+  
+        // Calculate completion percentages
+        const exercisePercentage = exerciseCount === 0 ? 0 : (exerciseCompletedCount / exerciseCount) * 100;
+        const dietPercentage = dietCount === 0 ? 0 : (dietCompletedCount / dietCount) * 100;
+  
+        // Store completion percentages along with date
+        completionRates.push({ date, exercise: exercisePercentage, diet: dietPercentage });
+      }
+  
+      // Send the completion rates in the response
+      return res.json({
+        success:true,
+        completionRates
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+// const getCompletionRates = async (req, res) => {
+//     try {
+//       const userId = req.user._id;
+  
+//       // Get today's date in yyyy-mm-dd format
+//       const today = new Date();
+//       const formatDateString = (date) => {
+//         return date.toISOString().split('T')[0];
+//       };
+//       const todayString = formatDateString(today);
+  
+//       // Fetch all histories for the user and group by date and type
+//       const histories = await History.aggregate([
+//         { $match: { userId: mongoose.Types.ObjectId(userId) } },
+//         {
+//           $group: {
+//             _id: { date: "$createdAt", type: "$type" },
+//             total: { $sum: 1 },
+//             completed: { $sum: { $cond: [{ $eq: ["$status", "completed"] }, 1, 0] } }
+//           }
+//         },
+//         { $sort: { "_id.date": -1 } }
+//       ]);
+  
+//       // Initialize arrays to store completion rates
+//       const completionRates = [];
+//       const datesMap = {};
+  
+//       // Process aggregated data
+//       histories.forEach(history => {
+//         const { date, type } = history._id;
+//         const { total, completed } = history;
+//         const percentage = (total === 0) ? 0 : (completed / total) * 100;
+  
+//         if (!datesMap[date]) {
+//           datesMap[date] = { date, exercise: 0, diet: 0 };
+//         }
+  
+//         if (type === 'exercise') {
+//           datesMap[date].exercise = percentage;
+//         } else if (type === 'diet') {
+//           datesMap[date].diet = percentage;
+//         }
+//       });
+  
+//       // Convert map to array and sort by date
+//       for (const key in datesMap) {
+//         completionRates.push(datesMap[key]);
+//       }
+      
+//       completionRates.sort((a, b) => new Date(b.date) - new Date(a.date));
+  
+//       // Send the completion rates in the response
+//       res.json({ completionRates });
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//     }
+//   };
+  
 module.exports = {
     createExercise, updateGoalStatus, deleteExercise, getAllExercises, getExerciseById,
     createDiet, updateDietStatus, deleteDiet, getAllDiets, getDietById,
-    todayHistoryController, showAllHistoryController, todayAllTask, todayDataCategoryWise, createEveryDayHistoryData, getExerciseByName
+    todayHistoryController, showAllHistoryController, todayAllTask, todayDataCategoryWise, createEveryDayHistoryData, getExerciseByName, getCompletionRates
 };
 
 

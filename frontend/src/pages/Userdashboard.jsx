@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from '../context/auth';
-import ExerciseChart from "./ExerciseChart";
+import ExerciseChart from "./Charts";
 import logo from "../landingPage/logo.png"
 
 
@@ -12,6 +12,7 @@ import {
   BiGrid,
   BiTime,
   BiTask,
+  
   BiUser,
   // BiSearch,
   BiLogOut,
