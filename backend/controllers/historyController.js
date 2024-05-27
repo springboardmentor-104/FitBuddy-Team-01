@@ -651,13 +651,12 @@ const getDietById = async (req, res) => {
 //             .json({ success: false, message: "Internal server error" });
 //     }
 // };
-const createEveryDayHistoryData = async (req, res) => {
+const createEveryDayHistoryData = async (req, res) => { 
     try {
         const  userId  = req.user._id;
         const currentDate = new Date().toISOString().split('T')[0];
         const previousDate = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
-        console.log(currentDate)
-        console.log(previousDate)
+   
         // Check if exercises already created for today
         const existingHistory = await History.findOne({
             userId: userId,
@@ -669,32 +668,58 @@ const createEveryDayHistoryData = async (req, res) => {
                 message: "Exercises already created for today"
             });
         }
-        console.log(userId)
         const goaldiets = await GoalDiet.find({ userId: userId, date:previousDate }); // personal diets
         const goalexercises = await GoalExercise.find({ userId: userId , date:previousDate}); // personal exercises
-        const data = [...goaldiets, ...goalexercises];
-        console.log(goaldiets)
-        console.log(goalexercises)
-        const historyData = [];
-        for (const item of data) {
-            let type = "";
-            if ("sets" in item ) {
-                type = "exercise"; // If the data has sets and timeToPerformExercise fields, it's from exercises
-            } else {
-                type = "diet"; // Otherwise, it's from diet goals
-            }
 
-            const historyRecord = {
+        const data = [...goaldiets, ...goalexercises];
+        const newGoalDiets = goaldiets.map(diet => ({
+            ...diet.toObject(),
+            _id: undefined,
+            date: currentDate
+        }));
+        const newGoalExercises = goalexercises.map(exercise => ({
+            ...exercise.toObject(),
+            _id: undefined,
+            date: currentDate
+        }));
+
+        const createdGoalDiets = await GoalDiet.insertMany(newGoalDiets);
+        const createdGoalExercises = await GoalExercise.insertMany(newGoalExercises);
+
+        const historyData = [
+            ...createdGoalDiets.map(diet => ({
                 userId: userId,
-                goalId: item._id,
-                type: type,
+                goalId: diet._id,
+                type: "diet",
                 status: "pending",
                 createdAt: currentDate
-            };
+            })),
+            ...createdGoalExercises.map(exercise => ({
+                userId: userId,
+                goalId: exercise._id,
+                type: "exercise",
+                status: "pending",
+                createdAt: currentDate
+            }))
+        ];
+        // for (const item of data) {
+        //     let type = "";
+        //     if ("sets" in item ) {
+        //         type = "exercise"; // If the data has sets and timeToPerformExercise fields, it's from exercises
+        //     } else {
+        //         type = "diet"; // Otherwise, it's from diet goals
+        //     }
 
-            historyData.push(historyRecord);
-        }
-        console.log(historyData)
+        //     const historyRecord = {
+        //         userId: userId,
+        //         goalId: item._id,
+        //         type: type,
+        //         status: "pending",
+        //         createdAt: currentDate
+        //     };
+
+        //     historyData.push(historyRecord);
+        // }
         await History.insertMany(historyData);
         res.status(201).json({
             success: true,

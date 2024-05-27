@@ -108,27 +108,66 @@
 // }
 
 // export default SingleDietPage;
+// export default SingleDietPage;
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-// import "./SingleDietPage.css";
+import "./SingleDietPage.css";
 import Userdashboard from "./Userdashboard";
 import DietForm from "./DietForm";
 import { useAuth } from "../context/auth"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function SingleDietPage() {
-    const [auth] = useAuth();
+    const [auth, setAuth] = useAuth();
+    const token = auth?.token;
 
     const [mealData, setMealData] = useState(null);
     const [showDietForm, setShowDietForm] = useState(false);
     const { id } = useParams();
     const [userId, setUserId] = useState("");
+    const [userDiets, setUserDiets] = useState([]);
+
 
     useEffect(() => {
-        if (auth?.userId) {
-            setUserId(auth.userId);
+        const storedUserId = localStorage.getItem("user");
+        if (storedUserId) {
+          setUserId(String(storedUserId));
+          fetchUserDiets(storedUserId);
         }
-    }, [auth]);
+         // eslint-disable-line no-console
+      }, []);
+    const fetchUserDiets = async (userId) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/v1/history/today/diet`, {
+                headers: {
+                    "Authorization": `${token}`,
+                },
+            });
+
+            console.log(response.data);
+
+            const dietsArray = response.data.diets || response.data;
+            if (Array.isArray(dietsArray)) {
+                const dietDetails = dietsArray.map((diet) => ({
+                    name: diet.goalId.name,
+                    goalId: diet.goalId._id,
+                    key: diet.goalId.key,
+                }));
+                setUserDiets(dietDetails);
+            } else {
+                console.error("Unexpected response data format:", response.data);
+                setUserDiets([]);
+            }
+        } catch (error) {
+            console.error("Error fetching user diets:", error);
+            setUserDiets([]);
+        }
+    };
+    
+
+    const isMealAdded = userDiets.some(userDiet => userDiet.key === mealData._id);
 
     useEffect(() => {
         const fetchMealData = async () => {
@@ -150,14 +189,37 @@ function SingleDietPage() {
         return () => {
             // Cleanup function
         };
+        // eslint-disable-line no-console
     }, [id]);
 
-    const handleSubmitDiet = async () => {
-        // Your submission logic
+    const handleRemoveButtonClick = async () => {
+        try {
+            const userDiet = userDiets.find(userDiet => userDiet.key === mealData._id);
+
+            if (!userDiet) {
+                toast.error("Meal not found in user diets");
+                return;
+            }
+
+            const goalId = userDiet.goalId;
+
+            await axios.delete(`http://localhost:8080/api/v1/goal/diet/${userDiet.goalId}`, {
+                headers: {
+                    "Authorization": `${token}`,
+                }
+            });
+
+            toast.success("Meal deleted successfully");
+            fetchUserDiets(userId);
+        } catch (error) {
+            console.error("Error deleting meal:", error);
+            toast.error("Failed to delete meal");
+        }
     };
 
     return (
         <>
+            <ToastContainer />
             <Userdashboard />
             <div className="diet-page" id="dietSidebarAdjustment">
                 <div className="App">
@@ -175,11 +237,17 @@ function SingleDietPage() {
                                 <div className="button-container">
                                     <button
                                         className="add-button"
+                                        disabled={isMealAdded}
+                                        style={{ opacity: isMealAdded ? 0.5 : 1, cursor: isMealAdded ? "not-allowed" : "pointer" }}
                                         onClick={() => setShowDietForm(true)}
+
                                     >
                                         Add
                                     </button>
-                                    <button className="remove-button" onClick={() => { }}>
+                                    <button className="remove-button" onClick={handleRemoveButtonClick}
+                                        disabled={!isMealAdded}
+                                        style={{ opacity: !isMealAdded ? 0.5 : 1, cursor: !isMealAdded ? "not-allowed" : "pointer" }}
+                                    >
                                         Remove
                                     </button>
                                 </div>
@@ -200,6 +268,7 @@ function SingleDietPage() {
                         meal={mealData}
                         userId={userId}
                         onClose={() => setShowDietForm(false)}
+                        fetchUserDiets={fetchUserDiets}
                     />
                 </>
             )}
@@ -208,4 +277,3 @@ function SingleDietPage() {
 }
 
 export default SingleDietPage;
-    
