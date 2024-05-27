@@ -25,7 +25,7 @@ import CreateGoals from "./pages/CreateGoals";
 import ManageGoals from "./pages/ManageGoals";
 
 import MainContent from "./landingPage/MainContent"
-import ExerciseChart from "./pages/ExerciseChart";
+// import ExerciseChart from "./pages/ExerciseChart"; // Shivankush Remove this line because chart not render in dashboard.
 
 function ProtectedRoute({ Component }) {
   const token = localStorage.getItem("user");
@@ -57,7 +57,8 @@ const App = () => {
         <Route
           exact
           path="/Userdashboard"
-          element={<ProtectedRoute Component={ExerciseChart} />}
+          // element={<ProtectedRoute Component={ExerciseChart} />} // Shivankush Remove this line because chart not render in dashboard.
+          element={<ProtectedRoute Component={Userdashboard} />}
         />
         <Route
           exact
