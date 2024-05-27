@@ -1164,6 +1164,7 @@ const MyProfile = () => {
                             }}
                             style={{
                               lineHeight: "20px",
+                              marginBottom: "3px",
                               ...(tabLiNum === 1
                                 ? {
                                     color: `#fff`,
@@ -1190,6 +1191,8 @@ const MyProfile = () => {
                             }}
                             style={{
                               lineHeight: "20px",
+                              marginLeft: "1rem",
+                              marginBottom: "3px",
                               ...(tabLiNum === 2
                                 ? {
                                     color: `#fff`,
@@ -1217,6 +1220,8 @@ const MyProfile = () => {
                             }}
                             style={{
                               lineHeight: "20px",
+                              marginLeft: "1rem",
+                              marginBottom: "3px",
                               ...(tabLiNum === 4
                                 ? {
                                     color: `#fff`,
@@ -1247,6 +1252,8 @@ const MyProfile = () => {
                             }}
                             style={{
                               lineHeight: "20px",
+                              marginLeft: "1rem",
+                              marginBottom: "3px",
                               ...(tabLiNum === 3
                                 ? {
                                     color: `#fff`,
@@ -1291,6 +1298,7 @@ const MyProfile = () => {
                                 id="my-prf-prdt-sec-hd"
                                 style={{
                                   lineHeight: "20px",
+                                  marginBottom: "3px",
                                   ...(activeTab === 5
                                     ? {
                                         color: `#fff`,
@@ -1311,6 +1319,8 @@ const MyProfile = () => {
                                 onClick={() => handleTabClick(6)}
                                 style={{
                                   lineHeight: "20px",
+                                  marginLeft: "1rem",
+                                  marginBottom: "3px",
                                   ...(activeTab === 6
                                     ? {
                                         color: `#fff`,
@@ -1333,6 +1343,8 @@ const MyProfile = () => {
                                 id="my-prf-prdt-sec-hd"
                                 style={{
                                   lineHeight: "20px",
+                                  marginLeft: "1rem",
+                                  marginBottom: "3px",
                                   ...(activeTab === 7
                                     ? {
                                         color: `#fff`,
@@ -1780,6 +1792,7 @@ const MyProfile = () => {
                                   style={{
                                     cursor: "pointer",
                                     lineHeight: "20px",
+                                    marginBottom: "3px",
                                     ...(EactiveTab === 8
                                       ? {
                                           color: `#fff`,
@@ -1801,6 +1814,8 @@ const MyProfile = () => {
                                   style={{
                                     cursor: "pointer",
                                     lineHeight: "20px",
+                                    marginLeft: "1rem",
+                                    marginBottom: "3px",
                                     ...(EactiveTab === 9
                                       ? {
                                           color: `#fff`,
@@ -1823,6 +1838,8 @@ const MyProfile = () => {
                                   style={{
                                     cursor: "pointer",
                                     lineHeight: "20px",
+                                    marginLeft: "1rem",
+                                    marginBottom: "3px",
                                     ...(EactiveTab === 10
                                       ? {
                                           color: `#fff`,

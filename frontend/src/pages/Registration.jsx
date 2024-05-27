@@ -108,7 +108,7 @@ const Registration = (props) => {
       if (responseData.success) {
         toast.success(responseData.message); // Display success message using toast
         setTimeout(() => {
-          navigate('/Login');
+          navigate("/Login");
         }, 1000);
         setOtpVerified(true); // Update state to indicate OTP verification success
       } else {
@@ -261,9 +261,9 @@ const Registration = (props) => {
     setShowPassword(!showPassword);
   };
 
-
-
   return (
+    <>
+    <div>
     <section
       className="register d-flex align-items-center justify-content-center"
       style={{ height: window.innerHeight,width:"70vw",margin:"auto" }}
@@ -501,6 +501,8 @@ const Registration = (props) => {
         </div>
       </div>
     </section>
+    </div>
+    </>
   );
 };
 export default Registration;

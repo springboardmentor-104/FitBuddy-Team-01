@@ -1,12 +1,10 @@
 import "./Userdashboard.css";
-// import { Link } from "react-router-dom";
 import { Link, useLocation, useNavigation } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
-import { useAuth } from '../context/auth';
-import ExerciseChart from "./ExerciseChart";
+import { useAuth } from "../context/auth";
+import ExerciseChart from "./ExerciseChart"; // Shivankush added this
 import logo from "../landingPage/logo.png"
-
 
 import {
   // BiCog,
@@ -28,8 +26,6 @@ import {
 } from "react-icons/bs";
 
 import { FaDumbbell, FaChevronDown } from "react-icons/fa";
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 
 const Userdashboard = (props) => {
   const [auth, setAuth] = useAuth();
@@ -38,7 +34,6 @@ const Userdashboard = (props) => {
 
   const ref = useRef(null);
   // My user - For opening dashboard of a user
-
   const [user, setUser] = useState({});
   const [openToggleMenu, setOpenToggleMenu] = useState("");
   const [showLeftSidebar, setShowLeftSidebar] = useState(true);
@@ -67,10 +62,10 @@ const Userdashboard = (props) => {
         setTabLiNum(8);
         break;
       case "/MyProfile":
-        setTabLiNum(4);
+        setTabLiNum(5);
         break;
       case "/History":
-        setTabLiNum(5);
+        setTabLiNum(6);
         break;
       default:
         setTabLiNum(1);
@@ -96,6 +91,7 @@ const Userdashboard = (props) => {
     }
   };
 
+  // Shivankush added the below code from line 65 - 87
   const exerciseData = [
     {
       name: "Push-ups",
@@ -128,15 +124,7 @@ const Userdashboard = (props) => {
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
-          {/* <Link
-            to=""
-            class="logo d-flex align-items-center"
-            style={{ textDecoration: "none" }}
-          >
-            {/* <img src={mylogo_icn} alt="" />
-            <span class="d-none d-lg-block">Fit Buddy</span>
-          </Link> */}
-          <BsList
+        <BsList
             className="toggle-sidebar-btn"
             onClick={() => {
               setShowLeftSidebar((show) => {
@@ -149,8 +137,6 @@ const Userdashboard = (props) => {
             className="logo d-flex align-items-center"
             style={{ textDecoration: "none" }}
           >
-            {/* <img src={mylogo_icn} alt="" /> */}
-            {/* <span class="d-none d-lg-block">Fit Buddy</span> */}
             <span class="d-none d-lg-block">
     <img src={logo} alt="Fit Buddy Image" height="55px"/>
     {/* Fit Buddy */}
@@ -159,18 +145,32 @@ const Userdashboard = (props) => {
           </Link>
         </div>
 
+        {/* <div className="search-bar">
+          <form className="search-form d-flex align-items-center">
+            <input
+              type="text"
+              name="query"
+              placeholder="Search"
+              title="Enter search keyword"
+            />
+            <button type="submit" title="Search">
+              <BiSearch />
+            </button>
+          </form>
+        </div> */}
+
         <nav className="header-nav ms-auto">
           <ul className="d-flex align-items-center">
             {/* Search Bar */}
-            <li className="nav-item d-block d-lg-none">
+            {/* <li className="nav-item d-block d-lg-none">
               <Link className="nav-link nav-icon search-bar-toggle " to="">
-                {/* <BiSearch /> */}
+                <BiSearch />
               </Link>
-            </li>
+            </li> */}
 
             {/* User Profie */}
             <li
-              className="nav-item dropdown pe-3"
+              class="nav-item dropdown pe-3"
               ref={ref}
               onClick={handleClickOutside}
             >
@@ -178,14 +178,14 @@ const Userdashboard = (props) => {
                 to=""
                 data-bs-toggle="dropdown"
                 onClick={toggleProfileDropdown}
-                className="nav-link nav-profile d-flex align-items-center pe-0"
+                class="nav-link nav-profile d-flex align-items-center pe-0"
               >
                 <img
                   alt="Profile"
                   src={person_icn}
                   className="rounded-circle"
                 />
-                <span className="d-none d-md-block dropdown-toggle ps-2">
+                <span class="d-none d-md-block dropdown-toggle ps-2">
                   {user?.name || "User"}
                 </span>
               </Link>
@@ -204,9 +204,9 @@ const Userdashboard = (props) => {
                     <span>Designation</span>
                   </li>
                   <li>
-                    <hr className="dropdown-divider" />
+                    <hr class="dropdown-divider" />
                   </li>
-                  <li>
+                  <li style={{ lineHeight: "40px" }}>
                     <Link
                       className="dropdown-item d-flex align-items-center"
                       to="/MyProfile"
@@ -217,9 +217,9 @@ const Userdashboard = (props) => {
                     </Link>
                   </li>
                   <li>
-                    <hr className="dropdown-divider" />
+                    <hr class="dropdown-divider" />
                   </li>
-                  <li>
+                  <li style={{ lineHeight: "40px" }}>
                     <Link
                       className="dropdown-item d-flex align-items-center"
                       to="/"
@@ -248,10 +248,10 @@ const Userdashboard = (props) => {
       >
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
-            <Link 
-            // className="nav-link " 
-            to="/Userdashboard"
-            className={`nav-link ${tabLiNum === 1 ? "active" : ""}`}
+            <Link
+              // className="nav-link "
+              to="/Userdashboard"
+              className={`nav-link ${tabLiNum === 1 ? "active" : ""}`}
               onClick={() => {
                 setTabLiNum(1);
               }}
@@ -271,14 +271,14 @@ const Userdashboard = (props) => {
             </Link>
           </li>
 
-          {/* <li className="nav-heading">Pages</li> */}
+          <li className="nav-heading">Pages</li>
 
           <li className="nav-item">
             {/* /ManageGoals */}
-            <Link 
-            // className="nav-link collapsed" 
-            to="/ManageGoals"
-            className={`nav-link ${tabLiNum === 2 ? "active" : ""}`}
+            <Link
+              // className="nav-link collapsed"
+              to="/ManageGoals"
+              className={`nav-link ${tabLiNum === 2 ? "active" : ""}`}
               onClick={() => {
                 setTabLiNum(2);
               }}
@@ -297,6 +297,14 @@ const Userdashboard = (props) => {
               <span>Manage Goals</span>
             </Link>
           </li>
+
+          {/* <li className="nav-item">
+            <Link className="nav-link collapsed" to="">
+              <BsFillPlusCircleFill />
+              &nbsp;
+              <span>Create Goals</span>
+            </Link>
+          </li> */}
 
           <li className="nav-item">
             <Link
@@ -327,7 +335,7 @@ const Userdashboard = (props) => {
             </Link>
             <ul
               id="forms-nav"
-              className={`nav-content  ${
+              class={`nav-content  ${
                 "sidebar-nav-create-goals" === openToggleMenu
                   ? "show"
                   : "collapse"
@@ -335,10 +343,10 @@ const Userdashboard = (props) => {
               data-bs-parent="#sidebar-nav-create-goals"
             >
               <li>
-                <Link 
-                to="/ExercisePage" 
-                style={{ textDecoration: "none" }}
-                className={tabLiNum === 7 ? "active" : ""}
+                <Link
+                  to="/ExercisePage"
+                  style={{ textDecoration: "none" }}
+                  className={tabLiNum === 7 ? "active" : ""}
                 >
                   <FaDumbbell />
                   &nbsp;
@@ -346,10 +354,10 @@ const Userdashboard = (props) => {
                 </Link>
               </li>
               <li>
-                <Link 
-                to="/create-goals" 
-                style={{ textDecoration: "none" }}
-                className={tabLiNum === 8 ? "active" : ""}
+                <Link
+                  to="/create-goals"
+                  style={{ textDecoration: "none" }}
+                  className={tabLiNum === 8 ? "active" : ""}
                 >
                   <BsFillPlusCircleFill />
                   &nbsp;
@@ -358,13 +366,13 @@ const Userdashboard = (props) => {
               </li>
               {/* <li>
                 <a href="forms-editors.html">
-                  <i className="bi bi-circle"></i>
+                  <i class="bi bi-circle"></i>
                   <span>Form Editors</span>
                 </a>
               </li>
               <li>
                 <a href="forms-validation.html">
-                  <i className="bi bi-circle"></i>
+                  <i class="bi bi-circle"></i>
                   <span>Form Validation</span>
                 </a>
               </li> */}
@@ -396,15 +404,39 @@ const Userdashboard = (props) => {
           </li> */}
 
           <li className="nav-item">
-            <Link 
-            // className="nav-link collapsed" 
-            to="/MyProfile"
-            className={`nav-link ${tabLiNum === 4 ? "active" : ""}`}
+            <Link
+              // className="nav-link collapsed"
+              to=""
+              className={`nav-link ${tabLiNum === 4 ? "active" : ""}`}
               onClick={() => {
                 setTabLiNum(4);
               }}
               style={{
                 ...(tabLiNum === 4
+                  ? {
+                      color: `#4154f1`,
+                      backgroundColor: `#f6f9ff`,
+                      borderColor: `#f6f9ff`,
+                    }
+                  : {}),
+              }}
+            >
+              <BsCartPlusFill />
+              &nbsp;
+              <span>Buy Subscription</span>
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link
+              // className="nav-link collapsed"
+              to="/MyProfile"
+              className={`nav-link ${tabLiNum === 5 ? "active" : ""}`}
+              onClick={() => {
+                setTabLiNum(5);
+              }}
+              style={{
+                ...(tabLiNum === 5
                   ? {
                       color: `#4154f1`,
                       backgroundColor: `#f6f9ff`,
@@ -420,15 +452,15 @@ const Userdashboard = (props) => {
           </li>
 
           <li className="nav-item">
-            <Link 
-            // className="nav-link collapsed" 
-            to="/History"
-            className={`nav-link ${tabLiNum === 5 ? "active" : ""}`}
+            <Link
+              // className="nav-link collapsed"
+              to="/History"
+              className={`nav-link ${tabLiNum === 6 ? "active" : ""}`}
               onClick={() => {
-                setTabLiNum(5);
+                setTabLiNum(6);
               }}
               style={{
-                ...(tabLiNum === 5
+                ...(tabLiNum === 6
                   ? {
                       color: `#4154f1`,
                       backgroundColor: `#f6f9ff`,
@@ -442,6 +474,20 @@ const Userdashboard = (props) => {
               <span>History</span>
             </Link>
           </li>
+
+          {/* <li className="nav-item">
+            <Link className="nav-link collapsed" to="">
+              <i className="bi bi-dash-circle"></i>
+              <span>Section 6</span>
+            </Link>
+          </li> */}
+
+          {/* <li className="nav-item">
+            <Link className="nav-link collapsed" to="">
+              <i className="bi bi-file-earmark"></i>
+              <span>Section 7</span>
+            </Link>
+          </li> */}
         </ul>
       </aside>
 
@@ -477,11 +523,6 @@ const Userdashboard = (props) => {
             return "";
           })()}
         </section>
-        {/* {props?.content}
-          <div>
-            <h1>Exercise Completion Chart</h1>
-            <ExerciseChart data={exerciseData} />
-          </div> */}
       </main>
 
       {/* Back to Top */}

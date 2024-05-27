@@ -27,7 +27,7 @@ function SingleExercisePage() {
     const fetchExerciseData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/exercises/${id}`
+          `http://localhost:8080/api/v1/exercise/exercises/${id}`
         );
         if (response.status === 200) {
           setExerciseData(response.data.exercise);
@@ -54,61 +54,70 @@ function SingleExercisePage() {
 
   return (
     <>
-      <Userdashboard />
-      <div className="exercise-page" id="exerciseSidebarAdjustment">
-        <div className="App">
-          {exerciseData ? (
-            <div className="container">
-              {/* Exercise details */}
-              <div className="image-container">
-                <img src={exerciseData.photo} alt={exerciseData.name} />
-              </div>
-              <div className="text-container">
-                {/* Exercise name */}
-                <div className="label">
-                  <center id="exerciseSidebarAdjustment">
-                    {exerciseData.name}
-                  </center>
-                </div>
-                {/* Exercise instructions */}
-                <h2>Instructions</h2>
-                <p className="instruction-para">
-                  {exerciseData.description}
-                </p>
-                {/* Buttons */}
-                <div className="button-container">
-                  <button
-                    className="add-button"
-                    onClick={() => setShowExerciseForm(true)}
-                  >
-                    Add
-                  </button>
-                  <button className="remove-button" onClick={() => {}}>
-                    Remove
-                  </button>
-                </div>
+      <Userdashboard
+        content={
+          <div>
+            {/* <div className="exercise-page" id="exerciseSidebarAdjustment"> */}
+            <div className="exercise-page" style={{ marginTop: "30px" }}>
+              <div className="App">
+                {exerciseData ? (
+                  <div className="container">
+                    <div className="label">
+                      {/* <center> */}
+                      {exerciseData.name}
+                      {/* </center> */}
+                    </div>
+                    <div className="d-flex justify-content-center">
+                      {/* Exercise details */}
+                      <div className="image-container">
+                        <img src={exerciseData.photo} alt={exerciseData.name} />
+                      </div>
+                      <div className="text-container">
+                        {/* Exercise name */}
+
+                        {/* Exercise instructions */}
+                        <h2>Instructions</h2>
+                        <p className="instruction-para">
+                          {exerciseData.description}
+                        </p>
+                        {/* Buttons */}
+                        <div className="button-container">
+                          <button
+                            className="add-button"
+                            onClick={() => setShowExerciseForm(true)}
+                          >
+                            Add
+                          </button>
+                          <button className="remove-button" onClick={() => {}}>
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div>Loading...</div>
+                )}
               </div>
             </div>
-          ) : (
-            <div>Loading...</div>
-          )}
-        </div>
-      </div>
-      {/* Exercise form */}
-      {showExerciseForm && (
-        <>
-          <div
-            className="exercise-form-overlay"
-            onClick={() => setShowExerciseForm(false)}
-          ></div>
-          <ExerciseForm2
-            exercise={exerciseData}
-            userId={userId}
-            onSubmit={handleSubmitExercise}
-            onClose={() => setShowExerciseForm(false)}
-          />
-        </>
-      )}
+            {/* Exercise form */}
+            {showExerciseForm && (
+              <>
+                <div
+                  className="exercise-form-overlay"
+                  onClick={() => setShowExerciseForm(false)}
+                ></div>
+                <ExerciseForm2
+                  exercise={exerciseData}
+                  userId={userId}
+                  onSubmit={handleSubmitExercise}
+                  onClose={() => setShowExerciseForm(false)}
+                />
+              </>
+            )}
+          </div>
+        }
+      />
     </>
   );
 }

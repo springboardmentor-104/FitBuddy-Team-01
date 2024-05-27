@@ -12,7 +12,7 @@ const ManageGoals = () => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-  
+
   return (
     <>
       <Userdashboard

@@ -186,11 +186,13 @@ const TableComponentPending = () => {
     {
       dataIndex: "time",
       title: "Estimated Time",
+      width: 150,
       className: "my-font",
     },
     {
       dataIndex: "status",
       title: "Status",
+      width: 100,
       className: "my-font",
       render: (value, row) => (
         <ExerciseStatusTypography
@@ -202,6 +204,7 @@ const TableComponentPending = () => {
     {
       dataIndex: "date",
       title: "Date",
+      width: 100,
       className: "my-font",
     },
   ];
@@ -225,11 +228,13 @@ const TableComponentPending = () => {
     {
       dataIndex: "category",
       title: "Time to Eat",
+      width: 150,
       className: "my-font",
     },
     {
       dataIndex: "status",
       title: "Status",
+      width: 100,
       className: "my-font",
       render: (value, row) => (
         <DietStatusTypography
@@ -241,6 +246,7 @@ const TableComponentPending = () => {
     {
       dataIndex: "date",
       title: "Date",
+      width: 100,
       className: "my-font",
     },
   ];
@@ -254,6 +260,17 @@ const TableComponentPending = () => {
   //   selectedRowKeys,
   //   onChange: onSelectChange,
   // };
+
+  // Calculate the total width
+  const AllDietsTableTotalWidth = AllDietsColumns.reduce(
+    (sum, column) => sum + column.width,
+    0
+  );
+
+  const AllExercisesTableTotalWidth = AllExercisesColumns.reduce(
+    (sum, column) => sum + column.width,
+    0
+  );
 
   return (
     <>
@@ -285,6 +302,8 @@ const TableComponentPending = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        // scroll={{ x: true }}
+        scroll={{ x: AllExercisesTableTotalWidth }}
       />
 
       <br />
@@ -316,6 +335,8 @@ const TableComponentPending = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        // scroll={{ x: true }}
+        scroll={{ x: AllDietsTableTotalWidth }}
       />
     </>
   );

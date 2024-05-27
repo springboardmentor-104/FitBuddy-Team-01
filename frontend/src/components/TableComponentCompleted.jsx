@@ -155,11 +155,13 @@ const TableComponentCompleted = () => {
     {
       dataIndex: "time",
       title: "Estimated Time",
+      width: 150,
       className: "my-font",
     },
     {
       dataIndex: "status",
       title: "Status",
+      width: 100,
       className: "my-font",
       render: (value, row) => (
         <ExerciseStatusTypography
@@ -171,6 +173,7 @@ const TableComponentCompleted = () => {
     {
       dataIndex: "date",
       title: "Date",
+      width: 100,
       className: "my-font",
     },
   ];
@@ -194,11 +197,13 @@ const TableComponentCompleted = () => {
     {
       dataIndex: "category",
       title: "Time to Eat",
+      width: 150,
       className: "my-font",
     },
     {
       dataIndex: "status",
       title: "Status",
+      width: 100,
       className: "my-font",
       render: (value, row) => (
         <DietStatusTypography
@@ -210,6 +215,7 @@ const TableComponentCompleted = () => {
     {
       dataIndex: "date",
       title: "Date",
+      width: 100,
       className: "my-font",
     },
   ];
@@ -223,6 +229,17 @@ const TableComponentCompleted = () => {
   //   selectedRowKeys,
   //   onChange: onSelectChange,
   // };
+
+  // Calculate the total width
+  const AllDietsTableTotalWidth = AllDietsColumns.reduce(
+    (sum, column) => sum + column.width,
+    0
+  );
+
+  const AllExercisesTableTotalWidth = AllExercisesColumns.reduce(
+    (sum, column) => sum + column.width,
+    0
+  );
 
   return (
     <>
@@ -254,6 +271,8 @@ const TableComponentCompleted = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        // scroll={{ x: true }}
+        scroll={{ x: AllExercisesTableTotalWidth }}
       />
 
       <br />
@@ -285,6 +304,8 @@ const TableComponentCompleted = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        // scroll={{ x: true }}
+        scroll={{ x: AllDietsTableTotalWidth }}
       />
     </>
   );

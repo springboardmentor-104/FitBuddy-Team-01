@@ -72,10 +72,13 @@
 }
 
 .add-button:hover {
-  background-color: rgb(107, 250, 107); /* Change button color to green on hover */
+  background-color: rgb(
+    107,
+    250,
+    107
+  ); /* Change button color to green on hover */
 }
 
 .remove-button:hover {
   background-color: rgb(254, 76, 76); /* Change button color to red on hover */
 }
-

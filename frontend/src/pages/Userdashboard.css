@@ -357,7 +357,7 @@ h6 {
 }
 
 .logo img {
-  max-height: 55px;
+  /* max-height: 26px; */
   margin-right: 6px;
 }
 
@@ -655,6 +655,7 @@ h6 {
   padding: 0;
   margin: 0;
   list-style: none;
+  line-height: 40px; /* Shivankush added this */
 }
 
 .sidebar-nav .nav-item {
@@ -676,7 +677,7 @@ h6 {
   font-weight: 600;
   color: #4154f1;
   transition: 0.3;
-  /* background: #f6f9ff; */ /* Shivankush Remove this */
+  /* background: #f6f9ff;  */ /* Shivankush Remove this */
   padding: 10px 15px;
   border-radius: 4px;
 }
@@ -1229,7 +1230,7 @@ h6 {
 }
 
 .dropdown-menu.notifications.active {
-  display: block; /* Display the dropdown when it has the 'active' className */
+  display: block; /* Display the dropdown when it has the 'active' class */
 }
 
 .dropdown-menu.profile {
@@ -1237,7 +1238,7 @@ h6 {
 }
 
 .dropdown-menu.profile.active {
-  display: block; /* Display the dropdown when it has the 'active' className */
+  display: block; /* Display the dropdown when it has the 'active' class */
 }
 
 @media (min-width: 768px) {
