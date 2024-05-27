@@ -28,6 +28,9 @@ import {
 import { FaDumbbell, FaChevronDown } from "react-icons/fa";
 
 const Userdashboard = (props) => {
+  const [tabLiNum, setTabLiNum] = useState(1);
+  const location = useLocation();
+
   const [auth, setAuth] = useAuth();
   const [tabLiNum, setTabLiNum] = useState(1);
   const location = useLocation();
