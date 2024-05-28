@@ -63,7 +63,8 @@ const App = () => {
         <Route
           exact
           path="/Userdashboard"
-          element={<ProtectedRoute Component={ExerciseChart} />}
+          // element={<ProtectedRoute Component={ExerciseChart} />}
+          element={<ProtectedRoute Component={Userdashboard} />}
         />
         <Route
           exact

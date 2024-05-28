@@ -1,5 +1,6 @@
 import "./Userdashboard.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigation } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/auth";
@@ -24,7 +25,7 @@ import {
   BsList,
   BsArrowUp,
   BsPersonFill,
-  // BsCartPlusFill,
+  BsCartPlusFill,
   BsFillPlusCircleFill,
 } from "react-icons/bs";
 
@@ -34,6 +35,8 @@ import { FaDumbbell, FaChevronDown } from "react-icons/fa";
 
 const Userdashboard = (props) => {
   const [auth, setAuth] = useAuth();
+  const [tabLiNum, setTabLiNum] = useState(1);
+  const location = useLocation();
 
   const ref = useRef(null);
   // My user - For opening dashboard of a user
@@ -46,6 +49,38 @@ const Userdashboard = (props) => {
     if (user) {
       user = JSON.parse(user);
       setUser(user);
+    }
+  }, []);
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/Userdashboard":
+        setTabLiNum(1);
+        break;
+      case "/ManageGoals":
+        setTabLiNum(2);
+        break;
+      case "/ExercisePage":
+        setOpenToggleMenu("sidebar-nav-create-goals");
+        setTabLiNum(7);
+        break;
+      case "/create-goals":
+        setOpenToggleMenu("sidebar-nav-create-goals");
+        setTabLiNum(8);
+        break;
+      case "/DietPage":
+        setOpenToggleMenu("sidebar-nav-create-goals");
+        setTabLiNum(9);
+        break;
+      case "/MyProfile":
+        setTabLiNum(5);
+        break;
+      case "/History":
+        setTabLiNum(6);
+        break;
+      default:
+        setTabLiNum(1);
+        break;
     }
   }, []);
 
@@ -218,7 +253,23 @@ const Userdashboard = (props) => {
       >
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
-            <Link className="nav-link " to="/Userdashboard">
+            <Link 
+            // className="nav-link " 
+            to="/Userdashboard"
+            className={`nav-link ${tabLiNum === 1 ? "active" : ""}`}
+              onClick={() => {
+                setTabLiNum(1);
+              }}
+              style={{
+                ...(tabLiNum === 1
+                  ? {
+                      color: `#4154f1`,
+                      backgroundColor: `#f6f9ff`,
+                      borderColor: `#f6f9ff`,
+                    }
+                  : {}),
+              }}
+            >
               <BiGrid />
               &nbsp;
               <span>Dashboard</span>
@@ -229,7 +280,23 @@ const Userdashboard = (props) => {
 
           <li className="nav-item">
             {/* /ManageGoals */}
-            <Link className="nav-link collapsed" to="/ManageGoals">
+            <Link 
+            // className="nav-link collapsed" 
+            to="/ManageGoals"
+            className={`nav-link ${tabLiNum === 2 ? "active" : ""}`}
+              onClick={() => {
+                setTabLiNum(2);
+              }}
+              style={{
+                ...(tabLiNum === 2
+                  ? {
+                      color: `#4154f1`,
+                      backgroundColor: `#f6f9ff`,
+                      borderColor: `#f6f9ff`,
+                    }
+                  : {}),
+              }}
+            >
               <BiTask />
               &nbsp;
               <span>Manage Goals</span>
@@ -238,14 +305,25 @@ const Userdashboard = (props) => {
 
           <li className="nav-item">
             <Link
-              className="nav-link collapsed"
-              onClick={() =>
-                setOpenToggleMenu(
-                  openToggleMenu === "sidebar-nav-create-goals"
-                    ? ""
-                    : "sidebar-nav-create-goals"
-                )
-              }
+              // className="nav-link collapsed"
+              onClick={() => {
+                setTabLiNum(3);
+                setOpenToggleMenu("sidebar-nav-create-goals");
+              }}
+              className={`nav-link ${
+                tabLiNum === 3 || tabLiNum === 7 || tabLiNum === 8
+                  ? "active"
+                  : ""
+              }`}
+              style={{
+                ...(tabLiNum === 7 || tabLiNum === 8 || tabLiNum === 3
+                  ? {
+                      color: `#4154f1`,
+                      backgroundColor: `#f6f9ff`,
+                      borderColor: `#f6f9ff`,
+                    }
+                  : {}),
+              }}
             >
               <BsFillPlusCircleFill />
               &nbsp;
@@ -262,21 +340,33 @@ const Userdashboard = (props) => {
               data-bs-parent="#sidebar-nav-create-goals"
             >
               <li>
-                <Link to="/ExercisePage" style={{ textDecoration: "none" }}>
+                <Link 
+                to="/ExercisePage" 
+                style={{ textDecoration: "none" }}
+                className={tabLiNum === 7 ? "active" : ""}
+                >
                   <FaDumbbell />
                   &nbsp;
                   <span>Exercises</span>
                 </Link>
               </li>
               <li>
-                <Link to="/DietPage" style={{ textDecoration: "none" }}>
+                <Link 
+                to="/DietPage" 
+                style={{ textDecoration: "none" }}
+                className={tabLiNum === 9 ? "active" : ""}
+                >
                   <FontAwesomeIcon icon={faUtensils} />
                   &nbsp;
                   <span>Meals</span>
                 </Link>
               </li>
               <li>
-                <Link to="/create-goals" style={{ textDecoration: "none" }}>
+                <Link 
+                to="/create-goals" 
+                style={{ textDecoration: "none" }}
+                className={tabLiNum === 8 ? "active" : ""}
+                >
                   <BsFillPlusCircleFill />
                   &nbsp;
                   <span>Create Goals</span>
@@ -298,7 +388,47 @@ const Userdashboard = (props) => {
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="/MyProfile">
+            <Link
+              // className="nav-link collapsed"
+              to=""
+              className={`nav-link ${tabLiNum === 4 ? "active" : ""}`}
+              onClick={() => {
+                setTabLiNum(4);
+              }}
+              style={{
+                ...(tabLiNum === 4
+                  ? {
+                      color: `#4154f1`,
+                      backgroundColor: `#f6f9ff`,
+                      borderColor: `#f6f9ff`,
+                    }
+                  : {}),
+              }}
+            >
+              <BsCartPlusFill />
+              &nbsp;
+              <span>Buy Subscription</span>
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link 
+            // className="nav-link collapsed" 
+            to="/MyProfile"
+            className={`nav-link ${tabLiNum === 5 ? "active" : ""}`}
+              onClick={() => {
+                setTabLiNum(5);
+              }}
+              style={{
+                ...(tabLiNum === 5
+                  ? {
+                      color: `#4154f1`,
+                      backgroundColor: `#f6f9ff`,
+                      borderColor: `#f6f9ff`,
+                    }
+                  : {}),
+              }}
+            >
               <BsPersonFill />
               &nbsp;
               <span>My Profile</span>
@@ -306,7 +436,23 @@ const Userdashboard = (props) => {
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="/History">
+            <Link 
+            // className="nav-link collapsed" 
+            to="/History"
+            className={`nav-link ${tabLiNum === 6 ? "active" : ""}`}
+              onClick={() => {
+                setTabLiNum(6);
+              }}
+              style={{
+                ...(tabLiNum === 6
+                  ? {
+                      color: `#4154f1`,
+                      backgroundColor: `#f6f9ff`,
+                      borderColor: `#f6f9ff`,
+                    }
+                  : {}),
+              }}
+            >
               <BiTime />
               &nbsp;
               <span>History</span>
@@ -332,7 +478,29 @@ const Userdashboard = (props) => {
             </ol>
           </nav>
         </div> */}
-        <section className="section dashboard">{props?.content}</section>
+        <section className="section dashboard">
+          {props?.content}
+          {(() => {
+            if (location.pathname === "/Userdashboard") {
+              return (
+                <div>
+                    <div className="card">
+                      <h1 className="card-header"
+                      style={{
+                      fontSize : "25px", 
+                      fontWeight : "600",
+                      color:"#012970"
+                      }}>
+                        Exercise Completion Chart
+                      </h1>
+                      <ExerciseChart data={exerciseData} />
+                    </div>
+                </div>
+             );
+            }
+            return "";
+          })()}
+        </section>
         {/* {props?.content}
           <div>
             <h1>Exercise Completion Chart</h1>
