@@ -221,18 +221,17 @@ const Registration = (props) => {
   const handleRegistrationSubmit1 = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post(
-      "http://localhost:8080/api/v1/auth/register",
-      {
-        name: fullName,
-        email: email,
-        username: userName,
-        password: password,
-        cpassword: confirmedPassword,
-      }
-    );
-
     try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/register",
+        {
+          name: fullName,
+          email: email,
+          username: userName,
+          password: password,
+          cpassword: confirmedPassword,
+        }
+      );
       // Check if all fields are filled
       if (response.data.success) {
         setIsRegistered(true);
@@ -248,7 +247,7 @@ const Registration = (props) => {
         error.response.status >= 400 &&
         error.response.status <= 500
       ) {
-        toast.error(response.data.message);
+        toast.error(error.response.data.message);
       }
       setRegisteredUserId("");
       setIsRegistered(false);
