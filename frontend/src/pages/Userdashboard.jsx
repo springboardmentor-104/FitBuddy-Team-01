@@ -124,13 +124,13 @@ const Userdashboard = (props) => {
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
-        <BsList
-            className="toggle-sidebar-btn"
-            onClick={() => {
-              setShowLeftSidebar((show) => {
-                return !show;
-              });
-            }}
+          <BsList
+              className="toggle-sidebar-btn"
+              onClick={() => {
+                setShowLeftSidebar((show) => {
+                  return !show;
+                });
+              }}
           />
           <Link
             to=""
@@ -138,10 +138,12 @@ const Userdashboard = (props) => {
             style={{ textDecoration: "none" }}
           >
             <span class="d-none d-lg-block">
-    <img src={logo} alt="Fit Buddy Image" height="55px"/>
-    {/* Fit Buddy */}
-</span>
-
+              <img src={logo} alt="Fit Buddy Image" 
+              // height="55px"
+              height="47px"
+              />
+              {/* Fit Buddy */}
+            </span>
           </Link>
         </div>
 
@@ -516,9 +518,14 @@ const Userdashboard = (props) => {
               return (
                 <div>
                     <div className="card">
-                      <div class="card-header" style={{fontSize : "25px", fontWeight : "600"}}>
+                      <h1 className="card-header"
+                      style={{
+                      fontSize : "25px", 
+                      fontWeight : "600",
+                      color:"#012970"
+                      }}>
                         Exercise Completion Chart
-                      </div>
+                      </h1>
                       <ExerciseChart data={exerciseData} />
                     </div>
                 </div>
