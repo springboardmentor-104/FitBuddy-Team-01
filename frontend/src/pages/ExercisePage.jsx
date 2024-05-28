@@ -65,8 +65,9 @@ const ExercisePage = () => {
 
   return (
     <>
-      <Userdashboard />
-      <div className="exercise-page" id="exerciseSidebarAdjustment">
+      <Userdashboard 
+      content={
+        <div className="exercise-page">
         <div
           className={`dropdown-container ${
             dropdownVisible ? "visible" : "hidden"
@@ -113,7 +114,9 @@ const ExercisePage = () => {
             onClose={() => setShowExerciseForm(false)}
           />
         )}
-      </div>
+        </div>
+      }
+      />
     </>
   );
 };
