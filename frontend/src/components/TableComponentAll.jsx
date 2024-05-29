@@ -150,7 +150,7 @@ const TableComponentAll = () => {
     {
       dataIndex: "time",
       title: "Estimated Time",
-      width: 100,
+      width: 150,
       className: "my-font",
     },
     {
