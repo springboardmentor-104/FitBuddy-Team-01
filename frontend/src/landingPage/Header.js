@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./Header.css";
 import logo from "./logo.png";
-import { Link } from 'react-router-dom'; // Import Link from React Router
-
+import { Link } from "react-router-dom"; // Import Link from React Router
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,19 +12,19 @@ function Header() {
 
   return (
     <header className="landingPageHeader">
-    <Link to="/">
-      <img src={logo} alt="FitBuddy Hero 1" className="LandingLogo" />
-    </Link>
-    <div className="hamburger" onClick={toggleMenu}>
-      &#9776;
-    </div>
-    <nav className={`nav ${menuOpen ? "open" : ""}`}>
-    <Link to="/">Home</Link>
-      <Link to="/registration">Sign Up</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/contactus">Contact Us</Link>
-    </nav>
-  </header>
+      <Link to="/">
+        <img src={logo} alt="FitBuddy Hero 1" className="LandingLogo" />
+      </Link>
+      <div className="hamburger" onClick={toggleMenu}>
+        &#9776;
+      </div>
+      <nav className={`gav-nav ${menuOpen ? "open" : ""}`}>
+        <Link to="/">Home</Link>
+        <Link to="/registration">Sign Up</Link>
+        <Link to="/login">Login</Link>
+        <Link to="/contactus">Contact Us</Link>
+      </nav>
+    </header>
   );
 }
 
