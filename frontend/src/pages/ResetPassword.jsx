@@ -9,8 +9,11 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+
 
 const ResetPassword = (props) => {
+  const navigate = useNavigate();
   const location = useLocation();
   // const [password, setPassword] = useState("");
   // const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,22 +24,6 @@ const ResetPassword = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordLengthValid, setPasswordLengthValid] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  // const [height, setHeight] = useState(0);
-
-  // const handlePasswordChange = (e) => {
-  //   setPassword(e.target.value);
-  // };
-
-  // const handleConfirmPasswordChange = (e) => {
-  //   setConfirmPassword(e.target.value);
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Add password reset logic here
-  //   console.log(password, confirmPassword);
-  // };
 
   // document.body.style.overflow = "hidden";
 
@@ -116,10 +103,10 @@ const ResetPassword = (props) => {
       // If passwords don't match, prevent form submission
       setPasswordsMatch(false);
       alert("Passwords do not match. Please re-enter.");
-    } else if (password.length > 8 || confirmPassword.length > 8) {
+    } else if (password.length < 8 ) {
       // If password length exceeds 8 characters, prevent form submission
       setPasswordLengthValid(false);
-      alert("Password cannot be more than 8 characters long.");
+      alert("Password cannot be less than 8 characters long.");
     } else {
       // Passwords match and length is valid, allow form submission
       // alert("Form submitted successfully!");
@@ -128,6 +115,7 @@ const ResetPassword = (props) => {
         userId: location?.state?.userId,
         otp: location?.state?.otp,
         newPassword: password,
+        cpassword:confirmPassword
       });
 
       let config = {
@@ -144,12 +132,17 @@ const ResetPassword = (props) => {
         .request(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
-          toast.success(response.data.message, {
-            position: "top-center",
-            autoClose: 20000,
-          });
+          if(response.data.success){
+            toast.success(response.data.message);
+            setTimeout(() => {
+              navigate('/login');
+            }, 1000);
+          }else{
+            toast.error(response.data.message)
+          }
         })
         .catch((error) => {
+          toast.error(error.response.data.message);
           console.log(error);
         });
     }

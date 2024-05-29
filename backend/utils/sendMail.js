@@ -13,8 +13,8 @@ module.exports = async (email, subject, text) => {
             requireTLS: true,
             service: process.env.SERVICE,
             auth: {
-                user: process.env.USERNAME,
-                pass: process.env.EmailPASS
+                user: process.env.USER,
+                pass: process.env.PASS
             }
       // host: "smtp.gmail.com",
       // port: 587,

@@ -1,18 +1,40 @@
 import { Card } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Userdashboard from "./Userdashboard";
 import TableComponentAll from "./../components/TableComponentAll";
 import TableComponentCompleted from "../components/TableComponentCompleted";
 import TableComponentPending from "../components/TableComponentPending";
+import axios from "axios";
+import {useAuth} from '../context/auth'
 
 const ManageGoals = () => {
+  const[auth, setAuth] = useAuth();
+
   const [activeTab, setActiveTab] = useState("All");
   const [loading] = useState(false);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-
+  
+  const addPreviousData = async () => {
+    const token = auth?.token;
+    try {
+        const res = await axios.get("http://localhost:8080/api/v1/history/create_everyday_historydata", {
+            headers: {
+                "Authorization": `${token}`, // Add token to Authorization header
+            }
+        });
+    } catch (error) {
+        if (error.response && error.response.status >= 400 && error.response.status <= 500){
+        }else {
+        }
+    }
+};
+ 
+React.useEffect(() => {
+  addPreviousData();
+}, []); 
   return (
     <>
       <Userdashboard
