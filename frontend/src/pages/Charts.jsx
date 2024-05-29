@@ -99,7 +99,7 @@
 //   );
 // };
 
-// const Charts = () => { 
+// const Charts = () => {
 //   const [data, setData] = useState([]);
 //   const [auth, setAuth] = useAuth();
 //   const token = auth?.token;
@@ -126,7 +126,7 @@
 //   useEffect(() => {
 //     fetchData();
 //     // eslint-disable-next-line
-//   }, []); 
+//   }, []);
 
 //   const [page, setPage] = useState(0);
 //   const itemsPerPage = 7;
@@ -161,7 +161,7 @@
 
 // export default Charts;
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import "./Charts.css";
 import {
@@ -175,10 +175,10 @@ import {
   Legend,
 } from "chart.js";
 import Userdashboard from "./Userdashboard";
-import axios from 'axios'
-import {useAuth} from '../context/auth';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import { useAuth } from "../context/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 ChartJS.register(
   CategoryScale,
@@ -191,26 +191,29 @@ ChartJS.register(
 );
 const CombinedChart = ({ data, page, itemsPerPage }) => {
   // Paginate the data
-  const paginatedData = data.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
+  const paginatedData = data.slice(
+    page * itemsPerPage,
+    (page + 1) * itemsPerPage
+  );
 
   // Get unique dates within the paginated data
-  const uniqueDates = paginatedData.map(entry => entry.date);
+  const uniqueDates = paginatedData.map((entry) => entry.date);
 
   // Prepare datasets for the chart
   const exerciseData = {
-    label: 'Exercise Completion Percentage',
-    data: paginatedData.map(entry => entry.exercise),
-    borderColor: 'hsl(220, 70%, 50%)',
-    backgroundColor: 'hsl(220, 70%, 50%, 0.2)',
+    label: "Exercise Completion Percentage",
+    data: paginatedData.map((entry) => entry.exercise),
+    borderColor: "hsl(220, 70%, 50%)",
+    backgroundColor: "hsl(220, 70%, 50%, 0.2)",
     fill: false,
     tension: 0.1,
   };
 
   const dietData = {
-    label: 'Diet Completion Percentage',
-    data: paginatedData.map(entry => entry.diet),
-    borderColor: 'hsl(120, 70%, 50%)',
-    backgroundColor: 'hsl(120, 70%, 50%, 0.2)',
+    label: "Diet Completion Percentage",
+    data: paginatedData.map((entry) => entry.diet),
+    borderColor: "hsl(120, 70%, 50%)",
+    backgroundColor: "hsl(120, 70%, 50%, 0.2)",
     fill: false,
     tension: 0.1,
   };
@@ -224,11 +227,11 @@ const CombinedChart = ({ data, page, itemsPerPage }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
+        position: "top",
       },
       title: {
         display: true,
-        text: 'Exercise and Diet Completion Over Time',
+        text: "Exercise and Diet Completion Over Time",
       },
     },
     scales: {
@@ -237,13 +240,13 @@ const CombinedChart = ({ data, page, itemsPerPage }) => {
         max: 100,
         title: {
           display: true,
-          text: 'Completion Percentage',
+          text: "Completion Percentage",
         },
       },
       x: {
         title: {
           display: true,
-          text: 'Date',
+          text: "Date",
         },
       },
     },
@@ -263,7 +266,7 @@ const Charts = () => {
 
   useEffect(() => {
     // Check if data is available in localStorage
-    const localStorageData = localStorage.getItem('chartData');
+    const localStorageData = localStorage.getItem("chartData");
     if (localStorageData) {
       setData(JSON.parse(localStorageData));
     }
@@ -271,30 +274,35 @@ const Charts = () => {
     // Fetch data from the backend
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://localhost:8080/api/v1/history/show/chart', {
-          headers: {
-            "Authorization": `${token}`,
-          },
-        });
+        const res = await axios.get(
+          "http://localhost:8080/api/v1/history/show/chart",
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
         if (res.data.success) {
-          console.log('Fetched Data:', res.data.completionRates);
+          console.log("Fetched Data:", res.data.completionRates);
           setData(res.data.completionRates);
 
           // Update localStorage with fetched data
-          localStorage.setItem('chartData', JSON.stringify(res.data.completionRates));
+          localStorage.setItem(
+            "chartData",
+            JSON.stringify(res.data.completionRates)
+          );
         } else {
           toast.error(res.data.message);
         }
       } catch (error) {
         console.error(error);
-        toast.error(error.response?.data?.message || 'Failed to fetch data');
+        toast.error(error.response?.data?.message || "Failed to fetch data");
       }
     };
 
     // Fetch data only if it's not available in localStorage
     fetchData();
     // eslint-disable-line no-console
-
   }, [token]); // Only run when token changes
 
   const [page, setPage] = useState(0);
@@ -315,18 +323,28 @@ const Charts = () => {
   return (
     <>
       <ToastContainer />
-      <Userdashboard />
-      <div className="app-container">
-        <h1>Exercise and Diet Chart</h1>
-        <div className="chart-navigation">
-          <button className="nav-button left" onClick={handlePrevPage}>←</button>
-          <CombinedChart data={data} page={page} itemsPerPage={itemsPerPage} />
-          <button className="nav-button right" onClick={handleNextPage}>→</button>
-        </div>
-      </div>
+      <Userdashboard
+        content={
+          <div className="app-container">
+            <h1>Exercise and Diet Chart</h1>
+            <div className="chart-navigation">
+              <button className="nav-button left" onClick={handlePrevPage}>
+                ←
+              </button>
+              <CombinedChart
+                data={data}
+                page={page}
+                itemsPerPage={itemsPerPage}
+              />
+              <button className="nav-button right" onClick={handleNextPage}>
+                →
+              </button>
+            </div>
+          </div>
+        }
+      />
     </>
   );
 };
 
 export default Charts;
-

@@ -3,15 +3,15 @@ import React from "react";
 import ExerciseStatusTypography from "../pages/ExerciseStatusTypography";
 import DietStatusTypography from "../pages/DietStatusTypography";
 import "./Table.css";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from '../context/auth'; 
-import axios from 'axios'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../context/auth";
+import axios from "axios";
 
 const TableComponentAll = () => {
-  const[auth, setAuth] = useAuth();
+  const [auth, setAuth] = useAuth();
   const token = auth?.token;
-  
+
   const [AllExercises, setAllExercises] = React.useState([]);
   const [AllDiets, setAllDiets] = React.useState([]);
   // const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
@@ -22,21 +22,23 @@ const TableComponentAll = () => {
     // eslint-disable-line no-console
   }, [auth]);
 
-
   const fetchDataAllExercises = async () => {
     try {
-      const allExercisesResponse = await axios.get("http://localhost:8080/api/v1/history/today/exercise", {
-        headers: {
-          "Authorization": `${token}`
+      const allExercisesResponse = await axios.get(
+        "http://localhost:8080/api/v1/history/today/exercise",
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
         }
-      });
-  
+      );
+
       if (allExercisesResponse.status !== 200) {
         toast.error(allExercisesResponse.message);
       }
-  
+
       const allExercisesData = allExercisesResponse.data;
-  
+
       // Transforming data
       const transformedData = allExercisesData.map((item, index) => ({
         index: index + 1,
@@ -46,28 +48,30 @@ const TableComponentAll = () => {
         sets: item.goalId.sets,
         time: item.goalId.time,
         status: item.status,
-        date: item.createdAt
+        date: item.createdAt,
       }));
-  
+
       setAllExercises(transformedData); // Assuming you have a state variable named allExercises to store the transformed data
-    } catch (error) {
-    }
+    } catch (error) {}
   };
-  
+
   const fetchDataAllDiets = async () => {
     try {
-      const alldietsResponse = await axios.get("http://localhost:8080/api/v1/history/today/diet", {
-        headers: {
-          "Authorization": `${token}`
+      const alldietsResponse = await axios.get(
+        "http://localhost:8080/api/v1/history/today/diet",
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
         }
-      });
-  
+      );
+
       if (alldietsResponse.status !== 200) {
         toast.error(alldietsResponse.message);
       }
-  
+
       const alldietsData = alldietsResponse.data;
-  
+
       // Transforming data
       const transformedData = alldietsData.map((item, index) => ({
         index: index + 1,
@@ -76,36 +80,39 @@ const TableComponentAll = () => {
         category: item.goalId.category,
         quantity: item.goalId.quantity,
         calories: item.goalId.calories,
-        status:item.status,
-        date:item.createdAt
+        status: item.status,
+        date: item.createdAt,
       }));
-  
+
       setAllDiets(transformedData);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
-  const handleStatusClick = async (id, type,currentStatus) => {
-    const newStatus = currentStatus === 'pending' ? 'completed' : 'pending';
+  const handleStatusClick = async (id, type, currentStatus) => {
+    const newStatus = currentStatus === "pending" ? "completed" : "pending";
 
     try {
-      const response = await axios.put(`http://localhost:8080/api/v1/goal/update/${id}/status`, {
-        status: newStatus,
-      }, {
-        headers: {
-          "Authorization": `${token}`, // replace with actual token
+      const response = await axios.put(
+        `http://localhost:8080/api/v1/goal/update/${id}/status`,
+        {
+          status: newStatus,
         },
-      });
+        {
+          headers: {
+            Authorization: `${token}`, // replace with actual token
+          },
+        }
+      );
 
       if (response.status === 200) {
         toast.success("Status updated successfully!");
         // Conditionally update state based on the type
-        if (type === 'exercise') {
+        if (type === "exercise") {
           setAllExercises((prevExercises) =>
             prevExercises.map((exercise) =>
               exercise.id === id ? { ...exercise, status: newStatus } : exercise
             )
           );
-        } else if (type === 'diet') {
+        } else if (type === "diet") {
           setAllDiets((prevDiets) =>
             prevDiets.map((diet) =>
               diet.id === id ? { ...diet, status: newStatus } : diet
@@ -120,7 +127,7 @@ const TableComponentAll = () => {
     }
   };
 
-    const AllExercisesColumns = [
+  const AllExercisesColumns = [
     { dataIndex: "index", title: "S.No.", width: 50, className: "my-font" },
     {
       dataIndex: "name",
@@ -153,7 +160,7 @@ const TableComponentAll = () => {
       render: (value, row) => (
         <ExerciseStatusTypography
           done={value}
-          onClick={() => handleStatusClick(row.id, 'exercise', value)}
+          onClick={() => handleStatusClick(row.id, "exercise", value)}
         />
       ),
     },
@@ -192,9 +199,9 @@ const TableComponentAll = () => {
       render: (value, row) => (
         <DietStatusTypography
           done={value}
-          onClick={() => handleStatusClick(row.id, 'diet',value)}
+          onClick={() => handleStatusClick(row.id, "diet", value)}
         />
-      ),   
+      ),
     },
     {
       dataIndex: "date",
@@ -202,10 +209,10 @@ const TableComponentAll = () => {
       className: "my-font",
     },
   ];
-  
+
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer />
 
       {/* All Exercises */}
       <div className="d-flex justify-content-between">
@@ -233,6 +240,8 @@ const TableComponentAll = () => {
         }}
         scroll={{ x: true }}
       />
+
+      <br />
 
       {/* All Diets */}
       <div className="d-flex justify-content-between">
