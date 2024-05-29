@@ -285,6 +285,7 @@ const TableComponentPending = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        scroll={{ x: true }}
       />
 
       <br />
@@ -316,6 +317,7 @@ const TableComponentPending = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        scroll={{ x: true }}
       />
     </>
   );

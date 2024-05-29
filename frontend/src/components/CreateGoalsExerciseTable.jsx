@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import CreateGoalsExerciseActions from "./CreateGoalsExerciseActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,37 +7,35 @@ import { useAuth } from "../context/auth";
 import axios from "axios";
 
 const CreateGoalsExerciseTable = () => {
- 
-
   const [exerciseHistory, setExerciseHistory] = React.useState([]);
   // console.log(token)
   const [auth, setAuth] = useAuth();
-   useEffect(() => {
+  useEffect(() => {
     fetchExerciseData();
   }, [auth]);
-  const token = auth?.token
+  const token = auth?.token;
   const fetchExerciseData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/v1/goal/exercises", {
-        headers: {
-          Authorization: `${auth?.token}`
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/goal/exercises",
+        {
+          headers: {
+            Authorization: `${auth?.token}`,
+          },
         }
-      }
       );
 
       if (response.status !== 200) {
         toast.error("Failed to fetch exercise data");
       } else {
-  
         const data = response.data;
-        if(data.length > 0){
-        const exerciseData = data.map((item, index) => ({
-          ...item,
-          index: index + 1,
-        }));
-        setExerciseHistory(exerciseData);
-      }
- 
+        if (data.length > 0) {
+          const exerciseData = data.map((item, index) => ({
+            ...item,
+            index: index + 1,
+          }));
+          setExerciseHistory(exerciseData);
+        }
       }
     } catch (error) {
       toast.error("Error fetching data:", error);
@@ -107,6 +105,7 @@ const CreateGoalsExerciseTable = () => {
           pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
           showSizeChanger: true,
         }}
+        scroll={{ x: true }}
       />
     </>
   );
