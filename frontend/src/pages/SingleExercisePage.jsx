@@ -5,9 +5,9 @@ import { useParams } from "react-router-dom";
 import "./SingleExercisePage.css";
 import Userdashboard from "./Userdashboard";
 import ExerciseForm from "./ExerciseForm";
-import { useAuth } from "../context/auth"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from "../context/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SingleExercisePage() {
   const [auth, setAuth] = useAuth();
@@ -19,7 +19,6 @@ function SingleExercisePage() {
   const [userId, setUserId] = useState("");
   const [userExercises, setUserExercises] = useState([]); // State to hold user's exercises
 
-
   useEffect(() => {
     const storedUserId = localStorage.getItem("user");
     if (storedUserId) {
@@ -30,11 +29,14 @@ function SingleExercisePage() {
 
   const fetchUserExercises = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/history/today/exercise`, {
-        headers: {
-          "Authorization": `${token}`, // Add token to Authorization header
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:8080/api/v1/history/today/exercise`,
+        {
+          headers: {
+            Authorization: `${token}`, // Add token to Authorization header
+          },
+        }
+      );
 
       // Log the response data to understand its structure
       console.log(response.data);
@@ -49,8 +51,8 @@ function SingleExercisePage() {
         }));
         setUserExercises(exerciseDetails); // Set the state with the array of objects
 
-        console.log("data")
-        console.log(userExercises)
+        console.log("data");
+        console.log(userExercises);
       } else {
         console.error("Unexpected response data format:", response.data);
         setUserExercises([]); // Set an empty array in case of unexpected format
@@ -61,7 +63,9 @@ function SingleExercisePage() {
     }
   };
 
-  const isExerciseAdded = userExercises.some(userExercise => userExercise.key === id);
+  const isExerciseAdded = userExercises.some(
+    (userExercise) => userExercise.key === id
+  );
   useEffect(() => {
     const fetchExerciseData = async () => {
       try {
@@ -90,17 +94,21 @@ function SingleExercisePage() {
   const handleRemoveButtonClick = async () => {
     try {
       // Find the exercise object from userExercises with matching _id
-      const userExercise = userExercises.find(userExercise => userExercise.key === id);
-      const res = await axios.delete(`http://localhost:8080/api/v1/goal/exercise/${userExercise.goalId}`, {
-        headers: {
-          "Authorization": `${token}`, // Add token to Authorization header
+      const userExercise = userExercises.find(
+        (userExercise) => userExercise.key === id
+      );
+      const res = await axios.delete(
+        `http://localhost:8080/api/v1/goal/exercise/${userExercise.goalId}`,
+        {
+          headers: {
+            Authorization: `${token}`, // Add token to Authorization header
+          },
         }
-      });
+      );
       toast.success("Exercise deleted successfully");
       setTimeout(() => {
         fetchUserExercises(userId); // Update the user's exercises after deletion
       }, 1000);
-
     } catch (error) {
       console.error("Error deleting exercise:", error);
       toast.error("Failed to delete exercise");
@@ -109,53 +117,64 @@ function SingleExercisePage() {
 
   return (
     <>
-    <ToastContainer/>
-      <Userdashboard />
-      <div className="exercise-page" id="exerciseSidebarAdjustment">
-        <div className="App">
-          {exerciseData ? (
-            <div className="container">
-              {/* Exercise details */}
-              <div className="image-container">
-                <img src={exerciseData.photo} alt={exerciseData.name} />
-              </div>
-              <div className="text-container">
-                {/* Exercise name */}
-                <div className="label">
-                  <center id="exerciseSidebarAdjustment">
-                    {exerciseData.name}
-                  </center>
+      <ToastContainer />
+      <Userdashboard
+        content={
+          // <div className="exercise-page" id="exerciseSidebarAdjustment">
+          <div className="exercise-page">
+            <div className="App" style={{ marginTop: "25px" }}>
+              {exerciseData ? (
+                <div className="container">
+                  {/* Exercise details */}
+                  <div className="image-container">
+                    <img src={exerciseData.photo} alt={exerciseData.name} />
+                  </div>
+                  <div className="text-container">
+                    {/* Exercise name */}
+                    <div className="label">
+                      <center id="exerciseSidebarAdjustment">
+                        {exerciseData.name}
+                      </center>
+                    </div>
+                    {/* Exercise instructions */}
+                    <h2>Instructions</h2>
+                    <p className="instruction-para">
+                      {exerciseData.description}
+                    </p>
+                    {/* Buttons */}
+                    <div className="button-container">
+                      <button
+                        className="add-button"
+                        onClick={() => setShowExerciseForm(true)}
+                        disabled={isExerciseAdded}
+                        style={{
+                          opacity: isExerciseAdded ? 0.5 : 1,
+                          cursor: isExerciseAdded ? "not-allowed" : "pointer",
+                        }}
+                      >
+                        Add
+                      </button>
+                      <button
+                        className="remove-button"
+                        onClick={handleRemoveButtonClick}
+                        disabled={!isExerciseAdded}
+                        style={{
+                          opacity: !isExerciseAdded ? 0.5 : 1,
+                          cursor: !isExerciseAdded ? "not-allowed" : "pointer",
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                {/* Exercise instructions */}
-                <h2>Instructions</h2>
-                <p className="instruction-para">
-                  {exerciseData.description}
-                </p>
-                {/* Buttons */}
-                <div className="button-container">
-                  <button
-                    className="add-button"
-                    onClick={() => setShowExerciseForm(true)}
-                    disabled={isExerciseAdded}
-                    style={{ opacity: isExerciseAdded ? 0.5 : 1, cursor: isExerciseAdded ? "not-allowed" : "pointer" }}
-
-                  >
-                    Add
-                  </button>
-                  <button className="remove-button" onClick={handleRemoveButtonClick}
-                    disabled={!isExerciseAdded}
-                    style={{ opacity: !isExerciseAdded ? 0.5 : 1, cursor: !isExerciseAdded ? "not-allowed" : "pointer" }}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
+              ) : (
+                <div>Loading...</div>
+              )}
             </div>
-          ) : (
-            <div>Loading...</div>
-          )}
-        </div>
-      </div>
+          </div>
+        }
+      />
       {/* Exercise form */}
       {showExerciseForm && (
         <>
