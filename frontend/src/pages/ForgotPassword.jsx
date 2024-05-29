@@ -10,6 +10,8 @@ import clseye_icon from "./../Assets/clseye.png";
 import opneye_icon from "./../Assets/opneye.png";
 import OtpVrfo_icon from "./../Assets/otpvrfo.png";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ForgotPassword = (props) => {
   // const [email, setEmail] = useState("");
@@ -185,6 +187,7 @@ const ForgotPassword = (props) => {
           console.log(JSON.stringify(response.data));
           handleGetOTP();
           setUserId(response?.data?.userId);
+          toast.success(response.data.message)
         })
         .catch((error) => {
           console.log(error);
@@ -196,13 +199,14 @@ const ForgotPassword = (props) => {
 
   return (
     <>
+    <ToastContainer/>
       <div className="container-fluid">
         <div
           className="d-flex align-items-center justify-content-center"
-          style={{ height: window.innerHeight,width:"70vw",margin:"auto" }}
+          style={{ height: window.innerHeight }}
         >
-          <div className="card border-0" style={{ margin: "2px" }}>
-            <div className="card-body p-0 ">
+          <div className="card border-0" style={{ margin: "100px" }}>
+            <div className="card-body p-0 bg-light shadow">
               <div className="row">
                 <div className="col-md-6 col-sm-12">
                   <div ref={ref} className={`p-5`}>
@@ -296,7 +300,7 @@ const ForgotPassword = (props) => {
                             </p>
                             <button
                               type="submit"
-                              className="btn btn-primary"
+                              className="btn btn-success"
                               id="otp-btn"
                             >
                               Confirm

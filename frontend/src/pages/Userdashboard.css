@@ -1269,3 +1269,38 @@ h6 {
 }
 
 /* ======================================= */
+.chart-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.nav-button {
+  background-color: #6a72e3;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.nav-button.left {
+  position: absolute;
+  left: 10px;
+}
+
+.nav-button.right {
+  position: absolute;
+  right: 10px;
+}
+
+.chart-container {
+  position: relative;
+  width: 90%;
+  height: 600px;
+  /* Adjust height as needed */
+  margin: 0 auto;
+}

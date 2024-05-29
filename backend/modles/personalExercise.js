@@ -9,6 +9,8 @@ const exerciseSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+  }, key: {
+    type: mongoose.Schema.Types.ObjectId,
   },
   category: {
     type: String,
@@ -23,9 +25,9 @@ const exerciseSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  date:{
-    type:String,
-    required:true
+  date: {
+    type: String,
+    required: true
   },
 });
 

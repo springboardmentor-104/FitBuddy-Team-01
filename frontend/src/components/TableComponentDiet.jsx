@@ -66,17 +66,6 @@ const TableComponentDiet = () => {
     { dataIndex: "date", title: "Date", width: 100 },
   ];
 
-  // const onSelectChange = (newSelectedRowKeys) => {
-  //   console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-  //   setSelectedRowKeys(newSelectedRowKeys);
-  // };
-
-  // const rowSelection = {
-  //   selectedRowKeys,
-  //   onChange: onSelectChange,
-  // };
-
-  // Calculate the total width
   const totalWidth = columns.reduce((sum, column) => sum + column.width, 0);
 
   return (

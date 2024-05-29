@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../context/auth";
+import axios from "axios"; 
+import Tooltip from 'react-bootstrap/Tooltip';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import CreateGoalsExerciseTable from "./../components/CreateGoalsExerciseTable";
@@ -14,6 +19,9 @@ import { MenuItem, TextField } from "@mui/material";
 // import { Delete } from '@material-ui/icons';
 
 const CreateGoals = () => {
+  const [auth, setAuth] = useAuth();
+  const token = auth?.token;
+
 
   const [exercises, setExercises] = useState([
     { name: "", category: "", sets: "", time: "" },
@@ -60,77 +68,96 @@ const CreateGoals = () => {
   const removeDiet = (index) => {
     const newDiets = [...diets];
     newDiets.splice(index, 1);
-    console.log("removed diet =", newDiets);
     setDiets(newDiets);
   };
 
-  const handleExerciseSubmit = (e) => {
+  const handleExerciseSubmit = async (e) => {
     e.preventDefault();
-    const userData = JSON.parse(localStorage.getItem("user"));
-    const userId = userData.userId;
-    const token = userData.token;
+    try {
+      const data = {
+        userId: auth?.userId,
+        exerciseArr: exercises,
+      };
+    
+      const config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "http://localhost:8080/api/v1/goal/exercise",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `${token}`, // Add token to Authorization header
+        },
+        data: data,
+      };
+      const res = await axios.request(config);
+      if(res.data.success){
+        toast.success(res.data.message);
+        // window.location.reload();
+      }else{
+        toast.error(res.data.message)
+      }
+    } catch (error) {
+      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
+  };
+  
+
+  const addPreviousData = async () => {
+    try {
+        const res = await axios.get("http://localhost:8080/api/v1/history/create_everyday_historydata", {
+            headers: {
+                "Authorization": `${token}`, // Add token to Authorization header
+            }
+        });
+    } catch (error) {
+        if (error.response && error.response.status >= 400 && error.response.status <= 500){
+        }else {
+        }
+    }
+};
+ 
+React.useEffect(() => {
+  addPreviousData();
+}, []); 
+
+
+const handleDietSubmit = async (e) => {
+  e.preventDefault();
+  try {
     const data = {
-      userId: userId,
-      exerciseArr: exercises,
-    };
-
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "http://localhost:8080/api/v1/goal/exercise",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `${token}`, // Add token to Authorization header
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        alert("Exercise has been saved successfully");
-      })
-      .catch((error) => {
-        if (error.response && error.response.status >= 400 && error.response.status <= 500) {
-        alert("Something went wrong. Please try again later ");}
-      });
+      userId: auth?.userdId,
+      dietArr: diets,
   };
 
-  const handleDietSubmit = (e) => {
-    e.preventDefault();
-    // Send diet data to backend
-    console.log(diets);
-    // Handle form submission for diets
-    const userData = JSON.parse(localStorage.getItem("user"));
-    const userId = userData.userId;
-    const token = userData.token;
-    const data = {
-      userId: userId,
-      dietArr: diets,
-    };
-    let config = {
+  const config = {
       method: "post",
       maxBodyLength: Infinity,
       url: "http://localhost:8080/api/v1/goal/diet",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `${token}`, // Add token to Authorization header
+          "Content-Type": "application/json",
+          "Authorization": `${token}`, // Add token to Authorization header
       },
       data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        alert("Diet has been saved successfully");
-      })
-      .catch((error) => {
-        if (error.response && error.response.status >= 400 && error.response.status <= 500) {
-          alert("Something went wrong. Please try again later ");}  
-      });
   };
+      const response = await axios.request(config);
+      if(response.data.success){
+        toast.success(response.data.message);
+      }else{
+        toast.error(response.data.message)
+      }
+  } catch (error) {
+      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+          toast.error(error.response.data.message);
+      } else {
+          toast.error("An unexpected error occurred");
+      }
+  }
+};
+
 
   const [activeSection, setActiveSection] = useState("exercise"); // Initially set to 'exercise'
 
@@ -138,9 +165,11 @@ const CreateGoals = () => {
     setActiveSection(section);
   };
 
+  
 
   return (
     <>
+      <ToastContainer />
       <Userdashboard
         content={
           <>

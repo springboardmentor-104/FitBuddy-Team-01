@@ -6,6 +6,9 @@ const personalDietSchema = new mongoose.Schema({
         ref: 'users', // Reference to the user who created this personal exercise
         required: true
     },
+    key:{
+        type:mongoose.Schema.Types.ObjectId,
+    },
     name: {
         type: String,
         required: true

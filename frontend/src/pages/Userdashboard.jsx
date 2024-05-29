@@ -2,13 +2,16 @@ import "./Userdashboard.css";
 import { Link, useLocation, useNavigation } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../context/auth";
-import ExerciseChart from "./ExerciseChart"; // Shivankush added this
-import logo from "../landingPage/logo.png"
+import axios from "axios"; import ExerciseChart from "./ExerciseChart"; // Shivankush added this
+import logo from "../landingPage/logo.png";
+import { IoFastFoodOutline } from "react-icons/io5";
 
 import {
   // BiCog,
-  BiGrid,
+  BiGrid, 
   BiTime,
   BiTask,
   BiUser,
@@ -90,31 +93,58 @@ const Userdashboard = (props) => {
       setIsOpen(false);
     }
   };
+  const [data, setData] = useState([]);
+  const token = auth?.token;  // Shivankush added the below code from line 65 - 87
+  useEffect(() => {
+    // Check if data is available in localStorage
+    const localStorageData = localStorage.getItem('chartData');
+    if (localStorageData) {
+      setData(JSON.parse(localStorageData));
+    }
 
-  // Shivankush added the below code from line 65 - 87
-  const exerciseData = [
-    {
-      name: "Push-ups",
-      date: ["9 am"],
-      percentages: [20, 40, 60, 100],
-    },
-    {
-      name: "Sit-ups",
-      date: ["3 pm"],
-      percentages: [30, 50, 70, 90],
-    },
-    {
-      name: "Running",
-      date: ["7 pm"],
-      percentages: [10, 40, 50, 80],
-    },
-    {
-      name: "Skipping",
-      date: ["10 pm"],
-      percentages: [10, 40, 50, 90],
-    },
-    // Add more exercises as needed
-  ];
+    // Fetch data from the backend
+    const fetchData = async () => {
+      try {
+        const res = await axios.get('http://localhost:8080/api/v1/history/show/chart', {
+          headers: {
+            "Authorization": `${token}`,
+          },
+        });
+        if (res.data.success) {
+          console.log('Fetched Data:', res.data.completionRates);
+          setData(res.data.completionRates);
+
+          // Update localStorage with fetched data
+          localStorage.setItem('chartData', JSON.stringify(res.data.completionRates));
+        } else {
+          toast.error(res.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error(error.response?.data?.message || 'Failed to fetch data');
+      }
+    };
+
+    // Fetch data only if it's not available in localStorage
+    fetchData();
+    // eslint-disable-line no-console
+
+  }, [token]); // Only run when token changes
+
+  const [page, setPage] = useState(0);
+  const itemsPerPage = 7;
+
+  const handlePrevPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if ((page + 1) * itemsPerPage < data.length) {
+      setPage(page + 1);
+    }
+  };
 
   return (
     <div>
@@ -125,12 +155,12 @@ const Userdashboard = (props) => {
       >
         <div className="d-flex align-items-center justify-content-between">
           <BsList
-              className="toggle-sidebar-btn"
-              onClick={() => {
-                setShowLeftSidebar((show) => {
-                  return !show;
-                });
-              }}
+            className="toggle-sidebar-btn"
+            onClick={() => {
+              setShowLeftSidebar((show) => {
+                return !show;
+              });
+            }}
           />
           <Link
             to=""
@@ -138,9 +168,9 @@ const Userdashboard = (props) => {
             style={{ textDecoration: "none" }}
           >
             <span class="d-none d-lg-block">
-              <img src={logo} alt="Fit Buddy Image" 
-              // height="55px"
-              height="47px"
+              <img src={logo} alt="Fit Buddy Image"
+                // height="55px"
+                height="47px"
               />
               {/* Fit Buddy */}
             </span>
@@ -260,10 +290,10 @@ const Userdashboard = (props) => {
               style={{
                 ...(tabLiNum === 1
                   ? {
-                      color: `#4154f1`,
-                      backgroundColor: `#f6f9ff`,
-                      borderColor: `#f6f9ff`,
-                    }
+                    color: `#4154f1`,
+                    backgroundColor: `#f6f9ff`,
+                    borderColor: `#f6f9ff`,
+                  }
                   : {}),
               }}
             >
@@ -287,10 +317,10 @@ const Userdashboard = (props) => {
               style={{
                 ...(tabLiNum === 2
                   ? {
-                      color: `#4154f1`,
-                      backgroundColor: `#f6f9ff`,
-                      borderColor: `#f6f9ff`,
-                    }
+                    color: `#4154f1`,
+                    backgroundColor: `#f6f9ff`,
+                    borderColor: `#f6f9ff`,
+                  }
                   : {}),
               }}
             >
@@ -315,18 +345,17 @@ const Userdashboard = (props) => {
                 setTabLiNum(3);
                 setOpenToggleMenu("sidebar-nav-create-goals");
               }}
-              className={`nav-link ${
-                tabLiNum === 3 || tabLiNum === 7 || tabLiNum === 8
-                  ? "active"
-                  : ""
-              }`}
+              className={`nav-link ${tabLiNum === 3 || tabLiNum === 7 || tabLiNum === 8
+                ? "active"
+                : ""
+                }`}
               style={{
                 ...(tabLiNum === 7 || tabLiNum === 8 || tabLiNum === 3
                   ? {
-                      color: `#4154f1`,
-                      backgroundColor: `#f6f9ff`,
-                      borderColor: `#f6f9ff`,
-                    }
+                    color: `#4154f1`,
+                    backgroundColor: `#f6f9ff`,
+                    borderColor: `#f6f9ff`,
+                  }
                   : {}),
               }}
             >
@@ -337,11 +366,10 @@ const Userdashboard = (props) => {
             </Link>
             <ul
               id="forms-nav"
-              class={`nav-content  ${
-                "sidebar-nav-create-goals" === openToggleMenu
-                  ? "show"
-                  : "collapse"
-              }`}
+              class={`nav-content  ${"sidebar-nav-create-goals" === openToggleMenu
+                ? "show"
+                : "collapse"
+                }`}
               data-bs-parent="#sidebar-nav-create-goals"
             >
               <li>
@@ -357,6 +385,17 @@ const Userdashboard = (props) => {
               </li>
               <li>
                 <Link
+                  to="/DietPage"
+                  style={{ textDecoration: "none" }}
+                  className={tabLiNum === 7 ? "active" : ""}
+                >
+                  <IoFastFoodOutline />
+                  &nbsp;
+                  <span>Diets</span>
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/create-goals"
                   style={{ textDecoration: "none" }}
                   className={tabLiNum === 8 ? "active" : ""}
@@ -366,18 +405,6 @@ const Userdashboard = (props) => {
                   <span>Create Goals</span>
                 </Link>
               </li>
-              {/* <li>
-                <a href="forms-editors.html">
-                  <i class="bi bi-circle"></i>
-                  <span>Form Editors</span>
-                </a>
-              </li>
-              <li>
-                <a href="forms-validation.html">
-                  <i class="bi bi-circle"></i>
-                  <span>Form Validation</span>
-                </a>
-              </li> */}
             </ul>
           </li>
 
@@ -416,10 +443,10 @@ const Userdashboard = (props) => {
               style={{
                 ...(tabLiNum === 4
                   ? {
-                      color: `#4154f1`,
-                      backgroundColor: `#f6f9ff`,
-                      borderColor: `#f6f9ff`,
-                    }
+                    color: `#4154f1`,
+                    backgroundColor: `#f6f9ff`,
+                    borderColor: `#f6f9ff`,
+                  }
                   : {}),
               }}
             >
@@ -440,10 +467,10 @@ const Userdashboard = (props) => {
               style={{
                 ...(tabLiNum === 5
                   ? {
-                      color: `#4154f1`,
-                      backgroundColor: `#f6f9ff`,
-                      borderColor: `#f6f9ff`,
-                    }
+                    color: `#4154f1`,
+                    backgroundColor: `#f6f9ff`,
+                    borderColor: `#f6f9ff`,
+                  }
                   : {}),
               }}
             >
@@ -464,10 +491,10 @@ const Userdashboard = (props) => {
               style={{
                 ...(tabLiNum === 6
                   ? {
-                      color: `#4154f1`,
-                      backgroundColor: `#f6f9ff`,
-                      borderColor: `#f6f9ff`,
-                    }
+                    color: `#4154f1`,
+                    backgroundColor: `#f6f9ff`,
+                    borderColor: `#f6f9ff`,
+                  }
                   : {}),
               }}
             >
@@ -517,19 +544,23 @@ const Userdashboard = (props) => {
             if (location.pathname === "/Userdashboard") {
               return (
                 <div>
-                    <div className="card">
-                      <h1 className="card-header"
+                  <div className="card">
+                    <h1 className="card-header"
                       style={{
-                      fontSize : "25px", 
-                      fontWeight : "600",
-                      color:"#012970"
+                        fontSize: "25px",
+                        fontWeight: "600",
+                        color: "#012970"
                       }}>
-                        Exercise Completion Chart
-                      </h1>
-                      <ExerciseChart data={exerciseData} />
+                      Completion Chart
+                    </h1>
+                    <div className="chart-navigation">
+                      <button className="nav-button left" onClick={handlePrevPage}>←</button>
+                      <ExerciseChart data={data} page={page} itemsPerPage={itemsPerPage} />
+                      <button className="nav-button right" onClick={handleNextPage}>→</button>
                     </div>
+                  </div>
                 </div>
-             );
+              );
             }
             return "";
           })()}
@@ -549,7 +580,7 @@ const Userdashboard = (props) => {
       >
         <BsArrowUp style={{ color: "#fff" }} />
       </Link>
-    </div>
+    </div >
   );
 };
 

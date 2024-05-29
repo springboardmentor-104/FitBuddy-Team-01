@@ -29,8 +29,8 @@ function Header() {
         {user ? (<Link to="/" onClick={() => {
             localStorage.removeItem("user");
           }}>Sign Out</Link>) :
-          (<Link to="/login">Login</Link>)}
-        <Link to="/registration">Sign Up</Link>
+          (<><Link to="/login">Login</Link><Link to="/registration">Sign Up</Link></>)}
+        
       </nav>
     </header>
   );

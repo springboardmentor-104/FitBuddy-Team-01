@@ -10,9 +10,9 @@ const { getAllMealController,
 
 
 // exercise
-router.get('/meals', getAllMealController);
+router.get('/all', getAllMealController);
 router.get('/:id', getMealByIdController);
-router.get('/meals/:category', findMealsByCategory);
+router.get('/all/search/:category', findMealsByCategory);
 
 // personal exercise routes
 /*

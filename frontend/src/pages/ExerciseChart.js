@@ -120,28 +120,47 @@ ChartJS.register(
   Legend
 );
 
-const ExerciseChart = ({ data }) => {
+const ExerciseChart = ({ data, page, itemsPerPage  }) => {
+
+  // Paginate the data
+  const paginatedData = data.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
+
+  // Get unique dates within the paginated data
+  const uniqueDates = paginatedData.map(entry => entry.date);
+
+  // Prepare datasets for the chart
+  const exerciseData = {
+    label: 'Exercise Completion Percentage',
+    data: paginatedData.map(entry => entry.exercise),
+    borderColor: 'hsl(220, 70%, 50%)',
+    backgroundColor: 'hsl(220, 70%, 50%, 0.2)',
+    fill: false,
+    tension: 0.1,
+  };
+
+  const dietData = {
+    label: 'Diet Completion Percentage',
+    data: paginatedData.map(entry => entry.diet),
+    borderColor: 'hsl(120, 70%, 50%)',
+    backgroundColor: 'hsl(120, 70%, 50%, 0.2)',
+    fill: false,
+    tension: 0.1,
+  };
+
   const chartData = {
-    labels: data.map((entry) => entry.date), // Assuming data is an array of objects with a 'date' field
-    datasets: data.map((exercise, index) => ({
-      label: exercise.name, // Assuming each exercise object has a 'name' field
-      data: exercise.percentages, // Assuming each exercise object has a 'percentages' field which is an array of percentage values
-      borderColor: `hsl(${index * 70}, 70%, 50%)`, // Unique color for each exercise
-      backgroundColor: `hsl(${index * 60}, 70%, 50%, 0.2)`,
-      fill: false,
-      tension: 0.1,
-    })),
+    labels: uniqueDates,
+    datasets: [exerciseData, dietData],
   };
 
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: 'top',
       },
       title: {
         display: true,
-        text: "Exercise Completion Percentage Over Time",
+        text: 'Exercise and Diet Completion Over Time',
       },
     },
     scales: {
@@ -150,19 +169,23 @@ const ExerciseChart = ({ data }) => {
         max: 100,
         title: {
           display: true,
-          text: "Completion Percentage (%)",
+          text: 'Completion Percentage',
         },
       },
       x: {
         title: {
           display: true,
-          text: "Time",
+          text: 'Date',
         },
       },
     },
   };
 
-  return <Line data={chartData} options={options} />;
+  return (
+    <div className="chart-container">
+      <Line data={chartData} options={options} />
+    </div>
+  );
 };
 
 export default ExerciseChart;

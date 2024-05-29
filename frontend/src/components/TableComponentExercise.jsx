@@ -7,15 +7,14 @@ import { useAuth } from "../context/auth";
 import axios from "axios";
 
 const TableComponentExercise = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const token = auth?.token;
 
   const [exerciseHistory, setExerciseHistory] = React.useState([]);
-  // const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
 
   React.useEffect(() => {
     fetchData();
-    // eslint-disable-line no-console
+    // eslint-disable-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = async () => {
@@ -24,13 +23,14 @@ const TableComponentExercise = () => {
         "http://localhost:8080/api/v1/history/all/exercise",
         {
           headers: {
-            Authorization: `${token}`,
+            Authorization: `${token}`, 
           },
         }
       );
 
       if (allExercisesResponse.status !== 200) {
-        toast.error(allExercisesResponse.message);
+        toast.error(allExercisesResponse.message || "Failed to fetch data");
+        return;
       }
 
       const allExercisesData = allExercisesResponse.data;
@@ -39,16 +39,18 @@ const TableComponentExercise = () => {
       const transformedData = allExercisesData.map((item, index) => ({
         index: index + 1,
         id: item._id,
-        name: item.goalId.name,
-        category: item.goalId.category,
-        sets: item.goalId.sets,
-        time: item.goalId.time,
+        name: item.goalId?.name,
+        category: item.goalId?.category,
+        sets: item.goalId?.sets,
+        time: item.goalId?.time,
         status: item.status,
-        date: item.createdAt,
+        date: new Date(item.createdAt).toLocaleDateString(),
       }));
 
-      setExerciseHistory(transformedData); // Assuming you have a state variable named allExercises to store the transformed data
-    } catch (error) {}
+      setExerciseHistory(transformedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   const columns = [
@@ -70,7 +72,7 @@ const TableComponentExercise = () => {
       title: "Status",
       width: 100,
       className: "my-font",
-      render: (value, row) => <ExerciseStatusTypography done={value} />,
+      render: (value) => <ExerciseStatusTypography done={value} />,
     },
     {
       dataIndex: "date",
@@ -79,17 +81,6 @@ const TableComponentExercise = () => {
     },
   ];
 
-  // const onSelectChange = (newSelectedRowKeys) => {
-  //   console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-  //   setSelectedRowKeys(newSelectedRowKeys);
-  // };
-
-  // const rowSelection = {
-  //   selectedRowKeys,
-  //   onChange: onSelectChange,
-  // };
-
-  // Calculate the total width
   const totalWidth = columns.reduce((sum, column) => sum + column.width, 0);
 
   return (

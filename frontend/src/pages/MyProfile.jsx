@@ -365,12 +365,13 @@ const MyProfile = () => {
         })
         .then(
           (response) => {
-            console.log(response?.data);
-            toast.success("Password Update successfully!"); // Display success message using toast
+             // Display success message using toast
             if (response.data.success) {
+              toast.success(response.data.message)
               setPasswordUpdateUserId(response?.data?.user?._id);
               setcurrentpassword("");
             } else {
+              toast.error(response.data.message);
               setPasswordUpdateUserId("");
             }
             //
@@ -1079,6 +1080,8 @@ const MyProfile = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
+    <>
+    <ToastContainer/>
     <Userdashboard
       content={
         <div>
@@ -2865,6 +2868,7 @@ const MyProfile = () => {
         </div>
       }
     />
+    </>
   );
 };
 
