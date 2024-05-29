@@ -14,7 +14,8 @@ import Registration from "./pages/Registration";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Userdashboard from "./pages/Userdashboard";
-import MyProfile from "./pages/MyProfile";
+// import MyProfile from "./pages/MyProfile"; // Old Version
+import ProfilePage from "./pages/ProfilePage"; // New Version
 import History from "./pages/History";
 import Card from "./pages/Card";
 import ExerciseCard from "./pages/ExerciseCard";
@@ -25,11 +26,11 @@ import SingleDietPage from "./pages/SingleDietPage";
 import CreateGoals from "./pages/CreateGoals";
 import ManageGoals from "./pages/ManageGoals";
 
-import MainContent from "./landingPage/MainContent"
-import Charts from './pages/Charts'
+import MainContent from "./landingPage/MainContent";
+import Charts from "./pages/Charts";
 // index.js or App.js
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import DietPage from "./pages/DietPage";
 
 function ProtectedRoute({ Component }) {
@@ -112,8 +113,10 @@ const App = () => {
         />
         <Route
           exact
-          path="/MyProfile"
-          element={<ProtectedRoute Component={MyProfile} />}
+          // path="/MyProfile"
+          path="/ProfilePage"
+          // element={<ProtectedRoute Component={MyProfile} />}
+          element={<ProtectedRoute Component={ProfilePage} />}
         />
         <Route
           exact

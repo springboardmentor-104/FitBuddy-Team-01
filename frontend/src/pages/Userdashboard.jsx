@@ -2,17 +2,15 @@ import "./Userdashboard.css";
 import { Link } from "react-router-dom";
 import person_icn from "../Assets/person.png";
 import React, { useEffect, useRef, useState } from "react";
-import { useAuth } from '../context/auth';
+import { useAuth } from "../context/auth";
 import ExerciseChart from "./Charts";
-import logo from "../landingPage/logo.png"
-
+import logo from "../landingPage/logo.png";
 
 import {
   // BiCog,
   BiGrid,
   BiTime,
   BiTask,
-  
   BiUser,
   // BiSearch,
   BiLogOut,
@@ -124,10 +122,9 @@ const Userdashboard = (props) => {
             {/* <img src={mylogo_icn} alt="" /> */}
             {/* <span class="d-none d-lg-block">Fit Buddy</span> */}
             <span class="d-none d-lg-block">
-    <img src={logo} alt="Fit Buddy Image" height="55px"/>
-    {/* Fit Buddy */}
-</span>
-
+              <img src={logo} alt="Fit Buddy Image" height="55px" />
+              {/* Fit Buddy */}
+            </span>
           </Link>
         </div>
 
@@ -272,7 +269,7 @@ const Userdashboard = (props) => {
               </li>
               <li>
                 <Link to="/DietPage" style={{ textDecoration: "none" }}>
-                  <IoFastFoodOutline  />
+                  <IoFastFoodOutline />
                   &nbsp;
                   <span>Diets</span>
                 </Link>
@@ -300,7 +297,8 @@ const Userdashboard = (props) => {
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="/MyProfile">
+            {/* <Link className="nav-link collapsed" to="/MyProfile"> */}
+            <Link className="nav-link collapsed" to="/ProfilePage">
               <BsPersonFill />
               &nbsp;
               <span>My Profile</span>
