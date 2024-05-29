@@ -8,7 +8,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 const ContactUs = () => {
   return (
     <div>
-         <Header />
+      <Header />
       <div className="ContactUs-container">
         <div className="Box">
           <h1 className="h1-1">Contact Us</h1>
@@ -70,22 +70,22 @@ const ContactUs = () => {
               <h1 className="h1-2">Social Links</h1>
               <span className="icon-container">
                 <Link to="https://x.com/">
-                  <i class="bi bi-twitter"></i>
+                  <i className="bi bi-twitter"></i>
                 </Link>
               </span>
               <span className="icon-container">
                 <Link to="#">
-                  <i class="bi bi-linkedin"></i>
+                  <i className="bi bi-linkedin"></i>
                 </Link>
               </span>
               <span className="icon-container">
                 <Link to="#">
-                  <i class="bi bi-instagram"></i>
+                  <i className="bi bi-instagram"></i>
                 </Link>
               </span>
               <span className="icon-container">
                 <Link to="#">
-                  <i class="bi bi-facebook"></i>
+                  <i className="bi bi-facebook"></i>
                 </Link>
               </span>
             </div>

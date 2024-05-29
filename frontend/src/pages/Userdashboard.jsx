@@ -100,11 +100,11 @@ const Userdashboard = (props) => {
         <div className="d-flex align-items-center justify-content-between">
           {/* <Link
             to=""
-            class="logo d-flex align-items-center"
+            className="logo d-flex align-items-center"
             style={{ textDecoration: "none" }}
           >
             {/* <img src={mylogo_icn} alt="" />
-            <span class="d-none d-lg-block">Fit Buddy</span>
+            <span className="d-none d-lg-block">Fit Buddy</span>
           </Link> */}
           <BsList
             className="toggle-sidebar-btn"
@@ -120,8 +120,8 @@ const Userdashboard = (props) => {
             style={{ textDecoration: "none" }}
           >
             {/* <img src={mylogo_icn} alt="" /> */}
-            {/* <span class="d-none d-lg-block">Fit Buddy</span> */}
-            <span class="d-none d-lg-block">
+            {/* <span className="d-none d-lg-block">Fit Buddy</span> */}
+            <span className="d-none d-lg-block">
               <img src={logo} alt="Fit Buddy Image" height="55px" />
               {/* Fit Buddy */}
             </span>
