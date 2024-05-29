@@ -203,7 +203,7 @@ const Login = (props) => {
       if (responseData.success) {
         toast.success(responseData.message); // Display success message using toast
         setTimeout(() => {
-          navigate('/Userdashboard');
+          navigate("/Userdashboard");
         }, 1000);
         setOtpVerified(true); // Update state to indicate OTP verification success
       } else {
@@ -235,6 +235,13 @@ const Login = (props) => {
         <div className="row h-100">
           <div className="col-sm-12 col-md-6">
             <div className="text-center p-3" id="reg-bx">
+              <div className="text-left" style={{ marginBottom: "5px" }}>
+                <Link to="/">
+                  <i className="fa fa-angle-left" id="lft-arw-icn">
+                    &nbsp;Back
+                  </i>
+                </Link>
+              </div>
               <h1 className="h3" id="lg-lg">
                 Fit Buddy
               </h1>
@@ -302,7 +309,7 @@ const Login = (props) => {
                   <Link to="/forgot-password" id="fg-ps">
                     Forgot your password?
                   </Link>
-                  <button className="btn btn-warning" id="btn-lg" type="submit">
+                  <button className="btn btn-primary" id="btn-lg" type="submit">
                     Login to continue
                   </button>
                   <div className="text-left">

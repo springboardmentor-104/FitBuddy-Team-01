@@ -108,7 +108,7 @@ const Registration = (props) => {
       if (responseData.success) {
         toast.success(responseData.message); // Display success message using toast
         setTimeout(() => {
-          navigate('/Login');
+          navigate("/Login");
         }, 1000);
         setOtpVerified(true); // Update state to indicate OTP verification success
       } else {
@@ -261,8 +261,6 @@ const Registration = (props) => {
     setShowPassword(!showPassword);
   };
 
-
-
   return (
     <section
       className="register d-flex align-items-center justify-content-center"
@@ -281,6 +279,13 @@ const Registration = (props) => {
                   </i>
                 </Link>
               </div> */}
+              <div className="text-left" style={{ marginBottom: "0px" }}>
+                <Link to="/">
+                  <i className="fa fa-angle-left" id="lft-arw-icn">
+                    &nbsp;Back
+                  </i>
+                </Link>
+              </div>
               <h1 className="h3" id="ap-nm">
                 Fit Buddy
               </h1>
@@ -406,7 +411,7 @@ const Registration = (props) => {
                     </span>
                   </div>
                   <button
-                    className="btn btn-success"
+                    className="btn btn-primary"
                     id="sgn-btn"
                     type="submit"
                   >
