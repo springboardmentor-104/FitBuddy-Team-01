@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import OtpVrfo_icon from "./../Assets/otpvrfo.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
+import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
@@ -90,11 +90,6 @@ const ResetPassword = (props) => {
       // If passwords don't match, prevent form submission
       setPasswordsMatch(false);
       alert("Passwords do not match. Please re-enter.");
-    } else {
-      // Passwords match, allow form submission
-      // alert("Form submitted successfully!");
-      alert("Password Changed Successfully!");
-      // Here you can proceed with further actions like submitting the form to a server
     }
 
     // ====================================
@@ -115,9 +110,9 @@ const ResetPassword = (props) => {
         userId: location?.state?.userId,
         otp: location?.state?.otp,
         newPassword: password,
-        cpassword:confirmPassword
+        cpassword :confirmPassword
       });
-
+      
       let config = {
         method: "put",
         maxBodyLength: Infinity,
@@ -150,6 +145,7 @@ const ResetPassword = (props) => {
 
   return (
     <>
+    <ToastContainer/>
       <div className="container-fluid">
         <div
           className="d-flex align-items-center justify-content-center"

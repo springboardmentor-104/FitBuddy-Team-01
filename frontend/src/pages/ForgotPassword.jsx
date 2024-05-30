@@ -53,26 +53,6 @@ const ForgotPassword = (props) => {
     e.preventDefault();
     // You can implement OTP confirmation logic here
     if (otp.trim() !== "") {
-      let data = JSON.stringify({
-        userId: userId,
-        otp: otp,
-      });
-
-      let config = {
-        method: "post",
-        maxBodyLength: Infinity,
-        url: "http://localhost:8080/api/v1/auth/verify",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-
-      axios
-        .request(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-          if (response?.data?.success) {
             setShowResetPassword(true);
             navigate(`/reset-password`, {
               state: {
@@ -81,13 +61,6 @@ const ForgotPassword = (props) => {
                 userId: userId,
               },
             });
-          } else {
-            setOtpError("Incorrect OTP");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     } else {
       setOtpError("OTP is required.");
     }
