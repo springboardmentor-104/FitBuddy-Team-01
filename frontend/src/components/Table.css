@@ -4,3 +4,13 @@
 th.my-font {
   font-weight: 700 !important;
 }
+@media (max-width: 480px) {
+  button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+.table-responsive{
+  width: 100%;
+  overflow-x: auto;
+}

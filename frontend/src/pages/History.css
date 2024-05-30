@@ -1,8 +1,85 @@
-table {
-  border: 1px solid gray;
+.container {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
 }
 
-.text-lg,
-.font-normal {
-  font-family: "Nunito", sans-serif;
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.p-4 {
+  padding: 16px;
+}
+
+.space-x-4 {
+  margin-right: 16px;
+}
+
+.mb-4 {
+  margin-bottom: 16px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.bg-blue-500 {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.bg-gray-300 {
+  background-color: #e0e0e0;
+  color: #333333;
+}
+
+.bg-green-500 {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #dddddd;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
 }

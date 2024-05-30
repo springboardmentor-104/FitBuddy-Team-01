@@ -36,7 +36,7 @@ function ProtectedRoute({ Component }) {
       toast.warn("Unauthorized Access, Please Login First", {
         position: "top-center",
       });
-      navigate("/login");
+      navigate("/Userdashboard");
     }
   }, []);
   return <Component />;

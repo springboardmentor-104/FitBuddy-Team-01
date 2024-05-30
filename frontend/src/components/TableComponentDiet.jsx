@@ -10,11 +10,9 @@ const TableComponentDiet = () => {
   const [auth, setAuth] = useAuth();
   const token = auth?.token;
   const [dietHistory, setDietHistory] = React.useState([]);
-  // const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
 
   React.useEffect(() => {
     fetchData();
-    // eslint-disable-line no-console
   }, []);
 
   const fetchData = async () => {
@@ -43,11 +41,13 @@ const TableComponentDiet = () => {
         quantity: item.goalId.quantity,
         calories: item.goalId.calories,
         status: item.status,
-        date: item.createdAt,
+        date: new Date(item.createdAt).toLocaleDateString(), // Formatting the date
       }));
 
       setDietHistory(transformedData);
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Failed to fetch data.");
+    }
   };
 
   const columns = [
@@ -71,31 +71,36 @@ const TableComponentDiet = () => {
   return (
     <>
       <ToastContainer />
-      <div className="d-flex justify-content-between">
+      <div className="flex justify-between items-center mb-4">
         <div>
-          <h4 className="text-lg font-bold mb-2" style={{ color: "#4caf50" }}>
+          <h4 className="text-lg font-bold" style={{ color: "#4caf50" }}>
             <strong>Diet History</strong>
           </h4>
         </div>
-        {/* <div>
-          {selectedRowKeys?.length > 0 && (
-            <button className="btn btn-sm btn-danger">Delete</button>
-          )}
-        </div> */}
+        {/* Additional button or actions can be added here */}
       </div>
-      <Table
-        rowKey={(record) => record.id}
-        dataSource={dietHistory || []}
-        columns={columns || null}
-        // rowSelection={rowSelection}
-        pagination={{
-          defaultPageSize: 5,
-          total: dietHistory.length,
-          pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
-          showSizeChanger: true,
-        }}
-        scroll={{ x: totalWidth }}
-      />
+      <div className="overflow-x-auto">
+        <Table
+          rowKey={(record) => record.id}
+          dataSource={dietHistory || []}
+          columns={columns || null}
+          pagination={{
+            defaultPageSize: 5,
+            total: dietHistory.length,
+            pageSizeOptions: ["5", "10", "20", "25", "50", "100"],
+            showSizeChanger: true,
+          }}
+          scroll={{ x: totalWidth }}
+          className="min-w-full bg-white rounded-lg shadow-md"
+          rowClassName={(record, index) =>
+            index % 2 === 0 ? "bg-gray-50" : "bg-white"
+          }
+          style={{
+            borderCollapse: "separate",
+            borderSpacing: "0 10px",
+          }}
+        />
+      </div>
     </>
   );
 };

@@ -4,6 +4,7 @@ import Userdashboard from "./Userdashboard";
 import "./History.css";
 import TableComponentExercise from "./../components/TableComponentExercise";
 import TableComponentDiet from "../components/TableComponentDiet";
+import { BsJustifyRight } from "react-icons/bs";
 
 const History = (props) => {
   const [activeTab, setActiveTab] = useState("exercise");
@@ -43,11 +44,10 @@ const History = (props) => {
                 </aside> */}
 
                 {/* Main Content */}
-                <main className="flex-1 p-4">
+                <main className="flex-1 p-4 justify-end">
                   {/* Buttons for Exercise and Diet History */}
                   <div
-                    className="flex justify-end space-x-4 mb-4"
-                    style={{ justifyContent: "flex-end" }}
+                    className="inline justify-center space-x-7 mb-4"
                   >
                     <button
                       className={`btn ${
