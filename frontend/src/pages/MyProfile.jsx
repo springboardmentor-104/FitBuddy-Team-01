@@ -1236,7 +1236,7 @@ const MyProfile = () => {
                         </li>
 
                         {/* Account Settings */}
-                        <li
+                        {/* <li
                           className="nav-item"
                           style={{ marginRight: "0rem" }}
                         >
@@ -1265,7 +1265,7 @@ const MyProfile = () => {
                           >
                             Account Settings
                           </button>
-                        </li>
+                        </li> */}
                       </ul>
 
                       <div className="tab-content pt-2">
@@ -2684,7 +2684,7 @@ const MyProfile = () => {
                         {/* Change Password Section End */}
 
                         {/* Accont Setting Section Start */}
-                        <div
+                        {/* <div
                           className={`tab-pane fade profile-edit pt-3 ${
                             tabLiNum === 3 ? `show active` : ``
                           }`}
@@ -2737,49 +2737,11 @@ const MyProfile = () => {
                                     once account deleted?
                                   </label>
                                 </div>
-                                {/* <div className="form-check">
-                              <input
-                                required
-                                id="proOffers"
-                                type="checkbox"
-                                className="form-check-input"
-                              />
-                              <label
-                                htmlFor="proOffers"
-                                className="form-check-label"
-                              >
-                                Warning 3
-                              </label>
-                            </div> */}
-                                {/* Add more warning */}
-                                {/* <div className="form-check">
-                              <input
-                                required
-                                type="checkbox"
-                                id="securityNotify"
-                                className="form-check-input"
-                              />
-                              <label
-                                htmlFor="securityNotify"
-                                className="form-check-label"
-                              >
-                                Warning 4
-                              </label>
-                            </div> */}
                               </div>
                             </div>
-
-                            {/* <div className="text-center"> */}
                             <div className="row mb-3">
-                              {/* <button type="submit" className="">
-                            Button
-                          </button> */}
-
-                              {/* Delete Account Button */}
                               <div className="text-center">
-                                {/* <button> */}
                                 <span
-                                  // type="submit"
                                   className="btn btn-outline-danger"
                                   onClick={handleDeleteClick}
                                   style={{
@@ -2790,10 +2752,8 @@ const MyProfile = () => {
                                 >
                                   Delete Account
                                 </span>
-                                {/* <button> */}
                               </div>
 
-                              {/* Delete Confirmation Modal */}
                               {isDeleteConfirmationVisible && (
                                 <div className="delete-confirmation-modal">
                                   <p
@@ -2839,7 +2799,7 @@ const MyProfile = () => {
                               )}
                             </div>
                           </form>
-                        </div>
+                        </div> */}
                         {/* Accont Setting Section Start End */}
                       </div>
                     </div>
