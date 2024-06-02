@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from '../context/auth';
-import axios from 'axios'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../context/auth";
+import axios from "axios";
 import ExerciseCard from "./ExerciseCard";
 import ExerciseForm from "./ExerciseForm";
 import "./ExercisePage.css";
@@ -21,8 +21,6 @@ const ExercisePage = () => {
   const [userId, setUserId] = useState(""); // State to hold user ID
   const [userExercises, setUserExercises] = useState([]); // State to hold user's exercises
 
-
-
   useEffect(() => {
     const storedUserId = localStorage.getItem("user");
     if (storedUserId) {
@@ -33,11 +31,14 @@ const ExercisePage = () => {
 
   const fetchUserExercises = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/history/today/exercise`, {
-        headers: {
-          "Authorization": `${token}`, // Add token to Authorization header
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:8080/api/v1/history/today/exercise`,
+        {
+          headers: {
+            Authorization: `${token}`, // Add token to Authorization header
+          },
+        }
+      );
 
       // Log the response data to understand its structure
       console.log(response.data);
@@ -52,8 +53,8 @@ const ExercisePage = () => {
         }));
         setUserExercises(exerciseDetails); // Set the state with the array of objects
 
-        console.log("data")
-        console.log(userExercises)
+        console.log("data");
+        console.log(userExercises);
       } else {
         console.error("Unexpected response data format:", response.data);
         setUserExercises([]); // Set an empty array in case of unexpected format
@@ -86,7 +87,8 @@ const ExercisePage = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
       setDropdownVisible(scrollTop === 0);
     };
 
@@ -110,10 +112,14 @@ const ExercisePage = () => {
   return (
     <>
       <ToastContainer />
-      <Userdashboard/>
-          <div className="exercise-page" id="exerciseSidebarAdjustment">
+      <Userdashboard
+        content={
+          // <div className="exercise-page" id="exerciseSidebarAdjustment">
+          <div className="exercise-page">
             <div
-              className={`dropdown-container ${dropdownVisible ? "visible" : "hidden"}`}
+              className={`dropdown-container ${
+                dropdownVisible ? "visible" : "hidden"
+              }`}
             >
               <div className="select-wrapper">
                 <select value={selectedType} onChange={handleTypeChange}>
@@ -127,7 +133,10 @@ const ExercisePage = () => {
               </div>
             </div>
 
-            <div className="card-container" style={{ marginTop: dropdownVisible ? "50px" : "0" }}>
+            <div
+              className="card-container"
+              style={{ marginTop: dropdownVisible ? "50px" : "0" }}
+            >
               {loading ? (
                 <div className="loading">Loading...</div>
               ) : exercises.length === 0 ? (
@@ -158,7 +167,8 @@ const ExercisePage = () => {
               />
             )}
           </div>
-       
+        }
+      />
     </>
   );
 };
