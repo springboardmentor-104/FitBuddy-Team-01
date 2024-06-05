@@ -303,7 +303,7 @@ const Userdashboard = (props) => {
             </Link>
           </li>
 
-          <li className="nav-heading">Pages</li>
+          {/* <li className="nav-heading">Pages</li> */}
 
           <li className="nav-item">
             {/* /ManageGoals */}
