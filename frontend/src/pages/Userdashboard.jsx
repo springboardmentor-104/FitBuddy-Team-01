@@ -432,7 +432,7 @@ const Userdashboard = (props) => {
             </Link>
           </li> */}
 
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link
               // className="nav-link collapsed"
               to=""
@@ -454,7 +454,7 @@ const Userdashboard = (props) => {
               &nbsp;
               <span>Buy Subscription</span>
             </Link>
-          </li>
+          </li> */}
 
           <li className="nav-item">
             <Link

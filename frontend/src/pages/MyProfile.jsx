@@ -985,7 +985,7 @@ const MyProfile = () => {
             {/* Main Section */}
             <div>
               <div className="pagetitle">
-                <h1>My Profile</h1>
+                {/* <h1>My Profile</h1>
                 <nav>
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
@@ -999,7 +999,7 @@ const MyProfile = () => {
                     <li className="breadcrumb-item">Users</li>
                     <li className="breadcrumb-item active">My Profile</li>
                   </ol>
-                </nav>
+                </nav> */}
               </div>
               <section className="section profile">
                 <div className="row">
