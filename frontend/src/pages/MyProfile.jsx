@@ -673,7 +673,7 @@ const MyProfile = () => {
       formData.append("link3", link3);
     }
     if (link4) {
-      formData.append("link3", link4);
+      formData.append("link4", link4);
     }
     if (heightUnit) {
       formData.append("heightUnit", heightUnit);
