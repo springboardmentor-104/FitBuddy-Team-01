@@ -101,7 +101,6 @@ const Login = (props) => {
             token: response.data.token,
           });
           console.log("auth");
-          console.log(auth);
           let localData = {
             token: response?.data?.token,
             ...response?.data?.user,
