@@ -1133,7 +1133,7 @@ const MyProfile = () => {
                           </li>
 
                           {/* Account Settings */}
-                          <li
+                          {/* <li
                             className="nav-item"
                             style={{ marginRight: "0rem" }}
                           >
@@ -1161,7 +1161,7 @@ const MyProfile = () => {
                             >
                               Account Settings
                             </button>
-                          </li>
+                          </li> */}
                         </ul>
 
                         <div className="tab-content pt-2">
