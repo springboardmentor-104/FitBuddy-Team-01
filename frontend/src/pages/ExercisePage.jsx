@@ -121,7 +121,7 @@ const ExercisePage = () => {
                 dropdownVisible ? "visible" : "hidden"
               }`}
             >
-              <div className="select-wrapper">
+              <div className="Ex-select-wrapper">
                 <select value={selectedType} onChange={handleTypeChange}>
                   <option value="">All Exercises</option>
                   <option value="strength">Strength</option>

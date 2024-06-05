@@ -1,119 +1,121 @@
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .select-wrapper {
-    text-align: center; /* Center the dropdown box */
-    position: fixed; /* Fix the position */
-    top: 0; /* Align to the top */
-    left: 50%; /* Move to the center horizontally */
-    transform: translateX(-50%); /* Adjust for centering */
-    width: 200px; /* Set a fixed width for the dropdown */
-    /* margin-top: 20px; Add margin from the top */
-  
-    margin-top: 100px; /* new change */
-  }
-  
-  .select-wrapper select {
-    width: 150px; /* Set a fixed width for the dropdown */
-    text-align: center; /* Align text to the center */
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    cursor: pointer;
-  }
-  
-  .select-wrapper select:focus {
-    outline: none;
-  }
-  
-  .horizontal-line {
-    width: 100%;
-    border-bottom: 1px solid #ccc; /* Add horizontal line below the dropdown */
-    margin-bottom: 20px; /* Add space below the horizontal line */
-  }
-  
-  .card-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 20px; /* Add margin from the top */
-    margin-bottom: 20px; /* Add margin from the bottom */
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.select-wrapper {
+  /* text-align: center; */ /* Center the dropdown box */
+  /* position: fixed; */ /* Fix the position */
+  top: 0; /* Align to the top */
+  left: 50%; /* Move to the center horizontally */
+  /* transform: translateX(-50%); */ /* Adjust for centering */
+  /* width: 200px; */ /* Set a fixed width for the dropdown */
+  /* margin-top: 20px; Add margin from the top */
+
+  /* margin-top: 100px;  */ /* new change */
+
+  display: flex;
+  justify-content: center;
+}
+
+.select-wrapper select {
+  width: 150px; /* Set a fixed width for the dropdown */
+  text-align: center; /* Align text to the center */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.select-wrapper select:focus {
+  outline: none;
+}
+
+.horizontal-line {
+  width: 100%;
+  border-bottom: 1px solid #ccc; /* Add horizontal line below the dropdown */
+  margin-bottom: 20px; /* Add space below the horizontal line */
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px; /* Add margin from the top */
+  margin-bottom: 20px; /* Add margin from the bottom */
+}
+
+.card-container > * {
+  margin: 35px; /* Margin between and around cards */
+}
+
+/* Adjust number of cards per row based on screen size */
+@media only screen and (min-width: 1024px) {
   .card-container > * {
-    margin: 35px; /* Margin between and around cards */
+    flex: 0 0 calc(20% - 40px); /* 5 cards per row */
   }
-  
-  /* Adjust number of cards per row based on screen size */
-  @media only screen and (min-width: 1024px) {
-    .card-container > * {
-      flex: 0 0 calc(20% - 40px); /* 5 cards per row */
-    }
+}
+
+@media only screen and (max-width: 1023px) and (min-width: 768px) {
+  .card-container > * {
+    flex: 0 0 calc(25% - 40px); /* 4 cards per row */
   }
-  
-  @media only screen and (max-width: 1023px) and (min-width: 768px) {
-    .card-container > * {
-      flex: 0 0 calc(25% - 40px); /* 4 cards per row */
-    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 576px) {
+  .card-container > * {
+    flex: 0 0 calc(50% - 40px); /* 2 cards per row */
   }
-  
-  @media only screen and (max-width: 767px) and (min-width: 576px) {
-    .card-container > * {
-      flex: 0 0 calc(50% - 40px); /* 2 cards per row */
-    }
+}
+
+@media only screen and (max-width: 575px) {
+  .card-container > * {
+    flex: 0 0 calc(100% - 40px); /* 1 card per row */
   }
-  
-  @media only screen and (max-width: 575px) {
-    .card-container > * {
-      flex: 0 0 calc(100% - 40px); /* 1 card per row */
-    }
+}
+
+.add-button:hover {
+  background-color: darkgreen; /* Change to desired color */
+}
+
+.remove-button:hover {
+  background-color: darkred; /* Change to desired color */
+}
+
+.dropdown-container {
+  margin-bottom: 20px;
+}
+
+.card-container {
+  margin-top: 20px;
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .toggle-sidebar #exerciseSidebarAdjustment,
+  .toggle-sidebar {
+    margin-left: 0;
   }
-  
-  .add-button:hover {
-    background-color: darkgreen; /* Change to desired color */
+}
+
+@media (min-width: 1200px) {
+  #exerciseSidebarAdjustment {
+    margin-left: 300px;
   }
-  
-  .remove-button:hover {
-    background-color: darkred; /* Change to desired color */
+}
+
+@media (max-width: 1199px) {
+  .toggle-sidebar .sidebar {
+    left: 0;
   }
-  
-  .dropdown-container {
-    margin-bottom: 20px;
-  }
-  
-  .card-container {
-    margin-top: 20px;
-  }
-  
-  .visible {
-    display: block;
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  @media (min-width: 1200px) {
-    .toggle-sidebar #exerciseSidebarAdjustment,
-    .toggle-sidebar {
-      margin-left: 0;
-    }
-  }
-  
-  @media (min-width: 1200px) {
-    #exerciseSidebarAdjustment {
-      margin-left: 300px;
-    }
-  }
-  
-  @media (max-width: 1199px) {
-    .toggle-sidebar .sidebar {
-      left: 0;
-    }
-  }
-  
+}
