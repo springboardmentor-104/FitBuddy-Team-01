@@ -692,6 +692,9 @@ const MyProfile = () => {
         (response) => {
           // alert("Update profile successfully!");
           if(response.data.success){
+            const existingData = JSON.parse(localStorage.getItem("user")) || {};
+            existingData.name = response.data?.user?.name;
+            localStorage.setItem('user', JSON.stringify(existingData));
             toast.success(response.data.message);
             getProfileDetails()
           } // Display success message using toast
@@ -1012,7 +1015,7 @@ const MyProfile = () => {
                           className="rounded-circle"
                           style={{ width: "100px", height: "100px" }}
                         />
-                        <h2>{user?.name || "N/A"}</h2>
+                        <h2>{name || "N/A"}</h2>
                         <h3>{occupation || "N/A"}</h3>
                         <div className="social-links mt-2">
                           <Link to={link1} className="twitter">
@@ -1133,7 +1136,7 @@ const MyProfile = () => {
                           </li>
 
                           {/* Account Settings */}
-                          <li
+                          {/* <li
                             className="nav-item"
                             style={{ marginRight: "0rem" }}
                           >
@@ -1161,7 +1164,7 @@ const MyProfile = () => {
                             >
                               Account Settings
                             </button>
-                          </li>
+                          </li> */}
                         </ul>
 
                         <div className="tab-content pt-2">
@@ -1268,7 +1271,7 @@ const MyProfile = () => {
                                   </div>
                                   <div className="col-lg-9 col-md-8">
                                     {/* {user?.name || "User"} */}
-                                    {user?.name || name || "N/A"}
+                                    {name ||user?.name || "N/A"}
                                   </div>
                                 </div>
 
@@ -1615,7 +1618,8 @@ const MyProfile = () => {
                                   <img
                                     alt="Profile"
                                     id="profilepic"
-                                    src={photo ? URL.createObjectURL(photo) : profile_icn}  
+                                    src={profilepic ? (photo ? URL.createObjectURL(photo) : profilepic) :photo ? URL.createObjectURL(photo) : profile_icn}
+                                    // src={profilepic ? photo ? URL.createObjectURL(photo) : profile_icn}  
                                     className={`profilepic`}
                                     style={{
                                       // width: "200px",
@@ -1630,7 +1634,7 @@ const MyProfile = () => {
                                       name="image"
                                       // value={image}
                                       type="file"
-                                      accept="image/jpej, image/png, image/jpg"
+                                      accept="image/jpeg, image/png, image/jpg"
                                       id="input-file"
                                       style={{ display: "none" }}
                                       onChange={handlePhotoChange}                                      // onChange={handleImageChange}

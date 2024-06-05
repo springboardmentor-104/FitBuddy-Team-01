@@ -2,14 +2,13 @@ import React, { useState ,useEffect} from "react";
 import "./Header.css";
 import logo from "./logo.png";
 import { Link } from "react-router-dom"; // Import Link from React Router
+import {useAuth} from '../context/auth'
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState()
+  const [auth, setAuth] = useAuth();
 
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user")))
-  }, [])
+
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -26,8 +25,10 @@ function Header() {
       <nav className={`gau-nav ${menuOpen ? "open" : ""}`}>
         <Link to="/">Home</Link>
         <Link to="/contactus">Contact Us</Link>
-        {user ? (<Link to="/" onClick={() => {
+        {auth.token ? (<Link to="/" onClick={() => {
+            setAuth({ token: "" });
             localStorage.removeItem("user");
+            localStorage.removeItem("chartData");
           }}>Sign Out</Link>) :
           (<><Link to="/login">Login</Link><Link to="/registration">Sign Up</Link></>)}
         

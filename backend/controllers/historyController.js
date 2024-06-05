@@ -518,7 +518,8 @@ const createEveryDayHistoryData = async (req, res) => {
         const  userId  = req.user._id;
         const currentDate = new Date().toISOString().split('T')[0];
         const previousDate = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
-   
+        console.log(currentDate)
+        console.log(previousDate)
         // Check if exercises already created for today
         const existingHistory = await History.findOne({
             userId: userId,
@@ -609,7 +610,7 @@ const getCompletionRates = async (req, res) => {
   
       // Generate an array of dates until the oldest record
       const histories = await History.find({ userId: userId }).sort({ createdAt: 1 });
-  
+      
       if (histories.length === 0) {
         return res.json({
             success:false,

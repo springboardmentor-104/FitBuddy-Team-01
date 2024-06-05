@@ -5,15 +5,17 @@
   }
   
   .select-wrapper {
-    text-align: center; /* Center the dropdown box */
-    position: fixed; /* Fix the position */
-    top: 0; /* Align to the top */
+    /* text-align: center;  */
+    /* position: fixed; Fix the position */
+    top: 0; 
     left: 50%; /* Move to the center horizontally */
-    transform: translateX(-50%); /* Adjust for centering */
-    width: 200px; /* Set a fixed width for the dropdown */
-    /* margin-top: 20px; Add margin from the top */
+    justify-content: center;
+    display: flex;
+    /* transform: translateX(-50%);  */
+    /* width: 200px;  */
+     margin-top: 20px; 
   
-    margin-top: 100px; /* new change */
+    /* margin-top: 100px; new change */
   }
   
   .select-wrapper select {

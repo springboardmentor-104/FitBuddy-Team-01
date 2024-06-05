@@ -258,6 +258,7 @@ const Userdashboard = (props) => {
                       onClick={() => {
                         setAuth({ token: "" });
                         localStorage.removeItem("user");
+                        localStorage.removeItem("chartData");
                       }}
                     >
                       <BiLogOut />

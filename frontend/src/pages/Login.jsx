@@ -107,6 +107,7 @@ const Login = (props) => {
             ...response?.data?.user,
           };
           localStorage.setItem("user", JSON.stringify(localData));
+          localStorage.removeItem("chartData");
           setTimeout(() => {
             navigate("/Userdashboard");
           }, 500);

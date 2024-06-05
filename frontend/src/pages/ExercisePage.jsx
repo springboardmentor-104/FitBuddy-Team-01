@@ -110,12 +110,12 @@ const ExercisePage = () => {
   return (
     <>
       <ToastContainer />
-      <Userdashboard/>
-          <div className="exercise-page" id="exerciseSidebarAdjustment">
+      <Userdashboard content={
+          <div className="exercise-page" id="">
             <div
               className={`dropdown-container ${dropdownVisible ? "visible" : "hidden"}`}
             >
-              <div className="select-wrapper">
+              <div className="Ex-select-wrapper">
                 <select value={selectedType} onChange={handleTypeChange}>
                   <option value="">All Exercises</option>
                   <option value="strength">Strength</option>
@@ -159,6 +159,7 @@ const ExercisePage = () => {
             )}
           </div>
        
+          }/>
     </>
   );
 };

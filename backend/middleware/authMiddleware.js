@@ -9,7 +9,7 @@ const requireSignIn = async (req, res, next) => {
     // Check if Authorization header exists
     const token = req.headers.authorization;
     if (!token) {
-      return res.send({ success: false, message: "Please login first" });
+      return res.send({ success: false });
     }
 
     // Verify JWT token

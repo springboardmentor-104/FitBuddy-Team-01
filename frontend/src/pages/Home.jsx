@@ -14,6 +14,7 @@ function Home() {
   const handleLogout = () => {
     setAuth({ token: "" });
     localStorage.removeItem("user");
+    localStorage.removeItem("chartData");
     toast.success("Logout Successfully");
   };
 

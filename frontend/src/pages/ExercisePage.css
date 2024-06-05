@@ -6,7 +6,7 @@
   padding: 20px;
 }
 
-.select-wrapper {
+.Ex-select-wrapper {
   /* text-align: center; */ /* Center the dropdown box */
   /* position: fixed; */ /* Fix the position */
   top: 0; /* Align to the top */
@@ -15,11 +15,12 @@
   /*width: 200px; */ /* Set a fixed width for the dropdown */
   /* margin-top: 20px; Add margin from the top */
   /* margin-top: 100px; */ /* new change */
+  margin-top: 20px; 
   display: flex;
   justify-content: center;
 }
 
-.select-wrapper select {
+.Ex-select-wrapper select {
   width: 150px; /* Set a fixed width for the dropdown */
   text-align: center; /* Align text to the center */
   padding: 10px;
@@ -30,7 +31,7 @@
   cursor: pointer;
 }
 
-.select-wrapper select:focus {
+.Ex-select-wrapper select:focus {
   outline: none;
 }
 
