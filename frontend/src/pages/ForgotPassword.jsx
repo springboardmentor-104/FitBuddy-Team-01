@@ -53,23 +53,40 @@ const ForgotPassword = (props) => {
     e.preventDefault();
     // You can implement OTP confirmation logic here
     if (otp.trim() !== "") {
-            setShowResetPassword(true);
-            navigate(`/reset-password`, {
-              state: {
-                email: email,
-                otp: otp,
-                userId: userId,
-              },
-            });
+      setShowResetPassword(true);
+      navigate(`/reset-password`, {
+        state: {
+          email: email,
+          otp: otp,
+          userId: userId,
+        },
+      });
     } else {
       setOtpError("OTP is required.");
     }
   };
 
   // Function to handle OTP resend
-  const handleResendOTP = () => {
+  const handleResendOTP = async () => {
     // You can implement OTP resend logic here
-  };
+      try {
+        const response = await axios.post('http://localhost:8080/api/v1/auth/resend', {
+          userId,
+          email,
+        });
+
+        if (response.data.success) {
+          toast.success(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        console.error('Error in sending OTP:', error);
+      }
+    };
+
+
+
 
   console.log("show", showPassword);
 
@@ -160,7 +177,11 @@ const ForgotPassword = (props) => {
           console.log(JSON.stringify(response.data));
           handleGetOTP();
           setUserId(response?.data?.userId);
-          toast.success(response.data.message)
+          if(response.data.success){
+            toast.success(response.data.message)
+          }else{
+            toast.error(response.data.message)
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -172,7 +193,7 @@ const ForgotPassword = (props) => {
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <div className="container-fluid">
         <div
           className="d-flex align-items-center justify-content-center"
