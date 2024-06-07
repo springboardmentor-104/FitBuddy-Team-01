@@ -13,8 +13,14 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
+
 const ForgotPassword = (props) => {
   // const [email, setEmail] = useState("");
+  // const [loading, setLoading] = useState(false);
+
+
+
   const ref = useRef(null);
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
@@ -42,9 +48,9 @@ const ForgotPassword = (props) => {
   const handleGetOTP = () => {
     // You can implement OTP sending logic here
     if (email !== "") {
-      setShowOtpField(true);
+      // setShowOtpField(true);
     } else {
-      alert("Email is required for OTP.");
+      toast.error("Email is required for OTP.");
     }
   };
 
@@ -69,21 +75,21 @@ const ForgotPassword = (props) => {
   // Function to handle OTP resend
   const handleResendOTP = async () => {
     // You can implement OTP resend logic here
-      try {
-        const response = await axios.post('http://localhost:8080/api/v1/auth/resend', {
-          userId,
-          email,
-        });
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/auth/resend', {
+        userId,
+        email,
+      });
 
-        if (response.data.success) {
-          toast.success(response.data.message);
-        } else {
-          toast.error(response.data.message);
-        }
-      } catch (error) {
-        console.error('Error in sending OTP:', error);
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
       }
-    };
+    } catch (error) {
+      console.error('Error in sending OTP:', error);
+    }
+  };
 
 
 
@@ -151,6 +157,8 @@ const ForgotPassword = (props) => {
   // Function to handle form submission
   const handleSubmit1 = async (e) => {
     e.preventDefault();
+    // setLoading(true);
+
     // Validate form before submission
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       alert("Please enter a your Email address for OTP");
@@ -177,10 +185,13 @@ const ForgotPassword = (props) => {
           console.log(JSON.stringify(response.data));
           handleGetOTP();
           setUserId(response?.data?.userId);
-          if(response.data.success){
-            toast.success(response.data.message)
-          }else{
-            toast.error(response.data.message)
+          if (response.data.success) {
+            toast.success(response.data.message);
+            // setLoading(false);
+            setShowOtpField(true);
+          } else {
+            toast.error(response.data.message);
+            // setLoading(false);  
           }
         })
         .catch((error) => {
@@ -197,9 +208,10 @@ const ForgotPassword = (props) => {
       <div className="container-fluid">
         <div
           className="d-flex align-items-center justify-content-center"
-          style={{ height: window.innerHeight }}
+          style={{ height: window.innerHeight, width: "70vw", margin: "auto" }} // divakar code for responsive
+        // style={{ height: window.innerHeight }}
         >
-          <div className="card border-0" style={{ margin: "100px" }}>
+          <div className="card border-0" style={{ margin: "2px" }}>
             <div className="card-body p-0 bg-light shadow">
               <div className="row">
                 <div className="col-md-6 col-sm-12">
@@ -240,8 +252,12 @@ const ForgotPassword = (props) => {
                             id="otp-btn"
                             type="submit"
                             className="btn btn-primary"
-                          >
-                            Get OTP
+                          >Get Otp
+                            {/* {loading ? (
+                              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            ) : (
+                              "Get OTP"
+                            )} */}
                           </button>
                         </div>
                       </form>

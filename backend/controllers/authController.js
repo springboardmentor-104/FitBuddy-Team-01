@@ -268,7 +268,7 @@ const forgotOtpController = async (req, res) => {
     const user = await userModel.findOne({ email });
 
     if (!user) {
-      return res.status(404).send({
+      return res.send({
         success: false,
         message: "User not found",
       });
