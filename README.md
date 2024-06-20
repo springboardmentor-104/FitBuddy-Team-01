@@ -97,34 +97,34 @@ FitBuddy provides a platform for users to track their fitness activities, set go
 - Start tracking your workouts and monitor your fitness progress.
 
 ## Directory Structure
-
+                                                                                                                                                                                    
 
 FITBUDDY-TEAM-01/
-├── backend/
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── utils/
-│ ├── .env.example
-│ ├── server.js
-│ └── package.json
-├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ ├── pages/
-│ │ ├── redux/
-│ │ ├── App.js
-│ │ └── index.js
-│ ├── public/
-│ ├── .env.example
-│ └── package.json
-├── Testing/
-├── Defect Sheet/
-├── PPT/
-├── .gitignore
-├── README.md
-├── package-lock.json
-└── package.json
+├── backend/                                                                                                                                                                                  
+│ ├── controllers/                                                                                                                                                                            
+│ ├── models/                                                                                                                                                                                 
+│ ├── routes/                                                                                                                                                                                 
+│ ├── utils/                                                                                                                                                                                  
+│ ├── .env.example                                                                                                                                                                            
+│ ├── server.js                                                                                                                                                                               
+│ └── package.json                                                                                                                                                                            
+├── frontend/                                                                                                                                                                                 
+│ ├── src/                                                                                                                                                                                    
+│ │ ├── components/                                                                                                                                                                           
+│ │ ├── pages/                                                                                                                                                                                
+│ │ ├── redux/                                                                                                                                                                                
+│ │ ├── App.js                                                                                                                                                                                
+│ │ └── index.js                                                                                                                                                                              
+│ ├── public/                                                                                                                                                                                 
+│ ├── .env.example                                                                                                                                                                            
+│ └── package.json                                                                                                                                                                            
+├── Testing/                                                                                                                                                                                  
+├── Defect Sheet/                                                                                                                                                                             
+├── PPT/                                                                                                                                                                                                                                                                                                                                                                                    
+├── .gitignore                                                                                                                                                                                
+├── README.md                                                                                                                                                                                 
+├── package-lock.json                                                                                                                                                                         
+└── package.json                                                                                                                                                                              
 
 
 In this structure:
