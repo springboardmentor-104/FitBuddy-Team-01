@@ -1,0 +1,166 @@
+/* #reg-sec {
+  background: gray;
+  background: linear-gradient(to right, gray, gray, gray);
+} */
+
+.register h1 {
+  color: #3076bb;
+}
+
+.RegistrationContainer{
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  height: 100vh; 
+}
+.register span {
+  color: #414346;
+}
+
+#form {
+  margin: 2em auto;
+}
+
+#form > input,
+.btn {
+  border: 1px solid #e9ecef;
+  padding: 0.2em 1em;
+}
+
+#form > input:focus {
+  outline: none;
+}
+
+#form > .btn {
+  color: #e9ecef;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+  gap: 1em;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.register .col-1 {
+  margin: auto;
+  padding: 3em 0;
+}
+
+.register .col-2 img {
+  width: 480px;
+  height: 100%;
+  object-fit: cover;
+  align-self: flex-end;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  display: none;
+}
+
+@media screen and (min-width: 960px) {
+  .register .col-2 img {
+    display: initial;
+  }
+}
+
+/* =============================== */
+
+#ap-nm {
+  text-align: left;
+  font-weight: 600;
+  font-size: 32.5px;
+}
+
+#reg-hd {
+  text-align: left;
+  color: #152085;
+  font-size: 20.5px;
+}
+
+#rg-rw {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  /* border-radius: 0px; */
+}
+
+#reg-slogan {
+  text-align: left;
+  color: gray;
+  /* margin-bottom: -1rem; */
+}
+
+#sgn-btn {
+  color: rgba(25, 63, 246, 1);
+}
+
+/* #mb-3 {
+  margin-bottom: 0rem !important;
+} */
+
+#img {
+  padding: 10px;
+  border-radius: 17.5px;
+}
+
+#entr-otp {
+  text-align: left;
+  text-align: justify;
+}
+
+#otp-btn-fr-rg {
+  margin-top: 5.5px;
+}
+
+/* .bc-bx {
+  font-size: 17.5px;
+  text-align: left;
+  cursor: pointer;
+}
+
+#bc {
+  color: rgb(27, 26, 26);
+} */
+
+#sgin-up-lnk {
+  text-decoration: none;
+  color: #ffc107;
+  font-weight: 500;
+}
+
+#lgin-bx {
+  margin-top: 10px;
+}
+
+.Reg-OTP {
+  text-align: left;
+  text-align: justify;
+}
+
+#reg-rsnd-btn {
+  outline: 0;
+  border: 0;
+  background-color: #fff;
+  color: red;
+  text-align: center;
+  cursor: pointer;
+}
+
+#msg-rg-otp {
+  text-align: left;
+  text-align: justify;
+}
+
+#inv-frmt-pas {
+  color: red;
+  text-align: left;
+  text-align: justify;
+}
+
+#inv-Usrnm-frm {
+  color: red;
+  text-align: left;
+  text-align: justify;
+}

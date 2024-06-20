@@ -1,0 +1,121 @@
+.App {
+  text-align: center;
+  /* height: 100vh; */ /* removed by Shivankush */
+  background-color: #ffffff;
+
+  height: 78vh; /* added by Shivankush */
+}
+
+.container {
+  display: contents;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+.image-container {
+  flex: 1;
+  /* margin-right: 50px; */ /* removed by Shivankush */
+  /* margin-top: 100px; */ /* removed by Shivankush */
+  /* margin-left: 20px; */ /* removed by Shivankush */
+
+  margin-left: 25px; /* added by Shivankush */
+  margin-right: 0px; /* added by Shivankush */
+  margin-top: 25px; /* added by Shivankush */
+  margin-bottom: 25px; /* added by Shivankush */
+}
+
+.image-container img {
+  margin-top: 0;
+  max-width: 80%;
+  height: 450px;
+  width: 600px;
+  border-radius: 20px;
+}
+
+.label {
+  /* position: absolute; */
+  /* top: 16px; */
+  /* left: 0; */
+  width: 100%;
+  /* padding: 60px; */
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: black;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.text-container {
+  flex: 1;
+  /* margin-right: 50px; */ /* removed by Shivankush */
+  /* margin-left: 20px; */ /* removed by Shivankush */
+  height: 400px;
+  text-align: center;
+  text-align: justify;
+
+  margin-right: 55px; /* added by Shivankush */
+  margin-left: 0px; /* added by Shivankush */
+  margin-bottom: 25px; /* added by Shivankush */
+  margin-top: 25px; /* added by Shivankush */
+}
+
+.text-container h2 {
+  /* margin-top: 40px; */ /* removed by Shivankush */
+
+  margin-top: 0px; /* added by Shivankush */
+}
+
+.button-container {
+  margin-bottom: 0px;
+  display: flex;
+  /* justify-content: space-around; */ /* removed by Shivankush */
+  align-items: center;
+  /* margin-top: 50px; */ /* removed by Shivankush */
+  margin-top: 0px;
+
+  justify-content: space-evenly; /* added by Shivankush */
+}
+
+.button-container .add-button {
+  background-color: #47f853;
+  color: white;
+  border: none;
+  text-align: center;
+  /* padding: 10px 40px; */ /* removed by Shivankush */
+  border-radius: 5px;
+  cursor: pointer;
+
+  padding: 5px; /* added by Shivankush */
+}
+
+.button-container .remove-button {
+  background-color: #9b2d19;
+  color: white;
+  border: none;
+  text-align: center;
+  /* padding: 10px 20px; */ /* removed by Shivankush */
+  border-radius: 5px;
+  cursor: pointer;
+
+  padding: 5px; /* added by Shivankush */
+}
+
+.button-container button:hover {
+  background-color: #0056b3;
+}
+
+.text-container .instruction-para {
+  margin-right: 20px;
+  height: max-content;
+
+  margin-bottom: 10px; /* added by Shivankush */
+}
+
+/* added by Shivankush */
+.instruction-para {
+  text-align: justify;
+}
