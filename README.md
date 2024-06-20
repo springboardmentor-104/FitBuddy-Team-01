@@ -2,7 +2,6 @@
 
 FitBuddy is a comprehensive fitness tracking application developed by Team 01. It helps users track their workouts, monitor progress, and achieve their fitness goals.
 
-> **Note:** We opted to use live cryptocurrency data instead of stock data due to the unavailability of free real-time stock data APIs on the internet.
 
 ## Table of Contents
 
